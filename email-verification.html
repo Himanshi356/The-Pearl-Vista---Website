@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Email Verification - The Pearl Vista" />
+  <meta name="keywords" content="email verification, pearl vista, hotel" />
+  <title>Email Verification - The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="images/logo.png" />
+</head>
+<body>
+
+  <!-- Email Verification Page -->
+  <div class="email-verification-bg">
+    <h2 class="verification-heading-outside">Verify Your Email</h2>
+    <div class="verification-content">
+      <!-- Removed the top verification-icon -->
+      <p class="verification-text">
+        Enter the 6-digit code sent to your email address to verify your account.
+      </p>
+      <div class="email-display">
+        <i class="fa-solid fa-envelope" aria-label="Email"></i>
+        <span id="userEmail">user@example.com</span>
+      </div>
+      <form id="codeForm" class="code-form" autocomplete="off" onsubmit="return false;" aria-label="OTP Verification Form">
+        <div class="otp-inputs">
+          <input type="text" inputmode="numeric" maxlength="1" class="otp-box" required aria-label="Digit 1" />
+          <input type="text" inputmode="numeric" maxlength="1" class="otp-box" required aria-label="Digit 2" />
+          <input type="text" inputmode="numeric" maxlength="1" class="otp-box" required aria-label="Digit 3" />
+          <input type="text" inputmode="numeric" maxlength="1" class="otp-box" required aria-label="Digit 4" />
+          <input type="text" inputmode="numeric" maxlength="1" class="otp-box" required aria-label="Digit 5" />
+          <input type="text" inputmode="numeric" maxlength="1" class="otp-box" required aria-label="Digit 6" />
+        </div>
+        <button class="btn primary" id="verifyBtn" type="submit" aria-label="Verify Code">Verify</button>
+      </form>
+      <div id="codeFeedback" class="code-feedback"></div>
+      <hr class="verification-divider" />
+      <div class="verification-actions">
+        <button class="btn accent" onclick="resendEmail()" aria-label="Resend Code">
+          <i class="fa-solid fa-paper-plane"></i>
+          Resend Code
+        </button>
+        <button class="btn secondary" onclick="changeEmail()" aria-label="Change Email">
+          <i class="fa-solid fa-edit"></i>
+          Change Email
+        </button>
+      </div>
+      <div class="verification-tips">
+        <h4>Didn't receive the code?</h4>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Check your spam folder</li>
+          <li><i class="fa-solid fa-check"></i> Make sure the email address is correct</li>
+          <li><i class="fa-solid fa-check"></i> Wait a few minutes and try again</li>
+        </ul>
+      </div>
+      <div class="back-to-login">
+        <a href="index.html" aria-label="Back to Login">
+          <i class="fa-solid fa-arrow-left"></i>
+          Back to Login
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    // Add a subtle background gradient for professionalism
+    document.body.style.background = "";
+    // Get email from URL parameters
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('email');
+      if (email) {
+        document.getElementById('userEmail').textContent = email;
+      }
+      // Autofocus first OTP box
+      const otpInputs = document.querySelectorAll('.otp-box');
+      if (otpInputs.length) otpInputs[0].focus();
+    };
+    function resendEmail() {
+      showNotification("Verification code resent successfully!", "success");
+    }
+    function changeEmail() {
+      window.location.href = 'index.html';
+    }
+    // OTP input UX
+    const otpInputs = document.querySelectorAll('.otp-box');
+    otpInputs.forEach((input, idx) => {
+      input.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        if (this.value && idx < otpInputs.length - 1) {
+          otpInputs[idx + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && !this.value && idx > 0) {
+          otpInputs[idx - 1].focus();
+        }
+      });
+    });
+    // Code verification logic
+    document.getElementById('codeForm').onsubmit = function(e) {
+      e.preventDefault();
+      const code = Array.from(otpInputs).map(i => i.value).join('');
+      const feedback = document.getElementById('codeFeedback');
+      feedback.classList.remove('success', 'error');
+      if (!/^\d{6}$/.test(code)) {
+        feedback.textContent = "Please enter the 6-digit code.";
+        feedback.classList.add('error');
+        return false;
+      }
+      // Simulate successful verification
+      feedback.textContent = "Email verified successfully! Redirecting...";
+      feedback.classList.add('success');
+      setTimeout(() => {
+        window.location.href = 'confirm-password.html';
+      }, 1200);
+      return false;
+    };
+  </script>
+</body>
+</html> 

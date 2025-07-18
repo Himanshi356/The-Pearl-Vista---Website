@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pearl Vista - Luxury Hotel New York</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Luxury fonts for headings and body -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  <style>
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 0 32px;
+      height: 70px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .header .profile i {
+      font-size: 1.5rem;
+      color: #d4af37;
+    }
+    .header .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #1a1a1a;
+    }
+    .header .logo img {
+      height: 36px;
+    }
+    .header .nav {
+      display: flex;
+      gap: 28px;
+    }
+    .header .nav a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .header .nav a.active, .header .nav a:hover {
+      color: #d4af37;
+    }
+    .hero {
+      position: relative;
+      height: 380px;
+      background: url('images/cover.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #fff;
+    }
+    .hero-content h1 {
+      font-size: 4.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+    .hero-content .hero-btn {
+      background: #d4af37;
+      color: #222;
+      border: none;
+      border-radius: 24px;
+      padding: 0.8rem 2.2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.2s, color 0.2s;
+    }
+    .hero-content .hero-btn:hover {
+      background: #bfa13a;
+      color: #fff;
+    }
+    .booking-section {
+      background: #fff;
+      box-shadow: 0 4px 18px rgba(26,34,56,0.08);
+      border-radius: 18px;
+      max-width: 700px;
+      margin: -60px auto 2.5rem auto;
+      padding: 2rem 2.5rem 1.5rem 2.5rem;
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .booking-section h2 {
+      margin-bottom: 1.2rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .booking-form {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .booking-form .form-group {
+      display: flex;
+      flex-direction: column;
+      min-width: 140px;
+    }
+    .booking-form label {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.3rem;
+      font-size: 0.98rem;
+    }
+    .booking-form input, .booking-form select {
+      border-radius: 10px;
+      border: 1.5px solid #e0e0e0;
+      padding: 0.7rem 1rem;
+      font-size: 1.08rem;
+      background: #f8f9fa;
+      color: #1a365d;
+      transition: border 0.2s;
+    }
+    .booking-form input:focus, .booking-form select:focus {
+      border: 2px solid #d4af37;
+      background: #fff;
+      outline: none;
+    }
+    .booking-form button {
+      background: #d4af37;
+      color: #222;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.1rem;
+      border: none;
+      margin-top: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .booking-form button:hover {
+      background: #bfa13a;
+      color: #fff;
+    }
+    .section {
+      margin: 3.5rem auto 2.5rem auto;
+      max-width: 1200px;
+      padding: 0 1.5rem;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1a1a1a;
+      text-align: center;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+    .footer {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 2.5rem 0 1rem 0;
+      margin-top: 3rem;
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto 1.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .footer-col {
+      min-width: 180px;
+      flex: 1;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .footer-logo img {
+      height: 28px;
+    }
+    .footer-links, .footer-contact {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-links li, .footer-contact li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: #d4af37;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 0.7rem;
+    }
+    .footer-social a {
+      color: #fff;
+      font-size: 1.2rem;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover {
+      color: #d4af37;
+    }
+    .footer-bottom {
+      text-align: center;
+      color: #bbb;
+      font-size: 0.98rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .footer-content { flex-direction: column; gap: 1.5rem; }
+      .header { flex-direction: column; height: auto; padding: 0 10px; }
+      .header .nav { gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .hero { height: 220px; }
+      .hero-content h1 { font-size: 2.5rem; text-align: center; }
+      .section-title { font-size: 1.2rem; }
+      .footer-content { padding: 0 0.5rem; }
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .testimonial-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.10), 0 1.5px 8px rgba(0,0,0,0.07);
+      padding: 2.2rem 2rem 1.5rem 2rem;
+      max-width: 350px;
+      min-width: 260px;
+      flex: 1 1 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid #FFD70022;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .testimonial-card:hover {
+      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.18), 0 2px 12px rgba(0,0,0,0.10);
+      border: 1.5px solid #FFD700;
+    }
+    .testimonial-rating {
+      color: #FFD700;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.13rem;
+      color: #222;
+      margin-bottom: 1.2rem;
+      text-align: center;
+      min-height: 80px;
+    }
+    .testimonial-name {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      color: #bfa13a;
+      font-size: 1.05rem;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .testimonial-card {
+        max-width: 95vw;
+        min-width: 0;
+      }
+    }
+    .gallery-section {
+      background: #fff;
+      padding: 3.5rem 0 2.5rem 0;
+    }
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+      overflow-x: auto;
+    }
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.08), 0 1.5px 8px rgba(0,0,0,0.07);
+      background: #fff;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.18s, border 0.18s, box-shadow 0.18s;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.18s;
+    }
+    .gallery-item:hover {
+      border: 2px solid #FFD700;
+      box-shadow: 0 6px 24px rgba(212, 175, 55, 0.16), 0 2px 12px rgba(0,0,0,0.10);
+      transform: translateY(-4px) scale(1.03);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .gallery-item img {
+        height: 120px;
+      }
+    }
+    @media (max-width: 700px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .gallery-item img {
+        height: 100px;
+      }
+    }
+    @media (max-width: 500px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .gallery-item img {
+        height: 90px;
+      }
+    }
+    .user-dropdown {
+      display: none; /* Hidden by default */
+      position: absolute;
+      top: 70px; /* Position below the header */
+      right: 32px; /* Align to the right */
+      min-width: 240px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+      z-index: 1001;
+      overflow: hidden;
+      font-family: 'Lato', Arial, sans-serif;
+    }
+    .user-dropdown.show {
+      display: block; /* Show when active */
+    }
+    .user-header {
+      background: #000 !important;
+      color: #fff !important;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 0.7rem 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    .user-dropdown ul {
+      list-style: none;
+      margin: 0;
+      padding: 0.7rem 0 0.2rem 0;
+    }
+    .user-dropdown li {
+      margin-bottom: 0.5rem;
+    }
+    .user-dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      color: #222;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .user-dropdown .logout {
+      color: #e60000;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      padding: 0.7rem 0 0.5rem 0;
+    }
+    /* Update .user-dropdown CSS for left alignment */
+    .user-dropdown {
+      left: 32px !important;
+      right: auto !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="profile" title="User Profile" onclick="toggleUserMenu()" style="display:none;">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <nav>
+      <a href="home.html">HOME</a>
+      <a href="about-us.html">ABOUT US</a>
+      <a href="rooms.html">ROOMS</a>
+      <a href="services.html">SERVICES</a>
+      <a href="gallery.html">GALLERY</a>
+      <a href="contact_us.html">CONTACT US</a>
+      <a href="locations.html">LOCATIONS</a>
+    </nav>
+  </header>
+
+  <!-- User Dropdown Menu -->
+  <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1001; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+    <div class="user-header">Hey [User]!</div>
+    <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
+      <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
+      <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+      <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+      <li><a href="my-itinerary.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+      <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+      <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+      <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+      <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+      <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+      <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+    </ul>
+    <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
+  </div>
+
+  <!-- Hero Banner with luxury video background -->
+  <section class="hero">
+    <!-- Luxury video background (with image fallback for mobile) -->
+    <video class="hero-bg-video" autoplay muted loop playsinline poster="images/cover.png" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+      <source src="https://videos.pexels.com/video-files/857195/857195-hd_1920_1080_25fps.mp4" type="video/mp4">
+      <!-- Fallback image for browsers that don't support video -->
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-content">
+      <h1>WELCOME TO THE PEARL VISTA</h1>
+      <div class="hero-btn-group">
+        <button class="hero-btn luxury-btn-filled">Check Availability</button>
+        <button class="hero-btn luxury-btn-outline">Take a Virtual Tour</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- USP/Features Section -->
+  <section class="usp-section" style="background:#fff; padding: 2.5rem 0 2rem 0;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;">
+      <h2 style="text-align:center; font-size:2.1rem; font-weight:700; margin-bottom:0.7rem; color:#1a1a1a;">Why Choose The Pearl Vista?</h2>
+      <div style="text-align:center; color:#888; font-size:1.1rem; margin-bottom:2.2rem;">Experience the difference with our unique blend of luxury, comfort, and world-class hospitality.</div>
+      <div class="usp-features">
+        <div class="usp-card">
+          <i class="fa-solid fa-crown"></i>
+          <h3>Unmatched Luxury</h3>
+          <div>Elegant rooms, suites, and amenities designed for the most discerning guests.</div>
+        </div>
+        <div class="usp-card">
+          <i class="fa-solid fa-utensils"></i>
+          <h3>Gourmet Dining</h3>
+          <div>Award-winning restaurants and bars offering global and local cuisine.</div>
+        </div>
+        <div class="usp-card">
+          <i class="fa-solid fa-spa"></i>
+          <h3>Wellness & Spa</h3>
+          <div>Relax and rejuvenate with our world-class spa, pool, and wellness facilities.</div>
+        </div>
+        <div class="usp-card">
+          <i class="fa-solid fa-location-dot"></i>
+          <h3>Prime Manhattan Location</h3>
+          <div>Stay in the heart of New York, steps from iconic attractions and shopping.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Featured Rooms: Luxury Suites -->
+  <section class="featured-rooms-section">
+    <div class="featured-rooms-container">
+      <h2 class="section-title">Featured Rooms</h2>
+      <div class="featured-rooms-grid">
+        <div class="featured-room-card">
+          <img src="images/Executive_room.jpg" alt="Executive Room" class="featured-room-img">
+          <div class="featured-room-content">
+            <h3>Executive Room</h3>
+            <p>Designed for discerning business travelers, the Executive Room features a plush king bed, ergonomic workspace, and floor-to-ceiling windows with breathtaking city views.</p>
+            <button class="luxury-btn-filled">Book Now</button>
+          </div>
+        </div>
+        <div class="featured-room-card">
+          <img src="images/luxury_suite.jpg" alt="Luxury Suite" class="featured-room-img">
+          <div class="featured-room-content">
+            <h3>Luxury Suite</h3>
+            <p>Our signature suite offers a grand living area, marble bathroom, private lounge, and exclusive butler service for the ultimate indulgence in New York luxury.</p>
+            <button class="luxury-btn-filled">Book Now</button>
+          </div>
+        </div>
+        <div class="featured-room-card">
+          <img src="images/Family_suite.jpg" alt="Family Suite" class="featured-room-img">
+          <div class="featured-room-content">
+            <h3>Family Suite</h3>
+            <p>Perfect for families, this spacious suite includes two bedrooms, a cozy living room, and thoughtful amenities to ensure comfort for guests of all ages.</p>
+            <button class="luxury-btn-filled">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offers: Luxury Packages -->
+  <section class="special-offers-section">
+    <div class="special-offers-container">
+      <h2 class="section-title">Special Offers</h2>
+      <div class="special-offers-grid">
+        <div class="special-offer-card">
+          <div class="special-offer-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
+          <h3>Romance in the City</h3>
+          <p>Enjoy a romantic getaway with champagne on arrival, spa treatments, and a private dinner overlooking the Manhattan skyline.</p>
+          <button class="luxury-btn-outline">View Offer</button>
+        </div>
+        <div class="special-offer-card">
+          <div class="special-offer-icon"><i class="fa-solid fa-spa"></i></div>
+          <h3>Ultimate Spa Retreat</h3>
+          <p>Indulge in a full day of pampering with luxury spa access, signature massages, and wellness amenities for two.</p>
+          <button class="luxury-btn-outline">View Offer</button>
+        </div>
+        <div class="special-offer-card">
+          <div class="special-offer-icon"><i class="fa-solid fa-utensils"></i></div>
+          <h3>Gourmet Escape</h3>
+          <p>Experience fine dining with a curated tasting menu, wine pairings, and a private chef’s table experience.</p>
+          <button class="luxury-btn-outline">View Offer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery: Glimpse Into Our World -->
+  <section class="gallery-section">
+    <div class="gallery-container">
+      <h2 class="section-title">Glimpse Into Our World</h2>
+      <div class="section-subtitle">Discover the elegance, comfort, and unforgettable moments that await you at Pearl Vista.</div>
+      <div class="gallery-grid">
+                        <div class="gallery-item"><img src="images/room.png" alt="Lobby"></div>
+        <div class="gallery-item"><img src="images/pool.png" alt="Pool"></div>
+        <div class="gallery-item"><img src="images/restaurant.png" alt="Restaurant"></div>
+        <div class="gallery-item"><img src="images/lounge.png" alt="Lounge"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials: Customer Reviews Grid -->
+  <section class="testimonials-section">
+    <div class="testimonials-container">
+      <h2 class="section-title">What Our Guests Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+          </div>
+          <p class="testimonial-quote">“Every detail was flawless – from the luxurious suite with breathtaking city views to the spa that felt like pure heaven. The staff made us feel like royalty. Truly unforgettable!”</p>
+          <div class="testimonial-name">— Sophie M.</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+          </div>
+          <p class="testimonial-quote">“Dining at The Pearl Vista was an experience in itself. The views were stunning, the service impeccable, and every dish—from the lobster bisque to the chocolate fondant—was a masterpiece.”</p>
+          <div class="testimonial-name">— Isabella R.</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+          </div>
+          <p class="testimonial-quote">“From the moment we arrived, The Pearl Vista exceeded every expectation. The personalized service, exquisite dining, and breathtaking suite made our anniversary magical.”</p>
+          <div class="testimonial-name">— Alexander P.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col" style="display: flex; justify-content: center; align-items: center;">
+        <div class="footer-logo">
+          <img src="images/logo.png" alt="Pearl Vista Logo"> PEARL VISTA
+        </div>
+      </div>
+      <div class="footer-col">
+        <div style="font-weight:600;margin-bottom:0.7rem;">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact_us.html">Help</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div style="font-weight:600;margin-bottom:0.7rem;">Contact</div>
+        <ul class="footer-contact">
+          <li><i class="fa-solid fa-phone"></i> +1 (212) 555-0123</li>
+          <li><i class="fa-solid fa-envelope"></i> info@pearlvista.com</li>
+          <li><i class="fa-solid fa-location-dot"></i> Manhattan, NY</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div style="font-weight:600;margin-bottom:0.7rem;">Follow Us</div>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 Pearl Vista. All rights reserved.</div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

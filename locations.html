@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locations - Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  
+  <!-- Removed custom <style> block for layout and background -->
+</head>
+<body>
+  <!-- Header (copied from home.html) -->
+  <header class="header">
+    <div class="profile" title="User Profile" onclick="toggleUserMenu()" style="display:none;">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <nav>
+      <a href="home.html">HOME</a>
+      <a href="about-us.html">ABOUT US</a>
+      <a href="rooms.html">ROOMS</a>
+      <a href="services.html">SERVICES</a>
+      <a href="gallery.html">GALLERY</a>
+      <a href="contact_us.html">CONTACT US</a>
+      <a href="locations.html" class="active">LOCATIONS</a>
+    </nav>
+  </header>
+
+  <!-- User Dropdown Menu -->
+  <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+    <div class="user-header">Hey [User]!</div>
+    <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
+      <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
+      <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+      <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+      <li><a href="my-itinerary.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+      <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+      <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+      <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+      <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+      <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+      <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+    </ul>
+    <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
+  </div>
+
+  <!-- Main Section: Locations Grid + Guided Tour Form -->
+  <main>
+    <div class="container" style="margin-top: 2.5rem; margin-bottom: 2rem;">
+      <div class="locations-main" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 2.5rem;">
+        <div class="locations-grid" style="flex: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+          <!-- Location cards (keep image frames as is) -->
+          <div class="location-card">
+            <img src="images/broadway.png" alt="Broadway Theaters">
+            <span>Broadway Theaters</span>
+          </div>
+          <div class="location-card">
+            <img src="images/madame-tussauds.png" alt="Madame Tussaud's New York">
+            <span>Madame Tussaud's New York</span>
+          </div>
+          <div class="location-card">
+            <img src="images/bryant-park.png" alt="Bryant Park">
+            <span>Bryant Park</span>
+          </div>
+          <div class="location-card">
+            <img src="images/rockefeller.png" alt="Rockefeller Center">
+            <span>Rockefeller Center</span>
+          </div>
+          <div class="location-card">
+            <img src="images/empire-state.png" alt="Empire State Building">
+            <span>Empire State Building</span>
+          </div>
+          <div class="location-card">
+            <img src="images/circle-line.png" alt="Circle Line Cruises">
+            <span>Circle Line Cruises</span>
+          </div>
+          <div class="location-card">
+            <img src="images/hersheys.png" alt="Hershey's Chocolate World">
+            <span>Hershey's Chocolate World</span>
+          </div>
+          <div class="location-card">
+            <img src="images/grand-central.png" alt="Grand Central Terminal">
+            <span>Grand Central Terminal</span>
+          </div>
+          <div class="location-card">
+            <img src="images/hells-kitchen.png" alt="Hell's Kitchen">
+            <span>Hell's Kitchen</span>
+          </div>
+        </div>
+        <form class="guided-tour-form" style="max-width: 350px; min-width: 320px; box-shadow: 0 2px 12px rgba(26,34,56,0.10); border-radius: 22px; background: #fff; padding: 2.2rem 2rem 2rem 2rem; display: flex; flex-direction: column; align-items: center;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: #222; margin-bottom: 1.2rem; font-family: 'Playfair Display', serif;">Guided Tour</h2>
+          <input type="text" placeholder="Full Name" required />
+          <input type="email" placeholder="Email" required />
+          <input type="tel" placeholder="Phone No." required />
+          <input type="date" placeholder="Tour Date" required />
+          <select required>
+            <option value="">Places To Visit</option>
+            <option>Broadway Theaters</option>
+            <option>Madame Tussaud's New York</option>
+            <option>Bryant Park</option>
+            <option>Rockefeller Center</option>
+            <option>Empire State Building</option>
+            <option>Circle Line Cruises</option>
+            <option>Hershey's Chocolate World</option>
+            <option>Grand Central Terminal</option>
+            <option>Hell's Kitchen</option>
+          </select>
+          <select required>
+            <option value="">No. Of Travellers</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5+</option>
+          </select>
+          <select required>
+            <option value="">Choose Your Vehicle</option>
+            <option>Car</option>
+            <option>Van</option>
+            <option>Bus</option>
+            <option>Limousine</option>
+          </select>
+          <input type="number" placeholder="Amount To Be Paid" min="0" required />
+          <button type="submit">BOOK NOW</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer (copied from home.html) -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col" style="display: flex; justify-content: center; align-items: center;">
+        <div class="footer-logo">
+          <img src="images/logo.png" alt="Pearl Vista Logo"> PEARL VISTA
+        </div>
+      </div>
+      <div class="footer-col">
+        <div style="font-weight:600;margin-bottom:0.7rem;">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact_us.html">Help</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div style="font-weight:600;margin-bottom:0.7rem;">Contact</div>
+        <ul class="footer-contact">
+          <li><i class="fa-solid fa-phone"></i> +1 (212) 555-0123</li>
+          <li><i class="fa-solid fa-envelope"></i> info@pearlvista.com</li>
+          <li><i class="fa-solid fa-location-dot"></i> Manhattan, NY</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div style="font-weight:600;margin-bottom:0.7rem;">Follow Us</div>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 Pearl Vista. All rights reserved.</div>
+  </footer>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const loggedIn = localStorage.getItem('pv_logged_in') === '1';
+    const username = localStorage.getItem('pv_username') || 'User';
+    const profileIcon = document.querySelector('.profile');
+    const userDropdown = document.getElementById('userDropdown');
+    if (profileIcon && userDropdown) {
+      if (loggedIn) {
+        profileIcon.style.display = 'flex';
+        const userHeader = userDropdown.querySelector('.user-header');
+        if (userHeader) {
+          userHeader.textContent = `Hey ${username}!`;
+        }
+      } else {
+        profileIcon.style.display = 'none';
+        userDropdown.classList.remove('show');
+      }
+    }
+    if (userDropdown) userDropdown.classList.remove('show');
+  });
+  const userIcon = document.querySelector('.profile');
+  if (userIcon) {
+    userIcon.addEventListener('click', function(event) {
+      event.stopPropagation();
+      const userDropdown = document.getElementById('userDropdown');
+      if (userDropdown) {
+        userDropdown.classList.toggle('show');
+      }
+    });
+  }
+  window.onclick = function(event) {
+    const userDropdown = document.getElementById('userDropdown');
+    const userIcon = document.querySelector('.profile');
+    if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
+      userDropdown.classList.remove('show');
+    }
+  };
+  function logout() {
+    localStorage.removeItem('pv_logged_in');
+    localStorage.removeItem('pv_username');
+    window.location.href = 'index.html';
+  }
+  </script>
+</body>
+</html> 

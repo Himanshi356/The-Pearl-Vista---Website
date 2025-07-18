@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Account Recovery - The Pearl Vista" />
+  <title>Account Recovery - The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="images/logo.png" />
+  <style>
+    body, html {
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: var(--background);
+    }
+    .recovery-bg {
+      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .recovery-heading {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.7rem;
+      margin-top: 1.2rem;
+      color: #000;
+    }
+    .recovery-content {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(44, 62, 80, 0.13), 0 1.5px 8px rgba(255,107,107,0.08);
+      padding: 1.1rem 2rem 1.1rem 2rem;
+      margin: 0 auto;
+      text-align: center;
+      border: 1.5px solid #f3d1d1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 410px;
+      width: 100%;
+      min-width: 320px;
+      gap: 0.7rem;
+    }
+    .form-group {
+      width: 100%;
+      margin-bottom: 0.8rem;
+      text-align: left;
+    }
+    .form-group label {
+      font-weight: 700;
+      color: #1a365d;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.08rem;
+    }
+    .input-box, .select-box {
+      width: 100%;
+      height: 44px;
+      font-size: 1.08rem;
+      border-radius: 14px;
+      border: 1.5px solid #e0e0e0;
+      background: #f8f9fa;
+      padding: 0 1rem;
+      color: #1a365d;
+      font-weight: 400;
+      transition: border 0.2s, background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 10px rgba(26,54,93,0.07);
+      outline: none;
+    }
+    .input-box:focus, .select-box:focus {
+      border: 2px solid #1a365d;
+      background: #f3f6ff;
+      box-shadow: 0 4px 18px rgba(26,54,93,0.13);
+    }
+    .btn.primary {
+      width: 100%;
+      margin-top: 0.2rem;
+      font-size: 1.13rem;
+      font-weight: 800;
+      border-radius: 12px;
+      padding: 1rem 0;
+      background: #1a365d;
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(26, 54, 93, 0.18);
+      border: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn.primary:hover {
+      background: #22336a;
+      box-shadow: 0 8px 28px rgba(26, 54, 93, 0.22);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .back-to-login {
+      margin-top: 0.7rem;
+      text-align: center;
+    }
+    .code-feedback {
+      margin-bottom: 0.5rem;
+    }
+    @media (max-width: 600px) {
+      .recovery-content {
+        max-width: 98vw;
+        min-width: unset;
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+      }
+      .recovery-heading {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="recovery-bg">
+    <h2 class="recovery-heading">Account Recovery</h2>
+    <div class="recovery-content">
+      <form id="recoveryForm" autocomplete="off" aria-label="Account Recovery Form">
+        <div class="form-group">
+          <label for="recoveryUsername"><i class="fa-solid fa-user"></i> Username</label>
+          <input type="text" id="recoveryUsername" class="input-box" required aria-label="Username" />
+        </div>
+        <div class="form-group">
+          <label for="recoveryEmail"><i class="fa-solid fa-envelope"></i> Email</label>
+          <input type="email" id="recoveryEmail" class="input-box" required aria-label="Email" />
+        </div>
+        <div class="form-group">
+          <label for="securityQuestion"><i class="fa-solid fa-shield-halved"></i> Security Question</label>
+          <select id="securityQuestion" class="select-box" required aria-label="Security Question">
+            <option value="" disabled selected>Select a security question</option>
+            <option value="pet">What is the name of your first pet?</option>
+            <option value="school">What is the name of your elementary school?</option>
+            <option value="city">In what city were you born?</option>
+            <option value="mother">What is your mother's maiden name?</option>
+            <option value="car">What was your first car?</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="securityAnswer"><i class="fa-solid fa-key"></i> Security Answer</label>
+          <input type="text" id="securityAnswer" class="input-box" required aria-label="Security Answer" />
+        </div>
+        <div id="recoveryFeedback" class="code-feedback"></div>
+        <button class="btn primary" id="recoveryBtn" type="submit">Recover Account</button>
+      </form>
+      <div class="back-to-login">
+        <a href="index.html" aria-label="Back to Login">
+          <i class="fa-solid fa-arrow-left"></i>
+          Back to Login
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('recoveryForm').onsubmit = function(e) {
+      e.preventDefault();
+      const username = document.getElementById('recoveryUsername').value.trim();
+      const email = document.getElementById('recoveryEmail').value.trim();
+      const question = document.getElementById('securityQuestion').value;
+      const answer = document.getElementById('securityAnswer').value.trim();
+      const feedback = document.getElementById('recoveryFeedback');
+      feedback.classList.remove('success', 'error');
+      if (!username || !email || !question || !answer) {
+        feedback.textContent = "Please fill in all fields.";
+        feedback.classList.add('error');
+        return false;
+      }
+      // Simulate success
+      feedback.textContent = "Account recovery details submitted! (Simulated)";
+      feedback.classList.add('success');
+      setTimeout(() => {
+        window.location.href = 'confirm-password.html';
+      }, 1200);
+      return false;
+    };
+  </script>
+</body>
+</html> 
