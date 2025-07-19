@@ -1,608 +1,731 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Explore The Pearl Vista's stunning gallery - luxury hotel rooms, amenities, and virtual tours" />
-    <meta name="keywords" content="gallery, hotel photos, virtual tour, pearl vista, luxury hotel" />
-    <title>Gallery - The Pearl Vista</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="images/logo.png" />
-    <style>
-      body, html {
-        background: #f7f8fa !important;
-        color: #1a2238 !important;
-        font-family: 'Lato', Arial, sans-serif !important;
-      }
-      .gallery-hero {
-        background: linear-gradient(120deg, #181f36 60%, #232946 100%);
-        color: #fff;
-        position: relative;
-        min-height: 320px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-      }
-      .gallery-hero .hero-overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(26,34,56,0.7);
-        z-index: 1;
-      }
-      .gallery-hero .hero-content {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        color: #fff;
-        padding: 2.5rem 1rem 2rem 1rem;
-      }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Explore The Pearl Vista's stunning gallery - luxury hotel rooms, amenities, and virtual tours" />
+  <meta name="keywords" content="gallery, hotel photos, virtual tour, pearl vista, luxury hotel" />
+  <title>Gallery - The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="images/logo.png" />
+  <style>
+    body,
+    html {
+      background: #f7f8fa !important;
+      color: #1a2238 !important;
+      font-family: 'Lato', Arial, sans-serif !important;
+    }
+
+    .gallery-hero {
+      background: linear-gradient(120deg, #181f36 60%, #232946 100%);
+      color: #fff;
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .gallery-hero .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 34, 56, 0.7);
+      z-index: 1;
+    }
+
+    .gallery-hero .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      padding: 2.5rem 1rem 2rem 1rem;
+    }
+
+    .gallery-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .gallery-hero .hero-subtitle {
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+
+    .gallery-hero .hero-features {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .gallery-hero .feature-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #FFD700;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .gallery-hero .feature-item i {
+      font-size: 1.7rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .virtual-tour-section,
+    .gallery-categories {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(26, 34, 56, 0.08);
+      margin: 2.5rem auto 2.5rem auto;
+      max-width: 1200px;
+      padding: 2.5rem 2rem 2.5rem 2rem;
+    }
+
+    .virtual-tour-section h2,
+    .gallery-categories h2 {
+      font-family: 'Playfair Display', serif;
+      color: #1a2238;
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+
+    .virtual-tour-section p,
+    .gallery-categories p {
+      color: #444;
+      font-size: 1.08rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .gallery-categories .section-header {
+      text-align: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .gallery-card {
+      background: #f8f9fa;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(26, 34, 56, 0.07);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.18s, transform 0.18s;
+      display: flex;
+      flex-direction: column;
+      min-height: 340px;
+    }
+
+    .gallery-card:hover {
+      box-shadow: 0 8px 32px rgba(26, 34, 56, 0.16);
+      transform: translateY(-6px) scale(1.03);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+    }
+
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 34, 56, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.18s;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+    }
+
+    .gallery-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-overlay i {
+      color: #FFD700;
+      font-size: 2.2rem;
+    }
+
+    .card-content {
+      padding: 1.2rem 1rem 1rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .card-content h3 {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #1a2238;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-content p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .photo-count {
+      color: #FFD700;
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-top: auto;
+    }
+
+    .virtual-tour-section .tour-content {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .virtual-tour-section .tour-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .virtual-tour-section .tour-features {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .virtual-tour-section .tour-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #FFD700;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .virtual-tour-section .tour-feature i {
+      font-size: 1.3rem;
+    }
+
+    .virtual-tour-section .tour-preview {
+      position: relative;
+      width: 100%;
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .virtual-tour-section .preview-container {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(26, 34, 56, 0.10);
+    }
+
+    .virtual-tour-section .preview-container img,
+    .virtual-tour-section .preview-container video {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      transition: opacity 0.3s;
+    }
+
+    .virtual-tour-section .play-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(26, 34, 56, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.18s;
+      border-radius: 14px;
+    }
+
+    .virtual-tour-section .preview-container:hover .play-overlay {
+      opacity: 1;
+    }
+
+    .virtual-tour-section .play-overlay i {
+      color: #FFD700;
+      font-size: 3.2rem;
+    }
+
+    @media (max-width: 900px) {
       .gallery-hero h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: 3.2rem;
-        font-weight: 700;
-        letter-spacing: 2px;
-        color: #fff;
-        margin-bottom: 0.2rem;
-      }
-      .gallery-hero .hero-subtitle {
-        font-size: 1.25rem;
-        color: #fff;
-        margin-bottom: 1.2rem;
-      }
-      .gallery-hero .hero-features {
-        display: flex;
-        justify-content: center;
-        gap: 2.5rem;
-        margin-top: 1.5rem;
-      }
-      .gallery-hero .feature-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #FFD700;
-        font-size: 1.1rem;
-        font-weight: 600;
-      }
-      .gallery-hero .feature-item i {
-        font-size: 1.7rem;
-        margin-bottom: 0.3rem;
-      }
-      .virtual-tour-section, .gallery-categories {
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 4px 24px rgba(26,34,56,0.08);
-        margin: 2.5rem auto 2.5rem auto;
-        max-width: 1200px;
-        padding: 2.5rem 2rem 2.5rem 2rem;
-      }
-      .virtual-tour-section h2, .gallery-categories h2 {
-        font-family: 'Playfair Display', serif;
-        color: #1a2238;
         font-size: 2.1rem;
-        font-weight: 700;
-        margin-bottom: 0.7rem;
       }
-      .virtual-tour-section p, .gallery-categories p {
-        color: #444;
-        font-size: 1.08rem;
-        margin-bottom: 1.2rem;
+
+      .gallery-hero .hero-features {
+        gap: 1.2rem;
       }
-      .gallery-categories .section-header {
-        text-align: center;
-        margin-bottom: 2.2rem;
+
+      .virtual-tour-section,
+      .gallery-categories {
+        padding: 1.2rem 0.5rem;
       }
+
       .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 2rem;
-        margin-top: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
       }
-      .gallery-card {
-        background: #f8f9fa;
-        border-radius: 14px;
-        box-shadow: 0 2px 12px rgba(26,34,56,0.07);
-        overflow: hidden;
-        cursor: pointer;
-        transition: box-shadow 0.18s, transform 0.18s;
-        display: flex;
-        flex-direction: column;
-        min-height: 340px;
-      }
-      .gallery-card:hover {
-        box-shadow: 0 8px 32px rgba(26,34,56,0.16);
-        transform: translateY(-6px) scale(1.03);
-      }
-      .card-image {
-        width: 100%;
-        height: 180px;
-        overflow: hidden;
-        position: relative;
-      }
-      .card-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-top-left-radius: 14px;
-        border-top-right-radius: 14px;
-      }
-      .card-overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(26,34,56,0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.18s;
-        border-top-left-radius: 14px;
-        border-top-right-radius: 14px;
-      }
-      .gallery-card:hover .card-overlay {
-        opacity: 1;
-      }
-      .card-overlay i {
-        color: #FFD700;
-        font-size: 2.2rem;
-      }
-      .card-content {
-        padding: 1.2rem 1rem 1rem 1rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-      }
-      .card-content h3 {
-        font-size: 1.18rem;
-        font-weight: 700;
-        color: #1a2238;
-        margin-bottom: 0.4rem;
-      }
-      .card-content p {
-        color: #555;
-        font-size: 1rem;
-        margin-bottom: 0.7rem;
-      }
-      .photo-count {
-        color: #FFD700;
-        font-size: 0.98rem;
-        font-weight: 600;
-        margin-top: auto;
-      }
+
       .virtual-tour-section .tour-content {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 2.5rem;
-        align-items: center;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
       }
-      .virtual-tour-section .tour-text {
-        display: flex;
-        flex-direction: column;
-        gap: 1.1rem;
-      }
-      .virtual-tour-section .tour-features {
-        display: flex;
-        gap: 1.5rem;
-        margin-bottom: 1.2rem;
-      }
-      .virtual-tour-section .tour-feature {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #FFD700;
-        font-weight: 600;
-        font-size: 1.05rem;
-      }
-      .virtual-tour-section .tour-feature i {
-        font-size: 1.3rem;
-      }
-      .virtual-tour-section .tour-preview {
-        position: relative;
-        width: 100%;
-        min-height: 220px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .virtual-tour-section .preview-container {
-        position: relative;
-        width: 100%;
-        max-width: 420px;
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 2px 12px rgba(26,34,56,0.10);
-      }
-      .virtual-tour-section .preview-container img,
-      .virtual-tour-section .preview-container video {
-        width: 100%;
-        height: 260px;
-        object-fit: cover;
-        border-radius: 14px;
-        display: block;
-        transition: opacity 0.3s;
-      }
-      .virtual-tour-section .play-overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(26,34,56,0.18);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        opacity: 0;
-        transition: opacity 0.18s;
-        border-radius: 14px;
-      }
-      .virtual-tour-section .preview-container:hover .play-overlay {
-        opacity: 1;
-      }
-      .virtual-tour-section .play-overlay i {
-        color: #FFD700;
-        font-size: 3.2rem;
-      }
-      @media (max-width: 900px) {
-        .gallery-hero h1 { font-size: 2.1rem; }
-        .gallery-hero .hero-features { gap: 1.2rem; }
-        .virtual-tour-section, .gallery-categories { padding: 1.2rem 0.5rem; }
-        .gallery-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-        .virtual-tour-section .tour-content { grid-template-columns: 1fr; gap: 1.2rem; }
-      }
-    </style>
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <header class="header">
-        <div class="profile" title="User Profile" onclick="toggleUserMenu()" style="display:none;">
-            <i class="fa-solid fa-user"></i>
-        </div>
-        <nav>
-            <a href="home.html">HOME</a>
-            <a href="about-us.html">ABOUT US</a>
-            <a href="rooms.html">ROOMS</a>
-            <a href="services.html">SERVICES</a>
-            <a href="gallery.html" class="active">GALLERY</a>
-            <a href="contact_us.html">CONTACT US</a>
-            <a href="locations.html">LOCATIONS</a>
-        </nav>
-    </header>
-
-    <!-- User Dropdown Menu -->
-    <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1001; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
-        <div class="user-header">Hey [User]!</div>
-        <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
-            <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
-            <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
-            <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
-            <li><a href="my-itinerary.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
-            <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
-            <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
-            <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
-            <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
-            <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
-            <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
-        </ul>
-        <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
+  <!-- Navbar -->
+  <header class="header">
+    <div class="profile" title="User Profile" onclick="toggleUserMenu()" style="display:none;">
+      <i class="fa-solid fa-user"></i>
     </div>
+    <nav>
+      <a href="home.html">HOME</a>
+      <a href="about-us.html">ABOUT US</a>
+      <a href="rooms.html">ROOMS</a>
+      <a href="services.html">SERVICES</a>
+      <a href="gallery.html" class="active">GALLERY</a>
+      <a href="contact_us.html">CONTACT US</a>
+      <a href="locations.html">LOCATIONS</a>
+    </nav>
+  </header>
 
-    <style>
-        .user-header {
-            background: #000 !important;
-            color: #fff !important;
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            padding: 0.7rem 0;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-        }
-        .user-dropdown {
-            left: 32px !important;
-            right: auto !important;
-        }
-    </style>
+  <!-- User Dropdown Menu -->
+  <div id="userDropdown" class="user-dropdown"
+    style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1001; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+    <div class="user-header">Hey [User]!</div>
+    <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
+      <li><a href="user-info.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
+      <li><a href="my-bookings.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+      <li><a href="my-wishlist.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+      <li><a href="my-itinerary.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+      <li><a href="rewards.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+      <li><a href="privacy-policy.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+      <li><a href="language.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+      <li><a href="contact_us.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+      <li><a href="settings.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+      <li><a href="share.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+            class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+    </ul>
+    <div class="logout"
+      style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;"
+      onclick="logout()">Logout</div>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loggedIn = localStorage.getItem('pv_logged_in') === '1';
-            const username = localStorage.getItem('pv_username') || 'User';
-            const profileIcon = document.querySelector('.profile');
-            const userDropdown = document.getElementById('userDropdown');
-            if (profileIcon && userDropdown) {
-                if (loggedIn) {
-                    profileIcon.style.display = 'flex';
-                    const userHeader = userDropdown.querySelector('.user-header');
-                    if (userHeader) {
-                        userHeader.textContent = `Hey ${username}!`;
-                    }
-                } else {
-                    profileIcon.style.display = 'none';
-                    userDropdown.classList.remove('show');
-                }
-            }
-            if (userDropdown) userDropdown.classList.remove('show');
-        });
-        const userIcon = document.querySelector('.profile');
-        if (userIcon) {
-            userIcon.addEventListener('click', function(event) {
-                event.stopPropagation();
-                      const userDropdown = document.getElementById('userDropdown');
-      if (userDropdown) {
-        userDropdown.classList.toggle('show');
-      }
-            });
-        }
-        window.onclick = function(event) {
-            const userDropdown = document.getElementById('userDropdown');
-            const userIcon = document.querySelector('.profile');
-                if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
-      userDropdown.classList.remove('show');
+  <style>
+    .user-header {
+      background: #000 !important;
+      color: #fff !important;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 0.7rem 0;
+      border-radius: 0 !important;
+      box-shadow: none !important;
     }
-        };
-        function logout() {
-            localStorage.removeItem('pv_logged_in');
-            localStorage.removeItem('pv_username');
-            window.location.href = 'index.html';
+
+    .user-dropdown {
+      left: 32px !important;
+      right: auto !important;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const loggedIn = localStorage.getItem('pv_logged_in') === '1';
+      const username = localStorage.getItem('pv_username') || 'User';
+      const profileIcon = document.querySelector('.profile');
+      const userDropdown = document.getElementById('userDropdown');
+      if (profileIcon && userDropdown) {
+        if (loggedIn) {
+          profileIcon.style.display = 'flex';
+          const userHeader = userDropdown.querySelector('.user-header');
+          if (userHeader) {
+            userHeader.textContent = `Hey ${username}!`;
+          }
+        } else {
+          profileIcon.style.display = 'none';
+          userDropdown.classList.remove('show');
         }
-    </script>
+      }
+      if (userDropdown) userDropdown.classList.remove('show');
+    });
+    const userIcon = document.querySelector('.profile');
+    if (userIcon) {
+      userIcon.addEventListener('click', function (event) {
+        event.stopPropagation();
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown) {
+          userDropdown.classList.toggle('show');
+        }
+      });
+    }
+    window.onclick = function (event) {
+      const userDropdown = document.getElementById('userDropdown');
+      const userIcon = document.querySelector('.profile');
+      if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
+        userDropdown.classList.remove('show');
+      }
+    };
+    function logout() {
+      localStorage.removeItem('pv_logged_in');
+      localStorage.removeItem('pv_username');
+      window.location.href = 'index.html';
+    }
+  </script>
 
-    <!-- Hero Section -->
-    <section class="gallery-hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>GALLERY</h1>
-            <p class="hero-subtitle">Discover The Pearl Vista in stunning detail</p>
-            
+  <!-- Hero Section -->
+  <section class="gallery-hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>GALLERY</h1>
+      <p class="hero-subtitle">Discover The Pearl Vista in stunning detail</p>
+      <div class="gallery-banner-stats" style="display: flex; justify-content: center; gap: 4rem; margin-top: 2.2rem;">
+        <div style="text-align: center;">
+          <span style="color: #FFD700; font-size: 2.7rem; font-weight: 700; display: block;">300+</span>
+          <span style="color: #fff; font-size: 1.08rem; font-weight: 600; letter-spacing: 1px;">Photos</span>
         </div>
-    </section>
+        <div style="text-align: center;">
+          <span style="color: #FFD700; font-size: 2.7rem; font-weight: 700; display: block;">6</span>
+          <span style="color: #fff; font-size: 1.08rem; font-weight: 600; letter-spacing: 1px;">categories</span>
+        </div>
+        <div style="text-align: center;">
+          <span style="color: #FFD700; font-size: 2.7rem; font-weight: 700; display: block;">360&deg;</span>
+          <span style="color: #fff; font-size: 1.08rem; font-weight: 600; letter-spacing: 1px;">View</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Virtual Tour Section -->
-    <section class="virtual-tour-section">
-        <div class="container">
-            <div class="tour-content">
-                <div class="tour-text">
-                    <h2>Experience Our Hotel in 360°</h2>
-                    <p>Take an immersive virtual tour of The Pearl Vista and explore our luxury amenities, elegant rooms, and stunning facilities from the comfort of your home.</p>
-                    <div class="tour-features">
-                        <div class="tour-feature">
-                            <i class="fas fa-play-circle"></i>
-                            <span>Interactive Tours</span>
-                        </div>
-                        <div class="tour-feature">
-                            <i class="fas fa-mobile-alt"></i>
-                            <span>Mobile Compatible</span>
-                        </div>
-                        <div class="tour-feature">
-                            <i class="fas fa-globe"></i>
-                            <span>HD Quality</span>
-                        </div>
-                    </div>
-                    <button class="btn signup" onclick="startVirtualTour()">
-                        <i class="fas fa-play"></i> Start Virtual Tour
-                    </button>
-                </div>
-                <div class="tour-preview">
-                    <div class="preview-container">
-                        <img id="heroImage" src="images/video_cover.png" alt="Hotel exterior view" loading="lazy">
-                        <video id="heroVideo" controls preload="metadata" style="display: none; opacity: 0;">
-                <source src="Videos/hotel_tour.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
+  <!-- Virtual Tour Section -->
+  <section class="virtual-tour-section">
+    <div class="container">
+      <div class="tour-content">
+        <div class="tour-text">
+          <h2>Experience Our Hotel in 360°</h2>
+          <p>Take an immersive virtual tour of The Pearl Vista and explore our luxury amenities, elegant rooms, and
+            stunning facilities from the comfort of your home.</p>
+          <div class="tour-features">
+            <div class="tour-feature">
+              <i class="fas fa-play-circle"></i>
+              <span>Interactive Tours</span>
+            </div>
+            <div class="tour-feature">
+              <i class="fas fa-mobile-alt"></i>
+              <span>Mobile Compatible</span>
+            </div>
+            <div class="tour-feature">
+              <i class="fas fa-globe"></i>
+              <span>HD Quality</span>
+            </div>
+          </div>
+          <button class="btn signup" onclick="startVirtualTour()">
+            <i class="fas fa-play"></i> Start Virtual Tour
+          </button>
+        </div>
+        <div class="tour-preview">
+          <div class="preview-container">
+            <img id="heroImage" src="images/video_cover.png" alt="Hotel exterior view" loading="lazy">
+            <video id="heroVideo" controls preload="metadata" style="display: none; opacity: 0;">
+              <source src="Videos/hotel_tour.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
             </video>
 
-                    </div>
-                </div>
-        </div>
-        </div>
-    </section>
-
-    <!-- Gallery Categories -->
-    <section class="gallery-categories">
-        <div class="container">
-            <div class="section-header">
-                <h2>Explore Our Gallery</h2>
-                <p>Browse through our stunning photo collections and discover every corner of The Pearl Vista</p>
-            </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-card" onclick="showGalleryCategory('lobby')">
-                    <div class="card-image">
-                        <img src="images/reception.png" alt="Hotel lobby interior" loading="lazy">
-                        <div class="card-overlay">
-                            <i class="fas fa-images"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Lobby & Reception</h3>
-                        <p>Elegant entrance and welcoming reception area</p>
-                        <span class="photo-count">12 Photos</span>
-                    </div>
-                </div>
-
-                <div class="gallery-card" onclick="showGalleryCategory('rooms')">
-                    <div class="card-image">
-                        <img src="images/room.png" alt="Hotel room interior" loading="lazy">
-                        <div class="card-overlay">
-                            <i class="fas fa-images"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Rooms & Suites</h3>
-                        <p>Luxury accommodations with premium amenities</p>
-                        <span class="photo-count">24 Photos</span>
-                    </div>
-                </div>
-
-                <div class="gallery-card" onclick="showGalleryCategory('dining')">
-                    <div class="card-image">
-                        <img src="images/restaurant.png" alt="Hotel restaurant interior" loading="lazy">
-                        <div class="card-overlay">
-                            <i class="fas fa-images"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Dining & Culinary</h3>
-                        <p>World-class restaurants and dining experiences</p>
-                        <span class="photo-count">18 Photos</span>
-                    </div>
-                </div>
-
-                <div class="gallery-card" onclick="showGalleryCategory('wellness')">
-                    <div class="card-image">
-                        <img src="images/spa.png" alt="Hotel spa and wellness center" loading="lazy">
-                        <div class="card-overlay">
-                            <i class="fas fa-images"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Wellness & Spa</h3>
-                        <p>Relaxing spa treatments and fitness facilities</p>
-                        <span class="photo-count">15 Photos</span>
-                    </div>
-                </div>
-
-                <div class="gallery-card" onclick="showGalleryCategory('leisure')">
-                    <div class="card-image">
-                        <img src="images/pool.png" alt="Swimming pool at sunset" loading="lazy">
-                        <div class="card-overlay">
-                            <i class="fas fa-images"></i>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Leisure & Recreation</h3>
-                        <p>Swimming pools, fitness center, and activities</p>
-                        <span class="photo-count">20 Photos</span>
-                    </div>
-                </div>
-
-                <div class="gallery-card" onclick="showGalleryCategory('events')">
-                    <div class="card-image">
-                        <img src="images/Event_hall.png" alt="Hotel lounge area" loading="lazy">
-                        <div class="card-overlay">
-                            <i class="fas fa-images"></i>
-        </div>
-        </div>
-                    <div class="card-content">
-                        <h3>Events & Meetings</h3>
-                        <p>Conference rooms and event spaces</p>
-                        <span class="photo-count">16 Photos</span>
-        </div>
-        </div>
-        </div>
-        </div>
-    </section>
-
-    <!-- Gallery Modal -->
-    <div id="galleryModal" class="gallery-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">Gallery</h2>
-                <span class="close-modal" onclick="closeGalleryModal()">
-                    <i class="fas fa-times"></i>
-                </span>
-            </div>
-            <div id="modalContent" class="modal-body">
-                <!-- Content will be dynamically loaded -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer style="background:#181818; color:#fff; padding:40px 0 0 0; margin-top:48px;">
-      <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; padding:0 32px;">
-        <div style="flex:1 1 180px; min-width:180px; display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
-          <img src="images/logo.png" alt="Pearl Vista Logo" style="height:32px; margin-bottom:8px;">
-          <div style="font-size:2rem; font-family:'Playfair Display',serif; font-weight:700; color:#fff;">PEARL<br>VISTA</div>
-        </div>
-        <div style="flex:1 1 180px; min-width:180px;">
-          <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1em;">Quick Links</div>
-          <ul style="list-style:none; padding:0; margin:0; line-height:2;">
-            <li><a href="home.html" style="color:#fff; text-decoration:none;">Home</a></li>
-            <li><a href="reviews.html" style="color:#fff; text-decoration:none;">Reviews</a></li>
-            <li><a href="gallery.html" style="color:#fff; text-decoration:none;">Gallery</a></li>
-            <li><a href="contact_us.html" style="color:#fff; text-decoration:none;">Help</a></li>
-            <li><a href="privacy-policy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
-          </ul>
-        </div>
-        <div style="flex:1 1 220px; min-width:220px;">
-          <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Contact</div>
-          <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212) 555-0123</div>
-          <div style="margin-bottom:8px;"><i class="fa fa-envelope" style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
-          <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
-        </div>
-        <div style="flex:1 1 180px; min-width:180px;">
-          <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Follow Us</div>
-          <div style="display:flex; gap:16px;">
-            <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-facebook"></i></a>
-            <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-instagram"></i></a>
-            <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-twitter"></i></a>
-            <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
       </div>
-      <div style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px;">©2025 Pearl Vista. All rights reserved.</div>
-    </footer>
+    </div>
+  </section>
 
-    <script src="main.js"></script>
-    <script>
-        // Gallery page specific functionality
-        const image = document.getElementById('heroImage');
-        const video = document.getElementById('heroVideo');
+  <!-- Gallery Categories -->
+  <section class="gallery-categories">
+    <div class="container">
+      <div class="section-header">
+        <h2>Explore Our Gallery</h2>
+        <p>Browse through our stunning photo collections and discover every corner of The Pearl Vista</p>
+      </div>
 
-        function startVirtualTour() {
-            // Fade out the image
-            image.style.opacity = '0';
+      <div class="gallery-grid">
+        <div class="gallery-card" onclick="showGalleryCategory('lobby')">
+          <div class="card-image">
+            <img src="images/reception.png" alt="Hotel lobby interior" loading="lazy">
+            <div class="card-overlay">
+              <i class="fas fa-images"></i>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Lobby & Reception</h3>
+            <p>Elegant entrance and welcoming reception area</p>
+            <span class="photo-count">12 Photos</span>
+          </div>
+        </div>
 
-            setTimeout(() => {
-                image.style.display = 'none';
-                video.style.display = 'block';
-                
-                setTimeout(() => {
-                    video.style.opacity = '1';
-                    video.play();
-                }, 300);
-            }, 300);
-        }
+        <div class="gallery-card" onclick="showGalleryCategory('rooms')">
+          <div class="card-image">
+            <img src="images/room.png" alt="Hotel room interior" loading="lazy">
+            <div class="card-overlay">
+              <i class="fas fa-images"></i>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Rooms & Suites</h3>
+            <p>Luxury accommodations with premium amenities</p>
+            <span class="photo-count">24 Photos</span>
+          </div>
+        </div>
 
-        // When video ends, fade it out and show image
-        video.addEventListener('ended', () => {
-            video.style.opacity = '0';
+        <div class="gallery-card" onclick="showGalleryCategory('dining')">
+          <div class="card-image">
+            <img src="images/restaurant.png" alt="Hotel restaurant interior" loading="lazy">
+            <div class="card-overlay">
+              <i class="fas fa-images"></i>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Dining & Culinary</h3>
+            <p>World-class restaurants and dining experiences</p>
+            <span class="photo-count">18 Photos</span>
+          </div>
+        </div>
 
-            setTimeout(() => {
-                video.style.display = 'none';
-                image.style.display = 'block';
+        <div class="gallery-card" onclick="showGalleryCategory('wellness')">
+          <div class="card-image">
+            <img src="images/spa.png" alt="Hotel spa and wellness center" loading="lazy">
+            <div class="card-overlay">
+              <i class="fas fa-images"></i>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Wellness & Spa</h3>
+            <p>Relaxing spa treatments and fitness facilities</p>
+            <span class="photo-count">15 Photos</span>
+          </div>
+        </div>
 
-                setTimeout(() => {
-                    image.style.opacity = '1';
-                }, 300);
-            }, 300);
-        });
+        <div class="gallery-card" onclick="showGalleryCategory('leisure')">
+          <div class="card-image">
+            <img src="images/pool.png" alt="Swimming pool at sunset" loading="lazy">
+            <div class="card-overlay">
+              <i class="fas fa-images"></i>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Leisure & Recreation</h3>
+            <p>Swimming pools, fitness center, and activities</p>
+            <span class="photo-count">20 Photos</span>
+          </div>
+        </div>
 
-        function showGalleryCategory(category) {
-            const modal = document.getElementById('galleryModal');
-            const modalContent = document.getElementById('modalContent');
-            const modalTitle = document.getElementById('modalTitle');
-            
-            // Set modal title
-            const titles = {
-                'lobby': 'Lobby & Reception',
-                'rooms': 'Rooms & Suites',
-                'dining': 'Dining & Culinary',
-                'wellness': 'Wellness & Spa',
-                'leisure': 'Leisure & Recreation',
-                'events': 'Events & Meetings'
-            };
-            
-            modalTitle.textContent = titles[category] || category.charAt(0).toUpperCase() + category.slice(1);
-            
-            // Load content based on category
-            let content = '';
-            switch(category) {
-                case 'lobby':
-                    content = `
+        <div class="gallery-card" onclick="showGalleryCategory('events')">
+          <div class="card-image">
+            <img src="images/Event_hall.png" alt="Hotel lounge area" loading="lazy">
+            <div class="card-overlay">
+              <i class="fas fa-images"></i>
+            </div>
+          </div>
+          <div class="card-content">
+            <h3>Events & Meetings</h3>
+            <p>Conference rooms and event spaces</p>
+            <span class="photo-count">16 Photos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer"
+    style="background:#1a1a1a; color:#fff; padding:0; margin-top:48px; border-top:4px solid #FFD700;">
+    <div style="padding:48px 0 0 0;">
+    <div class="footer-content"
+      style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+      <div class="footer-col"
+        style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+        <img src="images/logo.png" alt="Pearl Vista Logo"
+          style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
+      </div>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Quick
+          Links</div>
+        <ul style="list-style:none; padding:0; margin:0; line-height:2;">
+          <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a></li>
+          <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+          <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+          <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+          <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy
+              Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+          Contact</div>
+        <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212)
+          555-0123</div>
+        <div style="margin-bottom:8px;"><i class="fa fa-envelope"
+            style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
+        <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
+      </div>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Follow
+          Us</div>
+        <div style="display:flex; gap:18px; justify-content:flex-start;">
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+              class="fab fa-facebook"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+              class="fab fa-instagram"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"
+      style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">
+      © 2025 Pearl Vista. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Gallery Modal -->
+  <div id="galleryModal" class="gallery-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Gallery</h2>
+        <span class="close-modal" onclick="closeGalleryModal()">
+          <i class="fas fa-times"></i>
+        </span>
+      </div>
+      <div id="modalContent" class="modal-body">
+        <!-- Content will be dynamically loaded -->
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="main.js"></script>
+  <script>
+    // Gallery page specific functionality
+    const image = document.getElementById('heroImage');
+    const video = document.getElementById('heroVideo');
+
+    function startVirtualTour() {
+      // Fade out the image
+      image.style.opacity = '0';
+
+      setTimeout(() => {
+        image.style.display = 'none';
+        video.style.display = 'block';
+
+        setTimeout(() => {
+          video.style.opacity = '1';
+          video.play();
+        }, 300);
+      }, 300);
+    }
+
+    // When video ends, fade it out and show image
+    video.addEventListener('ended', () => {
+      video.style.opacity = '0';
+
+      setTimeout(() => {
+        video.style.display = 'none';
+        image.style.display = 'block';
+
+        setTimeout(() => {
+          image.style.opacity = '1';
+        }, 300);
+      }, 300);
+    });
+
+    function showGalleryCategory(category) {
+      const modal = document.getElementById('galleryModal');
+      const modalContent = document.getElementById('modalContent');
+      const modalTitle = document.getElementById('modalTitle');
+
+      // Set modal title
+      const titles = {
+        'lobby': 'Lobby & Reception',
+        'rooms': 'Rooms & Suites',
+        'dining': 'Dining & Culinary',
+        'wellness': 'Wellness & Spa',
+        'leisure': 'Leisure & Recreation',
+        'events': 'Events & Meetings'
+      };
+
+      modalTitle.textContent = titles[category] || category.charAt(0).toUpperCase() + category.slice(1);
+
+      // Load content based on category
+      let content = '';
+      switch (category) {
+        case 'lobby':
+          content = `
                         <div class="gallery-grid-modal">
                             <img src="images/lobby.png" alt="Lobby view" onclick="openLightbox(this.src)">
                             <img src="images/reception.png" alt="Reception area" onclick="openLightbox(this.src)">
@@ -610,9 +733,9 @@
                             <img src="images/hotel-view.png" alt="Hotel exterior" onclick="openLightbox(this.src)">
                         </div>
                     `;
-                    break;
-                case 'rooms':
-                    content = `
+          break;
+        case 'rooms':
+          content = `
                         <div class="gallery-grid-modal">
                             <img src="images/room.png" alt="Standard room" onclick="openLightbox(this.src)">
                             <img src="images/deluxe-room.png" alt="Deluxe room" onclick="openLightbox(this.src)">
@@ -622,29 +745,30 @@
                             <img src="images/premium-room.png" alt="Premium room" onclick="openLightbox(this.src)">
                         </div>
                     `;
-                    break;
-                case 'dining':
-                    content = `
+          break;
+        case 'dining':
+          content = `
                         <div class="gallery-grid-modal">
                             <img src="images/restaurant.png" alt="Restaurant" onclick="openLightbox(this.src)">
                             <img src="images/dining.png" alt="Dining area" onclick="openLightbox(this.src)">
                             <img src="images/lounge.png" alt="Lounge bar" onclick="openLightbox(this.src)">
                         </div>
                     `;
-                    break;
-                case 'wellness':
-                    content = `
+          break;
+        case 'wellness':
+          content = `
                         <div class="gallery-grid-modal">
                             <img src="images/spa.png" alt="Spa area" onclick="openLightbox(this.src)">
                             <img src="images/pool.png" alt="Swimming pool" onclick="openLightbox(this.src)">
                             <img src="images/spa.png" alt="Wellness center" onclick="openLightbox(this.src)">
                         </div>
                     `;
-                    break;
-            }
-            modalContent.innerHTML = content;
-            modal.style.display = 'block';
-        }
-    </script>
+          break;
+      }
+      modalContent.innerHTML = content;
+      modal.style.display = 'block';
+    }
+  </script>
 </body>
+
 </html>

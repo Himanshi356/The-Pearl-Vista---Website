@@ -83,10 +83,45 @@
         <h1 style="color: #fff;">Our Services</h1>
         <p style="color: #fff; font-size: 1.18rem; margin-top: 0.5rem; font-weight: 500;">Experience luxury beyond accommodation with our premium services.</p>
       </div>
+      <div class="mini-services-overview" style="background: transparent !important; border-bottom: none; margin-bottom: 0; padding: 2.2rem 0 0 0;">
+        <div class="mini-service-cards-row">
+          <div class="mini-service-card">
+            <i class="fa fa-utensils"></i>
+            <span>Dining</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-spa"></i>
+            <span>Spa</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-swimming-pool"></i>
+            <span>Leisure</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-calendar-alt"></i>
+            <span>Events</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-concierge-bell"></i>
+            <span>Concierge</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-child"></i>
+            <span>Kids</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-gift"></i>
+            <span>Packages</span>
+          </div>
+          <div class="mini-service-card">
+            <i class="fa fa-paw"></i>
+            <span>Pet Services</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Mini Services Overview Section -->
   <style>
     .mini-services-overview {
       background: #111 !important;
@@ -94,19 +129,32 @@
       margin-bottom: 2.5rem;
       border-bottom: 1px solid #222;
     }
+    .mini-services-overview .mini-service-cards-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0.7rem;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      width: 100%;
+      padding-bottom: 0.5rem;
+    }
     .mini-services-overview .mini-service-card {
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(26,34,56,0.06);
-      padding: 1.1rem 0.5rem;
+      padding: 0.7rem 0.2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.4rem;
-      min-width: 100px;
+      gap: 0.3rem;
+      min-width: 70px;
+      max-width: 90px;
+      width: 100%;
       transition: box-shadow 0.18s, transform 0.18s;
       border: 1px solid #f2f2f2;
       cursor: pointer;
+      flex: 1 1 70px;
     }
     .mini-services-overview .mini-service-card:hover {
       box-shadow: 0 6px 24px rgba(26,34,56,0.18);
@@ -119,59 +167,17 @@
     }
     .mini-services-overview .mini-service-card i {
       color: #FFD700;
-      font-size: 1.45rem;
+      font-size: 1.1rem;
       transition: color 0.18s;
     }
     .mini-services-overview .mini-service-card span {
       font-weight: 600;
       color: #1a2238;
-      font-size: 1rem;
+      font-size: 0.85rem;
       letter-spacing: 0.01em;
       transition: color 0.18s;
     }
   </style>
-  <section class="mini-services-overview">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.1rem; justify-items: center; align-items: stretch; max-width: 900px; margin: 0 auto;">
-        <div class="mini-service-card">
-          <i class="fa fa-utensils"></i>
-          <span>Dining</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-spa"></i>
-          <span>Spa</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-dumbbell"></i>
-          <span>Fitness</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-swimming-pool"></i>
-          <span>Leisure</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-calendar-alt"></i>
-          <span>Events</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-concierge-bell"></i>
-          <span>Concierge</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-child"></i>
-          <span>Kids</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-gift"></i>
-          <span>Packages</span>
-        </div>
-        <div class="mini-service-card">
-          <i class="fa fa-paw"></i>
-          <span>Pet Services</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Services Content -->
   <section class="wishlist-overview">
@@ -179,7 +185,7 @@
       <div class="overview-cards" style="display:block;">
         
         <!-- Dining & Culinary Excellence -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="dining" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-utensils" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -228,7 +234,7 @@
         </div>
 
         <!-- Wellness & Spa Services -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="spa" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-spa" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -236,7 +242,8 @@
             </div>
             <p style="font-size:1.01rem; color:#555; line-height:1.6; margin-bottom:1.05rem;">Rejuvenate your mind, body, and soul with our luxury spa and wellness treatments</p>
             
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              
+              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
                 <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Luxury Spa</h3>
                 <p style="color:#666; margin-bottom:1rem;">Comprehensive spa treatments including massages, facials, and body therapies.</p>
                 <div style="display:flex; gap:1rem; margin-bottom:1rem;">
@@ -276,7 +283,7 @@
         </div>
 
         <!-- Leisure & Activities -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="leisure" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-swimming-pool" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -284,7 +291,8 @@
             </div>
             <p style="font-size:1.01rem; color:#555; line-height:1.6; margin-bottom:1.5rem;">Stay active and entertained with our range of leisure activities and recreational facilities</p>
             
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              
+              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
                 <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Swimming Pool</h3>
                 <p style="color:#666; margin-bottom:1rem;">Infinity pool with stunning city views and poolside service.</p>
                 <div style="display:flex; gap:1rem; margin-bottom:1rem;">
@@ -324,7 +332,7 @@
         </div>
 
         <!-- Events & Meetings -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="events" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-calendar-alt" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -332,7 +340,8 @@
             </div>
             <p style="font-size:1.01rem; color:#555; line-height:1.6; margin-bottom:1.5rem;">Professional event spaces and meeting facilities for corporate and social gatherings</p>
             
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              
+              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
                 <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Conference Rooms</h3>
                 <p style="color:#666; margin-bottom:1rem;">State-of-the-art meeting rooms with modern technology and equipment.</p>
                 <div style="display:flex; gap:1rem; margin-bottom:1rem;">
@@ -372,7 +381,7 @@
         </div>
 
         <!-- Concierge Services -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="concierge" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-concierge-bell" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -380,7 +389,8 @@
             </div>
             <p style="font-size:1.01rem; color:#555; line-height:1.6; margin-bottom:1.5rem;">Personalized assistance and exclusive services to enhance your stay</p>
             
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              
+              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
                 <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Travel Arrangements</h3>
                 <p style="color:#666; margin-bottom:1rem;">Airport transfers, car rentals, and transportation services.</p>
                 <div style="display:flex; gap:1rem; margin-bottom:1rem;">
@@ -420,7 +430,7 @@
         </div>
 
         <!-- Kids & Family -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="kids" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-child" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -428,7 +438,8 @@
             </div>
             <p style="font-size:1.01rem; color:#555; line-height:1.6; margin-bottom:1.5rem;">Specialized services and activities designed for families with children</p>
             
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem;">              
+              <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
                 <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Kids Club</h3>
                 <p style="color:#666; margin-bottom:1rem;">Supervised activities and entertainment for children of all ages.</p>
                 <div style="display:flex; gap:1rem; margin-bottom:1rem;">
@@ -468,7 +479,7 @@
         </div>
 
         <!-- Packages & Experiences -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="packages" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-gift" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -514,7 +525,7 @@
         </div>
 
         <!-- Pet Services -->
-        <div class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
+        <div id="pet-services" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem;">
           <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-paw" style="color:#FFD700; font-size:1.5rem;"></i>
@@ -564,41 +575,69 @@
   </section>
 
   <!-- Footer -->
-  <footer class="footer" style="background:#181818; color:#fff; padding:40px 0 0 0; margin-top:48px;">
-    <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; padding:0 32px;">
-      <div style="flex:1 1 180px; min-width:180px; display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
-        <img src="images/logo.png" alt="Pearl Vista Logo" style="height:32px; margin-bottom:8px;">
-        <div style="font-size:2rem; font-family:'Playfair Display',serif; font-weight:700; color:#fff;">PEARL<br>VISTA</div>
+  <footer class="footer" style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
+    <div class="footer-content" style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+      <div class="footer-col" style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+        <img src="images/logo.png" alt="Pearl Vista Logo" style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
       </div>
-      <div style="flex:1 1 180px; min-width:180px;">
-        <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1em;">Quick Links</div>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Quick Links</div>
         <ul style="list-style:none; padding:0; margin:0; line-height:2;">
-          <li><a href="home.html" style="color:#fff; text-decoration:none;">Home</a></li>
-          <li><a href="reviews.html" style="color:#fff; text-decoration:none;">Reviews</a></li>
-          <li><a href="gallery.html" style="color:#fff; text-decoration:none;">Gallery</a></li>
-          <li><a href="contact_us.html" style="color:#fff; text-decoration:none;">Help</a></li>
-          <li><a href="privacy-policy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
+          <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a></li>
+          <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+          <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+          <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+          <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy Policy</a></li>
         </ul>
       </div>
-      <div style="flex:1 1 220px; min-width:220px;">
-        <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Contact</div>
+      <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Contact</div>
         <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212) 555-0123</div>
         <div style="margin-bottom:8px;"><i class="fa fa-envelope" style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
         <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
       </div>
-      <div style="flex:1 1 180px; min-width:180px;">
-        <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Follow Us</div>
-        <div style="display:flex; gap:16px;">
-          <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-facebook"></i></a>
-          <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-instagram"></i></a>
-          <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-twitter"></i></a>
-          <a href="#" style="color:#FFD700; font-size:1.03rem;"><i class="fab fa-youtube"></i></a>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Follow Us</div>
+        <div style="display:flex; gap:18px; justify-content:flex-start;">
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-facebook"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-instagram"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
     </div>
-    <div style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px;">©2025 Pearl Vista. All rights reserved.</div>
+    <div class="footer-bottom" style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">© 2025 Pearl Vista. All rights reserved.</div>
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const cardMap = {
+        'Dining': 'dining',
+        'Spa': 'spa',
+        'Leisure': 'leisure',
+        'Events': 'events',
+        'Concierge': 'concierge',
+        'Kids': 'kids',
+        'Packages': 'packages',
+        'Pet Services': 'pet-services'
+      };
+      document.querySelectorAll('.mini-service-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function() {
+          const label = card.innerText.trim();
+          const targetId = cardMap[label];
+          if (targetId) {
+            const section = document.getElementById(targetId);
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+      // Enable smooth scroll for anchor links
+      document.documentElement.style.scrollBehavior = 'smooth';
+    });
+  </script>
 </body>
 </html> 

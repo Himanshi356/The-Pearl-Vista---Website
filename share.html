@@ -4,46 +4,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Your Experience</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Share Your Experience - The Pearl Vista</title>
+    <meta name="description" content="Share your experience at The Pearl Vista - Luxury hotel reviews and feedback" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" type="image/x-icon" href="images/logo.png" />
 </head>
 
 <body>
-    <!-- Navbar -->
-    <header>
+    <!-- Header (consistent with other pages) -->
+    <header class="header">
+        <div class="profile" title="User Profile" id="userProfileIcon" tabindex="0">
+            <i class="fa-solid fa-user"></i>
+        </div>
         <nav>
-            <div class="nav-left">
-                <i class="fas fa-user-circle user-icon"></i>
-            </div>
-            <ul class="nav-right">
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="about-us.html">ABOUT US</a></li>
-                <li><a href="rooms.html">ROOMS</a></li>
-                <li><a href="#">SERVICES</a></li>
-                <li><a href="gallery.html">GALLERY</a></li>
-                <li><a href="contact_us.html">CONTACT US</a></li>
-                <li><a href="#">LOCATIONS</a></li>
-            </ul>
+            <a href="home.html">HOME</a>
+            <a href="about-us.html">ABOUT US</a>
+            <a href="rooms.html">ROOMS</a>
+            <a href="services.html">SERVICES</a>
+            <a href="gallery.html">GALLERY</a>
+            <a href="contact_us.html">CONTACT US</a>
+            <a href="locations.html">LOCATIONS</a>
         </nav>
     </header>
+    <!-- User Dropdown Menu -->
+    <div id="userDropdown" class="user-dropdown"
+        style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+        <div class="user-header" id="userDropdownHeader"
+            style="background:#000; color:#fff; text-align:center; font-size:1.3rem; font-weight:700; letter-spacing:0.5px; padding:0.7rem 0; border-radius:0; box-shadow:none;">
+        </div>
+        <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
+            <li><a href="user-info.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-user"></i> Personal Information</a></li>
+            <li><a href="my-bookings.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+            <li><a href="my-wishlist.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+            <li><a href="my-itinerary.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+            <li><a href="rewards.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+            <li><a href="privacy-policy.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+            <li><a href="language.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+            <li><a href="contact_us.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+            <li><a href="settings.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+            <li><a href="share.html" class="active"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+                        class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+        </ul>
+        <div class="logout"
+            style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;"
+            onclick="logout()">Logout</div>
+    </div>
+    <script>
+        // User dropdown toggle
+        const userProfileIcon = document.getElementById('userProfileIcon');
+        const userDropdownMenu = document.getElementById('userDropdown');
+        const userDropdownHeader = document.getElementById('userDropdownHeader');
+        document.addEventListener('DOMContentLoaded', function () {
+            const username = localStorage.getItem('pv_username') || 'User';
+            if (userDropdownHeader) {
+                userDropdownHeader.textContent = `Hey ${username}!`;
+            }
+            var editProfileModal = document.getElementById('editProfileModal');
+            if (editProfileModal) editProfileModal.style.display = 'none';
+        });
+        document.addEventListener('click', function (e) {
+            if (userProfileIcon && userProfileIcon.contains(e.target)) {
+                userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
+            } else if (userDropdownMenu && !userDropdownMenu.contains(e.target)) {
+                userDropdownMenu.style.display = 'none';
+            }
+        });
+        userProfileIcon && userProfileIcon.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+        function logout() {
+            localStorage.removeItem('pv_logged_in');
+            localStorage.removeItem('pv_username');
+            window.location.href = 'index.html';
+        }
+    </script>
 
-    <main>
-        <section class="review-form">
-            <h1>Share Your Experience</h1>
-            <div class="rating">
-                <span class="star-rating">★★★★☆</span>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 style="color: #fff;">Share Your Experience</h1>
+                <p style="color: #fff; font-size: 1.18rem; margin-top: 0.5rem; font-weight: 500;">Help other travelers
+                    by sharing your review of The Pearl Vista</p>
             </div>
-            <textarea placeholder="Write a review..."></textarea>
-            <br><br>
-            <div class="button-group">
-                <button class="post-button">Post</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <!-- Fixed Back button -->
-                <a href="reviews.html" class="back-button">Back</a>
+        </div>
+    </section>
+
+    <!-- Share Experience Form Section -->
+    <section class="wishlist-overview">
+        <div class="container">
+            <div class="overview-cards" style="display:block;">
+                <div class="wishlist-card"
+                    style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10); padding: 2.2rem 1.5rem; margin-bottom:2rem; max-width: 600px; margin-left:auto; margin-right:auto;">
+                    <div class="wishlist-content"
+                        style="display:flex; flex-direction:column; gap:1.5rem; align-items:center;">
+                        <h2 style="color:#1a2238;">Share Your Experience</h2>
+                        <div class="rating" id="starRating"
+                            style="font-size:2rem; color:#FFD700; display:flex; gap:0.5rem; cursor:pointer;">
+                            <i class="fa fa-star" data-value="1"></i>
+                            <i class="fa fa-star" data-value="2"></i>
+                            <i class="fa fa-star" data-value="3"></i>
+                            <i class="fa fa-star" data-value="4"></i>
+                            <i class="fa fa-star" data-value="5"></i>
+                        </div>
+                        <textarea id="reviewTextarea" placeholder="Write a review..."
+                            style="width:100%; min-height:120px; border-radius:12px; border:1px solid #e0e0e0; padding:1rem; font-size:1rem; color:#222;"></textarea>
+                        <div class="button-group" style="display:flex; gap:1.5rem; justify-content:center;">
+                            <button class="btn signup" id="postReviewBtn" disabled>Post</button>
+                            <a href="home.html" class="btn btn-back">Back</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer"
+        style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
+        <div class="footer-content"
+            style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+            <div class="footer-col"
+                style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+                <img src="images/logo.png" alt="Pearl Vista Logo"
+                    style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
+            </div>
+            <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+                <div
+                    style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+                    Quick Links</div>
+                <ul style="list-style:none; padding:0; margin:0; line-height:2;">
+                    <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a>
+                    </li>
+                    <li><a href="reviews.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+                    <li><a href="gallery.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+                    <li><a href="contact_us.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+                    <li><a href="privacy-policy.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+                <div
+                    style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+                    Contact</div>
+                <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1
+                    (212) 555-0123</div>
+                <div style="margin-bottom:8px;"><i class="fa fa-envelope"
+                        style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
+                <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
+            </div>
+            <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+                <div
+                    style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+                    Follow Us</div>
+                <div style="display:flex; gap:18px; justify-content:flex-start;">
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-facebook"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-twitter"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"
+            style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">
+            © 2025 Pearl Vista. All rights reserved.</div>
+    </footer>
+
+    <!-- Custom Alert Box -->
+    <div id="customAlert"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:9999; justify-content:center; align-items:center;">
+        <div
+            style="background:#fff; color:#1a2238; border-radius:18px; box-shadow:0 4px 24px rgba(26,34,56,0.18); padding:2.2rem 2.5rem; min-width:320px; max-width:90vw; text-align:center; position:relative;">
+            <div id="customAlertMsg" style="font-size:1.15rem; font-weight:600; margin-bottom:1.5rem;"></div>
+            <button id="closeCustomAlert"
+                style="background:#3FA8B1; color:#fff; border:none; border-radius:24px; padding:0.7rem 2.2rem; font-size:1.1rem; font-weight:700; cursor:pointer;">OK</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Interactive star rating
+        const stars = document.querySelectorAll('#starRating .fa-star');
+        let selectedRating = 4;
+        function highlightStars(rating) {
+            stars.forEach((star, idx) => {
+                if (idx < rating) {
+                    star.classList.add('fas');
+                    star.classList.remove('far');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
+        // Initialize with 4 stars filled
+        stars.forEach(star => star.classList.add('fas'));
+        stars[4].classList.remove('fas'); stars[4].classList.add('far');
+        // Hover effect
+        stars.forEach((star, idx) => {
+            star.addEventListener('mouseenter', () => highlightStars(idx + 1));
+            star.addEventListener('mouseleave', () => highlightStars(selectedRating));
+            star.addEventListener('click', () => {
+                selectedRating = idx + 1;
+                highlightStars(selectedRating);
+            });
+        });
+        // Enable/disable Post button based on textarea content
+        const reviewTextarea = document.getElementById('reviewTextarea');
+        const postReviewBtn = document.getElementById('postReviewBtn');
+        reviewTextarea.addEventListener('input', function () {
+            postReviewBtn.disabled = this.value.trim() === '';
+        });
+
+        // Custom personalized alert box
+        const customAlert = document.getElementById('customAlert');
+        const customAlertMsg = document.getElementById('customAlertMsg');
+        const closeCustomAlert = document.getElementById('closeCustomAlert');
+        postReviewBtn.addEventListener('click', function () {
+            var username = localStorage.getItem('pv_username') || 'Guest';
+            customAlertMsg.textContent = 'Thank you, ' + username + '! Your review (' + selectedRating + ' star' + (selectedRating > 1 ? 's' : '') + ') has been submitted.';
+            customAlert.style.display = 'flex';
+        });
+        closeCustomAlert.addEventListener('click', function () {
+            customAlert.style.display = 'none';
+        });
+    </script>
 </body>
 
 </html>

@@ -1,54 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="View and manage your itinerary at The Pearl Vista" />
-    <meta name="keywords" content="itinerary, travel, schedule, pearl vista" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your itinerary at The Pearl Vista" />
+  <meta name="keywords" content="itinerary, travel, schedule, pearl vista" />
   <title>My Itinerary - The Pearl Vista</title>
-    <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="icon" type="image/x-icon" href="images/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="images/logo.png" />
 </head>
+
 <body>
-    <!-- Header (consistent with other pages) -->
-    <header class="header">
-      <div class="profile" title="User Profile" id="userProfileIcon" tabindex="0">
-        <i class="fa-solid fa-user"></i>
+  <!-- Header (consistent with other pages) -->
+  <header class="header">
+    <div class="profile" title="User Profile" id="userProfileIcon" tabindex="0">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <nav>
+      <a href="home.html">HOME</a>
+      <a href="about-us.html">ABOUT US</a>
+      <a href="rooms.html">ROOMS</a>
+      <a href="services.html">SERVICES</a>
+      <a href="gallery.html">GALLERY</a>
+      <a href="contact_us.html">CONTACT US</a>
+      <a href="locations.html">LOCATIONS</a>
+    </nav>
+  </header>
+  <!-- User Dropdown Menu -->
+  <div id="userDropdown" class="user-dropdown"
+    style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+    <div class="user-header" id="userDropdownHeader"
+      style="background:#000; color:#fff; text-align:center; font-size:1.3rem; font-weight:700; letter-spacing:0.5px; padding:0.7rem 0; border-radius:0; box-shadow:none;">
+    </div>
+    <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
+      <li><a href="user-info.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-user"></i> Personal Information</a></li>
+      <li><a href="my-bookings.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+      <li><a href="my-wishlist.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+      <li><a href="my-itinerary.html" class="active"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+      <li><a href="rewards.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+      <li><a href="privacy-policy.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+      <li><a href="language.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+      <li><a href="contact_us.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+      <li><a href="settings.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+      <li><a href="share.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+    </ul>
+    <div class="logout"
+      style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;"
+      onclick="logout()">Logout</div>
   </div>
-  <nav>
-        <a href="home.html">HOME</a>
-    <a href="about-us.html">ABOUT US</a>
-    <a href="rooms.html">ROOMS</a>
-    <a href="services.html">SERVICES</a>
-    <a href="gallery.html">GALLERY</a>
-        <a href="contact_us.html">CONTACT US</a>
-    <a href="locations.html">LOCATIONS</a>
-  </nav>
-</header>
-    <!-- User Dropdown Menu -->
-    <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
-      <div class="user-header" id="userDropdownHeader" style="background:#000; color:#fff; text-align:center; font-size:1.3rem; font-weight:700; letter-spacing:0.5px; padding:0.7rem 0; border-radius:0; box-shadow:none;"></div>
-      <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
-        <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-user"></i> Personal Information</a></li>
-        <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
-        <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
-        <li><a href="my-itinerary.html" class="active" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
-        <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
-        <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
-        <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
-        <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
-        <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
-        <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
-      </ul>
-      <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
-  </div>
-    <script>
+  <script>
     // User dropdown toggle
     const userProfileIcon = document.getElementById('userProfileIcon');
     const userDropdownMenu = document.getElementById('userDropdown');
     const userDropdownHeader = document.getElementById('userDropdownHeader');
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const username = localStorage.getItem('pv_username') || 'User';
       if (userDropdownHeader) {
         userDropdownHeader.textContent = `Hey ${username}!`;
@@ -56,14 +83,14 @@
       var editProfileModal = document.getElementById('editProfileModal');
       if (editProfileModal) editProfileModal.style.display = 'none';
     });
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       if (userProfileIcon && userProfileIcon.contains(e.target)) {
         userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
       } else if (userDropdownMenu && !userDropdownMenu.contains(e.target)) {
         userDropdownMenu.style.display = 'none';
       }
     });
-    userProfileIcon && userProfileIcon.addEventListener('keydown', function(e) {
+    userProfileIcon && userProfileIcon.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
       }
@@ -73,347 +100,503 @@
       localStorage.removeItem('pv_username');
       window.location.href = 'index.html';
     }
-    </script>
+  </script>
 
-    <!-- Page Header -->
-    <section class="page-header">
-      <div class="container">
-        <div class="header-content">
-          <h1 style="color: #FFD700;">My Itinerary</h1>
-          <p style="color: #FFD700;">Your personalized travel schedule and activities</p>
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="header-content">
+        <h1 style="color: #FFD700;">My Itinerary</h1>
+        <p style="color: #FFD700;">Your personalized travel schedule and activities</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Itinerary Overview -->
+  <section class="wishlist-overview">
+    <div class="container">
+      <div class="overview-cards">
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="overview-content">
+            <h3>Stay Dates</h3>
+            <span class="overview-number">July 11 - July 17, 2025</span>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fas fa-user-friends"></i>
+          </div>
+          <div class="overview-content">
+            <h3>Guests</h3>
+            <span class="overview-number">2 Adults, 1 Child</span>
+          </div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fas fa-bed"></i>
+          </div>
+          <div class="overview-content">
+            <h3>Room</h3>
+            <span class="overview-number">Luxury Suite</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline and Calendar -->
+  <section class="saved-rooms">
+    <div class="container">
+      <div class="section-header">
+        <h2>Timeline & Calendar</h2>
+        <p>Your daily activities and schedule</p>
+      </div>
+      <div class="wishlist-grid" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <!-- Timeline View Card -->
+        <div class="wishlist-card"
+          style="flex:1; min-width:320px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10); padding: 2.2rem 1.5rem; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
+          <div class="wishlist-content">
+            <h3
+              style="color: #1a2238; font-size: 1.35rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px;">
+              Timeline View</h3>
+            <div style="position: relative; padding-left: 32px;">
+              <div
+                style="position: absolute; left: 13px; top: 0; bottom: 0; width: 6px; background: linear-gradient(180deg, #FFD700 0%, #fffbe6 100%); border-radius: 4px;">
+              </div>
+              <div class="wishlist-details" style="display: flex; flex-direction: column; gap: 2.1rem;">
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-door-open"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 1 &mdash; 3:00 PM</strong><br />
+                    <span style="color: #444;">Check-In &amp; Welcome Drink at Lobby Lounge</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-utensils"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 1 &mdash; 7:00 PM</strong><br />
+                    <span style="color: #444;">Gourmet Dinner Reservation at Pearl Restaurant</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-spa"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 2 &mdash; 10:00 AM</strong><br />
+                    <span style="color: #444;">Luxury Spa Session (60 min) &mdash; Serenity Spa</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-swimmer"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 2 &mdash; 2:00 PM</strong><br />
+                    <span style="color: #444;">Poolside Relaxation &amp; Signature Cocktails</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-map-marked-alt"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 3 &mdash; 11:00 AM</strong><br />
+                    <span style="color: #444;">Guided City Tour: Bryant Park &amp; Landmarks</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-martini-glass-citrus"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 4 &mdash; 6:00 PM</strong><br />
+                    <span style="color: #444;">Evening Social: Rooftop Bar Happy Hour</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-concierge-bell"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 5 &mdash; 8:00 AM</strong><br />
+                    <span style="color: #444;">Breakfast in Bed &amp; Room Service</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-umbrella-beach"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 6 &mdash; 1:00 PM</strong><br />
+                    <span style="color: #444;">Private Beach Excursion (with Lunch)</span>
+                  </div>
+                </div>
+                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
+                  <span
+                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
+                      class="fa-solid fa-sign-out-alt"></i></span>
+                  <div style="margin-left: 18px;">
+                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 7 &mdash; 12:00 PM</strong><br />
+                    <span style="color: #444;">Check-Out &amp; Chauffeur Service to Airport</span>
+                  </div>
+                </div>
+                <div class="add-activity" style="margin-left: 18px; color: #3FA8B1; font-weight: 700; cursor: pointer;">
+                  ＋ Add Activity</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Calendar View Card -->
+        <div class="wishlist-card"
+          style="flex:1; min-width:320px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10); padding: 2.2rem 1.5rem; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
+          <div class="wishlist-content" style="width:100%;">
+            <h3
+              style="color: #1a2238; font-size: 1.35rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px;">
+              Calendar View</h3>
+            <div class="wishlist-details" style="width:100%;">
+              <div class="calendar-box"
+                style="background: #f8f9fa; border-radius: 18px; box-shadow: 0 2px 8px rgba(26,34,56,0.06); padding: 1.2rem 1.2rem 0.7rem 1.2rem; margin-bottom:2.2rem; width: 100%; max-width: 320px;">
+                <h4 style="color: #1a2238; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.7rem;">July</h4>
+                <table style="width: 100%; border-spacing: 8px; font-size: 1.05rem; color: #1a2238; text-align:center;">
+                  <tr>
+                    <td>S</td>
+                    <td>M</td>
+                    <td>T</td>
+                    <td>W</td>
+                    <td>T</td>
+                    <td>F</td>
+                    <td>S</td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                  </tr>
+                  <tr>
+                    <td class="week-highlight">11</td>
+                    <td class="week-highlight">12</td>
+                    <td class="week-highlight">13</td>
+                    <td class="week-highlight">14</td>
+                    <td class="week-highlight">15</td>
+                    <td class="week-highlight">16</td>
+                    <td class="week-highlight">17</td>
+                  </tr>
+                  <tr>
+                    <td>18</td>
+                    <td>19</td>
+                    <td>20</td>
+                    <td>21</td>
+                    <td>22</td>
+                    <td>23</td>
+                    <td>24</td>
+                  </tr>
+                </table>
+              </div>
+              <div style="margin-top:0; width:100%; max-width: 420px;">
+                <h4 style="color:#FFD700; margin-bottom:0.7rem; font-size: 1.25rem; font-weight: 700; text-align:left;">
+                  This Week's Highlights</h4>
+                <ul
+                  style="list-style:none; padding:0; color:#1a2238; font-size:1.08rem; line-height: 2; text-align:left;">
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-door-open"
+                      style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 1:</span>Check-In & Welcome Drink
+                  </li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-utensils"
+                      style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 1:</span>Dinner at Pearl
+                    Restaurant</li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-spa"
+                      style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 2:</span>Spa Session</li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-swimmer"
+                      style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 2:</span>Poolside Relaxation</li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i
+                      class="fa-solid fa-map-marked-alt" style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 3:</span>City Tour</li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i
+                      class="fa-solid fa-martini-glass-citrus" style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 4:</span>Rooftop Bar Happy Hour
+                  </li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i
+                      class="fa-solid fa-concierge-bell" style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 5:</span>Breakfast in Bed</li>
+                  <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i
+                      class="fa-solid fa-umbrella-beach" style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 6:</span>Beach Excursion</li>
+                  <li style="display:flex;align-items:center;"><i class="fa-solid fa-sign-out-alt"
+                      style="color:#FFD700; width:24px;"></i><span
+                      style="font-weight:700; margin-right:4px; margin-left:6px;">Day 7:</span>Check-Out & Chauffeur
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Action Buttons -->
+  <section class="wishlist-actions-section">
+    <div class="container">
+      <div class="actions-grid btn-group" style="gap: 1.5rem; justify-content: center;">
+        <button class="btn signup"><i class="fa-solid fa-spa" style="color:#000; margin-right:10px;"></i>Book
+          spa</button>
+        <button class="btn login"><i class="fa-solid fa-utensils" style="color:#000; margin-right:10px;"></i>Reserve
+          table</button>
+        <button class="btn secondary"><i class="fa-solid fa-calendar-check"
+            style="color:#000; margin-right:10px;"></i>Plan an event</button>
+        <button class="btn secondary"><i class="fa-solid fa-file-arrow-down"
+            style="color:#000; margin-right:10px;"></i>Download PDF</button>
+      </div>
+    </div>
+  </section>
+  <style>
+    #addActivityModalOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #addActivityModal {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(26, 34, 56, 0.13);
+      padding: 2.2rem 2.5rem 1.5rem 2.5rem;
+      min-width: 340px;
+      max-width: 95vw;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #addActivityModal h2 {
+      color: #1a2238;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+
+    #addActivityModal label {
+      font-weight: 600;
+      color: #1a2238;
+      margin-bottom: 0.3rem;
+      font-size: 0.98rem;
+    }
+
+    #addActivityModal input,
+    #addActivityModal textarea {
+      border-radius: 10px;
+      border: 1.5px solid #e0e0e0;
+      padding: 0.7rem 1rem;
+      font-size: 1.08rem;
+      background: #f8f9fa;
+      color: #1a365d;
+      margin-bottom: 1rem;
+    }
+
+    #addActivityModal input:focus,
+    #addActivityModal textarea:focus {
+      border: 2px solid #d4af37;
+      background: #fff;
+      outline: none;
+    }
+
+    #addActivityModal .modal-actions {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+    }
+
+    #addActivityModal button {
+      background: #3FA8B1;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 0.7rem 2.2rem;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    #addActivityModal button.cancel {
+      background: #e0e0e0;
+      color: #1a2238;
+    }
+
+    #addActivityModal button:hover:not(.cancel) {
+      background: #2e7c8a;
+    }
+  </style>
+  <div id="addActivityModalOverlay">
+    <form id="addActivityModal" onsubmit="return false;">
+      <h2>THE PEARL VISTA says</h2>
+      <label for="activityTitle">Enter activity title (e.g., Afternoon Tea):</label>
+      <input id="activityTitle" type="text" required maxlength="60" autocomplete="off" />
+      <label for="activityTime">Enter time (e.g., Day 3 — 4:00 PM):</label>
+      <input id="activityTime" type="text" required maxlength="40" autocomplete="off" />
+      <label for="activityDesc">Enter a short description:</label>
+      <textarea id="activityDesc" rows="2" required maxlength="120"></textarea>
+      <div class="modal-actions">
+        <button type="submit">OK</button>
+        <button type="button" class="cancel">Cancel</button>
+      </div>
+    </form>
   </div>
-      </div>
-    </section>
-
-    <!-- Itinerary Overview -->
-    <section class="wishlist-overview">
-      <div class="container">
-        <div class="overview-cards">
-          <div class="overview-card">
-            <div class="overview-icon">
-              <i class="fas fa-calendar-check"></i>
-            </div>
-            <div class="overview-content">
-              <h3>Stay Dates</h3>
-              <span class="overview-number">July 11 - July 17, 2025</span>
-            </div>
-          </div>
-          <div class="overview-card">
-            <div class="overview-icon">
-              <i class="fas fa-user-friends"></i>
-            </div>
-            <div class="overview-content">
-              <h3>Guests</h3>
-              <span class="overview-number">2 Adults, 1 Child</span>
-            </div>
-          </div>
-          <div class="overview-card">
-            <div class="overview-icon">
-              <i class="fas fa-bed"></i>
-            </div>
-            <div class="overview-content">
-              <h3>Room</h3>
-              <span class="overview-number">Luxury Suite</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Timeline and Calendar -->
-    <section class="saved-rooms">
-      <div class="container">
-        <div class="section-header">
-          <h2>Timeline & Calendar</h2>
-          <p>Your daily activities and schedule</p>
-        </div>
-        <div class="wishlist-grid" style="display: flex; gap: 2rem; flex-wrap: wrap;">
-          <!-- Timeline View Card -->
-          <div class="wishlist-card" style="flex:1; min-width:320px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10); padding: 2.2rem 1.5rem; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
-            <div class="wishlist-content">
-              <h3 style="color: #1a2238; font-size: 1.35rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px;">Timeline View</h3>
-              <div style="position: relative; padding-left: 32px;">
-                <div style="position: absolute; left: 13px; top: 0; bottom: 0; width: 6px; background: linear-gradient(180deg, #FFD700 0%, #fffbe6 100%); border-radius: 4px;"></div>
-                <div class="wishlist-details" style="display: flex; flex-direction: column; gap: 2.1rem;">
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-door-open"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 1 &mdash; 3:00 PM</strong><br/>
-                      <span style="color: #444;">Check-In &amp; Welcome Drink at Lobby Lounge</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-utensils"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 1 &mdash; 7:00 PM</strong><br/>
-                      <span style="color: #444;">Gourmet Dinner Reservation at Pearl Restaurant</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-spa"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 2 &mdash; 10:00 AM</strong><br/>
-                      <span style="color: #444;">Luxury Spa Session (60 min) &mdash; Serenity Spa</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-swimmer"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 2 &mdash; 2:00 PM</strong><br/>
-                      <span style="color: #444;">Poolside Relaxation &amp; Signature Cocktails</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-map-marked-alt"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 3 &mdash; 11:00 AM</strong><br/>
-                      <span style="color: #444;">Guided City Tour: Bryant Park &amp; Landmarks</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-martini-glass-citrus"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 4 &mdash; 6:00 PM</strong><br/>
-                      <span style="color: #444;">Evening Social: Rooftop Bar Happy Hour</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-concierge-bell"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 5 &mdash; 8:00 AM</strong><br/>
-                      <span style="color: #444;">Breakfast in Bed &amp; Room Service</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-umbrella-beach"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 6 &mdash; 1:00 PM</strong><br/>
-                      <span style="color: #444;">Private Beach Excursion (with Lunch)</span>
-                    </div>
-                  </div>
-                  <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                    <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-sign-out-alt"></i></span>
-                    <div style="margin-left: 18px;">
-                      <strong style="color: #1a2238; font-size: 1.08rem;">Day 7 &mdash; 12:00 PM</strong><br/>
-                      <span style="color: #444;">Check-Out &amp; Chauffeur Service to Airport</span>
-                    </div>
-                  </div>
-                  <div class="add-activity" style="margin-left: 18px; color: #3FA8B1; font-weight: 700; cursor: pointer;">＋ Add Activity</div>
-                </div>
-              </div>
-      </div>
-    </div>
-          <!-- Calendar View Card -->
-          <div class="wishlist-card" style="flex:1; min-width:320px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10); padding: 2.2rem 1.5rem; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
-            <div class="wishlist-content" style="width:100%;">
-              <h3 style="color: #1a2238; font-size: 1.35rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px;">Calendar View</h3>
-              <div class="wishlist-details" style="width:100%;">
-                <div class="calendar-box" style="background: #f8f9fa; border-radius: 18px; box-shadow: 0 2px 8px rgba(26,34,56,0.06); padding: 1.2rem 1.2rem 0.7rem 1.2rem; margin-bottom:2.2rem; width: 100%; max-width: 320px;">
-                  <h4 style="color: #1a2238; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.7rem;">July</h4>
-                  <table style="width: 100%; border-spacing: 8px; font-size: 1.05rem; color: #1a2238; text-align:center;">
-          <tr><td>S</td><td>M</td><td>T</td><td>W</td><td>T</td><td>F</td><td>S</td></tr>
-          <tr><td> </td><td> </td><td> </td><td> </td><td>1</td><td>2</td><td>3</td></tr>
-          <tr><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
-                    <tr>
-                      <td class="week-highlight">11</td>
-                      <td class="week-highlight">12</td>
-                      <td class="week-highlight">13</td>
-                      <td class="week-highlight">14</td>
-                      <td class="week-highlight">15</td>
-                      <td class="week-highlight">16</td>
-                      <td class="week-highlight">17</td>
-                    </tr>
-          <tr><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td></tr>
-        </table>
-                </div>
-                <div style="margin-top:0; width:100%; max-width: 420px;">
-                  <h4 style="color:#FFD700; margin-bottom:0.7rem; font-size: 1.25rem; font-weight: 700; text-align:left;">This Week's Highlights</h4>
-                  <ul style="list-style:none; padding:0; color:#1a2238; font-size:1.08rem; line-height: 2; text-align:left;">
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-door-open" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 1:</span>Check-In & Welcome Drink</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-utensils" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 1:</span>Dinner at Pearl Restaurant</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-spa" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 2:</span>Spa Session</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-swimmer" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 2:</span>Poolside Relaxation</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-map-marked-alt" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 3:</span>City Tour</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-martini-glass-citrus" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 4:</span>Rooftop Bar Happy Hour</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-concierge-bell" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 5:</span>Breakfast in Bed</li>
-                    <li style="display:flex;align-items:center;margin-bottom:0.2rem;"><i class="fa-solid fa-umbrella-beach" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 6:</span>Beach Excursion</li>
-                    <li style="display:flex;align-items:center;"><i class="fa-solid fa-sign-out-alt" style="color:#FFD700; width:24px;"></i><span style="font-weight:700; margin-right:4px; margin-left:6px;">Day 7:</span>Check-Out & Chauffeur</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Action Buttons -->
-    <section class="wishlist-actions-section">
-      <div class="container">
-        <div class="actions-grid btn-group" style="gap: 1.5rem; justify-content: center;">
-          <button class="btn signup"><i class="fa-solid fa-spa" style="color:#000; margin-right:10px;"></i>Book spa</button>
-          <button class="btn login"><i class="fa-solid fa-utensils" style="color:#000; margin-right:10px;"></i>Reserve table</button>
-          <button class="btn secondary"><i class="fa-solid fa-calendar-check" style="color:#000; margin-right:10px;"></i>Plan an event</button>
-          <button class="btn secondary"><i class="fa-solid fa-file-arrow-down" style="color:#000; margin-right:10px;"></i>Download PDF</button>
-        </div>
-      </div>
-    </section>
-    <style>
-#addActivityModalOverlay {
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.25); z-index: 9999; display: none; align-items: center; justify-content: center;
-}
-#addActivityModal {
-  background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(26,34,56,0.13);
-  padding: 2.2rem 2.5rem 1.5rem 2.5rem; min-width: 340px; max-width: 95vw;
-  display: flex; flex-direction: column; align-items: stretch;
-}
-#addActivityModal h2 {
-  color: #1a2238; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px;
-  text-align: left;
-}
-#addActivityModal label {
-  font-weight: 600; color: #1a2238; margin-bottom: 0.3rem; font-size: 0.98rem;
-}
-#addActivityModal input, #addActivityModal textarea {
-  border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d; margin-bottom: 1rem;
-}
-#addActivityModal input:focus, #addActivityModal textarea:focus {
-  border: 2px solid #d4af37; background: #fff; outline: none;
-}
-#addActivityModal .modal-actions {
-  display: flex; gap: 1.2rem; justify-content: flex-end; margin-top: 0.5rem;
-}
-#addActivityModal button {
-  background: #3FA8B1; color: #fff; font-weight: 700; border-radius: 10px; padding: 0.7rem 2.2rem; font-size: 1.1rem; border: none; cursor: pointer; transition: background 0.2s, color 0.2s;
-}
-#addActivityModal button.cancel {
-  background: #e0e0e0; color: #1a2238;
-}
-#addActivityModal button:hover:not(.cancel) {
-  background: #2e7c8a;
-}
-</style>
-<div id="addActivityModalOverlay">
-  <form id="addActivityModal" onsubmit="return false;">
-    <h2>THE PEARL VISTA says</h2>
-    <label for="activityTitle">Enter activity title (e.g., Afternoon Tea):</label>
-    <input id="activityTitle" type="text" required maxlength="60" autocomplete="off" />
-    <label for="activityTime">Enter time (e.g., Day 3 — 4:00 PM):</label>
-    <input id="activityTime" type="text" required maxlength="40" autocomplete="off" />
-    <label for="activityDesc">Enter a short description:</label>
-    <textarea id="activityDesc" rows="2" required maxlength="120"></textarea>
-    <div class="modal-actions">
-      <button type="submit">OK</button>
-      <button type="button" class="cancel">Cancel</button>
-    </div>
-  </form>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const addActivityBtn = document.querySelector('.add-activity');
-  const timeline = document.querySelector('.wishlist-details');
-  // Modal elements
-  const overlay = document.getElementById('addActivityModalOverlay');
-  const modal = document.getElementById('addActivityModal');
-  const titleInput = document.getElementById('activityTitle');
-  const timeInput = document.getElementById('activityTime');
-  const descInput = document.getElementById('activityDesc');
-  const cancelBtn = modal.querySelector('button.cancel');
-  // Show modal
-  function showModal() {
-    overlay.style.display = 'flex';
-    titleInput.value = '';
-    timeInput.value = '';
-    descInput.value = '';
-    setTimeout(() => titleInput.focus(), 100);
-  }
-  // Hide modal
-  function hideModal() {
-    overlay.style.display = 'none';
-  }
-  // Add event
-  function addEvent(title, time, desc) {
-    const eventDiv = document.createElement('div');
-    eventDiv.className = 'event';
-    eventDiv.style = 'display: flex; align-items: flex-start; gap: 14px; position: relative;';
-    eventDiv.innerHTML = `
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const addActivityBtn = document.querySelector('.add-activity');
+      const timeline = document.querySelector('.wishlist-details');
+      // Modal elements
+      const overlay = document.getElementById('addActivityModalOverlay');
+      const modal = document.getElementById('addActivityModal');
+      const titleInput = document.getElementById('activityTitle');
+      const timeInput = document.getElementById('activityTime');
+      const descInput = document.getElementById('activityDesc');
+      const cancelBtn = modal.querySelector('button.cancel');
+      // Show modal
+      function showModal() {
+        overlay.style.display = 'flex';
+        titleInput.value = '';
+        timeInput.value = '';
+        descInput.value = '';
+        setTimeout(() => titleInput.focus(), 100);
+      }
+      // Hide modal
+      function hideModal() {
+        overlay.style.display = 'none';
+      }
+      // Add event
+      function addEvent(title, time, desc) {
+        const eventDiv = document.createElement('div');
+        eventDiv.className = 'event';
+        eventDiv.style = 'display: flex; align-items: flex-start; gap: 14px; position: relative;';
+        eventDiv.innerHTML = `
       <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class='fa-solid fa-plus'></i></span>
       <div style="margin-left: 18px;">
         <strong style="color: #1a2238; font-size: 1.08rem;">${time}</strong><br/>
         <span style="color: #444;">${title} — ${desc}</span>
       </div>
     `;
-    timeline.insertBefore(eventDiv, addActivityBtn);
-  }
-  if (addActivityBtn && timeline && overlay && modal) {
-    addActivityBtn.addEventListener('click', showModal);
-    cancelBtn.addEventListener('click', hideModal);
-    overlay.addEventListener('click', function(e) { if (e.target === overlay) hideModal(); });
-    modal.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const title = titleInput.value.trim();
-      const time = timeInput.value.trim();
-      const desc = descInput.value.trim();
-      if (!title || !time || !desc) return;
-      addEvent(title, time, desc);
-      hideModal();
+        timeline.insertBefore(eventDiv, addActivityBtn);
+      }
+      if (addActivityBtn && timeline && overlay && modal) {
+        addActivityBtn.addEventListener('click', showModal);
+        cancelBtn.addEventListener('click', hideModal);
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) hideModal(); });
+        modal.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const title = titleInput.value.trim();
+          const time = timeInput.value.trim();
+          const desc = descInput.value.trim();
+          if (!title || !time || !desc) return;
+          addEvent(title, time, desc);
+          hideModal();
+        });
+        // ESC key closes modal
+        document.addEventListener('keydown', function (e) {
+          if (overlay.style.display === 'flex' && e.key === 'Escape') hideModal();
+        });
+      }
     });
-    // ESC key closes modal
-    document.addEventListener('keydown', function(e) {
-      if (overlay.style.display === 'flex' && e.key === 'Escape') hideModal();
-    });
-  }
-});
-</script>
-    <div style="text-align:left; margin: 2rem 0 0 0;">
-      <a href="home.html" style="color:#3FA8B1; font-weight:700; text-decoration:none; font-size:1.25rem;">
-        &larr; Back
-      </a>
+  </script>
+  <div style="text-align:left; margin: 2rem 0 0 0;">
+    <a href="home.html" style="color:#3FA8B1; font-weight:700; text-decoration:none; font-size:1.25rem;">
+      &larr; Back
+    </a>
+  </div>
+  <!-- Footer -->
+  <footer class="footer"
+    style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
+    <div class="footer-content"
+      style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+      <div class="footer-col"
+        style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+        <img src="images/logo.png" alt="Pearl Vista Logo"
+          style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
+      </div>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+          Quick Links</div>
+        <ul style="list-style:none; padding:0; margin:0; line-height:2;">
+          <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a>
+          </li>
+          <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+          <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+          <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+          <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy
+              Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+          Contact</div>
+        <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1
+          (212) 555-0123</div>
+        <div style="margin-bottom:8px;"><i class="fa fa-envelope"
+            style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
+        <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
+      </div>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+          Follow Us</div>
+        <div style="display:flex; gap:18px; justify-content:flex-start;">
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+              class="fab fa-facebook"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+              class="fab fa-instagram"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
     </div>
-    <!-- Footer -->
-    <footer style="background:#181818; color:#fff; padding:40px 0 0 0; margin-top:48px;">
-      <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; padding:0 32px;">
-        <div style="flex:1 1 180px; min-width:180px; display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
-          <img src="images/logo.png" alt="Pearl Vista Logo" style="height:32px; margin-bottom:8px;">
-          <div style="font-size:2rem; font-family:'Playfair Display',serif; font-weight:700; color:#fff;">PEARL<br>VISTA</div>
-        </div>
-        <div style="flex:1 1 180px; min-width:180px;">
-          <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Quick Links</div>
-          <ul style="list-style:none; padding:0; margin:0; line-height:2;">
-            <li><a href="home.html" style="color:#fff; text-decoration:none;">Home</a></li>
-            <li><a href="reviews.html" style="color:#fff; text-decoration:none;">Reviews</a></li>
-            <li><a href="gallery.html" style="color:#fff; text-decoration:none;">Gallery</a></li>
-            <li><a href="contact_us.html" style="color:#fff; text-decoration:none;">Help</a></li>
-            <li><a href="privacy-policy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
-          </ul>
-        </div>
-        <div style="flex:1 1 220px; min-width:220px;">
-          <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Contact</div>
-          <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212) 555-0123</div>
-          <div style="margin-bottom:8px;"><i class="fa fa-envelope" style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
-          <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
-        </div>
-        <div style="flex:1 1 180px; min-width:180px;">
-          <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Follow Us</div>
-          <div style="display:flex; gap:16px;">
-            <a href="#" style="color:#FFD700; font-size:1.5rem;"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" style="color:#FFD700; font-size:1.5rem;"><i class="fab fa-instagram"></i></a>
-            <a href="#" style="color:#FFD700; font-size:1.5rem;"><i class="fab fa-twitter"></i></a>
-            <a href="#" style="color:#FFD700; font-size:1.5rem;"><i class="fab fa-youtube"></i></a>
-  </div>
-  </div>
-</div>
-      <div style="text-align:center; margin-top:1.5rem; color:#ccc;">&copy; 2025 Pearl Vista. All rights reserved.</div>
-    </footer>
+    <div class="footer-bottom"
+      style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">
+      © 2025 Pearl Vista. All rights reserved.</div>
+  </footer>
+
 </body>
+
 </html>
 
 <style>
-.week-highlight {
-  background: #FFF7D1 !important;
-  border-radius: 8px;
-  font-weight: 700;
-  color: #1a2238 !important;
-}
+  .week-highlight {
+    background: #FFF7D1 !important;
+    border-radius: 8px;
+    font-weight: 700;
+    color: #1a2238 !important;
+  }
 </style>

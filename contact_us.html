@@ -365,11 +365,10 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="profile" title="User Profile" onclick="toggleUserMenu()" style="display:none;">
+        <div class="profile" title="User Profile" id="userProfileIcon" tabindex="0">
             <i class="fa-solid fa-user"></i>
         </div>
         <nav>
-<<<<<<< HEAD
             <a href="home.html">HOME</a>
             <a href="about-us.html">ABOUT US</a>
             <a href="rooms.html">ROOMS</a>
@@ -377,20 +376,6 @@
             <a href="gallery.html">GALLERY</a>
             <a href="contact_us.html" class="active">CONTACT US</a>
             <a href="locations.html">LOCATIONS</a>
-=======
-            <div class="nav-left">
-                <i class="fas fa-user-circle user-icon"></i>
-            </div>
-            <ul class="nav-right">
-                <li><a href="index.html">HOME</a></li>
-                <li><a href="about-us.html">ABOUT US</a></li>
-                <li><a href="rooms.html">ROOMS</a></li>
-                <li><a href="#">SERVICES</a></li>
-                <li><a href="gallery.html">GALLERY</a></li>
-                <li><a href="contact_us.html">CONTACT US</a></li>
-                <li><a href="#">LOCATIONS</a></li>
-            </ul>
->>>>>>> 6a18fabbe4a30037549819923ef10190e1eefe3f
         </nav>
     </header>
 
@@ -412,11 +397,33 @@
         <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
     </div>
 
+    <!-- Custom Modal for Request Callback -->
+    <div id="callbackModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+      <div style="background:#fff; border-radius:18px; max-width:350px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative;">
+        <h2 style="color:#1a2238; font-size:1.3rem; margin-bottom:1.2rem;">Request a Callback</h2>
+        <input id="callbackName" type="text" placeholder="Your Name" style="width:100%;padding:0.7rem 1rem;margin-bottom:1rem;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
+        <input id="callbackPhone" type="text" placeholder="Your Phone Number" style="width:100%;padding:0.7rem 1rem;margin-bottom:1.2rem;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
+        <div style="display:flex;gap:1rem;justify-content:center;">
+          <button onclick="submitCallbackModal()" style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">Submit</button>
+          <button onclick="closeCallbackModal()" style="background:#eee;color:#222;font-weight:600;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Modal for Callback Confirmation -->
+    <div id="callbackConfirmModal" style="display:none; position:fixed; z-index:2001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+      <div style="background:#fff; border-radius:18px; max-width:350px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative;">
+        <h2 style="color:#1a2238; font-size:1.2rem; margin-bottom:1.2rem;">Thank You!</h2>
+        <div id="callbackConfirmMsg" style="color:#222; font-size:1.05rem; margin-bottom:1.5rem;"></div>
+        <button onclick="closeCallbackConfirmModal()" style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">OK</button>
+      </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const loggedIn = localStorage.getItem('pv_logged_in') === '1';
             const username = localStorage.getItem('pv_username') || 'User';
-            const profileIcon = document.querySelector('.profile');
+            const profileIcon = document.getElementById('userProfileIcon');
             const userDropdown = document.getElementById('userDropdown');
             if (profileIcon && userDropdown) {
                 if (loggedIn) {
@@ -444,7 +451,7 @@
         }
         window.onclick = function(event) {
             const userDropdown = document.getElementById('userDropdown');
-            const userIcon = document.querySelector('.profile');
+            const userIcon = document.getElementById('userProfileIcon');
                 if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
       userDropdown.classList.remove('show');
     }
@@ -708,42 +715,38 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-col" style="display: flex; justify-content: center; align-items: center;">
-                <div class="footer-logo">
-                    <img src="images/logo.png" alt="Pearl Vista Logo"> PEARL VISTA
-                </div>
+    <footer class="footer" style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
+        <div class="footer-content" style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+            <div class="footer-col" style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+                <img src="images/logo.png" alt="Pearl Vista Logo" style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
             </div>
-            <div class="footer-col">
-                <div style="font-weight:600;margin-bottom:0.7rem;">Quick Links</div>
-                <ul class="footer-links">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="reviews.html">Reviews</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact_us.html">Help</a></li>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+                <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Quick Links</div>
+                <ul style="list-style:none; padding:0; margin:0; line-height:2;">
+                    <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a></li>
+                    <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+                    <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+                    <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+                    <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy Policy</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <div style="font-weight:600;margin-bottom:0.7rem;">Contact</div>
-                <ul class="footer-contact">
-                    <li><i class="fa-solid fa-phone"></i> +1 (212) 555-0123</li>
-                    <li><i class="fa-solid fa-envelope"></i> info@pearlvista.com</li>
-                    <li><i class="fa-solid fa-location-dot"></i> Manhattan, NY</li>
-                </ul>
+            <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+                <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Contact</div>
+                <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212) 555-0123</div>
+                <div style="margin-bottom:8px;"><i class="fa fa-envelope" style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
+                <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
             </div>
-            <div class="footer-col">
-                <div style="font-weight:600;margin-bottom:0.7rem;">Follow Us</div>
-                <div class="footer-social">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+            <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+                <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Follow Us</div>
+                <div style="display:flex; gap:18px; justify-content:flex-start;">
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">&copy; 2025 Pearl Vista. All rights reserved.</div>
+        <div class="footer-bottom" style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">© 2025 Pearl Vista. All rights reserved.</div>
     </footer>
 
     <script src="main.js"></script>
@@ -767,12 +770,27 @@
         }
 
         function requestCallback() {
-            const name = prompt('Please enter your name:');
-            const phone = prompt('Please enter your phone number:');
-            
+            document.getElementById('callbackModal').style.display = 'flex';
+            document.getElementById('callbackName').value = '';
+            document.getElementById('callbackPhone').value = '';
+        }
+        function closeCallbackModal() {
+            document.getElementById('callbackModal').style.display = 'none';
+        }
+        function submitCallbackModal() {
+            const name = document.getElementById('callbackName').value.trim();
+            const phone = document.getElementById('callbackPhone').value.trim();
             if (name && phone) {
-                showNotification('Thank you! We will call you back within 24 hours.', 'success');
+                closeCallbackModal();
+                // Show custom confirmation modal
+                document.getElementById('callbackConfirmMsg').innerHTML = `Thank you, <b>${name}</b>! Our team will call you back at <b>${phone}</b> within 24 hours.<br>We appreciate your interest in Pearl Vista.`;
+                document.getElementById('callbackConfirmModal').style.display = 'flex';
+            } else {
+                alert('Please provide both your name and phone number to request a callback.');
             }
+        }
+        function closeCallbackConfirmModal() {
+            document.getElementById('callbackConfirmModal').style.display = 'none';
         }
 
         function openChat() {

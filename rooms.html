@@ -11,6 +11,105 @@
   <link rel="icon" type="image/x-icon" href="images/logo.png" />
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  <style>
+    .enhanced-booking-modal {
+      animation: bookingCardPop 0.25s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes bookingCardPop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    /* Hide scrollbar for modal */
+    .booking-modal-card {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+    }
+    .booking-modal-card::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+    /* End hide scrollbar */
+    .booking-label {
+      font-weight: 800;
+      font-size: 1.13rem;
+      color: #1a1a1a;
+      margin-bottom: 0.18rem;
+      letter-spacing: 0.1px;
+    }
+    .booking-input {
+      border-radius: 10px;
+      border: 1.5px solid #e0e0e0;
+      padding: 0.7rem 1rem;
+      font-size: 1.08rem;
+      background: #f8f9fa;
+      color: #1a365d;
+      transition: border 0.2s;
+    }
+    .booking-input:focus {
+      border: 2px solid #d4af37;
+      background: #fff;
+      outline: none;
+    }
+    .enhanced-input {
+      border-radius: 10px;
+      border: 1.5px solid #e0e0e0;
+      padding: 0.7rem 1rem;
+      font-size: 1.08rem;
+      background: #f8f9fa;
+      color: #1a365d;
+      transition: border 0.2s;
+    }
+    .enhanced-input:focus {
+      border: 2px solid #d4af37;
+      background: #fff;
+      outline: none;
+    }
+    .luxury-btn-filled {
+      background: #d4af37;
+      color: #222;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .luxury-btn-filled:hover {
+      background: #bfa13a;
+      color: #fff;
+    }
+    .luxury-btn-outline {
+      background: transparent;
+      color: #d4af37;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.1rem;
+      border: 2px solid #d4af37;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .luxury-btn-outline:hover {
+      background: #d4af37;
+      color: #fff;
+    }
+    .enhanced-submit-btn {
+      background: #d4af37;
+      color: #222;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 0.9rem 2.2rem;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 0.5rem;
+    }
+    .enhanced-submit-btn:hover {
+      background: #bfa13a;
+      color: #fff;
+    }
+  </style>
 </head>
 
 <body>
@@ -320,7 +419,7 @@
         <h2>Ready to Book Your Stay?</h2>
         <p>Experience luxury and comfort at The Pearl Vista</p>
         <div class="cta-buttons">
-          <button class="btn signup" onclick="window.location.href='home.html'">Book Now</button>
+          <button class="btn signup" id="openBookingModalBtn">Book Now</button>
           <button class="btn login" onclick="window.location.href='contact_us.html'">Contact Us</button>
         </div>
       </div>
@@ -330,41 +429,226 @@
 
 
   <!-- Footer -->
-  <footer style="background:#181818; color:#fff; padding:40px 0 0 0; margin-top:48px;">
-    <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:32px; padding:0 32px;">
-      <div style="flex:1 1 180px; min-width:180px; display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
-        <img src="images/logo.png" alt="Pearl Vista Logo" style="height:32px; margin-bottom:8px;">
-        <div style="font-size:2rem; font-family:'Playfair Display',serif; font-weight:700; color:#fff;">PEARL<br>VISTA</div>
+  <footer class="footer" style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
+    <div class="footer-content" style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+      <div class="footer-col" style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+        <img src="images/logo.png" alt="Pearl Vista Logo" style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
       </div>
-      <div style="flex:1 1 180px; min-width:180px;">
-        <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Quick Links</div>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Quick Links</div>
         <ul style="list-style:none; padding:0; margin:0; line-height:2;">
-          <li><a href="home.html" style="color:#fff; text-decoration:none;">Home</a></li>
-          <li><a href="reviews.html" style="color:#fff; text-decoration:none;">Reviews</a></li>
-          <li><a href="gallery.html" style="color:#fff; text-decoration:none;">Gallery</a></li>
-          <li><a href="contact_us.html" style="color:#fff; text-decoration:none;">Help</a></li>
-          <li><a href="privacy-policy.html" style="color:#fff; text-decoration:none;">Privacy Policy</a></li>
+          <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a></li>
+          <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+          <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+          <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+          <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy Policy</a></li>
         </ul>
       </div>
-      <div style="flex:1 1 220px; min-width:220px;">
-        <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Contact</div>
+      <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Contact</div>
         <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212) 555-0123</div>
         <div style="margin-bottom:8px;"><i class="fa fa-envelope" style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
         <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
       </div>
-      <div style="flex:1 1 180px; min-width:180px;">
-        <div style="font-weight:700; color:#FFD700; margin-bottom:10px; font-size:1.1rem;">Follow Us</div>
-        <div style="display:flex; gap:16px;">
-          <a href="#" style="color:#FFD700; font-size:1.3rem;"><i class="fab fa-facebook"></i></a>
-          <a href="#" style="color:#FFD700; font-size:1.3rem;"><i class="fab fa-instagram"></i></a>
-          <a href="#" style="color:#FFD700; font-size:1.3rem;"><i class="fab fa-twitter"></i></a>
-          <a href="#" style="color:#FFD700; font-size:1.3rem;"><i class="fab fa-youtube"></i></a>
+      <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+        <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Follow Us</div>
+        <div style="display:flex; gap:18px; justify-content:flex-start;">
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-facebook"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-instagram"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
     </div>
-    <div style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px;">© 2025 Pearl Vista. All rights reserved.</div>
+    <div class="footer-bottom" style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">© 2025 Pearl Vista. All rights reserved.</div>
   </footer>
 
+  <!-- Booking Modal Popup -->
+  <div id="bookingModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:440px; width:94vw; margin:auto; padding:2rem 2rem 1.2rem 2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:auto; display:flex; flex-direction:column; border:2.5px solid #FFD700;">
+      <button id="closeBookingModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+      <div style="text-align:center; margin-bottom:1.3rem;">
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Book Your Stay</div>
+        <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
+      </div>
+      <form id="bookingForm" style="display:flex; flex-direction:column; gap:1.2rem;">
+        <label for="name" class="booking-label">Name</label>
+        <input type="text" id="name" name="name" required class="booking-input enhanced-input">
+        <label for="phone" class="booking-label">Phone No.</label>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9\-\+\s]{7,15}" class="booking-input enhanced-input">
+        <label for="email" class="booking-label">Email</label>
+        <input type="email" id="email" name="email" required class="booking-input enhanced-input">
+        <label for="idType" class="booking-label">ID for Verification</label>
+        <select id="idType" name="idType" required class="booking-input enhanced-input">
+          <option value="">Select Document Type</option>
+          <option value="Passport">Passport</option>
+          <option value="Aadhar Card">Aadhar Card</option>
+          <option value="Pan Card">Pan Card</option>
+          <option value="Government ID">Government ID</option>
+          <option value="Others">Others</option>
+        </select>
+        <div id="idUploadWrapper" style="display:none; flex-direction:column; gap:0.5rem;">
+          <label for="idUpload" class="booking-label">Upload Document (PDF/Image)</label>
+          <input type="file" id="idUpload" name="idUpload" accept=".pdf,image/*" required class="booking-input enhanced-input">
+        </div>
+        <label for="rooms" class="booking-label">No. of Rooms</label>
+        <input type="number" id="rooms" name="rooms" min="1" max="10" value="1" required class="booking-input enhanced-input">
+        <label for="checkin" class="booking-label">Check-in Date</label>
+        <input type="date" id="checkin" name="checkin" required class="booking-input enhanced-input">
+        <label for="checkout" class="booking-label">Check-out Date</label>
+        <input type="date" id="checkout" name="checkout" required class="booking-input enhanced-input">
+        <label for="guests" class="booking-label">Guests</label>
+        <input type="number" id="guests" name="guests" min="1" max="10" value="1" required class="booking-input enhanced-input">
+        <label for="roomType" class="booking-label">Room Type</label>
+        <select id="roomType" name="roomType" required class="booking-input enhanced-input">
+          <option value="Pearl Signature Room">Pearl Signature Room</option>
+          <option value="Deluxe Room">Deluxe Room</option>
+          <option value="Premium Room">Premium Room</option>
+          <option value="Executive Room">Executive Room</option>
+          <option value="Luxury Suite">Luxury Suite</option>
+          <option value="Family Suite">Family Suite</option>
+        </select>
+        <label for="specialInstructions" class="booking-label">Special Instructions</label>
+        <textarea id="specialInstructions" name="specialInstructions" rows="3" placeholder="Any special requests or instructions?" class="booking-input enhanced-input"></textarea>
+        <button type="submit" class="luxury-btn-filled enhanced-submit-btn">Submit Booking</button>
+      </form>
+    </div>
+  </div>
+  <!-- Booking Confirmation Modal -->
+  <div id="bookingConfirmationModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:10000; align-items:center; justify-content:center;">
+    <div style="background:#fff; color:#222; border-radius:28px; max-width:370px; width:92vw; margin:auto; padding:2.2rem 1.7rem 1.5rem 1.7rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.18), 0 2px 16px rgba(0,0,0,0.13); display:flex; flex-direction:column; align-items:center; border:3px solid #FFD700;">
+      <div style="background:#FFD700; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; margin-bottom:1.1rem; box-shadow:0 2px 8px rgba(212,175,55,0.18);">
+        <i class="fa fa-check" style="color:#222; font-size:2.2rem;"></i>
+      </div>
+      <h3 style="color:#1a1a1a; font-size:1.35rem; font-weight:800; margin-bottom:0.7rem; text-align:center; font-family:'Playfair Display',serif;">Thank you for your booking!</h3>
+      <div id="confirmationDetails" style="font-size:1.08rem; color:#333; margin-bottom:1.4rem; text-align:center; line-height:1.6;"></div>
+      <button id="downloadReceiptBtn" class="luxury-btn-filled" style="margin-bottom:0.7rem; width:100%; font-size:1.08rem; border-width:2.5px;">Download Receipt</button>
+      <button id="closeConfirmationBtn" class="luxury-btn-outline" style="width:100%; font-size:1.08rem; border-width:2.5px;">Close</button>
+    </div>
+  </div>
+  <!-- Hidden Booking Receipt Template -->
+  <div id="bookingReceiptTemplate" style="display:none; font-family:'Lato',Arial,sans-serif;">
+    <div style="max-width:520px; margin:auto; background:#fff; color:#222; border-radius:16px; box-shadow:0 4px 24px rgba(26,34,56,0.10); border:1.5px solid #eee;">
+      <div style="text-align:center; padding:1.2rem 1.5rem 0.5rem 1.5rem;">
+        <img src="images/logo.png" alt="Pearl Vista Logo" style="height:32px; margin-bottom:0.2rem;">
+        <div style="font-size:1.45rem; font-weight:900; letter-spacing:1px; margin-bottom:0.1rem;">THE PEARL VISTA</div>
+        <div style="font-size:1.08rem; font-weight:700; color:#bfa13a; letter-spacing:1px;">BOOKING RECEIPT</div>
+        <div style="height:3px; background:#FFD700; width:60px; margin:0.7rem auto 0.7rem auto; border-radius:2px;"></div>
+        <div style="text-align:right; font-size:0.98rem; color:#444; margin-top:-2.2rem; margin-bottom:0.5rem;">Date: <span id="receiptDate"></span></div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; padding:0 1.5rem 0.5rem 1.5rem;">
+        <div style="flex:1 1 200px; min-width:180px;">
+          <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Guest Details</div>
+          <div id="receiptGuestName" style="font-size:1.01rem;"></div>
+          <div id="receiptGuestEmail" style="font-size:1.01rem;"></div>
+          <div id="receiptGuestPhone" style="font-size:1.01rem;"></div>
+        </div>
+        <div style="flex:1 1 200px; min-width:180px;">
+          <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Booking Details</div>
+          <div id="receiptBookingId" style="font-size:1.01rem;"></div>
+          <div id="receiptCheckin" style="font-size:1.01rem;"></div>
+          <div id="receiptCheckout" style="font-size:1.01rem;"></div>
+          <div id="receiptGuests" style="font-size:1.01rem;"></div>
+          <div id="receiptRooms" style="font-size:1.01rem;"></div>
+          <div id="receiptRoomType" style="font-size:1.01rem;"></div>
+        </div>
+      </div>
+      <div style="padding:0.5rem 1.5rem 0.5rem 1.5rem; border-top:1px solid #eee; border-bottom:1px solid #eee; margin:1rem 0 1rem 0;">
+        <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Payment Details</div>
+        <div id="receiptAmount" style="font-size:1.01rem;"></div>
+        <div id="receiptPaymentMode" style="font-size:1.01rem;"></div>
+        <div id="receiptDeadline" style="font-size:1.01rem;"></div>
+        <div style="font-size:1.13rem; font-weight:900; color:#bfa13a; margin-top:0.7rem;">Total Amount : <span id="receiptTotal"></span></div>
+      </div>
+      <div id="receiptSpecialInstructionsSection" style="display:none; padding:0.5rem 1.5rem 0.5rem 1.5rem;">
+        <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Special Instructions</div>
+        <div id="receiptSpecialInstructions" style="font-size:1.01rem; color:#444;"></div>
+      </div>
+      <div style="padding:1.1rem 1.5rem 0.5rem 1.5rem; text-align:center;">
+        <span style="background:#e6ffe6; border-radius:50%; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:0.3rem;"><i class="fa fa-check" style="color:#1a8f2b;"></i></span>
+        <div style="font-size:1.08rem; color:#1a8f2b; font-weight:700; display:inline-block; margin-left:0.5rem;">Thank You For Choosing THE PEARL VISTA</div>
+      </div>
+      <div style="padding:0 1.5rem 1.2rem 1.5rem; text-align:center; color:#888; font-size:1.01rem; font-style:italic;">We are grateful for your trust in us. Wishing you a wonderful stay and memorable experience!</div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('openBookingModalBtn').onclick = function() {
+      document.getElementById('bookingModal').style.display = 'flex';
+    };
+    document.getElementById('closeBookingModalBtn').onclick = function() {
+      document.getElementById('bookingModal').style.display = 'none';
+    };
+    document.getElementById('idType').onchange = function() {
+      var wrapper = document.getElementById('idUploadWrapper');
+      if (this.value) {
+        wrapper.style.display = 'flex';
+        document.getElementById('idUpload').required = true;
+      } else {
+        wrapper.style.display = 'none';
+        document.getElementById('idUpload').required = false;
+        document.getElementById('idUpload').value = '';
+      }
+    };
+    document.getElementById('bookingForm').onsubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('bookingModal').style.display = 'none';
+      // Fill confirmation details with personalized info
+      var name = document.getElementById('name').value;
+      var roomType = document.getElementById('roomType').value;
+      var checkin = document.getElementById('checkin').value;
+      var checkout = document.getElementById('checkout').value;
+      var guests = document.getElementById('guests').value;
+      var rooms = document.getElementById('rooms').value;
+      document.getElementById('confirmationDetails').innerHTML =
+        'Thank you, <b>' + name + '</b>!<br>Your booking for <b>' + roomType + '</b> (' + rooms + ' room(s), ' + guests + ' guest(s))<br>from <b>' + checkin + '</b> to <b>' + checkout + '</b> has been received.';
+      document.getElementById('bookingConfirmationModal').style.display = 'flex';
+    };
+    document.getElementById('closeConfirmationBtn').onclick = function() {
+      document.getElementById('bookingConfirmationModal').style.display = 'none';
+    };
+    document.getElementById('downloadReceiptBtn').onclick = function() {
+      // Gather booking details
+      var name = document.getElementById('name').value;
+      var phone = document.getElementById('phone').value;
+      var email = document.getElementById('email').value;
+      var idType = document.getElementById('idType').value;
+      var rooms = document.getElementById('rooms').value;
+      var checkin = document.getElementById('checkin').value;
+      var checkout = document.getElementById('checkout').value;
+      var guests = document.getElementById('guests').value;
+      var roomType = document.getElementById('roomType').value;
+      var special = document.getElementById('specialInstructions').value;
+      // Fill receipt fields
+      document.getElementById('receiptDate').textContent = new Date().toISOString().slice(0,10);
+      document.getElementById('receiptGuestName').innerHTML = '<b>Guest Name :</b> ' + name;
+      document.getElementById('receiptGuestEmail').innerHTML = '<b>Email :</b> ' + email;
+      document.getElementById('receiptGuestPhone').innerHTML = '<b>Phone No. :</b> ' + phone;
+      document.getElementById('receiptBookingId').innerHTML = '<b>Booking Id :</b> PV' + Math.floor(Math.random()*90000+10000);
+      document.getElementById('receiptCheckin').innerHTML = '<b>Check-In Date :</b> ' + checkin;
+      document.getElementById('receiptCheckout').innerHTML = '<b>Check-Out Date :</b> ' + checkout;
+      document.getElementById('receiptGuests').innerHTML = '<b>No. Of Guests :</b> ' + guests;
+      document.getElementById('receiptRooms').innerHTML = '<b>No. Of Rooms :</b> ' + rooms;
+      document.getElementById('receiptRoomType').innerHTML = '<b>Booked Room :</b> ' + roomType;
+      document.getElementById('receiptAmount').innerHTML = '<b>Amount To Be Paid At Reception For Booking Confirmation :</b> $11925';
+      document.getElementById('receiptPaymentMode').innerHTML = '<b>Payment Mode :</b> Cash';
+      document.getElementById('receiptDeadline').innerHTML = '<b>Payment Deadline :</b> Within 72 Hours of booking';
+      document.getElementById('receiptTotal').textContent = '$26500';
+      if (special && special.trim() !== "") {
+        document.getElementById('receiptSpecialInstructionsSection').style.display = 'block';
+        document.getElementById('receiptSpecialInstructions').textContent = special;
+      } else {
+        document.getElementById('receiptSpecialInstructionsSection').style.display = 'none';
+        document.getElementById('receiptSpecialInstructions').textContent = '';
+      }
+      // Show and download PDF
+      var element = document.getElementById('bookingReceiptTemplate');
+      element.style.display = 'block';
+      html2pdf().set({ margin:0.2, filename:'PearlVista_Booking_Receipt.pdf', html2canvas:{scale:2}, jsPDF:{unit:'in', format:'letter', orientation:'portrait'} }).from(element).save().then(() => {
+        element.style.display = 'none';
+      });
+    };
+  </script>
   <script src="main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

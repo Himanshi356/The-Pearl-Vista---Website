@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
-  
+
   <!-- Removed custom <style> block for layout and background -->
 </head>
+
 <body>
   <!-- Header (copied from home.html) -->
   <header class="header">
-    <div class="profile" title="User Profile" onclick="toggleUserMenu()" style="display:none;">
+    <div class="profile" title="User Profile" id="userProfileIcon" tabindex="0">
       <i class="fa-solid fa-user"></i>
     </div>
     <nav>
@@ -29,187 +31,616 @@
   </header>
 
   <!-- User Dropdown Menu -->
-  <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+  <div id="userDropdown" class="user-dropdown"
+    style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
     <div class="user-header">Hey [User]!</div>
     <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
-      <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
-      <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
-      <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
-      <li><a href="my-itinerary.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
-      <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
-      <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
-      <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
-      <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
-      <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
-      <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+      <li><a href="user-info.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
+      <li><a href="my-bookings.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+      <li><a href="my-wishlist.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+      <li><a href="my-itinerary.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+      <li><a href="rewards.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+      <li><a href="privacy-policy.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+      <li><a href="language.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+      <li><a href="contact_us.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+      <li><a href="settings.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+      <li><a href="share.html"
+          style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
+            class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
     </ul>
-    <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
+    <div class="logout"
+      style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;"
+      onclick="logout()">Logout</div>
   </div>
 
   <!-- Main Section: Locations Grid + Guided Tour Form -->
   <main>
-    <div class="container" style="margin-top: 2.5rem; margin-bottom: 2rem;">
-      <div class="locations-main" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 2.5rem;">
-        <div class="locations-grid" style="flex: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-          <!-- Location cards (keep image frames as is) -->
-          <div class="location-card">
-            <img src="images/broadway.png" alt="Broadway Theaters">
-            <span>Broadway Theaters</span>
-          </div>
-          <div class="location-card">
-            <img src="images/madame-tussauds.png" alt="Madame Tussaud's New York">
-            <span>Madame Tussaud's New York</span>
-          </div>
-          <div class="location-card">
-            <img src="images/bryant-park.png" alt="Bryant Park">
-            <span>Bryant Park</span>
-          </div>
-          <div class="location-card">
-            <img src="images/rockefeller.png" alt="Rockefeller Center">
-            <span>Rockefeller Center</span>
-          </div>
-          <div class="location-card">
-            <img src="images/empire-state.png" alt="Empire State Building">
-            <span>Empire State Building</span>
-          </div>
-          <div class="location-card">
-            <img src="images/circle-line.png" alt="Circle Line Cruises">
-            <span>Circle Line Cruises</span>
-          </div>
-          <div class="location-card">
-            <img src="images/hersheys.png" alt="Hershey's Chocolate World">
-            <span>Hershey's Chocolate World</span>
-          </div>
-          <div class="location-card">
-            <img src="images/grand-central.png" alt="Grand Central Terminal">
-            <span>Grand Central Terminal</span>
-          </div>
-          <div class="location-card">
-            <img src="images/hells-kitchen.png" alt="Hell's Kitchen">
-            <span>Hell's Kitchen</span>
-          </div>
+    <section class="locations-banner">
+      <h1
+        style="font-size: 4rem; font-family: 'Playfair Display', serif; font-weight: 700; margin-bottom: 1.2rem; letter-spacing: 2px;">
+        EXPLORE NYC LOCATIONS</h1>
+      <p style="font-size: 1.5rem; color: #e0e4ea; margin-bottom: 2.5rem;">Top tourist attractions near The Pearl
+        Vista—enjoy seamless access and exclusive hotel facilities for your city adventures.</p>
+      <div style="display: flex; justify-content: center; gap: 5rem; max-width: 700px; margin: 0 auto;">
+        <div class="banner-stat clean-stat">
+          <div class="stat-number">8+</div>
+          <div class="stat-label">TOP DESTINATIONS</div>
         </div>
-        <form class="guided-tour-form" style="max-width: 350px; min-width: 320px; box-shadow: 0 2px 12px rgba(26,34,56,0.10); border-radius: 22px; background: #fff; padding: 2.2rem 2rem 2rem 2rem; display: flex; flex-direction: column; align-items: center;">
-          <h2 style="font-size: 2rem; font-weight: 800; color: #222; margin-bottom: 1.2rem; font-family: 'Playfair Display', serif;">Guided Tour</h2>
-          <input type="text" placeholder="Full Name" required />
-          <input type="email" placeholder="Email" required />
-          <input type="tel" placeholder="Phone No." required />
-          <input type="date" placeholder="Tour Date" required />
-          <select required>
-            <option value="">Places To Visit</option>
-            <option>Broadway Theaters</option>
-            <option>Madame Tussaud's New York</option>
-            <option>Bryant Park</option>
-            <option>Rockefeller Center</option>
-            <option>Empire State Building</option>
-            <option>Circle Line Cruises</option>
-            <option>Hershey's Chocolate World</option>
-            <option>Grand Central Terminal</option>
-            <option>Hell's Kitchen</option>
-          </select>
-          <select required>
-            <option value="">No. Of Travellers</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5+</option>
-          </select>
-          <select required>
-            <option value="">Choose Your Vehicle</option>
-            <option>Car</option>
-            <option>Van</option>
-            <option>Bus</option>
-            <option>Limousine</option>
-          </select>
-          <input type="number" placeholder="Amount To Be Paid" min="0" required />
-          <button type="submit">BOOK NOW</button>
-        </form>
+        <div class="banner-stat clean-stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">CURATED EXPERIENCES</div>
+        </div>
+        <div class="banner-stat clean-stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">GUEST SUPPORT</div>
+        </div>
       </div>
-    </div>
+    </section>
+    <section class="section section-bg" style="padding-top: 2.5rem; padding-bottom: 2rem;">
+      <div class="locations-main-container">
+        <h2 class="section-title" style="margin-bottom: 0.5rem;">Tourist Attractions Near The Pearl Vista</h2>
+        <p style="text-align: center; color: #666; font-size: 1.15rem; margin-bottom: 2.2rem;">Explore the most popular
+          destinations just steps from our hotel. The Pearl Vista provides exclusive guest services, guided tours, and
+          travel support for all these locations.</p>
+        <div class="locations-main"
+          style="display: flex; flex-wrap: wrap; gap: 3rem; justify-content: center; align-items: flex-start;">
+          <div class="locations-grid"
+            style="flex: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.7rem; min-width: 0;">
+            <div class="location-card" style="--i:0">
+              <img src="images/Broadway_theatres (1).jpg" alt="Broadway Theaters">
+              <span>Broadway Theaters</span>
+            </div>
+            <div class="location-card" style="--i:1">
+              <img src="images/Madam_tussaud's_museum.jpg" alt="Madame Tussaud's New York">
+              <span>Madame Tussaud's New York</span>
+            </div>
+            <div class="location-card" style="--i:2">
+              <img src="images/Bryant_park.jpg" alt="Bryant Park">
+              <span>Bryant Park</span>
+            </div>
+            <div class="location-card" style="--i:3">
+              <img src="images/Rockefeller_Center.jpg" alt="Rockefeller Center">
+              <span>Rockefeller Center</span>
+            </div>
+            <div class="location-card" style="--i:4">
+              <img src="images/Empire_state_building.jpg" alt="Empire State Building">
+              <span>Empire State Building</span>
+            </div>
+            <div class="location-card" style="--i:5">
+              <img src="images/Circle_line_cruises.jpg" alt="Circle Line Cruises">
+              <span>Circle Line Cruises</span>
+            </div>
+            <div class="location-card" style="--i:6">
+              <img src="images/Hershey's_chocolate_world.jpg" alt="Hershey's Chocolate World">
+              <span>Hershey's Chocolate World</span>
+            </div>
+            <div class="location-card" style="--i:7">
+              <img src="images/Grand_central_terminal.jpg" alt="Grand Central Terminal">
+              <span>Grand Central Terminal</span>
+            </div>
+          </div>
+          <div
+            style="width: 2px; background: #f0f0f0; min-height: 420px; align-self: stretch; margin: 0 1.5rem; display: block;">
+          </div>
+          <form class="guided-tour-form"
+            style="max-width: 350px; min-width: 320px; box-shadow: 0 2px 12px rgba(26,34,56,0.10); border-radius: 22px; background: #fff; padding: 2.2rem 2rem 2rem 2rem; display: flex; flex-direction: column; align-items: center; margin-left: 0;"
+            id="tourForm">
+            <h2
+              style="font-size: 2rem; font-weight: 800; color: #222; margin-bottom: 1.2rem; font-family: 'Playfair Display', serif;">
+              Book a Guided Tour with Pearl Vista</h2>
+            <p style="color: #666; font-size: 1rem; margin-bottom: 1.2rem; text-align: center;">Let our concierge team
+              arrange a personalized city experience, including transport and tickets to these top attractions.</p>
+            <input type="text" placeholder="Full Name" required
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+            <input type="email" placeholder="Email" required
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+            <input type="tel" placeholder="Phone No." required
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+            <input type="text" id="dateInput" placeholder="Select a Date" required onfocus="(this.type='date')"
+              onblur="if(this.value===''){this.type='text'}"
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+            <!-- Custom Places to Visit Dropdown -->
+            <div style="position: relative; width: 100%; margin-bottom: 1rem;">
+              <input type="text" id="placeDisplay" placeholder="Places To Visit" readonly required
+                style="width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d; cursor: pointer;"
+                onclick="togglePlaceDropdown()">
+              <input type="hidden" id="placeSelectHidden" required>
+              <div id="placeDropdown"
+                style="display: none; position: absolute; top: 110%; left: 0; width: 100%; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 2px 12px rgba(26,34,56,0.10); z-index: 10; max-height: 180px; overflow-y: auto;">
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Broadway Theaters" class="placeOption"> Broadway Theaters</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Madame Tussaud's New York" class="placeOption"> Madame Tussaud's New
+                  York</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Bryant Park" class="placeOption"> Bryant Park</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Rockefeller Center" class="placeOption"> Rockefeller Center</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Empire State Building" class="placeOption"> Empire State Building</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Circle Line Cruises" class="placeOption"> Circle Line Cruises</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Hershey's Chocolate World" class="placeOption"> Hershey's Chocolate
+                  World</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Grand Central Terminal" class="placeOption"> Grand Central Terminal</label>
+                <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
+                    type="checkbox" value="Others" class="placeOption"> Others</label>
+              </div>
+            </div>
+            <!-- Replace the No. Of Travellers dropdown with a number input -->
+            <input id="travellersSelect" type="number" min="1" max="10" placeholder="No. Of Travellers" required
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+            <select id="vehicleSelect" required
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+              <option value="">Choose Your Vehicle</option>
+              <option>Car</option>
+              <option>Van</option>
+              <option>Bus</option>
+              <option>Limousine</option>
+            </select>
+            <input id="amountField" type="text" placeholder="Amount To Be Paid" min="0" required
+              style="margin-bottom: 1.2rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;"
+              readonly>
+            <button type="submit" class="btn gold" style="width: 100%;">BOOK NOW</button>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Footer (copied from home.html) -->
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-col" style="display: flex; justify-content: center; align-items: center;">
-        <div class="footer-logo">
-          <img src="images/logo.png" alt="Pearl Vista Logo"> PEARL VISTA
+  <!-- Footer -->
+  <footer class="footer"
+    style="background:#1a1a1a; color:#fff; padding:0; margin-top:0; border-top:4px solid #FFD700;">
+    <div style="padding:48px 0 0 0;">
+      <div class="footer-content"
+        style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+        <div class="footer-col"
+          style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+          <img src="images/logo.png" alt="Pearl Vista Logo"
+            style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
+        </div>
+        <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+          <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+            Quick
+            Links</div>
+          <ul style="list-style:none; padding:0; margin:0; line-height:2;">
+            <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a></li>
+            <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+            <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+            <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+            <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy
+                Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
+          <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+            Contact</div>
+          <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212)
+            555-0123</div>
+          <div style="margin-bottom:8px;"><i class="fa fa-envelope"
+              style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
+          <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
+        </div>
+        <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
+          <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+            Follow
+            Us</div>
+          <div style="display:flex; gap:18px; justify-content:flex-start;">
+            <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                class="fab fa-facebook"></i></a>
+            <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                class="fab fa-instagram"></i></a>
+            <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                class="fab fa-twitter"></i></a>
+            <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                class="fab fa-youtube"></i></a>
+          </div>
         </div>
       </div>
-      <div class="footer-col">
-        <div style="font-weight:600;margin-bottom:0.7rem;">Quick Links</div>
-        <ul class="footer-links">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact_us.html">Help</a></li>
-          <li><a href="privacy-policy.html">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <div style="font-weight:600;margin-bottom:0.7rem;">Contact</div>
-        <ul class="footer-contact">
-          <li><i class="fa-solid fa-phone"></i> +1 (212) 555-0123</li>
-          <li><i class="fa-solid fa-envelope"></i> info@pearlvista.com</li>
-          <li><i class="fa-solid fa-location-dot"></i> Manhattan, NY</li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <div style="font-weight:600;margin-bottom:0.7rem;">Follow Us</div>
-        <div class="footer-social">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
+      <div class="footer-bottom"
+        style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">
+        © 2025 Pearl Vista. All rights reserved.</div>
     </div>
-    <div class="footer-bottom">&copy; 2025 Pearl Vista. All rights reserved.</div>
   </footer>
 
+  <!-- Custom Booking Confirmation Modal -->
+  <div id="bookingModal"
+    style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(26,34,54,0.35); z-index:9999; align-items:center; justify-content:center;">
+    <div
+      style="background:#fff; border-radius:18px; max-width:370px; margin:auto; padding:2.2rem 1.5rem 1.5rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center;">
+      <div style="font-size:1.35rem; font-weight:700; color:#1a365d; margin-bottom:1.1rem;">Booking Confirmed!</div>
+      <div style="font-size:1.05rem; color:#333; margin-bottom:1.5rem;">Kindly visit <b>My Itinerary</b> page to view
+        your guided tour schedule.<br>Thank You for choosing <b>THE PEARL VISTA</b>.</div>
+      <button id="closeBookingModal"
+        style="background:linear-gradient(90deg,#ffe033 0%,#ffea70 100%);color:#222;font-weight:700;border:none;border-radius:18px;padding:0.6rem 2.2rem;font-size:1.08rem;box-shadow:0 2px 8px rgba(255,215,0,0.10);cursor:pointer;">OK</button>
+    </div>
+  </div>
+
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const loggedIn = localStorage.getItem('pv_logged_in') === '1';
-    const username = localStorage.getItem('pv_username') || 'User';
-    const profileIcon = document.querySelector('.profile');
-    const userDropdown = document.getElementById('userDropdown');
-    if (profileIcon && userDropdown) {
-      if (loggedIn) {
-        profileIcon.style.display = 'flex';
-        const userHeader = userDropdown.querySelector('.user-header');
-        if (userHeader) {
-          userHeader.textContent = `Hey ${username}!`;
+    document.addEventListener('DOMContentLoaded', function () {
+      const loggedIn = localStorage.getItem('pv_logged_in') === '1';
+      const username = localStorage.getItem('pv_username') || 'User';
+      const profileIcon = document.getElementById('userProfileIcon');
+      const userDropdown = document.getElementById('userDropdown');
+      if (profileIcon && userDropdown) {
+        if (loggedIn) {
+          profileIcon.style.display = 'flex';
+          const userHeader = userDropdown.querySelector('.user-header');
+          if (userHeader) {
+            userHeader.textContent = `Hey ${username}!`;
+          }
+        } else {
+          profileIcon.style.display = 'none';
+          userDropdown.classList.remove('show');
         }
-      } else {
-        profileIcon.style.display = 'none';
+      }
+      if (userDropdown) userDropdown.classList.remove('show');
+      // Booking confirmation alert on form submit
+      const form = document.getElementById('tourForm');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Get all required fields
+        const fullName = document.querySelector('input[placeholder="Full Name"]').value.trim();
+        const email = document.querySelector('input[placeholder="Email"]').value.trim();
+        const phone = document.querySelector('input[placeholder="Phone No."]').value.trim();
+        const date = document.getElementById('dateInput').value.trim();
+        const places = document.getElementById('placeSelectHidden').value.split(',').map(p => p.trim()).filter(p => p);
+        const travellers = document.getElementById('travellersSelect').value;
+        const vehicle = document.getElementById('vehicleSelect').value;
+        const allFilled = fullName && email && phone && date && places.length && travellers && vehicle;
+        if (allFilled) {
+          // Show custom modal
+          document.getElementById('bookingModal').style.display = 'flex';
+        } else {
+          alert('Please fill all required fields to confirm your booking.');
+        }
+      });
+      // Modal close button
+      document.getElementById('closeBookingModal').onclick = function () {
+        document.getElementById('bookingModal').style.display = 'none';
+      };
+    });
+    const userIcon = document.getElementById('userProfileIcon');
+    if (userIcon) {
+      userIcon.addEventListener('click', function (event) {
+        event.stopPropagation();
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown) {
+          userDropdown.classList.toggle('show');
+        }
+      });
+    }
+    window.onclick = function (event) {
+      const userDropdown = document.getElementById('userDropdown');
+      const userIcon = document.getElementById('userProfileIcon');
+      if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
         userDropdown.classList.remove('show');
       }
+    };
+    function logout() {
+      localStorage.removeItem('pv_logged_in');
+      localStorage.removeItem('pv_username');
+      window.location.href = 'index.html';
     }
-    if (userDropdown) userDropdown.classList.remove('show');
-  });
-  const userIcon = document.querySelector('.profile');
-  if (userIcon) {
-    userIcon.addEventListener('click', function(event) {
-      event.stopPropagation();
-      const userDropdown = document.getElementById('userDropdown');
-      if (userDropdown) {
-        userDropdown.classList.toggle('show');
+  </script>
+  <style>
+    /* Gradient banner overlay */
+    .locations-banner {
+      position: relative;
+      background: linear-gradient(120deg, #1a2236 80%, #ffe033 200%);
+      color: #fff;
+      padding: 4rem 0 3rem 0;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .locations-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(26, 34, 54, 0.95) 70%, rgba(255, 224, 51, 0.08) 100%);
+      z-index: 0;
+    }
+
+    .locations-banner>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Banner stats animation */
+    .banner-stat {
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+    }
+
+    .banner-stat:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 24px #ffe03344;
+    }
+
+    /* Section title underline */
+    .section-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 4px;
+      margin: 0.5rem auto 0 auto;
+      background: linear-gradient(90deg, #ffe033 0%, #fffbe6 100%);
+      border-radius: 2px;
+    }
+
+    /* Main card container gradient border and shadow */
+    .locations-main-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      box-shadow: 0 8px 32px rgba(26, 34, 56, 0.13);
+      border-radius: 32px;
+      background: #fff;
+      padding: 2.5rem 2rem;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+    }
+
+    .locations-main-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      padding: 2px;
+      background: linear-gradient(120deg, #ffe033 0%, #fffbe6 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .locations-main-container>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Section background pattern */
+    .section-bg {
+      background: repeating-linear-gradient(135deg, #f7f8fa, #f7f8fa 40px, #f9f9fb 40px, #f9f9fb 80px);
+    }
+
+    /* Card glowing effect on hover */
+    .location-card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 2px 12px rgba(26, 34, 56, 0.10);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.2rem 1rem 1.2rem 1rem;
+      transition: box-shadow 0.22s, transform 0.22s, border 0.22s;
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 0.7s forwards;
+    }
+
+    .location-card:hover {
+      box-shadow: 0 12px 36px rgba(26, 34, 56, 0.18), 0 0 0 4px #ffe03355;
+      transform: translateY(-8px) scale(1.04);
+      border: 2px solid #ffe033;
+    }
+
+    .location-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      margin-bottom: 1rem;
+      display: block;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .location-card:hover img {
+      transform: scale(1.07);
+      box-shadow: 0 6px 24px rgba(26, 34, 56, 0.13);
+    }
+
+    .location-card span {
+      font-weight: 600;
+      color: #222;
+      text-align: center;
+      font-size: 1.15rem;
+      transition: color 0.22s;
+    }
+
+    .location-card:hover span {
+      color: #ffe033;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Staggered animation for cards */
+    .locations-grid .location-card {
+      animation-delay: calc(var(--i, 0) * 0.08s);
+    }
+
+    /* Gold gradient button for form */
+    .btn.gold {
+      background: linear-gradient(90deg, #ffe033 0%, #ffea70 100%);
+      color: #222 !important;
+      font-weight: 700;
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.10);
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    }
+
+    .btn.gold:hover {
+      background: linear-gradient(90deg, #ffea70 0%, #ffe033 100%);
+      color: #000 !important;
+      box-shadow: 0 4px 16px #ffe03355;
+    }
+
+    .count-static {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #ffe033;
+      text-align: center;
+      margin-bottom: 0.2rem;
+      letter-spacing: 1px;
+    }
+
+    .clean-stat {
+      background: none;
+      box-shadow: none;
+      border: none;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.7rem;
+      font-weight: 700;
+      color: #FFD700;
+      font-family: 'Lato', Arial, sans-serif;
+      margin-bottom: 0.2rem;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 1.05rem;
+      color: #fff;
+      font-family: 'Lato', Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      margin-top: 0.2rem;
+      line-height: 1.2;
+    }
+  </style>
+  <script>
+    // Banner stat count up effect
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.banner-stat .count').forEach(el => {
+        const target = +el.dataset.target;
+        let count = 0;
+        const step = Math.ceil(target / 40);
+        const update = () => {
+          count += step;
+          if (count >= target) {
+            el.textContent = target + (el.dataset.suffix || '');
+          } else {
+            el.textContent = count + (el.dataset.suffix || '');
+            requestAnimationFrame(update);
+          }
+        };
+        update();
+      });
+    });
+
+    // Custom dropdown for Places to Visit
+    function togglePlaceDropdown() {
+      const dropdown = document.getElementById('placeDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+    window.togglePlaceDropdown = togglePlaceDropdown;
+    document.addEventListener('click', function (event) {
+      const display = document.getElementById('placeDisplay');
+      const dropdown = document.getElementById('placeDropdown');
+      if (!display.contains(event.target) && !dropdown.contains(event.target)) {
+        dropdown.style.display = 'none';
       }
     });
-  }
-  window.onclick = function(event) {
-    const userDropdown = document.getElementById('userDropdown');
-    const userIcon = document.querySelector('.profile');
-    if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
-      userDropdown.classList.remove('show');
+    function updatePlaceSelection() {
+      const checkboxes = document.querySelectorAll('.placeOption');
+      const selected = [];
+      checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
+      document.getElementById('placeDisplay').value = selected.length ? selected.join(', ') : '';
+      document.getElementById('placeSelectHidden').value = selected.join(',');
+      calculateAmount();
     }
-  };
-  function logout() {
-    localStorage.removeItem('pv_logged_in');
-    localStorage.removeItem('pv_username');
-    window.location.href = 'index.html';
-  }
+    document.querySelectorAll('.placeOption').forEach(cb => {
+      cb.addEventListener('change', updatePlaceSelection);
+    });
+
+    function calculateAmount() {
+      console.log('Calculating amount...');
+      // Get all selected places
+      const placeHidden = document.getElementById('placeSelectHidden').value;
+      let places = [];
+      if (placeHidden) {
+        places = placeHidden.split(',').map(p => p.trim()).filter(p => p);
+      }
+      const travellers = document.getElementById('travellersSelect').value;
+      const vehicle = document.getElementById('vehicleSelect').value;
+      // Get all required fields above amount
+      const fullName = document.querySelector('input[placeholder="Full Name"]').value.trim();
+      const email = document.querySelector('input[placeholder="Email"]').value.trim();
+      const phone = document.querySelector('input[placeholder="Phone No."]').value.trim();
+      const date = document.getElementById('dateInput').value.trim();
+      // Check if all required fields are filled
+      const allFilled = fullName && email && phone && date && places.length && travellers && vehicle;
+      // Calculate base for all selected places
+      let base = 0;
+      places.forEach(place => {
+        if (place === 'Others') base += 40;
+        else base += 50;
+      });
+      let numTravellers = parseInt(travellers);
+      if (!numTravellers || numTravellers < 1) numTravellers = 1;
+      let vehicleMultiplier = 1;
+      if (vehicle === 'Van') vehicleMultiplier = 1.5;
+      else if (vehicle === 'Bus') vehicleMultiplier = 2;
+      else if (vehicle === 'Limousine') vehicleMultiplier = 2.5;
+      const total = Math.round((base + (numTravellers - 1) * 30) * vehicleMultiplier);
+      document.getElementById('amountField').value = allFilled ? ('$' + total) : '';
+    }
+    document.getElementById('travellersSelect').addEventListener('change', calculateAmount);
+    document.getElementById('vehicleSelect').addEventListener('change', calculateAmount);
+    document.getElementById('dateInput').addEventListener('change', calculateAmount);
+    document.getElementById('dateInput').addEventListener('input', calculateAmount);
+    document.getElementById('dateInput').addEventListener('blur', calculateAmount);
+    document.getElementById('dateInput').addEventListener('focus', calculateAmount);
+    document.querySelector('input[placeholder="Full Name"]').addEventListener('input', calculateAmount);
+    document.querySelector('input[placeholder="Email"]').addEventListener('input', calculateAmount);
+    document.querySelector('input[placeholder="Phone No."]').addEventListener('input', calculateAmount);
   </script>
 </body>
-</html> 
+
+</html>
