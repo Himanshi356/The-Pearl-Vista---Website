@@ -12,102 +12,52 @@
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
   <style>
-    .enhanced-booking-modal {
-      animation: bookingCardPop 0.25s cubic-bezier(.4,0,.2,1);
-    }
-    @keyframes bookingCardPop {
-      0% { transform: scale(0.95); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    /* Hide scrollbar for modal */
-    .booking-modal-card {
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE 10+ */
-    }
-    .booking-modal-card::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
-    }
-    /* End hide scrollbar */
-    .booking-label {
-      font-weight: 800;
-      font-size: 1.13rem;
-      color: #1a1a1a;
-      margin-bottom: 0.18rem;
-      letter-spacing: 0.1px;
-    }
-    .booking-input {
-      border-radius: 10px;
-      border: 1.5px solid #e0e0e0;
-      padding: 0.7rem 1rem;
-      font-size: 1.08rem;
-      background: #f8f9fa;
-      color: #1a365d;
-      transition: border 0.2s;
-    }
-    .booking-input:focus {
-      border: 2px solid #d4af37;
-      background: #fff;
-      outline: none;
-    }
-    .enhanced-input {
-      border-radius: 10px;
-      border: 1.5px solid #e0e0e0;
-      padding: 0.7rem 1rem;
-      font-size: 1.08rem;
-      background: #f8f9fa;
-      color: #1a365d;
-      transition: border 0.2s;
-    }
-    .enhanced-input:focus {
-      border: 2px solid #d4af37;
-      background: #fff;
-      outline: none;
-    }
-    .luxury-btn-filled {
-      background: #d4af37;
-      color: #222;
-      font-weight: 700;
-      border-radius: 10px;
-      padding: 0.9rem 2.2rem;
-      font-size: 1.1rem;
-      border: none;
+    .wishlist-heart {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-    .luxury-btn-filled:hover {
-      background: #bfa13a;
-      color: #fff;
+    
+    .wishlist-heart:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-    .luxury-btn-outline {
-      background: transparent;
-      color: #d4af37;
-      font-weight: 700;
-      border-radius: 10px;
-      padding: 0.9rem 2.2rem;
-      font-size: 1.1rem;
-      border: 2px solid #d4af37;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+    
+    .wishlist-heart i {
+      font-size: 18px;
+      color: #ccc;
+      transition: all 0.3s ease;
     }
-    .luxury-btn-outline:hover {
-      background: #d4af37;
-      color: #fff;
+    
+    .wishlist-heart.active i {
+      color: #ff0000;
+      animation: heartBeat 0.6s ease;
     }
-    .enhanced-submit-btn {
-      background: #d4af37;
-      color: #222;
-      font-weight: 700;
-      border-radius: 10px;
-      padding: 0.9rem 2.2rem;
-      font-size: 1.1rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      margin-top: 0.5rem;
+    
+    .wishlist-heart:hover i {
+      color: #ff0000;
     }
-    .enhanced-submit-btn:hover {
-      background: #bfa13a;
-      color: #fff;
+    
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+    
+    .room-image {
+      position: relative;
     }
   </style>
 </head>
@@ -203,12 +153,12 @@
     <div class="container">
       <div class="featured-content">
         <div class="featured-text">
-          <h2>Sophistication Room</h2>
-          <p class="featured-description">Experience the epitome of luxury with our signature Sophistication Room. Featuring premium amenities, stunning city views, and elegant design that creates the perfect blend of comfort and sophistication.</p>
+          <h2>Pearl Signature Room</h2>
+          <p class="featured-description">The Pearl Signature Room is the crown jewel of THE PEARL VISTA hotel—our bestseller and most luxurious offering. Enjoy breathtaking views, exquisite interiors, unmatched comfort, and world-class services. Everything about this room is designed to deliver the ultimate luxury experience.</p>
           <div class="featured-amenities">
             <div class="amenity-item">
               <i class="fas fa-ruler-combined"></i>
-              <span>45 sqm</span>
+              <span>120 sqm</span>
             </div>
             <div class="amenity-item">
               <i class="fas fa-user-friends"></i>
@@ -224,13 +174,16 @@
             </div>
           </div>
           <div class="featured-price">
-            <span class="price">$265</span>
+            <span class="price">$20695</span>
             <span class="per-night">per night</span>
           </div>
-          <button class="btn signup" onclick="window.location.href='deluxe-room.html'">View Details</button>
+          <button class="btn signup" id="openSignatureDetailsBtn" type="button">View Details</button>
         </div>
         <div class="featured-image">
-          <img src="images/sophistication-room.png" alt="Sophistication Room" loading="lazy">
+          <div class="wishlist-heart" onclick="toggleWishlist('pearl-signature')">
+            <i class="fas fa-heart" id="pearl-signature-heart"></i>
+          </div>
+          <img src="images/sophistication-room.png" alt="Pearl Signature Room" loading="lazy">
         </div>
       </div>
     </div>
@@ -249,9 +202,12 @@
       <div class="rooms-grid">
         <div class="room-card">
           <div class="room-image">
+            <div class="wishlist-heart" onclick="toggleWishlist('deluxe-room')">
+              <i class="fas fa-heart" id="deluxe-room-heart"></i>
+            </div>
             <img src="images/deluxe-room.png" alt="Deluxe Room" loading="lazy">
             <div class="room-overlay">
-              <button class="btn signup" onclick="window.location.href='deluxe-room.html'">View Details</button>
+              <button class="btn signup" id="openDeluxeDetailsBtn" type="button">View Details</button>
             </div>
           </div>
           <div class="room-content">
@@ -263,7 +219,7 @@
               <span><i class="fas fa-bed"></i> King Bed</span>
             </div>
             <div class="room-price">
-              <span class="price">$180</span>
+              <span class="price">$3240</span>
               <span class="per-night">per night</span>
             </div>
           </div>
@@ -271,9 +227,12 @@
 
         <div class="room-card">
           <div class="room-image">
+            <div class="wishlist-heart" onclick="toggleWishlist('premium-room')">
+              <i class="fas fa-heart" id="premium-room-heart"></i>
+            </div>
             <img src="images/premium-room.png" alt="Premium Room" loading="lazy">
             <div class="room-overlay">
-              <button class="btn signup">View Details</button>
+              <button class="btn signup" id="openPremiumDetailsBtn" type="button">View Details</button>
             </div>
           </div>
           <div class="room-content">
@@ -285,7 +244,7 @@
               <span><i class="fas fa-bed"></i> King Bed</span>
             </div>
             <div class="room-price">
-              <span class="price">$220</span>
+              <span class="price">$5580</span>
               <span class="per-night">per night</span>
             </div>
           </div>
@@ -293,9 +252,12 @@
 
         <div class="room-card">
           <div class="room-image">
+            <div class="wishlist-heart" onclick="toggleWishlist('executive-room')">
+              <i class="fas fa-heart" id="executive-room-heart"></i>
+            </div>
             <img src="images/executive-room.png" alt="Executive Room" loading="lazy">
             <div class="room-overlay">
-              <button class="btn signup">View Details</button>
+              <button class="btn signup" id="openExecutiveDetailsBtn" type="button">View Details</button>
             </div>
           </div>
           <div class="room-content">
@@ -307,7 +269,7 @@
               <span><i class="fas fa-bed"></i> King Bed</span>
             </div>
             <div class="room-price">
-              <span class="price">$280</span>
+              <span class="price">$8790</span>
               <span class="per-night">per night</span>
             </div>
           </div>
@@ -315,9 +277,12 @@
 
         <div class="room-card">
           <div class="room-image">
+            <div class="wishlist-heart" onclick="toggleWishlist('luxury-suite')">
+              <i class="fas fa-heart" id="luxury-suite-heart"></i>
+            </div>
             <img src="images/Luxury_suite.jpg" alt="Luxury Suite" loading="lazy">
             <div class="room-overlay">
-              <button class="btn signup">View Details</button>
+              <button class="btn signup" id="openLuxuryDetailsBtn" type="button">View Details</button>
             </div>
           </div>
           <div class="room-content">
@@ -329,7 +294,7 @@
               <span><i class="fas fa-bed"></i> King Bed</span>
             </div>
             <div class="room-price">
-              <span class="price">$450</span>
+              <span class="price">$11920</span>
               <span class="per-night">per night</span>
             </div>
           </div>
@@ -337,9 +302,12 @@
 
         <div class="room-card">
           <div class="room-image">
+            <div class="wishlist-heart" onclick="toggleWishlist('family-suite')">
+              <i class="fas fa-heart" id="family-suite-heart"></i>
+            </div>
             <img src="images/family-suite.png" alt="Family Suite" loading="lazy">
             <div class="room-overlay">
-              <button class="btn signup">View Details</button>
+              <button class="btn signup" id="openFamilyDetailsBtn" type="button">View Details</button>
             </div>
           </div>
           <div class="room-content">
@@ -351,7 +319,7 @@
               <span><i class="fas fa-bed"></i> 2 Bedrooms</span>
             </div>
             <div class="room-price">
-              <span class="price">$380</span>
+              <span class="price">$14855</span>
               <span class="per-night">per night</span>
             </div>
           </div>
@@ -419,7 +387,7 @@
         <h2>Ready to Book Your Stay?</h2>
         <p>Experience luxury and comfort at The Pearl Vista</p>
         <div class="cta-buttons">
-          <button class="btn signup" id="openBookingModalBtn">Book Now</button>
+          <button class="btn signup" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
           <button class="btn login" onclick="window.location.href='contact_us.html'">Contact Us</button>
         </div>
       </div>
@@ -463,192 +431,288 @@
     <div class="footer-bottom" style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">© 2025 Pearl Vista. All rights reserved.</div>
   </footer>
 
-  <!-- Booking Modal Popup -->
-  <div id="bookingModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
-    <div class="booking-modal-card enhanced-booking-modal" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:440px; width:94vw; margin:auto; padding:2rem 2rem 1.2rem 2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:auto; display:flex; flex-direction:column; border:2.5px solid #FFD700;">
-      <button id="closeBookingModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+  <!-- Pearl Signature Room Details Modal -->
+  <div id="signatureRoomModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal signature-modal-content" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:540px; width:94vw; margin:auto; padding:2.2rem 2.2rem 1.5rem 2.2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:scroll; display:flex; flex-direction:column; border:2.5px solid #FFD700; scrollbar-width:none; -ms-overflow-style:none;">
+      <button id="closeSignatureModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
       <div style="text-align:center; margin-bottom:1.3rem;">
-        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Book Your Stay</div>
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Pearl Signature Room</div>
         <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
       </div>
-      <form id="bookingForm" style="display:flex; flex-direction:column; gap:1.2rem;">
-        <label for="name" class="booking-label">Name</label>
-        <input type="text" id="name" name="name" required class="booking-input enhanced-input">
-        <label for="phone" class="booking-label">Phone No.</label>
-        <input type="tel" id="phone" name="phone" required pattern="[0-9\-\+\s]{7,15}" class="booking-input enhanced-input">
-        <label for="email" class="booking-label">Email</label>
-        <input type="email" id="email" name="email" required class="booking-input enhanced-input">
-        <label for="idType" class="booking-label">ID for Verification</label>
-        <select id="idType" name="idType" required class="booking-input enhanced-input">
-          <option value="">Select Document Type</option>
-          <option value="Passport">Passport</option>
-          <option value="Aadhar Card">Aadhar Card</option>
-          <option value="Pan Card">Pan Card</option>
-          <option value="Government ID">Government ID</option>
-          <option value="Others">Others</option>
-        </select>
-        <div id="idUploadWrapper" style="display:none; flex-direction:column; gap:0.5rem;">
-          <label for="idUpload" class="booking-label">Upload Document (PDF/Image)</label>
-          <input type="file" id="idUpload" name="idUpload" accept=".pdf,image/*" required class="booking-input enhanced-input">
+      <div style="display:flex; flex-direction:column; gap:1.1rem;">
+        <img src="images/sophistication-room.png" alt="Pearl Signature Room" style="width:100%; border-radius:18px; margin-bottom:1.1rem;">
+        <div style="font-size:1.13rem; color:#222; line-height:1.7;">
+          <b>The Pearl Signature Room</b> is the crown jewel of THE PEARL VISTA hotel—our bestseller and most luxurious offering. Enjoy breathtaking <b>panoramic city views</b> from your private <b>balcony</b>, exquisite interiors, and unmatched comfort.<br><br>
+          <b>Facilities & Features:</b>
+          <ul style="margin:0 0 0 1.2em; padding:0; color:#222; font-size:1.05rem;">
+            <li>120 sqm of elegant space</li>
+            <li>Private balcony with skyline view</li>
+            <li>King-size luxury bed</li>
+            <li>En-suite marble bathroom with rain shower & soaking tub</li>
+            <li>Walk-in wardrobe</li>
+            <li>Smart 65" 4K TV, high-speed WiFi</li>
+            <li>Personalized butler service</li>
+            <li>Complimentary minibar & gourmet coffee/tea</li>
+            <li>24/7 in-room dining</li>
+            <li>Access to executive lounge & spa</li>
+            <li>Soundproof windows, blackout curtains</li>
+            <li>Luxury toiletries, plush robes & slippers</li>
+            <li>In-room safe, workspace, and more</li>
+          </ul>
+          <b>Services:</b> Daily housekeeping, laundry, airport transfers, concierge, and more.<br>
+          <b>Perfect for:</b> Couples, VIPs, and anyone seeking the ultimate luxury experience.
         </div>
-        <label for="rooms" class="booking-label">No. of Rooms</label>
-        <input type="number" id="rooms" name="rooms" min="1" max="10" value="1" required class="booking-input enhanced-input">
-        <label for="checkin" class="booking-label">Check-in Date</label>
-        <input type="date" id="checkin" name="checkin" required class="booking-input enhanced-input">
-        <label for="checkout" class="booking-label">Check-out Date</label>
-        <input type="date" id="checkout" name="checkout" required class="booking-input enhanced-input">
-        <label for="guests" class="booking-label">Guests</label>
-        <input type="number" id="guests" name="guests" min="1" max="10" value="1" required class="booking-input enhanced-input">
-        <label for="roomType" class="booking-label">Room Type</label>
-        <select id="roomType" name="roomType" required class="booking-input enhanced-input">
-          <option value="Pearl Signature Room">Pearl Signature Room</option>
-          <option value="Deluxe Room">Deluxe Room</option>
-          <option value="Premium Room">Premium Room</option>
-          <option value="Executive Room">Executive Room</option>
-          <option value="Luxury Suite">Luxury Suite</option>
-          <option value="Family Suite">Family Suite</option>
-        </select>
-        <label for="specialInstructions" class="booking-label">Special Instructions</label>
-        <textarea id="specialInstructions" name="specialInstructions" rows="3" placeholder="Any special requests or instructions?" class="booking-input enhanced-input"></textarea>
-        <button type="submit" class="luxury-btn-filled enhanced-submit-btn">Submit Booking</button>
-      </form>
+        <button class="luxury-btn-filled" id="signatureBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+      </div>
     </div>
   </div>
-  <!-- Booking Confirmation Modal -->
-  <div id="bookingConfirmationModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:10000; align-items:center; justify-content:center;">
-    <div style="background:#fff; color:#222; border-radius:28px; max-width:370px; width:92vw; margin:auto; padding:2.2rem 1.7rem 1.5rem 1.7rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.18), 0 2px 16px rgba(0,0,0,0.13); display:flex; flex-direction:column; align-items:center; border:3px solid #FFD700;">
-      <div style="background:#FFD700; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; margin-bottom:1.1rem; box-shadow:0 2px 8px rgba(212,175,55,0.18);">
-        <i class="fa fa-check" style="color:#222; font-size:2.2rem;"></i>
+
+  <!-- Deluxe Room Details Modal -->
+  <div id="deluxeRoomModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal deluxe-modal-content" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:540px; width:94vw; margin:auto; padding:2.2rem 2.2rem 1.5rem 2.2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:scroll; display:flex; flex-direction:column; border:2.5px solid #FFD700; scrollbar-width:none; -ms-overflow-style:none;">
+      <button id="closeDeluxeModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+      <div style="text-align:center; margin-bottom:1.3rem;">
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Deluxe Room</div>
+        <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
       </div>
-      <h3 style="color:#1a1a1a; font-size:1.35rem; font-weight:800; margin-bottom:0.7rem; text-align:center; font-family:'Playfair Display',serif;">Thank you for your booking!</h3>
-      <div id="confirmationDetails" style="font-size:1.08rem; color:#333; margin-bottom:1.4rem; text-align:center; line-height:1.6;"></div>
-      <button id="downloadReceiptBtn" class="luxury-btn-filled" style="margin-bottom:0.7rem; width:100%; font-size:1.08rem; border-width:2.5px;">Download Receipt</button>
-      <button id="closeConfirmationBtn" class="luxury-btn-outline" style="width:100%; font-size:1.08rem; border-width:2.5px;">Close</button>
+      <div style="display:flex; flex-direction:column; gap:1.1rem;">
+        <img src="images/deluxe-room.png" alt="Deluxe Room" style="width:100%; border-radius:18px; margin-bottom:1.1rem;">
+        <div style="font-size:1.13rem; color:#222; line-height:1.7;">
+          <b>The Deluxe Room</b> is perfect for solo travelers or couples seeking comfort and style at an affordable price. Enjoy a cozy ambiance with modern amenities and elegant decor.<br><br>
+          <b>Facilities & Features:</b>
+          <ul style="margin:0 0 0 1.2em; padding:0; color:#222; font-size:1.05rem;">
+            <li>35 sqm of comfortable space</li>
+            <li>King-size bed with premium linens</li>
+            <li>Modern en-suite bathroom with rain shower</li>
+            <li>Smart 43" TV, high-speed WiFi</li>
+            <li>Work desk and reading chair</li>
+            <li>Complimentary tea/coffee set</li>
+            <li>Mini fridge and in-room safe</li>
+            <li>Soundproof windows, blackout curtains</li>
+            <li>Luxury toiletries, plush towels</li>
+          </ul>
+          <b>Services:</b> Daily housekeeping, laundry, 24/7 room service, and more.<br>
+          <b>Perfect for:</b> Solo travelers, couples, and business guests.
+        </div>
+        <button class="luxury-btn-filled" id="deluxeBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+      </div>
     </div>
   </div>
-  <!-- Hidden Booking Receipt Template -->
-  <div id="bookingReceiptTemplate" style="display:none; font-family:'Lato',Arial,sans-serif;">
-    <div style="max-width:520px; margin:auto; background:#fff; color:#222; border-radius:16px; box-shadow:0 4px 24px rgba(26,34,56,0.10); border:1.5px solid #eee;">
-      <div style="text-align:center; padding:1.2rem 1.5rem 0.5rem 1.5rem;">
-        <img src="images/logo.png" alt="Pearl Vista Logo" style="height:32px; margin-bottom:0.2rem;">
-        <div style="font-size:1.45rem; font-weight:900; letter-spacing:1px; margin-bottom:0.1rem;">THE PEARL VISTA</div>
-        <div style="font-size:1.08rem; font-weight:700; color:#bfa13a; letter-spacing:1px;">BOOKING RECEIPT</div>
-        <div style="height:3px; background:#FFD700; width:60px; margin:0.7rem auto 0.7rem auto; border-radius:2px;"></div>
-        <div style="text-align:right; font-size:0.98rem; color:#444; margin-top:-2.2rem; margin-bottom:0.5rem;">Date: <span id="receiptDate"></span></div>
+
+  <!-- Premium Room Details Modal -->
+  <div id="premiumRoomModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal premium-modal-content" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:540px; width:94vw; margin:auto; padding:2.2rem 2.2rem 1.5rem 2.2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:scroll; display:flex; flex-direction:column; border:2.5px solid #FFD700; scrollbar-width:none; -ms-overflow-style:none;">
+      <button id="closePremiumModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+      <div style="text-align:center; margin-bottom:1.3rem;">
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Premium Room</div>
+        <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
       </div>
-      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; padding:0 1.5rem 0.5rem 1.5rem;">
-        <div style="flex:1 1 200px; min-width:180px;">
-          <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Guest Details</div>
-          <div id="receiptGuestName" style="font-size:1.01rem;"></div>
-          <div id="receiptGuestEmail" style="font-size:1.01rem;"></div>
-          <div id="receiptGuestPhone" style="font-size:1.01rem;"></div>
+      <div style="display:flex; flex-direction:column; gap:1.1rem;">
+        <img src="images/premium-room.png" alt="Premium Room" style="width:100%; border-radius:18px; margin-bottom:1.1rem;">
+        <div style="font-size:1.13rem; color:#222; line-height:1.7;">
+          <b>The Premium Room</b> is designed for guests who desire a step above the ordinary. Enjoy exclusive access to higher floors with breathtaking city views, a spacious layout, and refined décor. The Premium Room features a dedicated lounge area, enhanced in-room technology, and a complimentary welcome amenity. Perfect for business travelers and couples seeking a blend of luxury and comfort.<br><br>
+          <b>Facilities & Features:</b>
+          <ul style="margin:0 0 0 1.2em; padding:0; color:#222; font-size:1.05rem;">
+            <li>40 sqm of stylish space</li>
+            <li>King-size bed with luxury bedding</li>
+            <li>Modern en-suite bathroom with rain shower</li>
+            <li>Dedicated lounge area for relaxation or work</li>
+            <li>Smart 50" TV, high-speed WiFi, and Bluetooth speaker</li>
+            <li>Complimentary minibar and premium coffee/tea set</li>
+            <li>In-room safe and mini fridge</li>
+            <li>Soundproof windows, blackout curtains</li>
+            <li>Luxury toiletries, plush towels and robes</li>
+            <li>Welcome fruit basket and bottled water</li>
+          </ul>
+          <b>Services:</b> Priority check-in, daily housekeeping, laundry, 24/7 room service, and more.<br>
+          <b>Perfect for:</b> Business travelers, couples, and guests seeking an elevated stay experience.
         </div>
-        <div style="flex:1 1 200px; min-width:180px;">
-          <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Booking Details</div>
-          <div id="receiptBookingId" style="font-size:1.01rem;"></div>
-          <div id="receiptCheckin" style="font-size:1.01rem;"></div>
-          <div id="receiptCheckout" style="font-size:1.01rem;"></div>
-          <div id="receiptGuests" style="font-size:1.01rem;"></div>
-          <div id="receiptRooms" style="font-size:1.01rem;"></div>
-          <div id="receiptRoomType" style="font-size:1.01rem;"></div>
-        </div>
+        <button class="luxury-btn-filled" id="premiumBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
       </div>
-      <div style="padding:0.5rem 1.5rem 0.5rem 1.5rem; border-top:1px solid #eee; border-bottom:1px solid #eee; margin:1rem 0 1rem 0;">
-        <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Payment Details</div>
-        <div id="receiptAmount" style="font-size:1.01rem;"></div>
-        <div id="receiptPaymentMode" style="font-size:1.01rem;"></div>
-        <div id="receiptDeadline" style="font-size:1.01rem;"></div>
-        <div style="font-size:1.13rem; font-weight:900; color:#bfa13a; margin-top:0.7rem;">Total Amount : <span id="receiptTotal"></span></div>
-      </div>
-      <div id="receiptSpecialInstructionsSection" style="display:none; padding:0.5rem 1.5rem 0.5rem 1.5rem;">
-        <div style="font-weight:700; color:#bfa13a; margin-bottom:0.3rem;">Special Instructions</div>
-        <div id="receiptSpecialInstructions" style="font-size:1.01rem; color:#444;"></div>
-      </div>
-      <div style="padding:1.1rem 1.5rem 0.5rem 1.5rem; text-align:center;">
-        <span style="background:#e6ffe6; border-radius:50%; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:0.3rem;"><i class="fa fa-check" style="color:#1a8f2b;"></i></span>
-        <div style="font-size:1.08rem; color:#1a8f2b; font-weight:700; display:inline-block; margin-left:0.5rem;">Thank You For Choosing THE PEARL VISTA</div>
-      </div>
-      <div style="padding:0 1.5rem 1.2rem 1.5rem; text-align:center; color:#888; font-size:1.01rem; font-style:italic;">We are grateful for your trust in us. Wishing you a wonderful stay and memorable experience!</div>
     </div>
   </div>
-  <script>
-    document.getElementById('openBookingModalBtn').onclick = function() {
-      document.getElementById('bookingModal').style.display = 'flex';
-    };
-    document.getElementById('closeBookingModalBtn').onclick = function() {
-      document.getElementById('bookingModal').style.display = 'none';
-    };
-    document.getElementById('idType').onchange = function() {
-      var wrapper = document.getElementById('idUploadWrapper');
-      if (this.value) {
-        wrapper.style.display = 'flex';
-        document.getElementById('idUpload').required = true;
-      } else {
-        wrapper.style.display = 'none';
-        document.getElementById('idUpload').required = false;
-        document.getElementById('idUpload').value = '';
-      }
-    };
-    document.getElementById('bookingForm').onsubmit = function(e) {
-      e.preventDefault();
-      document.getElementById('bookingModal').style.display = 'none';
-      // Fill confirmation details with personalized info
-      var name = document.getElementById('name').value;
-      var roomType = document.getElementById('roomType').value;
-      var checkin = document.getElementById('checkin').value;
-      var checkout = document.getElementById('checkout').value;
-      var guests = document.getElementById('guests').value;
-      var rooms = document.getElementById('rooms').value;
-      document.getElementById('confirmationDetails').innerHTML =
-        'Thank you, <b>' + name + '</b>!<br>Your booking for <b>' + roomType + '</b> (' + rooms + ' room(s), ' + guests + ' guest(s))<br>from <b>' + checkin + '</b> to <b>' + checkout + '</b> has been received.';
-      document.getElementById('bookingConfirmationModal').style.display = 'flex';
-    };
-    document.getElementById('closeConfirmationBtn').onclick = function() {
-      document.getElementById('bookingConfirmationModal').style.display = 'none';
-    };
-    document.getElementById('downloadReceiptBtn').onclick = function() {
-      // Gather booking details
-      var name = document.getElementById('name').value;
-      var phone = document.getElementById('phone').value;
-      var email = document.getElementById('email').value;
-      var idType = document.getElementById('idType').value;
-      var rooms = document.getElementById('rooms').value;
-      var checkin = document.getElementById('checkin').value;
-      var checkout = document.getElementById('checkout').value;
-      var guests = document.getElementById('guests').value;
-      var roomType = document.getElementById('roomType').value;
-      var special = document.getElementById('specialInstructions').value;
-      // Fill receipt fields
-      document.getElementById('receiptDate').textContent = new Date().toISOString().slice(0,10);
-      document.getElementById('receiptGuestName').innerHTML = '<b>Guest Name :</b> ' + name;
-      document.getElementById('receiptGuestEmail').innerHTML = '<b>Email :</b> ' + email;
-      document.getElementById('receiptGuestPhone').innerHTML = '<b>Phone No. :</b> ' + phone;
-      document.getElementById('receiptBookingId').innerHTML = '<b>Booking Id :</b> PV' + Math.floor(Math.random()*90000+10000);
-      document.getElementById('receiptCheckin').innerHTML = '<b>Check-In Date :</b> ' + checkin;
-      document.getElementById('receiptCheckout').innerHTML = '<b>Check-Out Date :</b> ' + checkout;
-      document.getElementById('receiptGuests').innerHTML = '<b>No. Of Guests :</b> ' + guests;
-      document.getElementById('receiptRooms').innerHTML = '<b>No. Of Rooms :</b> ' + rooms;
-      document.getElementById('receiptRoomType').innerHTML = '<b>Booked Room :</b> ' + roomType;
-      document.getElementById('receiptAmount').innerHTML = '<b>Amount To Be Paid At Reception For Booking Confirmation :</b> $11925';
-      document.getElementById('receiptPaymentMode').innerHTML = '<b>Payment Mode :</b> Cash';
-      document.getElementById('receiptDeadline').innerHTML = '<b>Payment Deadline :</b> Within 72 Hours of booking';
-      document.getElementById('receiptTotal').textContent = '$26500';
-      if (special && special.trim() !== "") {
-        document.getElementById('receiptSpecialInstructionsSection').style.display = 'block';
-        document.getElementById('receiptSpecialInstructions').textContent = special;
-      } else {
-        document.getElementById('receiptSpecialInstructionsSection').style.display = 'none';
-        document.getElementById('receiptSpecialInstructions').textContent = '';
-      }
-      // Show and download PDF
-      var element = document.getElementById('bookingReceiptTemplate');
-      element.style.display = 'block';
-      html2pdf().set({ margin:0.2, filename:'PearlVista_Booking_Receipt.pdf', html2canvas:{scale:2}, jsPDF:{unit:'in', format:'letter', orientation:'portrait'} }).from(element).save().then(() => {
-        element.style.display = 'none';
-      });
-    };
-  </script>
+
+  <!-- Executive Room Details Modal -->
+  <div id="executiveRoomModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal executive-modal-content" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:540px; width:94vw; margin:auto; padding:2.2rem 2.2rem 1.5rem 2.2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:scroll; display:flex; flex-direction:column; border:2.5px solid #FFD700; scrollbar-width:none; -ms-overflow-style:none;">
+      <button id="closeExecutiveModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+      <div style="text-align:center; margin-bottom:1.3rem;">
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Executive Room</div>
+        <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1.1rem;">
+        <img src="images/executive-room.png" alt="Executive Room" style="width:100%; border-radius:18px; margin-bottom:1.1rem;">
+        <div style="font-size:1.13rem; color:#222; line-height:1.7;">
+          <b>The Executive Room</b> is tailored for business travelers and professionals who value productivity and comfort. Enjoy a spacious work area, ergonomic chair, and enhanced connectivity. Guests receive exclusive access to the Executive Lounge, complimentary evening cocktails, and express check-in/out. The room is designed for both work and relaxation, with premium bedding and a tranquil ambiance.<br><br>
+          <b>Facilities & Features:</b>
+          <ul style="margin:0 0 0 1.2em; padding:0; color:#222; font-size:1.05rem;">
+            <li>45 sqm of modern, functional space</li>
+            <li>King-size bed with executive linens</li>
+            <li>Dedicated workspace with ergonomic chair and desk lamp</li>
+            <li>Smart 55" TV, high-speed WiFi, and multi-device charging station</li>
+            <li>Complimentary minibar and Nespresso machine</li>
+            <li>Spacious en-suite bathroom with rain shower and luxury amenities</li>
+            <li>Soundproof windows, blackout curtains</li>
+            <li>In-room safe, iron, and board</li>
+            <li>Evening turndown service</li>
+          </ul>
+          <b>Executive Perks:</b> Access to Executive Lounge (breakfast, snacks, cocktails), express check-in/out, business center services.<br>
+          <b>Perfect for:</b> Business travelers, executives, and guests seeking a productive yet relaxing stay.
+        </div>
+        <button class="luxury-btn-filled" id="executiveBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Luxury Suite Details Modal -->
+  <div id="luxurySuiteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal luxury-modal-content" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:540px; width:94vw; margin:auto; padding:2.2rem 2.2rem 1.5rem 2.2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:scroll; display:flex; flex-direction:column; border:2.5px solid #FFD700; scrollbar-width:none; -ms-overflow-style:none;">
+      <button id="closeLuxuryModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+      <div style="text-align:center; margin-bottom:1.3rem;">
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Luxury Suite</div>
+        <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1.1rem;">
+        <img src="images/Luxury_suite.jpg" alt="Luxury Suite" style="width:100%; border-radius:18px; margin-bottom:1.1rem;">
+        <div style="font-size:1.13rem; color:#222; line-height:1.7;">
+          <b>The Luxury Suite</b> is the epitome of elegance and exclusivity. Enjoy a spacious suite with a separate living and dining area, floor-to-ceiling windows with panoramic city views, and bespoke furnishings. Indulge in a marble bathroom with a soaking tub, private check-in, and VIP amenities. Perfect for families, VIPs, or anyone seeking a truly lavish experience.<br><br>
+          <b>Facilities & Features:</b>
+          <ul style="margin:0 0 0 1.2em; padding:0; color:#222; font-size:1.05rem;">
+            <li>65 sqm of luxurious space</li>
+            <li>Separate living and dining area</li>
+            <li>Master bedroom with king-size bed and premium linens</li>
+            <li>Marble bathroom with soaking tub and rain shower</li>
+            <li>Floor-to-ceiling windows with panoramic city views</li>
+            <li>Smart 65" TV, high-speed WiFi, and Bluetooth sound system</li>
+            <li>Fully stocked minibar and Nespresso machine</li>
+            <li>Walk-in wardrobe and dressing area</li>
+            <li>Luxury toiletries, plush robes and slippers</li>
+            <li>Personalized butler service</li>
+          </ul>
+          <b>VIP Perks:</b> Private check-in/out, complimentary airport transfer, welcome champagne, and access to the executive lounge.<br>
+          <b>Perfect for:</b> Families, VIPs, and guests seeking the ultimate in luxury and privacy.
+        </div>
+        <button class="luxury-btn-filled" id="luxuryBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Family Suite Details Modal -->
+  <div id="familySuiteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:9999; align-items:center; justify-content:center;">
+    <div class="booking-modal-card enhanced-booking-modal family-modal-content" style="background:#fcfcfc; color:#222; border-radius:26px; max-width:540px; width:94vw; margin:auto; padding:2.2rem 2.2rem 1.5rem 2.2rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10); max-height:94vh; overflow-y:scroll; display:flex; flex-direction:column; border:2.5px solid #FFD700; scrollbar-width:none; -ms-overflow-style:none;">
+      <button id="closeFamilyModalBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+      <div style="text-align:center; margin-bottom:1.3rem;">
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; color:#1a1a1a; letter-spacing:0.5px;">Family Suite</div>
+        <div style="height:3px; background:#FFD700; width:54px; margin:0.6rem auto 1.1rem auto; border-radius:2px;"></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1.1rem;">
+        <img src="images/family-suite.png" alt="Family Suite" style="width:100%; border-radius:18px; margin-bottom:1.1rem;">
+        <div style="font-size:1.13rem; color:#222; line-height:1.7;">
+          <b>The Family Suite</b> is designed for families and groups who want to stay together in comfort and style. Enjoy two spacious bedrooms, a separate living area, and thoughtful kid-friendly amenities. The suite features multiple TVs, a large bathroom, and plenty of space for everyone to relax. Perfect for family vacations, reunions, or extended stays.<br><br>
+          <b>Facilities & Features:</b>
+          <ul style="margin:0 0 0 1.2em; padding:0; color:#222; font-size:1.05rem;">
+            <li>80 sqm of family-friendly space</li>
+            <li>Two separate bedrooms (king + twin beds)</li>
+            <li>Spacious living area with sofa and dining table</li>
+            <li>Large bathroom with rain shower and bathtub</li>
+            <li>Multiple Smart TVs, high-speed WiFi</li>
+            <li>Mini fridge, microwave, and tea/coffee set</li>
+            <li>Kid-friendly amenities (crib, high chair, games on request)</li>
+            <li>Soundproof windows, blackout curtains</li>
+            <li>Luxury toiletries, plush towels</li>
+            <li>Ample storage and wardrobe space</li>
+          </ul>
+          <b>Family Perks:</b> Welcome treats for kids, babysitting on request, and late check-out (subject to availability).<br>
+          <b>Perfect for:</b> Families, groups, and guests who want space, comfort, and convenience.
+        </div>
+        <button class="luxury-btn-filled" id="familyBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+      </div>
+    </div>
+  </div>
+
   <script src="main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    // Use the enhanced wishlist function from main.js
+    function toggleWishlist(roomId) {
+      toggleRoomWishlist(roomId);
+    }
+    
+    // Initialize language and currency on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof initializeLanguageAndCurrency === 'function') {
+        initializeLanguageAndCurrency();
+      }
+    });
+  </script>
 </body>
 </html>
+
+<style>
+  .signature-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+  /* Remove hover effect from the close button in the modal */
+  #closeSignatureModalBtn:hover {
+    color: #888 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    cursor: pointer;
+  }
+  .deluxe-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+  #closeDeluxeModalBtn:hover {
+    color: #888 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    cursor: pointer;
+  }
+  .premium-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+  #closePremiumModalBtn:hover {
+    color: #888 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    cursor: pointer;
+  }
+  .executive-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+  #closeExecutiveModalBtn:hover {
+    color: #888 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    cursor: pointer;
+  }
+  .luxury-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+  #closeLuxuryModalBtn:hover {
+    color: #888 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    cursor: pointer;
+  }
+  .family-modal-content::-webkit-scrollbar {
+    display: none;
+  }
+  #closeFamilyModalBtn:hover {
+    color: #888 !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: none !important;
+    cursor: pointer;
+  }
+</style>

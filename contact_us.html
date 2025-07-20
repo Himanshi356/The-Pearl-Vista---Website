@@ -360,6 +360,41 @@
                 bottom: 80px;
             }
         }
+        /* Remove hover effect from close (X) buttons in modals and chat */
+        .close-chat:hover,
+        #callbackModal button[onclick*='closeCallbackModal']:hover,
+        #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:hover {
+            color: inherit !important;
+            background: none !important;
+            box-shadow: none !important;
+            border: none !important;
+            transition: none !important;
+            cursor: pointer;
+        }
+        .map-placeholder {
+            position: relative;
+            background: #f5f5f5 url('images/manhattan-map.png') center center/cover no-repeat;
+            border-radius: 24px;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(26,34,56,0.06);
+            z-index: 1;
+        }
+        .map-placeholder > * {
+            position: relative;
+            z-index: 2;
+        }
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(245,245,245,0.82);
+            border-radius: 24px;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -668,13 +703,12 @@
         <div class="container">
             <div class="section-header">
                 <h2>Find Us</h2>
-                <p>Located in the heart of Trees Valley, New York</p>
+                <p>Located in the heart of New York</p>
             </div>
             <div class="map-container">
                 <div class="map-placeholder">
                     <i class="fas fa-map-marked-alt"></i>
                     <h3>Interactive Map</h3>
-                    <p>Map integration coming soon</p>
                     <button class="btn signup" onclick="openDirections()">Get Directions</button>
                 </div>
             </div>
@@ -865,8 +899,15 @@
         }
 
         function openDirections() {
-            showNotification('Directions feature coming soon! Please contact us for directions.', 'info');
+            window.open('https://www.google.com/maps/search/?api=1&query=THE+PEARL+VISTA+hotel,+Manhattan,+New+York', '_blank');
         }
+        
+        // Initialize language and currency on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initializeLanguageAndCurrency === 'function') {
+                initializeLanguageAndCurrency();
+            }
+        });
     </script>
 </body>
 </html>

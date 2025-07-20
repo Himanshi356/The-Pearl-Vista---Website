@@ -148,10 +148,10 @@
       </div>
       <div class="wishlist-grid" style="display: flex; gap: 2rem; flex-wrap: wrap;">
         <div class="wishlist-card"
-          style="flex:1; min-width:320px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10); padding: 2.2rem 1.5rem; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
+          style="flex:1; min-width:320px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.10), 0 0 20px rgba(255,215,0,0.15), 0 0 40px rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); padding: 2.2rem 1.5rem; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
           <div class="wishlist-content">
             <h3
-              style="color: #1a2238; font-size: 1.18rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px; text-align:center;">
+              style="color: #FFD700; font-size: 1.18rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px; text-align:center;">
               Pearl Gold Benefits</h3>
             <ul style="color:#1a2238; font-size:1.08rem; line-height: 2;">
               <li>Complimentary Breakfast</li>
@@ -198,9 +198,9 @@
               </tr>
             </table>
             <div class="actions-grid btn-group" style="gap: 1.5rem; justify-content: center; margin-top:1.5rem;">
-              <button class="btn signup"><i class="fa-solid fa-gift" style="color:#111; margin-right:10px;"></i>Redeem
+              <button class="btn signup" onclick="redeemPoints()"><i class="fa-solid fa-gift" style="color:#111; margin-right:10px;"></i>Redeem
                 Points</button>
-              <button class="btn login"><i class="fa-solid fa-arrow-up"
+              <button class="btn login" onclick="upgradePlan()"><i class="fa-solid fa-arrow-up"
                   style="color:#111; margin-right:10px;"></i>Upgrade Plan</button>
             </div>
           </div>
@@ -287,6 +287,466 @@
   </footer>
 
   <script src="main.js"></script>
+
+  <style>
+    /* Custom Alert Box Styles */
+    .custom-alert-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+    }
+
+    .custom-alert {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(26, 34, 56, 0.2);
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      min-width: 420px;
+      max-width: 90vw;
+      text-align: center;
+      border: 2px solid #FFD700;
+      position: relative;
+      animation: alertSlideIn 0.3s ease-out;
+    }
+
+    @keyframes alertSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .custom-alert-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .custom-alert-icon {
+      width: 60px;
+      height: 60px;
+      background: #FFD700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+      font-size: 1.8rem;
+      color: #000;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+    }
+
+    .custom-alert-title {
+      color: #1a2238;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .custom-alert-subtitle {
+      color: #666;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .custom-alert-content {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .custom-alert-details {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      border-left: 4px solid #FFD700;
+    }
+
+    .custom-alert-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .custom-alert-detail:last-child {
+      margin-bottom: 0;
+    }
+
+    .custom-alert-detail-label {
+      color: #666;
+      font-weight: 600;
+    }
+
+    .custom-alert-detail-value {
+      color: #1a2238;
+      font-weight: 700;
+    }
+
+    .custom-alert-message {
+      color: #1a2238;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .custom-alert-button {
+      background: #FFD700;
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2);
+    }
+
+    .custom-alert-button:hover {
+      background: #e6c200;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .custom-alert-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .custom-alert-close:hover {
+      background: #f0f0f0;
+      color: #666;
+    }
+
+    /* Modal Styles for Rewards */
+    .rewards-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rewards-modal-content {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(26, 34, 56, 0.13);
+      padding: 2.2rem 2.5rem 1.5rem 2.5rem;
+      min-width: 450px;
+      max-width: 95vw;
+      text-align: center;
+    }
+
+    .rewards-modal h2 {
+      color: #1a2238;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .rewards-modal label {
+      display: block;
+      font-weight: 600;
+      color: #1a2238;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .rewards-modal select,
+    .rewards-modal input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .rewards-modal select:focus,
+    .rewards-modal input:focus {
+      border: 2px solid #FFD700;
+      outline: none;
+    }
+
+    .rewards-modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .rewards-modal-buttons button {
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .rewards-modal-buttons .confirm {
+      background: #FFD700;
+      color: #000;
+    }
+
+    .rewards-modal-buttons .cancel {
+      background: #e0e0e0;
+      color: #1a2238;
+    }
+
+    .rewards-modal-buttons button:hover {
+      transform: translateY(-1px);
+    }
+  </style>
+
+  <script>
+    // Redeem Points Function
+    function redeemPoints() {
+      const currentPoints = 16000; // Get from user data
+      const modalHTML = `
+        <div class="rewards-modal">
+          <div class="rewards-modal-content">
+            <h2>Redeem Points</h2>
+            <div style="margin-bottom: 1.5rem; text-align: center;">
+              <div style="font-size: 1.2rem; color: #1a2238; margin-bottom: 0.5rem;">
+                <strong>Available Points: ${currentPoints.toLocaleString()}</strong>
+              </div>
+              <div style="color: #666; font-size: 0.9rem;">Pearl Gold Member</div>
+            </div>
+            <label for="redeemOption">Select Redemption Option:</label>
+            <select id="redeemOption">
+              <option value="">Choose an option...</option>
+              <option value="free-night">Free Night Stay (15,000 pts)</option>
+              <option value="spa-voucher">Spa Treatment Voucher (5,000 pts)</option>
+              <option value="dining-credit">Dining Credit $100 (8,000 pts)</option>
+              <option value="room-upgrade">Room Upgrade (3,000 pts)</option>
+              <option value="late-checkout">Late Checkout (2,000 pts)</option>
+              <option value="airport-transfer">Airport Transfer (4,000 pts)</option>
+            </select>
+            <label for="redeemQuantity">Quantity:</label>
+            <input type="number" id="redeemQuantity" value="1" min="1" max="5">
+            <div class="rewards-modal-buttons">
+              <button class="confirm" onclick="confirmRedeem()">Confirm Redemption</button>
+              <button class="cancel" onclick="closeRedeemModal()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Upgrade Plan Function
+    function upgradePlan() {
+      const currentPoints = 16000;
+      const currentTier = 'Pearl Gold';
+      const nextTier = 'Pearl Platinum';
+      const pointsNeeded = 30000 - currentPoints;
+      
+      const modalHTML = `
+        <div class="rewards-modal">
+          <div class="rewards-modal-content">
+            <h2>Upgrade Membership</h2>
+            <div style="margin-bottom: 1.5rem; text-align: center;">
+              <div style="font-size: 1.2rem; color: #1a2238; margin-bottom: 0.5rem;">
+                <strong>Current Tier: ${currentTier}</strong>
+              </div>
+              <div style="color: #666; font-size: 0.9rem;">${currentPoints.toLocaleString()} points</div>
+            </div>
+            <div style="background: #f8f9fa; border-radius: 12px; padding: 1.2rem; margin-bottom: 1.5rem; border-left: 4px solid #FFD700;">
+              <div style="font-weight: 700; color: #1a2238; margin-bottom: 0.5rem;">Next Tier: ${nextTier}</div>
+              <div style="color: #666; font-size: 0.9rem;">
+                <div>Points Required: 30,000</div>
+                <div>Points Needed: ${pointsNeeded.toLocaleString()}</div>
+                <div style="margin-top: 0.5rem; color: #FFD700; font-weight: 600;">Benefits: VIP Lounge, Free Tour, 20% off</div>
+              </div>
+            </div>
+            <div style="text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 1.5rem;">
+              Earn ${pointsNeeded.toLocaleString()} more points to upgrade to ${nextTier}
+            </div>
+            <div class="rewards-modal-buttons">
+              <button class="confirm" onclick="showUpgradeInfo()">Learn More</button>
+              <button class="cancel" onclick="closeUpgradeModal()">Close</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Confirmation functions
+    function confirmRedeem() {
+      const option = document.getElementById('redeemOption').value;
+      const quantity = document.getElementById('redeemQuantity').value;
+      
+      if (!option) {
+        showCustomAlert('error', 'Please select a redemption option', 'Selection Required');
+        return;
+      }
+      
+      const optionNames = {
+        'free-night': 'Free Night Stay',
+        'spa-voucher': 'Spa Treatment Voucher',
+        'dining-credit': 'Dining Credit $100',
+        'room-upgrade': 'Room Upgrade',
+        'late-checkout': 'Late Checkout',
+        'airport-transfer': 'Airport Transfer'
+      };
+      
+      const pointCosts = {
+        'free-night': 15000,
+        'spa-voucher': 5000,
+        'dining-credit': 8000,
+        'room-upgrade': 3000,
+        'late-checkout': 2000,
+        'airport-transfer': 4000
+      };
+      
+      const totalCost = pointCosts[option] * quantity;
+      const currentPoints = 16000;
+      
+      if (totalCost > currentPoints) {
+        showCustomAlert('error', 'Insufficient points for this redemption', 'Insufficient Points');
+        return;
+      }
+      
+      showCustomAlert('success', 'Points redemption successful!', 'Redemption Confirmed', {
+        'Redemption': optionNames[option],
+        'Quantity': quantity,
+        'Points Used': totalCost.toLocaleString(),
+        'Remaining Points': (currentPoints - totalCost).toLocaleString()
+      }, 'You will receive a confirmation email with your voucher details.');
+      
+      closeRedeemModal();
+    }
+
+    function closeRedeemModal() {
+      const modal = document.querySelector('.rewards-modal');
+      if (modal) modal.remove();
+    }
+
+    function showUpgradeInfo() {
+      showCustomAlert('info', 'Upgrade to Pearl Platinum', 'Membership Upgrade', {
+        'Current Tier': 'Pearl Gold',
+        'Current Points': '16,000',
+        'Next Tier': 'Pearl Platinum',
+        'Points Required': '30,000',
+        'Points Needed': '14,000'
+      }, 'Earn points by booking stays, dining, and using hotel services. Each $1 spent = 10 points earned.');
+      
+      closeUpgradeModal();
+    }
+
+    function closeUpgradeModal() {
+      const modal = document.querySelector('.rewards-modal');
+      if (modal) modal.remove();
+    }
+
+    // Custom Alert Function
+    function showCustomAlert(type, message, title, details = null, additionalMessage = null) {
+      const icons = {
+        'success': 'fa-check-circle',
+        'error': 'fa-exclamation-circle', 
+        'info': 'fa-info-circle',
+        'warning': 'fa-exclamation-triangle'
+      };
+      
+      const colors = {
+        'success': '#28a745',
+        'error': '#dc3545',
+        'info': '#17a2b8', 
+        'warning': '#ffc107'
+      };
+      
+      const icon = icons[type] || 'fa-info-circle';
+      const color = colors[type] || '#17a2b8';
+      
+      let detailsHTML = '';
+      if (details) {
+        detailsHTML = '<div class="custom-alert-details">';
+        for (const [key, value] of Object.entries(details)) {
+          detailsHTML += `
+            <div class="custom-alert-detail">
+              <span class="custom-alert-detail-label">${key}:</span>
+              <span class="custom-alert-detail-value">${value}</span>
+            </div>
+          `;
+        }
+        detailsHTML += '</div>';
+      }
+      
+      const additionalMessageHTML = additionalMessage ? 
+        `<div class="custom-alert-message" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; color: #666; font-style: italic;">${additionalMessage}</div>` : '';
+      
+      const alertHTML = `
+        <div class="custom-alert-overlay">
+          <div class="custom-alert">
+            <button class="custom-alert-close" onclick="closeCustomAlert()">&times;</button>
+            <div class="custom-alert-header">
+              <div class="custom-alert-icon" style="background: ${color};">
+                <i class="fa-solid ${icon}"></i>
+              </div>
+              <div class="custom-alert-title">${title}</div>
+              <div class="custom-alert-subtitle">The Pearl Vista</div>
+            </div>
+            <div class="custom-alert-content">
+              <div class="custom-alert-message">${message}</div>
+              ${detailsHTML}
+              ${additionalMessageHTML}
+            </div>
+            <button class="custom-alert-button" onclick="closeCustomAlert()">OK</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.insertAdjacentHTML('beforeend', alertHTML);
+      
+      // Auto-close after 8 seconds for success/info alerts
+      if (type === 'success' || type === 'info') {
+        setTimeout(() => {
+          closeCustomAlert();
+        }, 8000);
+      }
+    }
+
+    function closeCustomAlert() {
+      const overlay = document.querySelector('.custom-alert-overlay');
+      if (overlay) {
+        overlay.style.animation = 'alertSlideIn 0.2s ease-in reverse';
+        setTimeout(() => {
+          overlay.remove();
+        }, 200);
+      }
+    }
+  </script>
 </body>
 
 </html>

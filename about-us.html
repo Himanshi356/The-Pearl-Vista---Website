@@ -209,7 +209,7 @@
       <h2>Ready to Experience Luxury?</h2>
       <p>Book your stay with us and discover the perfect blend of comfort and elegance</p>
         <div class="cta-buttons">
-          <button class="btn signup" onclick="window.location.href='home.html'">Book Now</button>
+          <button class="btn signup" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
           <button class="btn login" onclick="window.location.href='contact_us.html'">Contact Us</button>
         </div>
       </div>
@@ -254,5 +254,13 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    // Initialize language and currency on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof initializeLanguageAndCurrency === 'function') {
+        initializeLanguageAndCurrency();
+      }
+    });
+  </script>
 </body>
 </html>

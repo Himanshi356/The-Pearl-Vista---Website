@@ -168,7 +168,7 @@
               </fieldset>
               <div class="actions-grid btn-group"
                 style="gap: 1.5rem; justify-content: center; margin-top:2.5rem; flex-basis:100%;">
-                <button class="btn signup" type="submit">Save Preferences</button>
+                <button class="btn signup" type="button" onclick="savePreferences()">Save Preferences</button>
               </div>
             </form>
           </div>
@@ -233,6 +233,328 @@
   </footer>
 
   <script src="main.js"></script>
+
+  <style>
+    /* Custom Alert Box Styles */
+    .custom-alert-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+    }
+
+    .custom-alert {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(26, 34, 56, 0.2);
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      min-width: 420px;
+      max-width: 90vw;
+      text-align: center;
+      border: 2px solid #FFD700;
+      position: relative;
+      animation: alertSlideIn 0.3s ease-out;
+    }
+
+    @keyframes alertSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .custom-alert-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .custom-alert-icon {
+      width: 60px;
+      height: 60px;
+      background: #FFD700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+      font-size: 1.8rem;
+      color: #000;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+    }
+
+    .custom-alert-title {
+      color: #1a2238;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .custom-alert-subtitle {
+      color: #666;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .custom-alert-content {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .custom-alert-details {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      border-left: 4px solid #FFD700;
+    }
+
+    .custom-alert-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .custom-alert-detail:last-child {
+      margin-bottom: 0;
+    }
+
+    .custom-alert-detail-label {
+      color: #666;
+      font-weight: 600;
+    }
+
+    .custom-alert-detail-value {
+      color: #1a2238;
+      font-weight: 700;
+    }
+
+    .custom-alert-message {
+      color: #1a2238;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .custom-alert-button {
+      background: #FFD700;
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2);
+    }
+
+    .custom-alert-button:hover {
+      background: #e6c200;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .custom-alert-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .custom-alert-close:hover {
+      background: #f0f0f0;
+      color: #666;
+    }
+  </style>
+
+  <script>
+    // Language and Currency mapping
+    const languageNames = {
+      'en-US': 'English (United States)',
+      'en-UK': 'English (United Kingdom)',
+      'fr': 'French',
+      'es': 'Spanish',
+      'nl': 'Dutch',
+      'hi': 'Hindi',
+      'zh': 'Chinese',
+      'de': 'German',
+      'ja': 'Japanese',
+      'ko': 'Korean',
+      'tr': 'Turkish'
+    };
+
+    const currencyNames = {
+      'INR': 'Indian Rupee (₹)',
+      'USD': 'US Dollar ($)',
+      'EUR': 'Euro (€)',
+      'GBP': 'British Pound (£)',
+      'JPY': 'Japanese Yen (¥)'
+    };
+
+    // Save Preferences Function - Enhanced version from main.js
+    function savePreferences() {
+      const selectedLanguage = document.querySelector('input[name="language"]:checked');
+      const selectedCurrency = document.querySelector('input[name="currency"]:checked');
+      
+      if (!selectedLanguage || !selectedCurrency) {
+        showCustomAlert('error', 'Please select both language and currency preferences', 'Selection Required');
+        return;
+      }
+      
+      const language = selectedLanguage.value;
+      const currency = selectedCurrency.value;
+      const languageDisplay = languageNames[language];
+      const currencyDisplay = currencyNames[currency];
+      
+      // Save to localStorage for persistence
+      localStorage.setItem('pv_language', language);
+      localStorage.setItem('pv_currency', currency);
+      
+      // Show success confirmation
+      showCustomAlert('success', 'Preferences saved successfully!', 'Settings Updated', {
+        'Language': languageDisplay,
+        'Currency': currencyDisplay,
+        'Status': 'Active'
+      }, 'Your preferences will be applied across all pages. You may need to refresh the page to see changes.');
+      
+      // Apply changes immediately to current page
+      setTimeout(() => {
+        if (typeof applyTranslations === 'function') {
+          applyTranslations();
+        }
+        if (typeof applyCurrencyFormatting === 'function') {
+          applyCurrencyFormatting();
+        }
+      }, 1000);
+      
+      // Redirect to home page after a delay
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 3000);
+    }
+
+    // Custom Alert Function
+    function showCustomAlert(type, message, title, details = null, additionalMessage = null) {
+      const icons = {
+        'success': 'fa-check-circle',
+        'error': 'fa-exclamation-circle', 
+        'info': 'fa-info-circle',
+        'warning': 'fa-exclamation-triangle'
+      };
+      
+      const colors = {
+        'success': '#28a745',
+        'error': '#dc3545',
+        'info': '#17a2b8', 
+        'warning': '#ffc107'
+      };
+      
+      const icon = icons[type] || 'fa-info-circle';
+      const color = colors[type] || '#17a2b8';
+      
+      let detailsHTML = '';
+      if (details) {
+        detailsHTML = '<div class="custom-alert-details">';
+        for (const [key, value] of Object.entries(details)) {
+          detailsHTML += `
+            <div class="custom-alert-detail">
+              <span class="custom-alert-detail-label">${key}:</span>
+              <span class="custom-alert-detail-value">${value}</span>
+            </div>
+          `;
+        }
+        detailsHTML += '</div>';
+      }
+      
+      const additionalMessageHTML = additionalMessage ? 
+        `<div class="custom-alert-message" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; color: #666; font-style: italic;">${additionalMessage}</div>` : '';
+      
+      const alertHTML = `
+        <div class="custom-alert-overlay">
+          <div class="custom-alert">
+            <button class="custom-alert-close" onclick="closeCustomAlert()">&times;</button>
+            <div class="custom-alert-header">
+              <div class="custom-alert-icon" style="background: ${color};">
+                <i class="fa-solid ${icon}"></i>
+              </div>
+              <div class="custom-alert-title">${title}</div>
+              <div class="custom-alert-subtitle">The Pearl Vista</div>
+            </div>
+            <div class="custom-alert-content">
+              <div class="custom-alert-message">${message}</div>
+              ${detailsHTML}
+              ${additionalMessageHTML}
+            </div>
+            <button class="custom-alert-button" onclick="closeCustomAlert()">OK</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.insertAdjacentHTML('beforeend', alertHTML);
+      
+      // Auto-close after 8 seconds for success/info alerts
+      if (type === 'success' || type === 'info') {
+        setTimeout(() => {
+          closeCustomAlert();
+        }, 8000);
+      }
+    }
+
+    function closeCustomAlert() {
+      const overlay = document.querySelector('.custom-alert-overlay');
+      if (overlay) {
+        overlay.style.animation = 'alertSlideIn 0.2s ease-in reverse';
+        setTimeout(() => {
+          overlay.remove();
+        }, 200);
+      }
+    }
+
+    // Load saved preferences on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedLanguage = localStorage.getItem('pv_language');
+      const savedCurrency = localStorage.getItem('pv_currency');
+      
+      if (savedLanguage) {
+        const languageRadio = document.querySelector(`input[name="language"][value="${savedLanguage}"]`);
+        if (languageRadio) {
+          languageRadio.checked = true;
+        }
+      }
+      
+      if (savedCurrency) {
+        const currencyRadio = document.querySelector(`input[name="currency"][value="${savedCurrency}"]`);
+        if (currencyRadio) {
+          currencyRadio.checked = true;
+        }
+      }
+      
+      // Initialize language and currency formatting
+      if (typeof initializeLanguageAndCurrency === 'function') {
+        initializeLanguageAndCurrency();
+      }
+    });
+  </script>
 </body>
 
 </html>

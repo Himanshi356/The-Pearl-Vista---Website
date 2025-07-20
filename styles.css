@@ -4702,3 +4702,200 @@ body:has(.recovery-bg), html:has(.recovery-bg) {
   color: #d4af37 !important;
   border: none !important;
 }
+
+/* Black hover effect for My Bookings page buttons */
+.my-bookings-page .btn:hover,
+.my-bookings-page button:hover,
+.my-bookings-page .booking-actions .btn:hover,
+.my-bookings-page .booking-actions-section .btn:hover {
+  background: #000 !important;
+  color: #FFD700 !important;
+  border: 2px solid #FFD700 !important;
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Exception: Cross icons should not have black hover effect */
+.my-bookings-page button[id*="close"]:hover,
+.my-bookings-page button[id*="closeModal"]:hover,
+.my-bookings-page button[id*="closeModify"]:hover,
+.my-bookings-page button[id*="closeReview"]:hover,
+.my-bookings-page button[style*="font-size: 24px"]:hover,
+button[id*="close"]:hover,
+button[id*="closeModal"]:hover,
+button[id*="closeModify"]:hover,
+button[id*="closeReview"]:hover,
+button[id*="closeService"]:hover,
+button[id*="closeRoom"]:hover,
+button[style*="font-size: 24px"]:hover {
+  background: none !important;
+  color: #666 !important;
+  border: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* Black hover effect for specific button classes on My Bookings page */
+.my-bookings-page .btn.signup:hover,
+.my-bookings-page .btn.login:hover,
+.my-bookings-page .btn.secondary:hover {
+  background: #000 !important;
+  color: #FFD700 !important;
+  border: 2px solid #FFD700 !important;
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Keep booking cards and overview cards without hover effects */
+.my-bookings-page .booking-card:hover {
+  transform: none !important;
+  box-shadow: inherit !important;
+  border: inherit !important;
+}
+
+.my-bookings-page .overview-card:hover {
+  transform: none !important;
+  box-shadow: inherit !important;
+  border: inherit !important;
+}
+
+/* Remove hover effect for cross (X) icon only */
+.my-bookings-page button[id*="close"]:hover,
+.my-bookings-page button[id*="closeModal"]:hover,
+.my-bookings-page button[id*="closeModify"]:hover,
+.my-bookings-page button[style*="font-size: 24px"]:hover,
+.my-bookings-page button[style*="cursor: pointer"]:has(style*="font-size: 24px"):hover,
+.my-bookings-page button[style*="&times;"]:hover,
+.my-bookings-page button:contains("×"):hover,
+.my-bookings-page button:contains("&times;"):hover {
+  background: inherit !important;
+  color: inherit !important;
+  border: inherit !important;
+  transform: none !important;
+  box-shadow: inherit !important;
+  transition: none !important;
+}
+
+/* Additional specific rules for cross icons */
+.my-bookings-page button[id="closeModalBtn"]:hover,
+.my-bookings-page button[id="closeModifyModalBtn"]:hover,
+.my-bookings-page button[id="closeReviewModalBtn"]:hover {
+  background: none !important;
+  color: #666 !important;
+  border: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* Universal rule to prevent black hover effect on any cross icon */
+.my-bookings-page button[style*="font-size: 24px"]:hover,
+.my-bookings-page button[style*="cursor: pointer"][style*="font-size: 24px"]:hover,
+button[style*="font-size: 24px"]:hover,
+button[style*="cursor: pointer"][style*="font-size: 24px"]:hover,
+button[style*="&times;"]:hover {
+  background: none !important;
+  color: #666 !important;
+  border: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* Hide scrollbar but keep scrolling functionality */
+.my-bookings-page div[style*="overflow-y: auto"],
+.my-bookings-page div[style*="overflow-y: auto"]::-webkit-scrollbar,
+.my-bookings-page div[style*="overflow-y: auto"]::-webkit-scrollbar-track,
+.my-bookings-page div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.my-bookings-page div[style*="overflow-y: auto"]::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Universal scrollbar hiding for all modals and content areas */
+div[style*="overflow-y: auto"],
+div[style*="overflow-y: auto"]::-webkit-scrollbar,
+div[style*="overflow-y: auto"]::-webkit-scrollbar-track,
+div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+div[style*="overflow-y: auto"]::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Additional rules for modal content */
+.modal-content[style*="overflow-y: auto"],
+.modal-content[style*="overflow-y: auto"]::-webkit-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-content[style*="overflow-y: auto"]::-webkit-scrollbar {
+  display: none;
+}
+
+/* Wishlist Heart Icon Styling */
+.wishlist-heart {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-heart:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wishlist-heart i {
+  font-size: 1.2rem;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.wishlist-heart.active i {
+  color: #ff0000;
+}
+
+.wishlist-heart:hover i {
+  color: #ff0000;
+}
+
+/* Additional hover effects for service hearts */
+.wishlist-heart:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.wishlist-heart.active {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.wishlist-heart.active:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Ensure the heart appears on room images */
+.room-image,
+.featured-image {
+  position: relative;
+}

@@ -362,13 +362,13 @@
   <section class="wishlist-actions-section">
     <div class="container">
       <div class="actions-grid btn-group" style="gap: 1.5rem; justify-content: center;">
-        <button class="btn signup"><i class="fa-solid fa-spa" style="color:#000; margin-right:10px;"></i>Book
+        <button class="btn signup" onclick="bookSpaService()"><i class="fa-solid fa-spa" style="color:#000; margin-right:10px;"></i>Book
           spa</button>
-        <button class="btn login"><i class="fa-solid fa-utensils" style="color:#000; margin-right:10px;"></i>Reserve
+        <button class="btn login" onclick="reserveTable()"><i class="fa-solid fa-utensils" style="color:#000; margin-right:10px;"></i>Reserve
           table</button>
-        <button class="btn secondary"><i class="fa-solid fa-calendar-check"
+        <button class="btn secondary" onclick="planEvent()"><i class="fa-solid fa-calendar-check"
             style="color:#000; margin-right:10px;"></i>Plan an event</button>
-        <button class="btn secondary"><i class="fa-solid fa-file-arrow-down"
+        <button class="btn secondary" onclick="downloadItineraryPDF()"><i class="fa-solid fa-file-arrow-down"
             style="color:#000; margin-right:10px;"></i>Download PDF</button>
       </div>
     </div>
@@ -460,6 +460,157 @@
     #addActivityModal button:hover:not(.cancel) {
       background: #2e7c8a;
     }
+
+    /* Custom Alert Box Styles */
+    .custom-alert-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+    }
+
+    .custom-alert {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(26, 34, 56, 0.2);
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      min-width: 420px;
+      max-width: 90vw;
+      text-align: center;
+      border: 2px solid #FFD700;
+      position: relative;
+      animation: alertSlideIn 0.3s ease-out;
+    }
+
+    @keyframes alertSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .custom-alert-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .custom-alert-icon {
+      width: 60px;
+      height: 60px;
+      background: #FFD700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem auto;
+      font-size: 1.8rem;
+      color: #000;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+    }
+
+    .custom-alert-title {
+      color: #1a2238;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .custom-alert-subtitle {
+      color: #666;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .custom-alert-content {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .custom-alert-details {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      border-left: 4px solid #FFD700;
+    }
+
+    .custom-alert-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .custom-alert-detail:last-child {
+      margin-bottom: 0;
+    }
+
+    .custom-alert-detail-label {
+      color: #666;
+      font-weight: 600;
+    }
+
+    .custom-alert-detail-value {
+      color: #1a2238;
+      font-weight: 700;
+    }
+
+    .custom-alert-message {
+      color: #1a2238;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .custom-alert-button {
+      background: #FFD700;
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(255, 215, 0, 0.2);
+    }
+
+    .custom-alert-button:hover {
+      background: #e6c200;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .custom-alert-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .custom-alert-close:hover {
+      background: #f0f0f0;
+      color: #666;
+    }
   </style>
   <div id="addActivityModalOverlay">
     <form id="addActivityModal" onsubmit="return false;">
@@ -532,6 +683,496 @@
         });
       }
     });
+
+    // Book Spa Service Function
+    function bookSpaService() {
+      // Create a modal for spa booking
+      const modalHTML = `
+        <div id="spaBookingModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.25); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+          <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(26, 34, 56, 0.13); padding: 2.2rem 2.5rem 1.5rem 2.5rem; min-width: 400px; max-width: 95vw;">
+            <h2 style="color: #1a2238; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center;">Book Spa Service</h2>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Select Service:</label>
+              <select id="spaService" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">Choose a spa service...</option>
+                <option value="luxury-massage">Luxury Massage (60 min) - $150</option>
+                <option value="facial-treatment">Facial Treatment (45 min) - $120</option>
+                <option value="couples-spa">Couples Spa Package (90 min) - $280</option>
+                <option value="hot-stone">Hot Stone Therapy (75 min) - $180</option>
+                <option value="aromatherapy">Aromatherapy Session (60 min) - $140</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Preferred Date:</label>
+              <input type="date" id="spaDate" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Preferred Time:</label>
+              <select id="spaTime" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">Select time...</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="17:00">5:00 PM</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+              <button onclick="confirmSpaBooking()" style="background: #FFD700; color: #000; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Confirm Booking</button>
+              <button onclick="closeSpaModal()" style="background: #e0e0e0; color: #1a2238; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Reserve Table Function
+    function reserveTable() {
+      // Create a modal for table reservation
+      const modalHTML = `
+        <div id="tableReservationModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.25); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+          <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(26, 34, 56, 0.13); padding: 2.2rem 2.5rem 1.5rem 2.5rem; min-width: 400px; max-width: 95vw;">
+            <h2 style="color: #1a2238; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center;">Reserve Table</h2>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Restaurant:</label>
+              <select id="restaurantSelect" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">Choose restaurant...</option>
+                <option value="pearl-restaurant">Pearl Restaurant (Fine Dining)</option>
+                <option value="lobby-lounge">Lobby Lounge (Casual)</option>
+                <option value="rooftop-bar">Rooftop Bar (Cocktails & Light Bites)</option>
+                <option value="poolside-grill">Poolside Grill (Outdoor Dining)</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Date:</label>
+              <input type="date" id="tableDate" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Time:</label>
+              <select id="tableTime" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">Select time...</option>
+                <option value="07:00">7:00 AM (Breakfast)</option>
+                <option value="08:00">8:00 AM (Breakfast)</option>
+                <option value="12:00">12:00 PM (Lunch)</option>
+                <option value="13:00">1:00 PM (Lunch)</option>
+                <option value="18:00">6:00 PM (Dinner)</option>
+                <option value="19:00">7:00 PM (Dinner)</option>
+                <option value="20:00">8:00 PM (Dinner)</option>
+                <option value="21:00">9:00 PM (Dinner)</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Number of Guests:</label>
+              <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                <input type="number" id="guestCount" value="2" min="1" max="20" style="flex: 1; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem; text-align: center; font-weight: 600; color: #1a2238;">
+                <div style="display: flex; flex-direction: column; gap: 0.1rem;">
+                  <button type="button" onclick="incrementGuests()" style="width: 32px; height: 32px; background: #f8f9fa; border: 1.5px solid #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; color: #666; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-chevron-up"></i>
+                  </button>
+                  <button type="button" onclick="decrementGuests()" style="width: 32px; height: 32px; background: #f8f9fa; border: 1.5px solid #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; color: #666; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-chevron-down"></i>
+                  </button>
+                </div>
+              </div>
+              <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #666; text-align: center;">
+                <span id="guestLabel">2 Guests</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+              <button onclick="confirmTableReservation()" style="background: #FFD700; color: #000; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Confirm Reservation</button>
+              <button onclick="closeTableModal()" style="background: #e0e0e0; color: #1a2238; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+      
+      // Add event listeners for the spinner buttons
+      setTimeout(() => {
+        const guestInput = document.getElementById('guestCount');
+        const guestLabel = document.getElementById('guestLabel');
+        
+        if (guestInput && guestLabel) {
+          guestInput.addEventListener('input', updateGuestLabel);
+          updateGuestLabel(); // Initialize label
+        }
+      }, 100);
+    }
+
+    // Plan Event Function
+    function planEvent() {
+      // Create a modal for event planning
+      const modalHTML = `
+        <div id="eventPlanningModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.25); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+          <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(26, 34, 56, 0.13); padding: 2.2rem 2.5rem 1.5rem 2.5rem; min-width: 450px; max-width: 95vw;">
+            <h2 style="color: #1a2238; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center;">Plan an Event</h2>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Event Type:</label>
+              <select id="eventType" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">Select event type...</option>
+                <option value="wedding">Wedding Ceremony & Reception</option>
+                <option value="corporate">Corporate Meeting/Conference</option>
+                <option value="birthday">Birthday Celebration</option>
+                <option value="anniversary">Anniversary Party</option>
+                <option value="graduation">Graduation Party</option>
+                <option value="holiday">Holiday Gathering</option>
+                <option value="other">Other Special Event</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Event Date:</label>
+              <input type="date" id="eventDate" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Expected Guests:</label>
+              <input type="number" id="eventGuests" min="10" max="500" placeholder="Number of guests" style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Special Requirements:</label>
+              <textarea id="eventRequirements" rows="3" placeholder="Any special requests or requirements..." style="width: 100%; padding: 0.8rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+              <button onclick="confirmEventPlanning()" style="background: #FFD700; color: #000; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Submit Request</button>
+              <button onclick="closeEventModal()" style="background: #e0e0e0; color: #1a2238; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Download PDF Function
+    function downloadItineraryPDF() {
+      // Create a modal for PDF download options
+      const modalHTML = `
+        <div id="pdfDownloadModal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.25); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+          <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 32px rgba(26, 34, 56, 0.13); padding: 2.2rem 2.5rem 1.5rem 2.5rem; min-width: 400px; max-width: 95vw;">
+            <h2 style="color: #1a2238; font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center;">Download Itinerary</h2>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Select Format:</label>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label style="display: flex; align-items: center; cursor: pointer; color: #1a2238; font-weight: 500;">
+                  <input type="radio" name="pdfFormat" value="detailed" checked style="margin-right: 0.5rem;">
+                  <span style="color: #1a2238;">Detailed Itinerary (Full schedule with descriptions)</span>
+                </label>
+                <label style="display: flex; align-items: center; cursor: pointer; color: #1a2238; font-weight: 500;">
+                  <input type="radio" name="pdfFormat" value="summary" style="margin-right: 0.5rem;">
+                  <span style="color: #1a2238;">Summary Itinerary (Key events only)</span>
+                </label>
+                <label style="display: flex; align-items: center; cursor: pointer; color: #1a2238; font-weight: 500;">
+                  <input type="radio" name="pdfFormat" value="calendar" style="margin-right: 0.5rem;">
+                  <span style="color: #1a2238;">Calendar View (Monthly calendar format)</span>
+                </label>
+              </div>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-weight: 600; color: #1a2238; margin-bottom: 0.5rem;">Include Options:</label>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label style="display: flex; align-items: center; cursor: pointer; color: #1a2238; font-weight: 500;">
+                  <input type="checkbox" id="includeMap" checked style="margin-right: 0.5rem;">
+                  <span style="color: #1a2238;">Include hotel map and directions</span>
+                </label>
+                <label style="display: flex; align-items: center; cursor: pointer; color: #1a2238; font-weight: 500;">
+                  <input type="checkbox" id="includeContact" checked style="margin-right: 0.5rem;">
+                  <span style="color: #1a2238;">Include contact information</span>
+                </label>
+                <label style="display: flex; align-items: center; cursor: pointer; color: #1a2238; font-weight: 500;">
+                  <input type="checkbox" id="includeNotes" style="margin-right: 0.5rem;">
+                  <span style="color: #1a2238;">Include personal notes</span>
+                </label>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+              <button onclick="generateAndDownloadPDF()" style="background: #FFD700; color: #000; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Download PDF</button>
+              <button onclick="closePDFModal()" style="background: #e0e0e0; color: #1a2238; font-weight: 700; border: none; border-radius: 8px; padding: 0.8rem 2rem; font-size: 1rem; cursor: pointer;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // Confirmation functions for spa booking
+    function confirmSpaBooking() {
+      const service = document.getElementById('spaService').value;
+      const date = document.getElementById('spaDate').value;
+      const time = document.getElementById('spaTime').value;
+      
+      if (!service || !date || !time) {
+        showCustomAlert('error', 'Please fill in all fields', 'Incomplete Information');
+        return;
+      }
+      
+      // Get service display name
+      const serviceDisplay = document.getElementById('spaService').options[document.getElementById('spaService').selectedIndex].text;
+      const timeDisplay = document.getElementById('spaTime').options[document.getElementById('spaTime').selectedIndex].text;
+      
+      // Format date for display
+      const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      showCustomAlert('success', 'Spa booking confirmed!', 'Booking Confirmed', {
+        'Service': serviceDisplay,
+        'Date': formattedDate,
+        'Time': timeDisplay
+      }, 'You will receive a confirmation email shortly.');
+      closeSpaModal();
+    }
+
+    function closeSpaModal() {
+      const modal = document.getElementById('spaBookingModal');
+      if (modal) modal.remove();
+    }
+
+    // Confirmation functions for table reservation
+    function confirmTableReservation() {
+      const restaurant = document.getElementById('restaurantSelect').value;
+      const date = document.getElementById('tableDate').value;
+      const time = document.getElementById('tableTime').value;
+      const guests = document.getElementById('guestCount').value;
+      
+      if (!restaurant || !date || !time || !guests) {
+        showCustomAlert('error', 'Please fill in all fields', 'Incomplete Information');
+        return;
+      }
+      
+      // Get display names
+      const restaurantDisplay = document.getElementById('restaurantSelect').options[document.getElementById('restaurantSelect').selectedIndex].text;
+      const timeDisplay = document.getElementById('tableTime').options[document.getElementById('tableTime').selectedIndex].text;
+      const guestsDisplay = `${guests} ${parseInt(guests) === 1 ? 'Guest' : 'Guests'}`;
+      
+      // Format date for display
+      const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      showCustomAlert('success', 'Table reservation confirmed!', 'Reservation Confirmed', {
+        'Restaurant': restaurantDisplay,
+        'Date': formattedDate,
+        'Time': timeDisplay,
+        'Guests': guestsDisplay
+      }, 'You will receive a confirmation email shortly.');
+      closeTableModal();
+    }
+
+    function closeTableModal() {
+      const modal = document.getElementById('tableReservationModal');
+      if (modal) modal.remove();
+    }
+
+    // Spinner control functions for guest count
+    function incrementGuests() {
+      const guestInput = document.getElementById('guestCount');
+      if (guestInput) {
+        const currentValue = parseInt(guestInput.value) || 1;
+        const newValue = Math.min(currentValue + 1, 20);
+        guestInput.value = newValue;
+        updateGuestLabel();
+      }
+    }
+
+    function decrementGuests() {
+      const guestInput = document.getElementById('guestCount');
+      if (guestInput) {
+        const currentValue = parseInt(guestInput.value) || 1;
+        const newValue = Math.max(currentValue - 1, 1);
+        guestInput.value = newValue;
+        updateGuestLabel();
+      }
+    }
+
+    function updateGuestLabel() {
+      const guestInput = document.getElementById('guestCount');
+      const guestLabel = document.getElementById('guestLabel');
+      
+      if (guestInput && guestLabel) {
+        const count = parseInt(guestInput.value) || 1;
+        const guestText = count === 1 ? 'Guest' : 'Guests';
+        guestLabel.textContent = `${count} ${guestText}`;
+        
+        // Update button states
+        const upButton = guestInput.parentElement.querySelector('button[onclick="incrementGuests()"]');
+        const downButton = guestInput.parentElement.querySelector('button[onclick="decrementGuests()"]');
+        
+        if (upButton) {
+          upButton.style.opacity = count >= 20 ? '0.5' : '1';
+          upButton.style.cursor = count >= 20 ? 'not-allowed' : 'pointer';
+        }
+        
+        if (downButton) {
+          downButton.style.opacity = count <= 1 ? '0.5' : '1';
+          downButton.style.cursor = count <= 1 ? 'not-allowed' : 'pointer';
+        }
+      }
+    }
+
+    // Confirmation functions for event planning
+    function confirmEventPlanning() {
+      const eventType = document.getElementById('eventType').value;
+      const date = document.getElementById('eventDate').value;
+      const guests = document.getElementById('eventGuests').value;
+      const requirements = document.getElementById('eventRequirements').value;
+      
+      if (!eventType || !date || !guests) {
+        showCustomAlert('error', 'Please fill in all required fields', 'Incomplete Information');
+        return;
+      }
+      
+      // Get display names
+      const eventTypeDisplay = document.getElementById('eventType').options[document.getElementById('eventType').selectedIndex].text;
+      
+      // Format date for display
+      const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      const details = {
+        'Event Type': eventTypeDisplay,
+        'Date': formattedDate,
+        'Expected Guests': guests + ' guests'
+      };
+      
+      if (requirements.trim()) {
+        details['Special Requirements'] = requirements;
+      }
+      
+      showCustomAlert('success', 'Event planning request submitted!', 'Request Submitted', details, 'Our events team will contact you within 24 hours to discuss details.');
+      closeEventModal();
+    }
+
+    function closeEventModal() {
+      const modal = document.getElementById('eventPlanningModal');
+      if (modal) modal.remove();
+    }
+
+    // PDF generation and download function
+    function generateAndDownloadPDF() {
+      const format = document.querySelector('input[name="pdfFormat"]:checked').value;
+      const includeMap = document.getElementById('includeMap').checked;
+      const includeContact = document.getElementById('includeContact').checked;
+      const includeNotes = document.getElementById('includeNotes').checked;
+      
+      // Format display names
+      const formatDisplay = {
+        'detailed': 'Detailed Itinerary',
+        'summary': 'Summary Itinerary', 
+        'calendar': 'Calendar View'
+      }[format];
+      
+      const details = {
+        'Format': formatDisplay,
+        'Include Map': includeMap ? 'Yes' : 'No',
+        'Include Contact': includeContact ? 'Yes' : 'No',
+        'Include Notes': includeNotes ? 'Yes' : 'No'
+      };
+      
+      showCustomAlert('info', 'PDF generation started!', 'Processing', details, 'Your PDF will download automatically.');
+      closePDFModal();
+      
+      // Simulate download (in real implementation, this would generate and download the PDF)
+      setTimeout(() => {
+        showCustomAlert('success', 'PDF downloaded successfully!', 'Download Complete', {
+          'File': 'Pearl_Vista_Itinerary.pdf',
+          'Size': '2.4 MB',
+          'Location': 'Downloads folder'
+        }, 'You can now view and print your itinerary.');
+      }, 2000);
+    }
+
+    function closePDFModal() {
+      const modal = document.getElementById('pdfDownloadModal');
+      if (modal) modal.remove();
+    }
+
+    // Custom Alert Function
+    function showCustomAlert(type, message, title, details = null, additionalMessage = null) {
+      const icons = {
+        'success': 'fa-check-circle',
+        'error': 'fa-exclamation-circle', 
+        'info': 'fa-info-circle',
+        'warning': 'fa-exclamation-triangle'
+      };
+      
+      const colors = {
+        'success': '#28a745',
+        'error': '#dc3545',
+        'info': '#17a2b8', 
+        'warning': '#ffc107'
+      };
+      
+      const icon = icons[type] || 'fa-info-circle';
+      const color = colors[type] || '#17a2b8';
+      
+      let detailsHTML = '';
+      if (details) {
+        detailsHTML = '<div class="custom-alert-details">';
+        for (const [key, value] of Object.entries(details)) {
+          detailsHTML += `
+            <div class="custom-alert-detail">
+              <span class="custom-alert-detail-label">${key}:</span>
+              <span class="custom-alert-detail-value">${value}</span>
+            </div>
+          `;
+        }
+        detailsHTML += '</div>';
+      }
+      
+      const additionalMessageHTML = additionalMessage ? 
+        `<div class="custom-alert-message" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; color: #666; font-style: italic;">${additionalMessage}</div>` : '';
+      
+      const alertHTML = `
+        <div class="custom-alert-overlay">
+          <div class="custom-alert">
+            <button class="custom-alert-close" onclick="closeCustomAlert()">&times;</button>
+            <div class="custom-alert-header">
+              <div class="custom-alert-icon" style="background: ${color};">
+                <i class="fa-solid ${icon}"></i>
+              </div>
+              <div class="custom-alert-title">${title}</div>
+              <div class="custom-alert-subtitle">The Pearl Vista</div>
+            </div>
+            <div class="custom-alert-content">
+              <div class="custom-alert-message">${message}</div>
+              ${detailsHTML}
+              ${additionalMessageHTML}
+            </div>
+            <button class="custom-alert-button" onclick="closeCustomAlert()">OK</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.insertAdjacentHTML('beforeend', alertHTML);
+      
+      // Auto-close after 8 seconds for success/info alerts
+      if (type === 'success' || type === 'info') {
+        setTimeout(() => {
+          closeCustomAlert();
+        }, 8000);
+      }
+    }
+
+    function closeCustomAlert() {
+      const overlay = document.querySelector('.custom-alert-overlay');
+      if (overlay) {
+        overlay.style.animation = 'alertSlideIn 0.2s ease-in reverse';
+        setTimeout(() => {
+          overlay.remove();
+        }, 200);
+      }
+    }
   </script>
   <div style="text-align:left; margin: 2rem 0 0 0;">
     <a href="home.html" style="color:#3FA8B1; font-weight:700; text-decoration:none; font-size:1.25rem;">

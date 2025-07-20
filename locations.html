@@ -31,9 +31,8 @@
   </header>
 
   <!-- User Dropdown Menu -->
-  <div id="userDropdown" class="user-dropdown"
-    style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
-    <div class="user-header">Hey [User]!</div>
+  <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1001; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+    <div class="user-header" id="userDropdownHeader" style="background:#000; color:#fff; text-align:center; font-size:1.3rem; font-weight:700; letter-spacing:0.5px; padding:0.7rem 0; border-radius:0; box-shadow:none;"></div>
     <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
       <li><a href="user-info.html"
           style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i
@@ -285,7 +284,7 @@
       if (profileIcon && userDropdown) {
         if (loggedIn) {
           profileIcon.style.display = 'flex';
-          const userHeader = userDropdown.querySelector('.user-header');
+          const userHeader = document.getElementById('userDropdownHeader');
           if (userHeader) {
             userHeader.textContent = `Hey ${username}!`;
           }

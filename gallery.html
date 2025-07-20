@@ -768,6 +768,13 @@
       modalContent.innerHTML = content;
       modal.style.display = 'block';
     }
+    
+    // Initialize language and currency on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof initializeLanguageAndCurrency === 'function') {
+        initializeLanguageAndCurrency();
+      }
+    });
   </script>
 </body>
 
