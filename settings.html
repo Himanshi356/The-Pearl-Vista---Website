@@ -81,6 +81,25 @@
       }
       var editProfileModal = document.getElementById('editProfileModal');
       if (editProfileModal) editProfileModal.style.display = 'none';
+
+      // --- Dark Mode Toggle Logic ---
+      const darkModeToggle = document.querySelector('.setting-item .switch input[type="checkbox"]');
+      if (darkModeToggle) {
+        // Set initial state from localStorage
+        const darkModeEnabled = localStorage.getItem('pv_dark_mode') === '1';
+        darkModeToggle.checked = darkModeEnabled;
+        document.body.classList.toggle('dark-mode', darkModeEnabled);
+        // Listen for toggle changes
+        darkModeToggle.addEventListener('change', function() {
+          if (this.checked) {
+            localStorage.setItem('pv_dark_mode', '1');
+            document.body.classList.add('dark-mode');
+          } else {
+            localStorage.setItem('pv_dark_mode', '0');
+            document.body.classList.remove('dark-mode');
+          }
+        });
+      }
     });
     document.addEventListener('click', function (e) {
       if (userProfileIcon && userProfileIcon.contains(e.target)) {

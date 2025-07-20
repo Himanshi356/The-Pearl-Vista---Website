@@ -209,47 +209,9 @@
                       class="fa-solid fa-map-marked-alt"></i></span>
                   <div style="margin-left: 18px;">
                     <strong style="color: #1a2238; font-size: 1.08rem;">Day 3 &mdash; 11:00 AM</strong><br />
-                    <span style="color: #444;">Guided City Tour: Bryant Park &amp; Landmarks</span>
+                    <span style="color: #444;">Guided City Tour &amp; Shopping</span>
                   </div>
                 </div>
-                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                  <span
-                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
-                      class="fa-solid fa-martini-glass-citrus"></i></span>
-                  <div style="margin-left: 18px;">
-                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 4 &mdash; 6:00 PM</strong><br />
-                    <span style="color: #444;">Evening Social: Rooftop Bar Happy Hour</span>
-                  </div>
-                </div>
-                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                  <span
-                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
-                      class="fa-solid fa-concierge-bell"></i></span>
-                  <div style="margin-left: 18px;">
-                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 5 &mdash; 8:00 AM</strong><br />
-                    <span style="color: #444;">Breakfast in Bed &amp; Room Service</span>
-                  </div>
-                </div>
-                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                  <span
-                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
-                      class="fa-solid fa-umbrella-beach"></i></span>
-                  <div style="margin-left: 18px;">
-                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 6 &mdash; 1:00 PM</strong><br />
-                    <span style="color: #444;">Private Beach Excursion (with Lunch)</span>
-                  </div>
-                </div>
-                <div class="event" style="display: flex; align-items: flex-start; gap: 14px; position: relative;">
-                  <span
-                    style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i
-                      class="fa-solid fa-sign-out-alt"></i></span>
-                  <div style="margin-left: 18px;">
-                    <strong style="color: #1a2238; font-size: 1.08rem;">Day 7 &mdash; 12:00 PM</strong><br />
-                    <span style="color: #444;">Check-Out &amp; Chauffeur Service to Airport</span>
-                  </div>
-                </div>
-                <div class="add-activity" style="margin-left: 18px; color: #3FA8B1; font-weight: 700; cursor: pointer;">
-                  ＋ Add Activity</div>
               </div>
             </div>
           </div>
@@ -357,14 +319,15 @@
       </div>
     </div>
   </section>
-
   <!-- Action Buttons -->
   <section class="wishlist-actions-section">
     <div class="container">
       <div class="actions-grid btn-group" style="gap: 1.5rem; justify-content: center;">
-        <button class="btn signup" onclick="bookSpaService()"><i class="fa-solid fa-spa" style="color:#000; margin-right:10px;"></i>Book
+        <button class="btn signup" onclick="bookSpaService()"><i class="fa-solid fa-spa"
+            style="color:#000; margin-right:10px;"></i>Book
           spa</button>
-        <button class="btn login" onclick="reserveTable()"><i class="fa-solid fa-utensils" style="color:#000; margin-right:10px;"></i>Reserve
+        <button class="btn login" onclick="reserveTable()"><i class="fa-solid fa-utensils"
+            style="color:#000; margin-right:10px;"></i>Reserve
           table</button>
         <button class="btn secondary" onclick="planEvent()"><i class="fa-solid fa-calendar-check"
             style="color:#000; margin-right:10px;"></i>Plan an event</button>
@@ -494,6 +457,7 @@
         opacity: 0;
         transform: translateY(-20px) scale(0.95);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -789,12 +753,12 @@
         </div>
       `;
       document.body.insertAdjacentHTML('beforeend', modalHTML);
-      
+
       // Add event listeners for the spinner buttons
       setTimeout(() => {
         const guestInput = document.getElementById('guestCount');
         const guestLabel = document.getElementById('guestLabel');
-        
+
         if (guestInput && guestLabel) {
           guestInput.addEventListener('input', updateGuestLabel);
           updateGuestLabel(); // Initialize label
@@ -900,24 +864,24 @@
       const service = document.getElementById('spaService').value;
       const date = document.getElementById('spaDate').value;
       const time = document.getElementById('spaTime').value;
-      
+
       if (!service || !date || !time) {
         showCustomAlert('error', 'Please fill in all fields', 'Incomplete Information');
         return;
       }
-      
+
       // Get service display name
       const serviceDisplay = document.getElementById('spaService').options[document.getElementById('spaService').selectedIndex].text;
       const timeDisplay = document.getElementById('spaTime').options[document.getElementById('spaTime').selectedIndex].text;
-      
+
       // Format date for display
-      const formattedDate = new Date(date).toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
-      
+
       showCustomAlert('success', 'Spa booking confirmed!', 'Booking Confirmed', {
         'Service': serviceDisplay,
         'Date': formattedDate,
@@ -937,25 +901,25 @@
       const date = document.getElementById('tableDate').value;
       const time = document.getElementById('tableTime').value;
       const guests = document.getElementById('guestCount').value;
-      
+
       if (!restaurant || !date || !time || !guests) {
         showCustomAlert('error', 'Please fill in all fields', 'Incomplete Information');
         return;
       }
-      
+
       // Get display names
       const restaurantDisplay = document.getElementById('restaurantSelect').options[document.getElementById('restaurantSelect').selectedIndex].text;
       const timeDisplay = document.getElementById('tableTime').options[document.getElementById('tableTime').selectedIndex].text;
       const guestsDisplay = `${guests} ${parseInt(guests) === 1 ? 'Guest' : 'Guests'}`;
-      
+
       // Format date for display
-      const formattedDate = new Date(date).toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
-      
+
       showCustomAlert('success', 'Table reservation confirmed!', 'Reservation Confirmed', {
         'Restaurant': restaurantDisplay,
         'Date': formattedDate,
@@ -994,21 +958,21 @@
     function updateGuestLabel() {
       const guestInput = document.getElementById('guestCount');
       const guestLabel = document.getElementById('guestLabel');
-      
+
       if (guestInput && guestLabel) {
         const count = parseInt(guestInput.value) || 1;
         const guestText = count === 1 ? 'Guest' : 'Guests';
         guestLabel.textContent = `${count} ${guestText}`;
-        
+
         // Update button states
         const upButton = guestInput.parentElement.querySelector('button[onclick="incrementGuests()"]');
         const downButton = guestInput.parentElement.querySelector('button[onclick="decrementGuests()"]');
-        
+
         if (upButton) {
           upButton.style.opacity = count >= 20 ? '0.5' : '1';
           upButton.style.cursor = count >= 20 ? 'not-allowed' : 'pointer';
         }
-        
+
         if (downButton) {
           downButton.style.opacity = count <= 1 ? '0.5' : '1';
           downButton.style.cursor = count <= 1 ? 'not-allowed' : 'pointer';
@@ -1022,33 +986,33 @@
       const date = document.getElementById('eventDate').value;
       const guests = document.getElementById('eventGuests').value;
       const requirements = document.getElementById('eventRequirements').value;
-      
+
       if (!eventType || !date || !guests) {
         showCustomAlert('error', 'Please fill in all required fields', 'Incomplete Information');
         return;
       }
-      
+
       // Get display names
       const eventTypeDisplay = document.getElementById('eventType').options[document.getElementById('eventType').selectedIndex].text;
-      
+
       // Format date for display
-      const formattedDate = new Date(date).toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       });
-      
+
       const details = {
         'Event Type': eventTypeDisplay,
         'Date': formattedDate,
         'Expected Guests': guests + ' guests'
       };
-      
+
       if (requirements.trim()) {
         details['Special Requirements'] = requirements;
       }
-      
+
       showCustomAlert('success', 'Event planning request submitted!', 'Request Submitted', details, 'Our events team will contact you within 24 hours to discuss details.');
       closeEventModal();
     }
@@ -1064,24 +1028,24 @@
       const includeMap = document.getElementById('includeMap').checked;
       const includeContact = document.getElementById('includeContact').checked;
       const includeNotes = document.getElementById('includeNotes').checked;
-      
+
       // Format display names
       const formatDisplay = {
         'detailed': 'Detailed Itinerary',
-        'summary': 'Summary Itinerary', 
+        'summary': 'Summary Itinerary',
         'calendar': 'Calendar View'
       }[format];
-      
+
       const details = {
         'Format': formatDisplay,
         'Include Map': includeMap ? 'Yes' : 'No',
         'Include Contact': includeContact ? 'Yes' : 'No',
         'Include Notes': includeNotes ? 'Yes' : 'No'
       };
-      
+
       showCustomAlert('info', 'PDF generation started!', 'Processing', details, 'Your PDF will download automatically.');
       closePDFModal();
-      
+
       // Simulate download (in real implementation, this would generate and download the PDF)
       setTimeout(() => {
         showCustomAlert('success', 'PDF downloaded successfully!', 'Download Complete', {
@@ -1101,21 +1065,21 @@
     function showCustomAlert(type, message, title, details = null, additionalMessage = null) {
       const icons = {
         'success': 'fa-check-circle',
-        'error': 'fa-exclamation-circle', 
+        'error': 'fa-exclamation-circle',
         'info': 'fa-info-circle',
         'warning': 'fa-exclamation-triangle'
       };
-      
+
       const colors = {
         'success': '#28a745',
         'error': '#dc3545',
-        'info': '#17a2b8', 
+        'info': '#17a2b8',
         'warning': '#ffc107'
       };
-      
+
       const icon = icons[type] || 'fa-info-circle';
       const color = colors[type] || '#17a2b8';
-      
+
       let detailsHTML = '';
       if (details) {
         detailsHTML = '<div class="custom-alert-details">';
@@ -1129,10 +1093,10 @@
         }
         detailsHTML += '</div>';
       }
-      
-      const additionalMessageHTML = additionalMessage ? 
+
+      const additionalMessageHTML = additionalMessage ?
         `<div class="custom-alert-message" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; color: #666; font-style: italic;">${additionalMessage}</div>` : '';
-      
+
       const alertHTML = `
         <div class="custom-alert-overlay">
           <div class="custom-alert">
@@ -1153,9 +1117,9 @@
           </div>
         </div>
       `;
-      
+
       document.body.insertAdjacentHTML('beforeend', alertHTML);
-      
+
       // Auto-close after 8 seconds for success/info alerts
       if (type === 'success' || type === 'info') {
         setTimeout(() => {

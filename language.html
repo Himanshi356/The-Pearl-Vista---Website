@@ -81,6 +81,15 @@
       }
       var editProfileModal = document.getElementById('editProfileModal');
       if (editProfileModal) editProfileModal.style.display = 'none';
+
+      // --- Language & Currency Default Selection Logic ---
+      // Always set default language to English (United States)
+      const langRadio = document.querySelector('input[name="language"][value="en-US"]');
+      if (langRadio) langRadio.checked = true;
+      // Set default currency from localStorage or USD
+      const savedCurr = localStorage.getItem('pv_currency') || 'USD';
+      const currRadio = document.querySelector(`input[name="currency"][value="${savedCurr}"]`);
+      if (currRadio) currRadio.checked = true;
     });
     document.addEventListener('click', function (e) {
       if (userProfileIcon && userProfileIcon.contains(e.target)) {
@@ -126,28 +135,17 @@
                 style="flex:1 1 45%; min-width:320px; font-size:1.08rem; color:#1a2238; line-height:1.8; padding-right:2.5rem; border:none;">
                 <legend style="font-size:1.25rem; font-weight:800; margin-bottom:1.2rem;">Choose Your Language</legend>
                 <div class="radio-list">
-                  <input type="radio" id="lang-en-US" name="language" value="en-US" checked><label for="lang-en-US"
-                    class="custom-radio">English (United States)</label>
-                  <input type="radio" id="lang-en-UK" name="language" value="en-UK"><label for="lang-en-UK"
-                    class="custom-radio">English (United Kingdom)</label>
-                  <input type="radio" id="lang-fr" name="language" value="fr"><label for="lang-fr"
-                    class="custom-radio">French</label>
-                  <input type="radio" id="lang-es" name="language" value="es"><label for="lang-es"
-                    class="custom-radio">Spanish</label>
-                  <input type="radio" id="lang-nl" name="language" value="nl"><label for="lang-nl"
-                    class="custom-radio">Dutch</label>
-                  <input type="radio" id="lang-hi" name="language" value="hi"><label for="lang-hi"
-                    class="custom-radio">Hindi</label>
-                  <input type="radio" id="lang-zh" name="language" value="zh"><label for="lang-zh"
-                    class="custom-radio">Chinese</label>
-                  <input type="radio" id="lang-de" name="language" value="de"><label for="lang-de"
-                    class="custom-radio">German</label>
-                  <input type="radio" id="lang-ja" name="language" value="ja"><label for="lang-ja"
-                    class="custom-radio">Japanese</label>
-                  <input type="radio" id="lang-ko" name="language" value="ko"><label for="lang-ko"
-                    class="custom-radio">Korean</label>
-                  <input type="radio" id="lang-tr" name="language" value="tr"><label for="lang-tr"
-                    class="custom-radio">Turkish</label>
+                  <input type="radio" id="lang-en-US" name="language" value="en-US" checked><label for="lang-en-US" class="custom-radio">English (United States)</label>
+                  <input type="radio" id="lang-en-UK" name="language" value="en-UK"><label for="lang-en-UK" class="custom-radio">English (United Kingdom)</label>
+                  <input type="radio" id="lang-fr" name="language" value="fr"><label for="lang-fr" class="custom-radio">French</label>
+                  <input type="radio" id="lang-es" name="language" value="es"><label for="lang-es" class="custom-radio">Spanish</label>
+                  <input type="radio" id="lang-nl" name="language" value="nl"><label for="lang-nl" class="custom-radio">Dutch</label>
+                  <input type="radio" id="lang-hi" name="language" value="hi"><label for="lang-hi" class="custom-radio">Hindi</label>
+                  <input type="radio" id="lang-zh" name="language" value="zh"><label for="lang-zh" class="custom-radio">Chinese</label>
+                  <input type="radio" id="lang-de" name="language" value="de"><label for="lang-de" class="custom-radio">German</label>
+                  <input type="radio" id="lang-ja" name="language" value="ja"><label for="lang-ja" class="custom-radio">Japanese</label>
+                  <input type="radio" id="lang-ko" name="language" value="ko"><label for="lang-ko" class="custom-radio">Korean</label>
+                  <input type="radio" id="lang-tr" name="language" value="tr"><label for="lang-tr" class="custom-radio">Turkish</label>
                 </div>
               </fieldset>
               <fieldset class="selector-group"
@@ -431,11 +429,7 @@
       localStorage.setItem('pv_currency', currency);
       
       // Show success confirmation
-      showCustomAlert('success', 'Preferences saved successfully!', 'Settings Updated', {
-        'Language': languageDisplay,
-        'Currency': currencyDisplay,
-        'Status': 'Active'
-      }, 'Your preferences will be applied across all pages. You may need to refresh the page to see changes.');
+      showNotification('Preferences saved successfully! Your changes will be applied across all pages.', 'success');
       
       // Apply changes immediately to current page
       setTimeout(() => {
