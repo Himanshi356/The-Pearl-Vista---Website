@@ -100,6 +100,29 @@
       localStorage.removeItem('pv_username');
       window.location.href = 'index.html';
     }
+
+    // Load itinerary from localStorage
+    document.addEventListener('DOMContentLoaded', function () {
+      const itineraries = JSON.parse(localStorage.getItem('pv_itinerary') || '[]');
+      const timeline = document.querySelector('.wishlist-details');
+
+      itineraries.forEach(itinerary => {
+        if (itinerary.type === 'tour') {
+          const eventDiv = document.createElement('div');
+          eventDiv.className = 'event';
+          eventDiv.style = 'display: flex; align-items: flex-start; gap: 14px; position: relative;';
+          eventDiv.innerHTML = `
+            <span style="position: absolute; left: -19px; top: 2px; background: #FFD700; color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(212,175,55,0.13); font-size: 1.1rem;"><i class="fa-solid fa-map-marked-alt"></i></span>
+            <div style="margin-left: 18px;">
+              <strong style="color: #1a2238; font-size: 1.08rem;">${itinerary.date} &mdash; ${itinerary.time}</strong><br/>
+              <span style="color: #444;">${itinerary.title} — ${itinerary.places.join(', ')}</span><br/>
+              <span style="color: #666; font-size: 0.9rem;">${itinerary.details}</span>
+            </div>
+          `;
+          timeline.appendChild(eventDiv);
+        }
+      });
+    });
   </script>
 
   <!-- Page Header -->

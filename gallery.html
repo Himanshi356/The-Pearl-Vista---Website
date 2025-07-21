@@ -450,7 +450,7 @@
       <p class="hero-subtitle">Discover The Pearl Vista in stunning detail</p>
       <div class="gallery-banner-stats" style="display: flex; justify-content: center; gap: 4rem; margin-top: 2.2rem;">
         <div style="text-align: center;">
-          <span style="color: #FFD700; font-size: 2.7rem; font-weight: 700; display: block;">300+</span>
+          <span style="color: #FFD700; font-size: 2.7rem; font-weight: 700; display: block;">100+</span>
           <span style="color: #fff; font-size: 1.08rem; font-weight: 600; letter-spacing: 1px;">Photos</span>
         </div>
         <div style="text-align: center;">
@@ -538,7 +538,7 @@
           <div class="card-content">
             <h3>Rooms & Suites</h3>
             <p>Luxury accommodations with premium amenities</p>
-            <span class="photo-count">24 Photos</span>
+            <span class="photo-count">36 Photos</span>
           </div>
         </div>
 
@@ -566,7 +566,7 @@
           <div class="card-content">
             <h3>Wellness & Spa</h3>
             <p>Relaxing spa treatments and fitness facilities</p>
-            <span class="photo-count">15 Photos</span>
+            <span class="photo-count">9 Photos</span>
           </div>
         </div>
 
@@ -580,7 +580,7 @@
           <div class="card-content">
             <h3>Leisure & Recreation</h3>
             <p>Swimming pools, fitness center, and activities</p>
-            <span class="photo-count">20 Photos</span>
+            <span class="photo-count">9 Photos</span>
           </div>
         </div>
 
@@ -594,7 +594,7 @@
           <div class="card-content">
             <h3>Events & Meetings</h3>
             <p>Conference rooms and event spaces</p>
-            <span class="photo-count">16 Photos</span>
+            <span class="photo-count">9 Photos</span>
           </div>
         </div>
       </div>
@@ -705,68 +705,8 @@
     });
 
     function showGalleryCategory(category) {
-      const modal = document.getElementById('galleryModal');
-      const modalContent = document.getElementById('modalContent');
-      const modalTitle = document.getElementById('modalTitle');
-
-      // Set modal title
-      const titles = {
-        'lobby': 'Lobby & Reception',
-        'rooms': 'Rooms & Suites',
-        'dining': 'Dining & Culinary',
-        'wellness': 'Wellness & Spa',
-        'leisure': 'Leisure & Recreation',
-        'events': 'Events & Meetings'
-      };
-
-      modalTitle.textContent = titles[category] || category.charAt(0).toUpperCase() + category.slice(1);
-
-      // Load content based on category
-      let content = '';
-      switch (category) {
-        case 'lobby':
-          content = `
-                        <div class="gallery-grid-modal">
-                            <img src="images/lobby.png" alt="Lobby view" onclick="openLightbox(this.src)">
-                            <img src="images/reception.png" alt="Reception area" onclick="openLightbox(this.src)">
-                            <img src="images/lounge.png" alt="Lounge area" onclick="openLightbox(this.src)">
-                            <img src="images/hotel-view.png" alt="Hotel exterior" onclick="openLightbox(this.src)">
-                        </div>
-                    `;
-          break;
-        case 'rooms':
-          content = `
-                        <div class="gallery-grid-modal">
-                            <img src="images/room.png" alt="Standard room" onclick="openLightbox(this.src)">
-                            <img src="images/deluxe-room.png" alt="Deluxe room" onclick="openLightbox(this.src)">
-                            <img src="images/executive-room.png" alt="Executive room" onclick="openLightbox(this.src)">
-                            <img src="images/family-suite.png" alt="Family suite" onclick="openLightbox(this.src)">
-                            <img src="images/luxury-suite.png" alt="Luxury suite" onclick="openLightbox(this.src)">
-                            <img src="images/premium-room.png" alt="Premium room" onclick="openLightbox(this.src)">
-                        </div>
-                    `;
-          break;
-        case 'dining':
-          content = `
-                        <div class="gallery-grid-modal">
-                            <img src="images/restaurant.png" alt="Restaurant" onclick="openLightbox(this.src)">
-                            <img src="images/dining.png" alt="Dining area" onclick="openLightbox(this.src)">
-                            <img src="images/lounge.png" alt="Lounge bar" onclick="openLightbox(this.src)">
-                        </div>
-                    `;
-          break;
-        case 'wellness':
-          content = `
-                        <div class="gallery-grid-modal">
-                            <img src="images/spa.png" alt="Spa area" onclick="openLightbox(this.src)">
-                            <img src="images/pool.png" alt="Swimming pool" onclick="openLightbox(this.src)">
-                            <img src="images/spa.png" alt="Wellness center" onclick="openLightbox(this.src)">
-                        </div>
-                    `;
-          break;
-      }
-      modalContent.innerHTML = content;
-      modal.style.display = 'block';
+      // Redirect to the new categorized gallery page
+      window.location.href = 'gallery-categories.html#' + category;
     }
     
     // Initialize language and currency on page load

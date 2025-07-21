@@ -2945,6 +2945,8 @@ html, body {
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
+  background-color: #28a745;
+  color: #fff;
 }
 
 .booking-status.active,
@@ -4957,4 +4959,25 @@ body.dark-mode .switch .slider {
 }
 body.dark-mode .switch input:checked + .slider {
   background: #FFD700 !important;
+}
+
+.booking-card .service-list,
+.booking-card .booking-total {
+  color: #333;
+}
+
+.booking-total {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.booking-total .total-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.booking-card .booking-price .price {
+  font-size: 1.75rem;
+  font-weight: 700;
 }

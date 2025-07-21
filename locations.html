@@ -70,6 +70,13 @@
       onclick="logout()">Logout</div>
   </div>
 
+  <style>
+    #closeBookingModal:hover {
+      background: linear-gradient(90deg, #ffea70 0%, #ffe033 100%) !important;
+      box-shadow: 0 4px 16px #ffe03355 !important;
+    }
+  </style>
+
   <!-- Main Section: Locations Grid + Guided Tour Form -->
   <main>
     <section class="locations-banner">
@@ -154,6 +161,9 @@
             <input type="tel" placeholder="Phone No." required
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
             <input type="text" id="dateInput" placeholder="Select a Date" required onfocus="(this.type='date')"
+              onblur="if(this.value===''){this.type='text'}"
+              style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
+            <input type="text" id="timeInput" placeholder="Select a Time" required onfocus="(this.type='time')"
               onblur="if(this.value===''){this.type='text'}"
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
             <!-- Custom Places to Visit Dropdown -->
@@ -303,11 +313,26 @@
         const email = document.querySelector('input[placeholder="Email"]').value.trim();
         const phone = document.querySelector('input[placeholder="Phone No."]').value.trim();
         const date = document.getElementById('dateInput').value.trim();
+        const time = document.getElementById('timeInput').value.trim();
         const places = document.getElementById('placeSelectHidden').value.split(',').map(p => p.trim()).filter(p => p);
         const travellers = document.getElementById('travellersSelect').value;
         const vehicle = document.getElementById('vehicleSelect').value;
-        const allFilled = fullName && email && phone && date && places.length && travellers && vehicle;
+        const allFilled = fullName && email && phone && date && time && places.length && travellers && vehicle;
         if (allFilled) {
+          // Save itinerary to localStorage
+          const itinerary = {
+            id: `IT-${Date.now()}`,
+            type: 'tour',
+            title: 'Guided City Tour',
+            date: date,
+            time: time,
+            details: `${travellers} people, using ${vehicle}`,
+            places: places
+          };
+          const itineraries = JSON.parse(localStorage.getItem('pv_itinerary') || '[]');
+          itineraries.push(itinerary);
+          localStorage.setItem('pv_itinerary', JSON.stringify(itineraries));
+          
           // Show custom modal
           document.getElementById('bookingModal').style.display = 'flex';
         } else {
@@ -510,7 +535,7 @@
     }
 
     .btn.gold:hover {
-      background: linear-gradient(90deg, #ffea70 0%, #ffe033 100%);
+      background: linear-gradient(90deg, #ffea70 0%, #ffe033 100%) !important;
       color: #000 !important;
       box-shadow: 0 4px 16px #ffe03355;
     }
@@ -613,21 +638,22 @@
       const email = document.querySelector('input[placeholder="Email"]').value.trim();
       const phone = document.querySelector('input[placeholder="Phone No."]').value.trim();
       const date = document.getElementById('dateInput').value.trim();
+      const time = document.getElementById('timeInput').value.trim();
       // Check if all required fields are filled
-      const allFilled = fullName && email && phone && date && places.length && travellers && vehicle;
+      const allFilled = fullName && email && phone && date && time && places.length && travellers && vehicle;
       // Calculate base for all selected places
       let base = 0;
       places.forEach(place => {
-        if (place === 'Others') base += 40;
-        else base += 50;
+        if (place === 'Others') base += 4500;
+        else base += 5000;
       });
       let numTravellers = parseInt(travellers);
       if (!numTravellers || numTravellers < 1) numTravellers = 1;
-      let vehicleMultiplier = 1;
-      if (vehicle === 'Van') vehicleMultiplier = 1.5;
-      else if (vehicle === 'Bus') vehicleMultiplier = 2;
-      else if (vehicle === 'Limousine') vehicleMultiplier = 2.5;
-      const total = Math.round((base + (numTravellers - 1) * 30) * vehicleMultiplier);
+      let vehicleMultiplier = 5;
+      if (vehicle === 'Van') vehicleMultiplier = 8.5;
+      else if (vehicle === 'Bus') vehicleMultiplier = 10;
+      else if (vehicle === 'Limousine') vehicleMultiplier = 20;
+      const total = Math.round((base + (numTravellers - 1) * 3000) * vehicleMultiplier);
       document.getElementById('amountField').value = allFilled ? ('$' + total) : '';
     }
     document.getElementById('travellersSelect').addEventListener('change', calculateAmount);
@@ -639,6 +665,10 @@
     document.querySelector('input[placeholder="Full Name"]').addEventListener('input', calculateAmount);
     document.querySelector('input[placeholder="Email"]').addEventListener('input', calculateAmount);
     document.querySelector('input[placeholder="Phone No."]').addEventListener('input', calculateAmount);
+    document.getElementById('timeInput').addEventListener('change', calculateAmount);
+    document.getElementById('timeInput').addEventListener('input', calculateAmount);
+    document.getElementById('timeInput').addEventListener('blur', calculateAmount);
+    document.getElementById('timeInput').addEventListener('focus', calculateAmount);
   </script>
 </body>
 

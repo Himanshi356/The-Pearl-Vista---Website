@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pearl Vista - Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gallery-categories {
+            padding: 80px 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .gallery-header h1 {
+            font-size: 3rem;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .gallery-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .category-section {
+            margin-bottom: 80px;
+        }
+        
+        .category-title {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+            position: relative;
+        }
+        
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #c8a97e, #d4b483);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1), 0 0 20px rgba(200, 169, 126, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 0 30px rgba(200, 169, 126, 0.5);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #c8a97e, #d4b483);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+        
+        .category-nav {
+            position: sticky;
+            top: 80px;
+            background: white;
+            padding: 20px 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .category-nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .category-nav a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-nav a:hover,
+        .category-nav a.active {
+            color: #c8a97e;
+            background: rgba(200, 169, 126, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-categories {
+                padding: 60px 15px 30px;
+            }
+            
+            .gallery-header h1 {
+                font-size: 2rem;
+            }
+            
+            .category-title {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .category-nav ul {
+                gap: 15px;
+            }
+            
+            .category-nav a {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation will be included here -->
+    
+    <div class="gallery-categories">
+        <div class="gallery-header">
+            <h1>The Pearl Vista Gallery</h1>
+            <p>Experience luxury through our curated collection of images showcasing every aspect of your perfect stay</p>
+        </div>
+        
+        <nav class="category-nav">
+            <ul>
+                <li><a href="#dining">Dining & Culinary</a></li>
+                <li><a href="#wellness">Wellness & Spa</a></li>
+                <li><a href="#leisure">Leisure & Recreation</a></li>
+                <li><a href="#events">Events & Meetings</a></li>
+                <li><a href="#lobby">Lobby & Reception</a></li>
+                <li><a href="#rooms">Rooms & Suites</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Dining & Culinary Section -->
+        <section id="dining" class="category-section">
+            <h2 class="category-title">Dining & Culinary</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Gallery/dining1.jpg" alt="Signature Dining Experience">
+                    <div class="gallery-overlay">
+                        <h3>Signature Dining</h3>
+                        <p>Experience exquisite flavors in a luxurious setting</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining1.jpg" alt="Fine Dining Experience">
+                    <div class="gallery-overlay">
+                        <h3>Epicurean Excellence</h3>
+                        <p>Curated gastronomic experiences in opulent surroundings</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining2.jpg" alt="Restaurant Interior">
+                    <div class="gallery-overlay">
+                        <h3>Sophisticated Ambiance</h3>
+                        <p>Timeless elegance meets contemporary luxury</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining6.jpg" alt="Chef's Special">
+                    <div class="gallery-overlay">
+                        <h3>Master Chef's Signature</h3>
+                        <p>Handcrafted delicacies with artistic precision</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining7.jpg" alt="Kitchen Excellence">
+                    <div class="gallery-overlay">
+                        <h3>Culinary Mastery</h3>
+                        <p>World-class chefs crafting extraordinary experiences</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining8.jpg" alt="Dining Service">
+                    <div class="gallery-overlay">
+                        <h3>Impeccable Service</h3>
+                        <p>Discerning attention to every detail</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining9.jpg" alt="Chef's Table">
+                    <div class="gallery-overlay">
+                        <h3>Exclusive Chef's Table</h3>
+                        <p>Intimate culinary theater for distinguished guests</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining10.jpg" alt="Fine Dining">
+                    <div class="gallery-overlay">
+                        <h3>Refined Dining</h3>
+                        <p>Where sophistication meets exceptional taste</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining11.jpg" alt="Culinary Excellence">
+                    <div class="gallery-overlay">
+                        <h3>Culinary Artistry</h3>
+                        <p>Masterpieces of flavor and presentation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining12.jpg" alt="Dining Experience">
+                    <div class="gallery-overlay">
+                        <h3>Memorable Moments</h3>
+                        <p>Creating lasting impressions through excellence</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining13.jpg" alt="Restaurant Service">
+                    <div class="gallery-overlay">
+                        <h3>Professional Excellence</h3>
+                        <p>Seamless service with uncompromising standards</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining14.jpg" alt="Dining Atmosphere">
+                    <div class="gallery-overlay">
+                        <h3>Enchanting Atmosphere</h3>
+                        <p>Where every moment becomes extraordinary</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/dining15.jpg" alt="Culinary Art">
+                    <div class="gallery-overlay">
+                        <h3>Artistic Presentation</h3>
+                        <p>Visual masterpieces that delight the senses</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/chef.jpg" alt="Chef's Kitchen">
+                    <div class="gallery-overlay">
+                        <h3>Culinary Sanctuary</h3>
+                        <p>Where passion meets precision in every creation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/fine dining.jpg" alt="Fine Dining Experience">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Dining</h3>
+                        <p>Elevated experiences for discerning palates</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/Fine_dining.jpg" alt="Premium Dining">
+                    <div class="gallery-overlay">
+                        <h3>Premium Excellence</h3>
+                        <p>Unparalleled standards of culinary distinction</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/kitchen.jpg" alt="Kitchen Facilities">
+                    <div class="gallery-overlay">
+                        <h3>State-of-the-Art Kitchen</h3>
+                        <p>Cutting-edge facilities for culinary innovation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/service.jpg" alt="Dining Service">
+                    <div class="gallery-overlay">
+                        <h3>Exemplary Service</h3>
+                        <p>Anticipating needs with graceful precision</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Wellness & Spa Section -->
+        <section id="wellness" class="category-section">
+            <h2 class="category-title">Wellness & Spa</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Gallery/spa1.jpg" alt="Spa Treatment Room">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Terrace Oasis</h3>
+                        <p>Elegant outdoor sanctuary with panoramic city vistas</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/spa2.jpg" alt="Massage Therapy">
+                    <div class="gallery-overlay">
+                        <h3>Elite Fitness Sanctuary</h3>
+                        <p>Cutting-edge equipment in an inspiring environment</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/spa3.jpg" alt="Sauna Room">
+                    <div class="gallery-overlay">
+                        <h3>Finnish Sauna Tradition</h3>
+                        <p>Ancient wellness rituals in contemporary luxury</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/spa4.jpg" alt="Steam Room">
+                    <div class="gallery-overlay">
+                        <h3>Purifying Steam Therapy</h3>
+                        <p>Detoxifying rituals for body and soul</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/spa5.jpg" alt="Fitness Center">
+                    <div class="gallery-overlay">
+                        <h3>Therapeutic Excellence</h3>
+                        <p>Masterful hands delivering restorative healing</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/spa.jpg" alt="Spa Experience">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Spa Experience</h3>
+                        <p>Curated treatments for the discerning guest</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/wellness.jpg" alt="Wellness Center">
+                    <div class="gallery-overlay">
+                        <h3>Holistic Wellness Center</h3>
+                        <p>Comprehensive care for mind, body, and spirit</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/wellness2.jpg" alt="Wellness Programs">
+                    <div class="gallery-overlay">
+                        <h3>Signature Wellness Programs</h3>
+                        <p>Personalized journeys to optimal well-being</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/spa6.jpg" alt="Spa Relaxation Area">
+                    <div class="gallery-overlay">
+                        <h3>Spa Relaxation Area</h3>
+                        <p>Unwind in our tranquil and luxurious spa lounge</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Leisure & Recreation Section -->
+        <section id="leisure" class="category-section">
+            <h2 class="category-title">Leisure & Recreation</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Gallery/leisure.jpg" alt="Leisure Activities">
+                    <div class="gallery-overlay">
+                        <h3>Curated Leisure Experiences</h3>
+                        <p>Sophisticated entertainment for discerning guests</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure1.jpg" alt="Recreation Area">
+                    <div class="gallery-overlay">
+                        <h3>Premium Recreation Sanctuary</h3>
+                        <p>Expansive facilities designed for luxury leisure</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure2.jpg" alt="Entertainment Zone">
+                    <div class="gallery-overlay">
+                        <h3>Exclusive Entertainment</h3>
+                        <p>State-of-the-art facilities for refined enjoyment</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure3.jpg" alt="Game Room">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Terrace Gathering</h3>
+                        <p>Elegant outdoor spaces for sophisticated social experiences</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure4.jpg" alt="Relaxation Area">
+                    <div class="gallery-overlay">
+                        <h3>Serene Retreat Spaces</h3>
+                        <p>Sanctuaries designed for peaceful contemplation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure5.jpg" alt="Activity Center">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Activity Center</h3>
+                        <p>Diverse experiences curated for excellence</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure6.jpg" alt="Entertainment Lounge">
+                    <div class="gallery-overlay">
+                        <h3>Elite Fitness Center</h3>
+                        <p>State-of-the-art equipment in an inspiring environment</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/leisure7.jpg" alt="Recreation Facilities">
+                    <div class="gallery-overlay">
+                        <h3>Welcome Service Excellence</h3>
+                        <p>Curated welcome amenities with premium refreshments</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/swimming_pool.jpg" alt="Swimming Pool">
+                    <div class="gallery-overlay">
+                        <h3>Infinity Pool Oasis</h3>
+                        <p>Breathtaking views from our signature pool</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Events & Meetings Section -->
+        <section id="events" class="category-section">
+            <h2 class="category-title">Events & Meetings</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Gallery/events.jpg" alt="Event Spaces">
+                    <div class="gallery-overlay">
+                        <h3>Exclusive Event Venues</h3>
+                        <p>Versatile spaces designed for extraordinary occasions</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/events1.jpg" alt="Conference Facilities">
+                    <div class="gallery-overlay">
+                        <h3>Grand Event Hall</h3>
+                        <p>Spacious venues for magnificent celebrations</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/events2.jpg" alt="Meeting Rooms">
+                    <div class="gallery-overlay">
+                        <h3>Grand Ballroom</h3>
+                        <p>Majestic spaces for extraordinary celebrations</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/events3.jpg" alt="Event Hall">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Ballrooms</h3>
+                        <p>Perfect venues for any prestigious event</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/event4.jpg" alt="Audiovisual Setup">
+                    <div class="gallery-overlay">
+                        <h3>Cutting-Edge Technology</h3>
+                        <p>State-of-the-art audiovisual excellence</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/event5.jpg" alt="Meeting Equipment">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Event Hall</h3>
+                        <p>Elegant spaces for unforgettable celebrations</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/meeting.jpg" alt="Conference Room">
+                    <div class="gallery-overlay">
+                        <h3>Executive Conference Room</h3>
+                        <p>Distinguished settings for important meetings</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/meetings.jpg" alt="Meeting Spaces">
+                    <div class="gallery-overlay">
+                        <h3>Versatile Meeting Environments</h3>
+                        <p>Adaptable spaces for every occasion</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/meeting_hall.jpg" alt="Meeting Hall">
+                    <div class="gallery-overlay">
+                        <h3>Grand Meeting Hall</h3>
+                        <p>Spacious and elegant venue for your important events</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lobby & Reception Section -->
+        <section id="lobby" class="category-section">
+            <h2 class="category-title">Lobby & Reception</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Gallery/lobby1.jpg" alt="Main Lobby">
+                    <div class="gallery-overlay">
+                        <h3>Grand Lobby Entrance</h3>
+                        <p>Majestic foyer with timeless architectural elegance</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/lobby2.jpg" alt="Reception Desk">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Corridors</h3>
+                        <p>Elegant passageways of refined sophistication</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/lobby3.jpg" alt="Lobby Seating">
+                    <div class="gallery-overlay">
+                        <h3>Elegant Lounge Areas</h3>
+                        <p>Refined seating for distinguished guests</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/lobby4.jpg" alt="Concierge Desk">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Lobby</h3>
+                        <p>Grand spaces of timeless elegance</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/reception1.jpg" alt="Reception Area">
+                    <div class="gallery-overlay">
+                        <h3>Welcoming Reception</h3>
+                        <p>Sophisticated spaces for gracious arrivals</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/reception2.jpg" alt="Reception Service">
+                    <div class="gallery-overlay">
+                        <h3>Exemplary Guest Services</h3>
+                        <p>Professional excellence in every interaction</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/reception3.jpg" alt="Guest Services">
+                    <div class="gallery-overlay">
+                        <h3>Comprehensive Assistance</h3>
+                        <p>Anticipating needs with graceful precision</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/concierge.jpg" alt="Concierge Services">
+                    <div class="gallery-overlay">
+                        <h3>Dedicated Concierge</h3>
+                        <p>Personalized service for discerning travelers</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/bell.jpg" alt="Bell Service">
+                    <div class="gallery-overlay">
+                        <h3>Professional Bell Service</h3>
+                        <p>Attentive assistance with elegant efficiency</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/waiting.jpg" alt="Waiting Area">
+                    <div class="gallery-overlay">
+                        <h3>Sophisticated Waiting Areas</h3>
+                        <p>Comfortable elegance for discerning guests</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/lift.jpg" alt="Elevator Lobby">
+                    <div class="gallery-overlay">
+                        <h3>Elegant Elevator Access</h3>
+                        <p>Graceful transitions between floors</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/trolly.jpg" alt="Luggage Service">
+                    <div class="gallery-overlay">
+                        <h3>Premium Luggage Service</h3>
+                        <p>Professional handling with care and discretion</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Rooms & Suites Section -->
+        <section id="rooms" class="category-section">
+            <h2 class="category-title">Rooms & Suites</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="Gallery/rooms.jpg" alt="Standard Rooms">
+                    <div class="gallery-overlay">
+                        <h3>Sophisticated Accommodations</h3>
+                        <p>Refined comfort with contemporary luxury amenities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms1.jpg" alt="Deluxe Room">
+                    <div class="gallery-overlay">
+                        <h3>Deluxe Sanctuary</h3>
+                        <p>Spacious elegance with premium features</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms2.jpg" alt="Executive Room">
+                    <div class="gallery-overlay">
+                        <h3>Executive Excellence</h3>
+                        <p>Distinguished accommodations for discerning travelers</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms4.jpg" alt="Premium Room">
+                    <div class="gallery-overlay">
+                        <h3>Premium Retreat</h3>
+                        <p>Enhanced luxury with uncompromising comfort</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms5.jpg" alt="Superior Room">
+                    <div class="gallery-overlay">
+                        <h3>Superior Elegance</h3>
+                        <p>Sophisticated rooms with panoramic city vistas</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms6.jpg" alt="Comfort Room">
+                    <div class="gallery-overlay">
+                        <h3>Comfort Sanctuary</h3>
+                        <p>Serene spaces designed for ultimate relaxation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms7.jpg" alt="Modern Room">
+                    <div class="gallery-overlay">
+                        <h3>Contemporary Luxury</h3>
+                        <p>Modern sophistication with timeless comfort</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms8.jpg" alt="Elegant Room">
+                    <div class="gallery-overlay">
+                        <h3>Elegant Refinement</h3>
+                        <p>Sophisticated design with artistic touches</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms9.jpg" alt="Luxury Room">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Accommodations</h3>
+                        <p>Premium experiences for the most discerning guests</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms10.jpg" alt="Suite Experience">
+                    <div class="gallery-overlay">
+                        <h3>Suite Excellence</h3>
+                        <p>Spacious sanctuaries for extraordinary stays</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms11.jpg" alt="Executive Suite">
+                    <div class="gallery-overlay">
+                        <h3>Executive Suite</h3>
+                        <p>Distinguished settings for business excellence</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms12.jpg" alt="Premium Suite">
+                    <div class="gallery-overlay">
+                        <h3>The Pearl Signature</h3>
+                        <p>Luxury accommodations with unparalleled service</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms13.jpg" alt="Deluxe Suite">
+                    <div class="gallery-overlay">
+                        <h3>Deluxe Suite</h3>
+                        <p>Spacious luxury with premium amenities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms14.jpg" alt="Luxury Suite">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Suite</h3>
+                        <p>Ultimate comfort with sophisticated elegance</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/rooms15.jpg" alt="Presidential Suite">
+                    <div class="gallery-overlay">
+                        <h3>Presidential Suite</h3>
+                        <p>Unparalleled luxury and absolute privacy</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/deluxe_room.jpg" alt="Deluxe Room">
+                    <div class="gallery-overlay">
+                        <h3>Deluxe Accommodations</h3>
+                        <p>Spacious comfort with contemporary luxury</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/deluxe_room1.jpg" alt="Deluxe Room View">
+                    <div class="gallery-overlay">
+                        <h3>Panoramic Deluxe Views</h3>
+                        <p>Breathtaking city skyline from every window</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/deluxe_room2.jpg" alt="Deluxe Room Interior">
+                    <div class="gallery-overlay">
+                        <h3>Deluxe Interior Design</h3>
+                        <p>Artistic furnishings with sophisticated elegance</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/executive_room1.jpg" alt="Executive Room">
+                    <div class="gallery-overlay">
+                        <h3>Executive Accommodations</h3>
+                        <p>Business-class luxury for distinguished travelers</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/Executive_room2.jpg" alt="Executive Suite">
+                    <div class="gallery-overlay">
+                        <h3>Executive Suite</h3>
+                        <p>Luxury business accommodations</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/premium_room.jpg" alt="Premium Room">
+                    <div class="gallery-overlay">
+                        <h3>Premium Accommodations</h3>
+                        <p>Enhanced luxury with exceptional amenities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/premium_room1.jpg" alt="Premium Room View">
+                    <div class="gallery-overlay">
+                        <h3>Premium Panoramic Views</h3>
+                        <p>Stunning city vistas from premium heights</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/premium_room2.jpg" alt="Premium Room Interior">
+                    <div class="gallery-overlay">
+                        <h3>Premium Interior Design</h3>
+                        <p>Elegant premium accommodations with artistic flair</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/premium_room3.jpg" alt="Premium Suite">
+                    <div class="gallery-overlay">
+                        <h3>Premium Suite</h3>
+                        <p>Luxury premium suite with exceptional service</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites.jpg" alt="Suite Collection">
+                    <div class="gallery-overlay">
+                        <h3>Signature Suite Collection</h3>
+                        <p>Our most distinguished suite accommodations</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites1.jpg" alt="Luxury Suite">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Suite</h3>
+                        <p>Ultimate luxury with sophisticated comfort</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites2.jpg" alt="Executive Suite">
+                    <div class="gallery-overlay">
+                        <h3>Executive Suite</h3>
+                        <p>Distinguished business suite facilities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites3.jpg" alt="Deluxe Suite">
+                    <div class="gallery-overlay">
+                        <h3>Deluxe Suite</h3>
+                        <p>Spacious luxury with premium amenities</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites4.jpg" alt="Premium Suite">
+                    <div class="gallery-overlay">
+                        <h3>Premium Suite</h3>
+                        <p>Luxury premium suite with exceptional service</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites5.jpg" alt="Presidential Suite">
+                    <div class="gallery-overlay">
+                        <h3>Presidential Suite</h3>
+                        <p>Unparalleled luxury and absolute privacy</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites6.jpg" alt="Suite Living Room">
+                    <div class="gallery-overlay">
+                        <h3>Panoramic City Vista Suite</h3>
+                        <p>Breathtaking city skyline views from floor-to-ceiling windows</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites7.jpg" alt="Suite Bedroom">
+                    <div class="gallery-overlay">
+                        <h3>Cozy Retreat</h3>
+                        <p>Intimate spaces perfect for peaceful relaxation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites8.jpg" alt="Suite Bathroom">
+                    <div class="gallery-overlay">
+                        <h3>Workaholic's Paradise</h3>
+                        <p>Productive spaces for the dedicated professional</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites9.jpg" alt="Suite View">
+                    <div class="gallery-overlay">
+                        <h3>Ultimate Comfort Suite</h3>
+                        <p>Luxurious accommodations designed for complete relaxation</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites10.jpg" alt="Luxury Suite">
+                    <div class="gallery-overlay">
+                        <h3>Luxury Suite</h3>
+                        <p>Ultimate luxury accommodations with exceptional service</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="Gallery/suites11.jpg" alt="Presidential Suite">
+                    <div class="gallery-overlay">
+                        <h3>Dual Comfort Suite</h3>
+                        <p>Spacious accommodations with dual comfort for ultimate relaxation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <a href="#" class="back-to-top">↑</a>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.category-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Update active state
+                document.querySelectorAll('.category-nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Back to top functionality
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Update active navigation based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.category-section');
+            const navLinks = document.querySelectorAll('.category-nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Auto-scroll to category if specified in URL hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const targetSection = document.querySelector('#' + hash);
+                if (targetSection) {
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Update active navigation
+                        document.querySelectorAll('.category-nav a').forEach(a => a.classList.remove('active'));
+                        const activeLink = document.querySelector('.category-nav a[href="#' + hash + '"]');
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }, 500);
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

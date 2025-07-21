@@ -622,19 +622,19 @@
           <div class="special-offer-icon"><i class="fa-solid fa-champagne-glasses"></i></div>
           <h3>Romance in the City</h3>
           <p>Enjoy a romantic getaway with champagne on arrival, spa treatments, and a private dinner overlooking the Manhattan skyline.</p>
-          <button class="luxury-btn-outline">View Offer</button>
+          <button class="luxury-btn-outline" onclick="showRomanceOffer()">View Offer</button>
         </div>
         <div class="special-offer-card">
           <div class="special-offer-icon"><i class="fa-solid fa-spa"></i></div>
           <h3>Ultimate Spa Retreat</h3>
           <p>Indulge in a full day of pampering with luxury spa access, signature massages, and wellness amenities for two.</p>
-          <button class="luxury-btn-outline">View Offer</button>
+          <button class="luxury-btn-outline" onclick="showSpaOffer()">View Offer</button>
         </div>
         <div class="special-offer-card">
           <div class="special-offer-icon"><i class="fa-solid fa-utensils"></i></div>
           <h3>Gourmet Escape</h3>
           <p>Experience fine dining with a curated tasting menu, wine pairings, and a private chef’s table experience.</p>
-          <button class="luxury-btn-outline">View Offer</button>
+          <button class="luxury-btn-outline" onclick="showGourmetOffer()">View Offer</button>
         </div>
       </div>
     </div>
@@ -646,10 +646,10 @@
       <h2 class="section-title">Glimpse Into Our World</h2>
       <div class="section-subtitle">Discover the elegance, comfort, and unforgettable moments that await you at Pearl Vista.</div>
       <div class="gallery-grid">
-                        <div class="gallery-item"><img src="images/room.png" alt="Lobby"></div>
-        <div class="gallery-item"><img src="images/pool.png" alt="Pool"></div>
-        <div class="gallery-item"><img src="images/restaurant.png" alt="Restaurant"></div>
-        <div class="gallery-item"><img src="images/lounge.png" alt="Lounge"></div>
+        <a href="gallery.html" style="display:inline-block;"><div class="gallery-item"><img src="images/room.png" alt="Lobby"></div></a>
+        <a href="gallery.html" style="display:inline-block;"><div class="gallery-item"><img src="images/pool.png" alt="Pool"></div></a>
+        <a href="gallery.html" style="display:inline-block;"><div class="gallery-item"><img src="images/restaurant.png" alt="Restaurant"></div></a>
+        <a href="gallery.html" style="display:inline-block;"><div class="gallery-item"><img src="images/lounge.png" alt="Lounge"></div></a>
       </div>
     </div>
   </section>
@@ -764,6 +764,8 @@
           <option value="Luxury Suite">Luxury Suite</option>
           <option value="Family Suite">Family Suite</option>
         </select>
+        <label for="totalAmount" class="booking-label">Total Amount</label>
+        <input type="text" id="totalAmount" name="totalAmount" readonly class="booking-input enhanced-input">
         <label for="specialInstructions" class="booking-label">Special Instructions</label>
         <textarea id="specialInstructions" name="specialInstructions" rows="3" placeholder="Any special requests or instructions?" class="booking-input enhanced-input"></textarea>
         <button type="submit" class="luxury-btn-filled enhanced-submit-btn">Submit Booking</button>

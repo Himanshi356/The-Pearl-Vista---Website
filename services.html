@@ -205,19 +205,19 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-users"></i> 120 Seating Capacity</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Make Reservation</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('dining')">Make Reservation</button>
                 </div>
               </div>
               
               <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
-                <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Lounge Bar</h3>
-                <p style="color:#666; margin-bottom:1rem;">Sophisticated atmosphere with premium cocktails, wines, and light refreshments.</p>
+                <h3 style="font-size:1.3rem; color:#1a2238; font-weight:600; margin-bottom:0.5rem;">Restaurant and Lounge Bar</h3>
+                <p style="color:#666; margin-bottom:1rem;">Enjoy gourmet cuisine in our elegant restaurant and unwind with premium cocktails, wines, and light refreshments at the lounge bar.</p>
                 <div style="display:flex; gap:1rem; margin-bottom:1rem;">
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-clock"></i> 11:00 AM - 2:00 AM</span>
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-users"></i> 50 Seating Capacity</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">View Menu</button>
+                <button class="btn signup" style="width:100%;" onclick="showBarMenu()">View Menu</button>
                 </div>
               </div>
               
@@ -229,7 +229,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-utensils"></i> Custom Menus</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Private Dining</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('private-dining', true)">Book Private Dining</button>
                 </div>
               </div>
             </div>
@@ -257,7 +257,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-spa"></i> 6 Treatment Rooms</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Treatment</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('spa')">Book Treatment</button>
                 </div>
               </div>
               
@@ -269,7 +269,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-dumbbell"></i> Modern Equipment</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">View Classes</button>
+                <button class="btn signup" style="width:100%;" onclick="showFitnessClasses()">View Classes</button>
                 </div>
               </div>
               
@@ -281,7 +281,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-meditation"></i> Meditation</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Join Program</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('wellness')">Join Program</button>
                 </div>
               </div>
             </div>
@@ -309,7 +309,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-umbrella-beach"></i> Poolside Service</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">View Schedule</button>
+                <button class="btn signup" style="width:100%;" onclick="showPoolSchedule()">View Schedule</button>
                 </div>
               </div>
               
@@ -321,7 +321,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-gamepad"></i> Indoor Games</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Activity</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('leisure')">Book Activity</button>
                 </div>
               </div>
               
@@ -333,7 +333,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-hiking"></i> Outdoor Sports</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Explore Activities</button>
+                <button class="btn signup" style="width:100%;" onclick="showOutdoorActivities()">Explore Activities</button>
                 </div>
               </div>
             </div>
@@ -361,7 +361,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-wifi"></i> High-Speed WiFi</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Meeting</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('events')">Book Meeting</button>
                 </div>
               </div>
               
@@ -373,7 +373,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-camera"></i> Photography</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Plan Wedding</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('events')">Plan Wedding</button>
                 </div>
               </div>
               
@@ -385,7 +385,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-music"></i> Entertainment</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Plan Event</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('events')">Plan Event</button>
                 </div>
               </div>
             </div>
@@ -413,7 +413,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-car"></i> Car Rental</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Transfer</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('concierge')">Book Transfer</button>
                 </div>
               </div>
               
@@ -425,7 +425,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-ticket-alt"></i> Ticket Booking</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Tour</button>
+                <button class="btn signup" style="width:100%;" onclick="window.location.href='locations.html'">Book Tour</button>
                 </div>
               </div>
               
@@ -437,7 +437,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-truck"></i> Delivery</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Request Service</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('concierge')">Request Service</button>
                 </div>
               </div>
             </div>
@@ -465,7 +465,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-child"></i> Ages 3-12</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Join Kids Club</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('kids')">Join Kids Club</button>
                 </div>
               </div>
               
@@ -477,7 +477,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-palette"></i> Arts & Crafts</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">View Activities</button>
+                <button class="btn signup" style="width:100%;" onclick="showFamilyActivities()">View Activities</button>
                 </div>
               </div>
               
@@ -489,7 +489,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-user-shield"></i> Certified</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Babysitter</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('kids')">Book Babysitter</button>
                 </div>
               </div>
             </div>
@@ -516,7 +516,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-spa"></i> Spa Access</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Escape</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('packages')">Book Escape</button>
                 </div>
               </div>
               <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
@@ -527,7 +527,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-gamepad"></i> Activities</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">View Adventure</button>
+                <button class="btn signup" style="width:100%;" onclick="showFamilyAdventure()">View Adventure</button>
                 </div>
               </div>
               <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
@@ -538,7 +538,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-star"></i> Exclusive</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">See Specials</button>
+                <button class="btn signup" style="width:100%;" onclick="showSeasonalSpecials()">See Specials</button>
                 </div>
               </div>
             </div>
@@ -565,7 +565,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-bowl-food"></i> Feeding</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Pet Room</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('pet-services')">Book Pet Room</button>
                 </div>
               </div>
               <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
@@ -576,7 +576,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-user-shield"></i> Certified</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Sitter</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('pet-services')">Book Sitter</button>
                 </div>
               </div>
               <div style="background:#f8f9fa; border-radius:12px; padding:1.5rem; display:flex; flex-direction:column; height:100%;">
@@ -587,7 +587,7 @@
                   <span style="font-size:0.9rem; color:#FFD700;"><i class="fas fa-spa"></i> Spa</span>
                 </div>
                 <div style="margin-top:auto;">
-                <button class="btn signup" style="width:100%;">Book Grooming</button>
+                <button class="btn signup" style="width:100%;" onclick="bookService('pet-services')">Book Grooming</button>
                 </div>
               </div>
             </div>
