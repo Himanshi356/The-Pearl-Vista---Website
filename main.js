@@ -598,30 +598,72 @@ function showNotification(message, type = "info") {
   // Create new notification
   const notification = document.createElement('div');
   notification.className = `notification notification-${type}`;
-  notification.textContent = message;
+  let icon = '';
+  if (type === 'success') {
+    icon = '<i class="fa fa-check-circle" style="margin-right:10px;color:#d4af37;font-size:1.3em;vertical-align:middle;"></i>';
+  } else if (type === 'error') {
+    icon = '<i class="fa fa-times-circle" style="margin-right:10px;color:#dc3545;font-size:1.3em;vertical-align:middle;"></i>';
+  } else if (type === 'info') {
+    icon = '<i class="fa fa-info-circle" style="margin-right:10px;color:#17a2b8;font-size:1.3em;vertical-align:middle;"></i>';
+  } else if (type === 'warning') {
+    icon = '<i class="fa fa-exclamation-triangle" style="margin-right:10px;color:#ffc107;font-size:1.3em;vertical-align:middle;"></i>';
+  }
+  notification.innerHTML = `${icon}<span style='vertical-align:middle;'>${message}</span>`;
   notification.style.cssText = `
     position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px 20px;
-    border-radius: 8px;
-    color: white;
-    font-weight: 500;
+    top: 32px;
+    right: 32px;
+    padding: 20px 32px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 1.15rem;
     z-index: 10000;
-    max-width: 300px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    animation: slideIn 0.3s ease-out;
+    max-width: 380px;
+    min-width: 260px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeInNotif 0.4s;
+    transition: opacity 0.3s, transform 0.3s;
+    ${type === 'success' ? `
+      background: #111;
+      color: #27e02a;
+      border: 2.5px solid #d4af37;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.18), 0 0 16px 3px #d4af37;
+    ` : type === 'error' ? `
+      background: linear-gradient(90deg, #dc3545 80%, #d4af37 100%);
+      color: #fff;
+      border: 2.5px solid #d4af37;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.18), 0 0 12px 2px #d4af37;
+    ` : type === 'info' ? `
+      background: linear-gradient(90deg, #17a2b8 80%, #d4af37 100%);
+      color: #fff;
+      border: 2.5px solid #d4af37;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.18), 0 0 12px 2px #d4af37;
+    ` : `
+      background: linear-gradient(90deg, #ffc107 80%, #d4af37 100%);
+      color: #fff;
+      border: 2.5px solid #d4af37;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.18), 0 0 12px 2px #d4af37;
+    `}
   `;
-  const colors = {
-    success: '#28a745', error: '#dc3545', info: '#17a2b8', warning: '#ffc107'
-  };
-  notification.style.backgroundColor = colors[type] || colors.info;
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeInNotif {
+      from { opacity: 0; transform: translateY(-20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .notification { opacity: 1; }
+    .notification.fadeOut { opacity: 0; transform: translateY(-20px) scale(0.98); }
+  `;
+  document.head.appendChild(style);
   document.body.appendChild(notification);
   setTimeout(() => {
-    notification.style.animation = 'slideOut 0.3s ease-in';
+    notification.classList.add('fadeOut');
     setTimeout(() => {
       if (notification.parentNode) notification.parentNode.removeChild(notification);
-    }, 300);
+      if (style.parentNode) style.parentNode.removeChild(style);
+    }, 350);
   }, 5000);
 }
 
@@ -681,6 +723,8 @@ if (document.getElementById('signupForm')) {
     // Simulate signup process
     localStorage.setItem('pv_logged_in', '1');
     localStorage.setItem('pv_username', username);
+    // Set flag for home page modal
+    localStorage.setItem('justLoggedIn', '1');
     showNotification("Account created successfully! Please check your email for verification.", "success");
     setTimeout(() => {
       // Redirect to email verification page with email parameter
@@ -699,6 +743,8 @@ if (document.getElementById('loginForm')) {
     }
     localStorage.setItem('pv_logged_in', '1');
     localStorage.setItem('pv_username', username);
+    // Set flag for home page modal
+    localStorage.setItem('justLoggedIn', '1');
     showNotification("Login successful! Welcome back.", "success");
     setTimeout(() => {
       window.location.href = 'home.html';
@@ -890,6 +936,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const extraGuestCharge = extraAdults * EXTRA_GUEST_CHARGE_PER_NIGHT * numberOfNights;
         const total = baseAmount + extraGuestCharge;
         totalAmountInput.value = `$${total.toFixed(2)}`;
+        window.currentTotalAmount = total; // <-- Add this line
       } else {
         totalAmountInput.value = '';
       }
@@ -901,6 +948,15 @@ document.addEventListener('DOMContentLoaded', function() {
     checkoutInput.addEventListener('change', calculateTotal);
   }
 });
+
+// ... existing code ...
+// After all event listeners for booking form fields:
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof calculateTotal === 'function') {
+    calculateTotal();
+  }
+});
+// ... existing code ...
 
 // --- Language & Currency Page Logic ---
 document.addEventListener('DOMContentLoaded', function() {
@@ -951,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', function() {
       this.parentElement.classList.remove('focused');
     });
   });
-});
+}
 
 // Function to apply language and currency changes
 function applyLanguageAndCurrencyChanges(language, currency) {
@@ -1308,7 +1364,7 @@ document.addEventListener('DOMContentLoaded', function() {
     signatureBookNowBtn.onclick = function() {
       signatureModal.style.display = 'none';
       // Try to open the booking modal if present on this page
-      var bookingModal = document.getElementById('bookingModal');
+      const bookingModal = document.getElementById('bookingModal');
       if (bookingModal) {
         bookingModal.style.display = 'flex';
         // Optionally, pre-select Pearl Signature Room in the booking form
@@ -1320,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}); 
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   var openDeluxeBtn = document.getElementById('openDeluxeDetailsBtn');
@@ -1342,7 +1398,7 @@ document.addEventListener('DOMContentLoaded', function() {
     deluxeBookNowBtn.onclick = function() {
       deluxeModal.style.display = 'none';
       // Try to open the booking modal if present on this page
-      var bookingModal = document.getElementById('bookingModal');
+      const bookingModal = document.getElementById('bookingModal');
       if (bookingModal) {
         bookingModal.style.display = 'flex';
         // Optionally, pre-select Deluxe Room in the booking form
@@ -1354,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}); 
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   var openPremiumBtn = document.getElementById('openPremiumDetailsBtn');
@@ -1376,7 +1432,7 @@ document.addEventListener('DOMContentLoaded', function() {
     premiumBookNowBtn.onclick = function() {
       premiumModal.style.display = 'none';
       // Try to open the booking modal if present on this page
-      var bookingModal = document.getElementById('bookingModal');
+      const bookingModal = document.getElementById('bookingModal');
       if (bookingModal) {
         bookingModal.style.display = 'flex';
         // Optionally, pre-select Premium Room in the booking form
@@ -1388,7 +1444,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}); 
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   var openExecutiveBtn = document.getElementById('openExecutiveDetailsBtn');
@@ -1410,7 +1466,7 @@ document.addEventListener('DOMContentLoaded', function() {
     executiveBookNowBtn.onclick = function() {
       executiveModal.style.display = 'none';
       // Try to open the booking modal if present on this page
-      var bookingModal = document.getElementById('bookingModal');
+      const bookingModal = document.getElementById('bookingModal');
       if (bookingModal) {
         bookingModal.style.display = 'flex';
         // Optionally, pre-select Executive Room in the booking form
@@ -1422,7 +1478,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}); 
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   var openLuxuryBtn = document.getElementById('openLuxuryDetailsBtn');
@@ -1444,7 +1500,7 @@ document.addEventListener('DOMContentLoaded', function() {
     luxuryBookNowBtn.onclick = function() {
       luxuryModal.style.display = 'none';
       // Try to open the booking modal if present on this page
-      var bookingModal = document.getElementById('bookingModal');
+      const bookingModal = document.getElementById('bookingModal');
       if (bookingModal) {
         bookingModal.style.display = 'flex';
         // Optionally, pre-select Luxury Suite in the booking form
@@ -1456,7 +1512,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}); 
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   var openFamilyBtn = document.getElementById('openFamilyDetailsBtn');
@@ -1478,7 +1534,7 @@ document.addEventListener('DOMContentLoaded', function() {
     familyBookNowBtn.onclick = function() {
       familyModal.style.display = 'none';
       // Try to open the booking modal if present on this page
-      var bookingModal = document.getElementById('bookingModal');
+      const bookingModal = document.getElementById('bookingModal');
       if (bookingModal) {
         bookingModal.style.display = 'flex';
         // Optionally, pre-select Family Suite in the booking form
@@ -1490,7 +1546,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}); 
+}
 
 // --- My Bookings Page Functions ---
 
@@ -2877,7 +2933,7 @@ function bookService(serviceId, singleSelect) {
     bookings.push(booking);
     localStorage.setItem('pv_bookings', JSON.stringify(bookings));
     
-    showNotification('Service Booked Sucessfully! Kindly check my bookings page to review your booking', 'success');
+    showNotification('Service Booked Successfully! Kindly check my bookings page to review your booking', 'success');
     modal.remove();
     
     if (window.location.pathname.includes('my-bookings.html')) {
@@ -2889,6 +2945,8 @@ function bookService(serviceId, singleSelect) {
       modal.remove();
     }
   });
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('role', 'dialog');
 }
 
 // View Service Details function for services
@@ -3955,7 +4013,7 @@ function renderWishlistRooms() {
     if (!room) return;
     grid.innerHTML += `
       <div class="wishlist-card">
-        <div class="wishlist-image">
+    <div class="wishlist-image">
           <img src="${room.image}" alt="${room.name}">
       <div class="wishlist-overlay">
             <button class="remove-btn" onclick="removeFromWishlist('${room.id}')">
@@ -3963,29 +4021,29 @@ function renderWishlistRooms() {
         </button>
       </div>
     </div>
-        <div class="wishlist-content">
+    <div class="wishlist-content">
           <h3>${room.name}</h3>
-          <div class="wishlist-details">
+      <div class="wishlist-details">
             <span><i class="fas fa-user"></i> ${room.name === 'Family Suite' ? '4 Guests' : room.name === 'Luxury Suite' ? '3 Guests' : '2 Guests'}</span>
             <span><i class="fas fa-bed"></i> ${room.name === 'Family Suite' ? '2 Bedrooms' : 'King Bed'}</span>
-            <span><i class="fas fa-wifi"></i> Free WiFi</span>
+        <span><i class="fas fa-wifi"></i> Free WiFi</span>
       </div>
-          <div class="wishlist-price">
+      <div class="wishlist-price">
             <span class="price">$${room.price}</span>
-            <span class="per-night">per night</span>
-          </div>
+        <span class="per-night">per night</span>
+      </div>
           <div style="margin-bottom:0.7rem; color:#444; font-size:0.98rem;">${room.description}</div>
-          <div class="wishlist-actions">
+      <div class="wishlist-actions">
             <button class="btn signup" onclick="bookNow('${room.id}')">
-              <i class="fas fa-calendar-check" style="color: #000;"></i> Book Now
+          <i class="fas fa-calendar-check" style="color: #000;"></i> Book Now
         </button>
             <button class="btn login" onclick="viewDetails('${room.id}')">
           <i class="fas fa-eye" style="color: #000;"></i> View Details
         </button>
       </div>
+      </div>
     </div>
-        </div>
-      `;
+  `;
     });
 }
 // Remove from wishlist from wishlist page
@@ -4045,7 +4103,7 @@ function updateServiceWishlistHearts() {
       if (isServiceInWishlist(serviceId)) {
         heart.classList.add('active');
         heart.style.color = '#ff0000';
-      } else {
+  } else {
         heart.classList.remove('active');
         heart.style.color = '#ccc';
       }
@@ -4069,33 +4127,33 @@ function renderWishlistServices() {
     const service = getServiceDetails(serviceId);
     grid.innerHTML += `
       <div class="service-wishlist-card">
-        <div class="service-wishlist-image">
+    <div class="service-wishlist-image">
           <img src="images/${service.image}" alt="${service.name}">
-          <div class="wishlist-overlay">
+      <div class="wishlist-overlay">
             <button class="remove-btn" onclick="toggleServiceWishlist('${serviceId}')">
-              <i class="fas fa-heart" style="color: #ff0000;"></i>
-            </button>
-          </div>
-        </div>
-        <div class="service-wishlist-content">
+          <i class="fas fa-heart" style="color: #ff0000;"></i>
+        </button>
+      </div>
+    </div>
+    <div class="service-wishlist-content">
           <h3>${service.name}</h3>
           <p>${service.description}</p>
-          <div class="service-wishlist-features">
+      <div class="service-wishlist-features">
             <span><i class="fas fa-info-circle"></i> ${service.features}</span>
             <span><i class="fas fa-clock"></i> ${service.duration}</span>
-          </div>
-          <div class="service-wishlist-actions">
-            <button class="btn signup" onclick="bookService('${serviceId}')">
-              <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
-            </button>
-            <button class="btn login" onclick="viewServiceDetails('${serviceId}')">
-              <i class="fas fa-eye" style="color: #000;"></i> View Details
-            </button>
-          </div>
-        </div>
       </div>
-    `;
-  });
+      <div class="service-wishlist-actions">
+        <button class="btn signup" onclick="bookService('${serviceId}')">
+          <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+        </button>
+        <button class="btn login" onclick="viewServiceDetails('${serviceId}')">
+          <i class="fas fa-eye" style="color: #000;"></i> View Details
+        </button>
+      </div>
+    </div>
+        </div>
+      `;
+    });
 }
 // On services page load
 if (window.location.pathname.includes('services.html')) {
@@ -4105,3 +4163,71 @@ if (window.location.pathname.includes('services.html')) {
 if (window.location.pathname.includes('my-wishlist.html')) {
   document.addEventListener('DOMContentLoaded', renderWishlistServices);
 }
+
+// --- Check Availability Modal Logic ---
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.pathname.endsWith('home.html')) {
+    // Check for justLoggedIn or justSignedUp flag
+    var justLoggedIn = localStorage.getItem('justLoggedIn') === '1' || sessionStorage.getItem('justLoggedIn') === '1';
+    if (justLoggedIn) {
+      var modal = document.getElementById('checkAvailabilityModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        // Clear the flag so it doesn't show again
+        localStorage.removeItem('justLoggedIn');
+        sessionStorage.removeItem('justLoggedIn');
+      }
+    }
+    // Modal button logic
+    var openBtn = document.getElementById('openAvailabilityFormBtn');
+    var denyBtn = document.getElementById('denyAvailabilityBtn');
+    var formModal = document.getElementById('availabilityFormModal');
+    var closeFormBtn = document.getElementById('closeAvailabilityFormBtn');
+    var checkModal = document.getElementById('checkAvailabilityModal');
+    if (openBtn && formModal && checkModal) {
+      openBtn.onclick = function() {
+        checkModal.style.display = 'none';
+        formModal.style.display = 'flex';
+      };
+    }
+    if (denyBtn && checkModal) {
+      denyBtn.onclick = function() {
+        checkModal.style.display = 'none';
+      };
+    }
+    if (closeFormBtn && formModal) {
+      closeFormBtn.onclick = function() {
+        formModal.style.display = 'none';
+      };
+    }
+    // Form submit logic
+    var availForm = document.getElementById('availabilityForm');
+    if (availForm) {
+      availForm.onsubmit = function(e) {
+        e.preventDefault();
+        var checkin = document.getElementById('checkinDate').value;
+        var checkout = document.getElementById('checkoutDate').value;
+        var guests = parseInt(document.getElementById('guests').value, 10);
+        var roomType = document.getElementById('roomType').value;
+        var numRooms = parseInt(document.getElementById('numRooms').value, 10);
+        // Simple logic: available if <=5 rooms and guests <=10
+        var available = (numRooms <= 5 && guests <= 10);
+        formModal.style.display = 'none';
+        if (available) {
+          showNotification('Your preferred room is available! You can proceed to book.', 'success');
+        } else {
+          showNotification('Sorry, the preferred room is not available for the selected criteria.', 'error');
+        }
+      };
+    }
+    // Close modal when clicking outside
+    [document.getElementById('checkAvailabilityModal'), document.getElementById('availabilityFormModal')].forEach(function(modal) {
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) modal.style.display = 'none';
+        });
+      }
+    });
+  }
+});
+// ... existing code ...
