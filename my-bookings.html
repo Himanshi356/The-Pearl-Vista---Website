@@ -124,7 +124,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Active Bookings</h3>
-                        <span class="overview-number">2</span>
+                        <span class="overview-number" id="overviewActive">0</span>
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Past Stays</h3>
-                        <span class="overview-number">2</span>
+                        <span class="overview-number" id="overviewPast">0</span>
                     </div>
                 </div>
 
@@ -144,7 +144,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Total Points</h3>
-                        <span class="overview-number">16,000</span>
+                        <span class="overview-number" id="overviewPoints">0</span>
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Next Stay</h3>
-                        <span class="overview-number">3 days</span>
+                        <span class="overview-number" id="overviewNext">-</span>
                     </div>
                 </div>
             </div>
@@ -169,91 +169,7 @@
                 <p>Your upcoming reservations</p>
             </div>
 
-            <div class="bookings-grid">
-                <div class="booking-card">
-                    <div class="booking-header">
-                        <div class="booking-status active">Confirmed</div>
-                        <div class="booking-number">#BK-2024-001</div>
-                    </div>
-
-                    <div class="booking-content">
-                        <div class="booking-image">
-                            <img src="images/luxury_suite.jpg" alt="Luxury Suite">
-                        </div>
-
-                        <div class="booking-details">
-                            <h3>Luxury Suite</h3>
-                            <div class="booking-dates">
-                                <span><i class="fas fa-calendar"></i> Check-in: March 15, 2025</span>
-                                <span><i class="fas fa-calendar"></i> Check-out: March 18, 2025</span>
-                            </div>
-                            <div class="booking-info">
-                                <span><i class="fas fa-user"></i> 2 Guests</span>
-                                <span><i class="fas fa-bed"></i> 1 King Bed</span>
-                                <span><i class="fas fa-wifi"></i> Free WiFi</span>
-                            </div>
-                            <div class="booking-price">
-                                <span class="price">$35760</span>
-                                <span class="total">Total for 3 nights</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="booking-actions">
-                        <button class="btn signup" onclick="viewBooking('BK-2024-001')">
-                            <i class="fas fa-eye" style="color: #000;"></i> View Details
-                        </button>
-                        <button class="btn login" onclick="modifyBooking('BK-2024-001')">
-                            <i class="fas fa-edit" style="color: #000;"></i> Modify
-                        </button>
-                        <button class="btn secondary" onclick="cancelBooking('BK-2024-001')">
-                            <i class="fas fa-times" style="color: #000;"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-
-                <div class="booking-card">
-                    <div class="booking-header">
-                        <div class="booking-status confirmed">Confirmed</div>
-                        <div class="booking-number">#BK-2024-002</div>
-                    </div>
-
-                    <div class="booking-content">
-                        <div class="booking-image">
-                            <img src="Gallery/deluxe_room1.jpg" alt="Deluxe Room">
-                        </div>
-
-                        <div class="booking-details">
-                            <h3>Deluxe Room</h3>
-                            <div class="booking-dates">
-                                <span><i class="fas fa-calendar"></i> Check-in: April 5, 2025</span>
-                                <span><i class="fas fa-calendar"></i> Check-out: April 7, 2025</span>
-                            </div>
-                            <div class="booking-info">
-                                <span><i class="fas fa-user"></i> 1 Guest</span>
-                                <span><i class="fas fa-bed"></i> 1 Queen Bed</span>
-                                <span><i class="fas fa-wifi"></i> Free WiFi</span>
-                            </div>
-                            <div class="booking-price">
-                                <span class="price">$6480</span>
-                                <span class="total">Total for 2 nights</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="booking-actions">
-                        <button class="btn signup" onclick="viewBooking('BK-2024-002')">
-                            <i class="fas fa-eye" style="color: #000;"></i> View Details
-                        </button>
-                        <button class="btn login" onclick="modifyBooking('BK-2024-002')">
-                            <i class="fas fa-edit" style="color: #000;"></i> Modify
-                        </button>
-                        <button class="btn secondary" onclick="cancelBooking('BK-2024-002')">
-                            <i class="fas fa-times" style="color: #000;"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <div class="bookings-grid" id="currentBookingsGrid"></div>
         </div>
     </section>
 
@@ -265,89 +181,7 @@
                 <p>Your previous reservations</p>
             </div>
 
-            <div class="bookings-grid">
-                <div class="booking-card past">
-                    <div class="booking-header">
-                        <div class="booking-status completed">Completed</div>
-                        <div class="booking-number">#BK-2023-015</div>
-                    </div>
-
-                    <div class="booking-content">
-                        <div class="booking-image">
-                            <img src="Gallery/Executive_room2.jpg" alt="Executive Room">
-                        </div>
-
-                        <div class="booking-details">
-                            <h3>Executive Room</h3>
-                            <div class="booking-dates">
-                                <span><i class="fas fa-calendar"></i> Stayed: December 20-23, 2024</span>
-                            </div>
-                            <div class="booking-info">
-                                <span><i class="fas fa-user"></i> 2 Guests</span>
-                                <span><i class="fas fa-bed"></i> 1 King Bed</span>
-                                <span><i class="fas fa-star"></i> 5-Star Rating</span>
-                            </div>
-                            <div class="booking-price">
-                                <span class="price">$26370</span>
-                                <span class="total">Total paid</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="booking-actions">
-                        <button class="btn signup" onclick="viewBooking('BK-2023-015')">
-                            <i class="fas fa-eye" style="color: #000;"></i> View Details
-                        </button>
-                        <button class="btn login" onclick="window.location.href='share.html'">
-                            <i class="fas fa-star" style="color: #000;"></i> Write Review
-                        </button>
-                        <button class="btn secondary" onclick="window.location.href='home.html?openBooking=true'">
-                            <i class="fas fa-redo" style="color: #000;"></i> Book Again
-                        </button>
-                    </div>
-                </div>
-
-                <div class="booking-card past">
-                    <div class="booking-header">
-                        <div class="booking-status completed">Completed</div>
-                        <div class="booking-number">#BK-2023-014</div>
-                    </div>
-
-                    <div class="booking-content">
-                        <div class="booking-image">
-                            <img src="images/Family_suite.jpg" alt="Family Suite">
-                        </div>
-
-                        <div class="booking-details">
-                            <h3>Family Suite</h3>
-                            <div class="booking-dates">
-                                <span><i class="fas fa-calendar"></i> Stayed: November 10-12, 2024</span>
-                            </div>
-                            <div class="booking-info">
-                                <span><i class="fas fa-user"></i> 4 Guests</span>
-                                <span><i class="fas fa-bed"></i> 2 Bedrooms</span>
-                                <span><i class="fas fa-star"></i> 5-Star Rating</span>
-                            </div>
-                            <div class="booking-price">
-                                <span class="price">$59420</span>
-                                <span class="total">Total paid</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="booking-actions">
-                        <button class="btn signup" onclick="viewBooking('BK-2023-014')">
-                            <i class="fas fa-eye" style="color: #000;"></i> View Details
-                        </button>
-                        <button class="btn login" onclick="window.location.href='share.html'">
-                            <i class="fas fa-star" style="color: #000;"></i> Write Review
-                        </button>
-                        <button class="btn secondary" onclick="window.location.href='home.html?openBooking=true'">
-                            <i class="fas fa-redo" style="color: #000;"></i> Book Again
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <div class="bookings-grid" id="pastBookingsGrid"></div>
         </div>
     </section>
 
@@ -437,6 +271,380 @@
     </footer>
 
     <script src="main.js"></script>
+    <script>
+    // Room type to image mapping (from rooms.html)
+    const roomTypeImages = {
+      'Pearl Signature Room': 'images/sophistication-room.png',
+      'Deluxe Room': 'Gallery/deluxe_room1.jpg',
+      'Premium Room': 'images/Premium_room1.png',
+      'Executive Room': 'Gallery/Executive_room2.jpg',
+      'Luxury Suite': 'images/Luxury_suite.jpg',
+      'Family Suite': 'images/Family_suite.jpg'
+    };
+
+    // Render bookings from localStorage
+    function renderBookings() {
+      const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+      const now = new Date();
+      const currentGrid = document.getElementById('currentBookingsGrid');
+      const pastGrid = document.getElementById('pastBookingsGrid');
+      currentGrid.innerHTML = '';
+      pastGrid.innerHTML = '';
+      if (!bookings.length) {
+        currentGrid.innerHTML = '<div style="padding:2rem; color:#888; text-align:center; width:100%;">No current bookings found.</div>';
+        pastGrid.innerHTML = '<div style="padding:2rem; color:#888; text-align:center; width:100%;">No past bookings found.</div>';
+        return;
+      }
+      bookings.forEach(booking => {
+        const checkin = new Date(booking.checkin);
+        const checkout = new Date(booking.checkout);
+        const isPast = checkout < now;
+        const grid = isPast ? pastGrid : currentGrid;
+        const statusClass = isPast ? 'completed' : (booking.status === 'Confirmed' ? 'active' : 'pending');
+        const statusText = isPast ? 'Completed' : booking.status;
+        const bookingId = booking.id || '';
+        const imgSrc = roomTypeImages[booking.roomType] || 'images/room.png';
+        const guests = booking.guests || '-';
+        const nights = (checkout - checkin) / (1000*60*60*24);
+        const dateInfo = isPast
+          ? `<span><i class='fas fa-calendar'></i> Stayed: ${booking.checkin} - ${booking.checkout}</span>`
+          : `<span><i class='fas fa-calendar'></i> Check-in: ${booking.checkin}</span><span><i class='fas fa-calendar'></i> Check-out: ${booking.checkout}</span>`;
+        const priceInfo = isPast
+          ? `<span class='price'>${booking.totalAmount}</span><span class='total'>Total paid</span>`
+          : `<span class='price'>${booking.totalAmount}</span><span class='total'>Total for ${nights} night${nights>1?'s':''}</span>`;
+        grid.innerHTML += `
+        <div class="booking-card${isPast ? ' past' : ''}">
+          <div class="booking-header">
+            <div class="booking-status ${statusClass}">${statusText}</div>
+            <div class="booking-number">#${bookingId}</div>
+          </div>
+          <div class="booking-content">
+            <div class="booking-image">
+              <img src="${imgSrc}" alt="${booking.roomType}">
+            </div>
+            <div class="booking-details">
+              <h3>${booking.roomType}</h3>
+              <div class="booking-dates">${dateInfo}</div>
+              <div class="booking-info">
+                <span><i class="fas fa-user"></i> ${guests} Guest${guests>1?'s':''}</span>
+                <span><i class="fas fa-bed"></i> Room(s): ${booking.rooms}</span>
+                <span><i class="fas fa-wifi"></i> Free WiFi</span>
+              </div>
+              <div class="booking-price">${priceInfo}</div>
+            </div>
+          </div>
+          <div class="booking-actions">
+            <button class="btn signup" onclick="viewBooking('${bookingId}')">
+              <i class="fas fa-eye" style="color: #000;"></i> View Details
+            </button>
+            ${!isPast ? `<button class="btn login" onclick="modifyBooking('${bookingId}')">
+              <i class="fas fa-edit" style="color: #000;"></i> Modify
+            </button>
+            <button class="btn secondary" onclick="cancelBooking('${bookingId}')">
+              <i class="fas fa-times" style="color: #000;"></i> Cancel
+            </button>` : `<button class="btn login" onclick="window.location.href='share.html'">
+              <i class="fas fa-star" style="color: #000;"></i> Write Review
+            </button>
+            <button class="btn secondary" onclick="window.location.href='home.html?openBooking=true'">
+              <i class="fas fa-redo" style="color: #000;"></i> Book Again
+            </button>`}
+          </div>
+        </div>
+        `;
+      });
+      // --- Overview Cards Real-Time Update ---
+      const activeCount = bookings.filter(b => new Date(b.checkout) >= now).length;
+      const pastCount = bookings.filter(b => new Date(b.checkout) < now).length;
+      // Points: 8000 per completed stay (example logic)
+      const totalPoints = pastCount * 8000;
+      // Next Stay: days until next check-in
+      let nextStayDays = null;
+      const futureBookings = bookings.filter(b => new Date(b.checkin) >= now);
+      if (futureBookings.length) {
+        const next = futureBookings.map(b => new Date(b.checkin)).sort((a, b) => a - b)[0];
+        nextStayDays = Math.ceil((next - now) / (1000*60*60*24));
+      }
+      document.getElementById('overviewActive').textContent = activeCount;
+      document.getElementById('overviewPast').textContent = pastCount;
+      document.getElementById('overviewPoints').textContent = totalPoints.toLocaleString();
+      document.getElementById('overviewNext').textContent = nextStayDays !== null ? (nextStayDays === 0 ? 'Today' : `${nextStayDays} day${nextStayDays>1?'s':''}`) : '-';
+    }
+    document.addEventListener('DOMContentLoaded', renderBookings);
+
+    // Cancel booking with confirmation modal
+    function cancelBooking(bookingId) {
+      // Find booking
+      const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+      const booking = bookings.find(b => b.id === bookingId);
+      if (!booking) return;
+      // Create modal
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.45);
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `;
+      const modalContent = document.createElement('div');
+      modalContent.style.cssText = `
+        background: #fff;
+        color: #b91c1c;
+        border-radius: 18px;
+        max-width: 400px;
+        width: 94vw;
+        margin: auto;
+        padding: 2.2rem 1.7rem 1.5rem 1.7rem;
+        position: relative;
+        box-shadow: 0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 2.5px solid #FFD700;
+        text-align: center;
+      `;
+      modalContent.innerHTML = `
+        <div style="font-size:2.5rem; margin-bottom:0.5rem;"><i class='fas fa-exclamation-triangle'></i></div>
+        <h2 style="color:#b91c1c; font-size:1.5rem; font-weight:800; margin-bottom:0.7rem;">Cancel Booking</h2>
+        <div style="color:#222; font-size:1.08rem; margin-bottom:0.5rem;">Are you sure you want to cancel booking<br><b style='font-size:1.15rem;'>${bookingId}</b>?</div>
+        <div style="color:#888; font-size:0.98rem; margin-bottom:1.1rem;">This action cannot be undone.</div>
+        <div style="background:#fffbe6; color:#b96a16; border-radius:7px; padding:0.7rem 1rem; margin-bottom:1.2rem; border:1.5px solid #ffd699; text-align:left; font-size:0.99rem;">
+          <b><i class='fas fa-info-circle'></i> Cancellation Policy:</b> A cancellation fee of <b>25%</b> of the total booking amount will be applied. Refunds will be processed within 5-7 business days.
+        </div>
+        <div style="display:flex; gap:12px; width:100%; justify-content:center;">
+          <button id="cancelConfirmBtn" style="padding: 12px 24px; background: #e3342f; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem;">Yes, Cancel Booking</button>
+          <button id="cancelCancelBtn" style="padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem;">No, Keep Booking</button>
+        </div>
+      `;
+      modal.appendChild(modalContent);
+      document.body.appendChild(modal);
+      // Button handlers
+      modalContent.querySelector('#cancelConfirmBtn').onclick = function() {
+        // Remove booking from localStorage
+        const updated = bookings.filter(b => b.id !== bookingId);
+        localStorage.setItem('pv_bookings', JSON.stringify(updated));
+        document.body.removeChild(modal);
+        renderBookings();
+      };
+      modalContent.querySelector('#cancelCancelBtn').onclick = function() {
+        document.body.removeChild(modal);
+      };
+      // Close modal on outside click
+      modal.onclick = function(e) {
+        if (e.target === modal) document.body.removeChild(modal);
+      };
+    }
+
+    // View booking details modal
+    function viewBooking(bookingId) {
+      const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+      const booking = bookings.find(b => b.id === bookingId);
+      // Modal base
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.45);
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `;
+      const modalContent = document.createElement('div');
+      modalContent.style.cssText = `
+        background: #fff;
+        color: #222;
+        border-radius: 18px;
+        max-width: 440px;
+        width: 94vw;
+        margin: auto;
+        padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+        position: relative;
+        box-shadow: 0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10);
+        display: flex;
+        flex-direction: column;
+        border: 2.5px solid #FFD700;
+        text-align: left;
+        max-height: 90vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      `;
+      modalContent.className = 'modal-content-hide-scroll';
+      modalContent.innerHTML = `
+        <button id="closeBookingDetailsBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+        <h2 style="color:#FFD700; font-size:1.45rem; font-weight:900; margin-bottom:1.2rem;">Booking Details</h2>
+        ${booking ? `
+        <div style="margin-bottom:0.7rem;"><b>Booking ID:</b> <span style="color:#1a365d;">${booking.id}</span></div>
+        <div style="margin-bottom:0.7rem;"><b>Room Type:</b> ${booking.roomType}</div>
+        <div style="margin-bottom:0.7rem;"><b>Check-in:</b> ${booking.checkin}</div>
+        <div style="margin-bottom:0.7rem;"><b>Check-out:</b> ${booking.checkout}</div>
+        <div style="margin-bottom:0.7rem;"><b>Guests:</b> ${booking.guests}${booking.guestAges && booking.guestAges.length ? ` (Ages: ${booking.guestAges.join(', ')})` : ''}</div>
+        <div style="margin-bottom:0.7rem;"><b>Rooms:</b> ${booking.rooms}</div>
+        <div style="margin-bottom:0.7rem;"><b>Total Amount:</b> <span style="color:#bfa13a;">${booking.totalAmount}</span></div>
+        <div style="margin-bottom:0.7rem;"><b>Status:</b> <span style="color:${booking.status==='Confirmed'?'#28a745':'#bfa13a'}; font-weight:600;">${booking.status}</span></div>
+        ${booking.special && booking.special.trim() ? `<div style='margin-bottom:0.7rem;'><b>Special Instructions:</b> ${booking.special}</div>` : ''}
+        ` : `
+        <div style='color:#b91c1c; font-weight:600; margin-bottom:0.7rem;'>Booking not found.</div>
+        `}
+      `;
+      modal.appendChild(modalContent);
+      document.body.appendChild(modal);
+      // Close button
+      modalContent.querySelector('#closeBookingDetailsBtn').onclick = function() {
+        document.body.removeChild(modal);
+      };
+      // Close modal on outside click
+      modal.onclick = function(e) {
+        if (e.target === modal) document.body.removeChild(modal);
+      };
+    }
+
+    // Modify booking modal (updated to match booking form, with guest ages)
+    function modifyBooking(bookingId) {
+      const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+      const booking = bookings.find(b => b.id === bookingId);
+      if (!booking) return;
+      // Modal base
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.45);
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `;
+      const modalContent = document.createElement('div');
+      modalContent.style.cssText = `
+        background: #fff;
+        color: #222;
+        border-radius: 18px;
+        max-width: 440px;
+        width: 94vw;
+        margin: auto;
+        padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+        position: relative;
+        box-shadow: 0 12px 40px rgba(212,175,55,0.13), 0 2px 16px rgba(0,0,0,0.10);
+        display: flex;
+        flex-direction: column;
+        border: 2.5px solid #FFD700;
+        text-align: left;
+        max-height: 90vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      `;
+      modalContent.className = 'modal-content-hide-scroll';
+      modalContent.innerHTML = `
+        <button id="closeModifyBookingBtn" style="position:absolute; top:18px; right:22px; background:none; border:none; font-size:1.6rem; color:#888; cursor:pointer; transition:color 0.2s;">&times;</button>
+        <h2 style="color:#FFD700; font-size:1.45rem; font-weight:900; margin-bottom:1.2rem;">Modify Booking</h2>
+        <form id="modifyBookingForm">
+          <label style="font-weight:700; margin-bottom:0.2rem;">Room Type:</label>
+          <select id="modifyRoomType" style="margin-bottom:1rem; width:100%; padding:10px; border-radius:7px; border:1.5px solid #e0e0e0;">
+            <option value="Pearl Signature Room">Pearl Signature Room</option>
+            <option value="Deluxe Room">Deluxe Room</option>
+            <option value="Premium Room">Premium Room</option>
+            <option value="Executive Room">Executive Room</option>
+            <option value="Luxury Suite">Luxury Suite</option>
+            <option value="Family Suite">Family Suite</option>
+          </select>
+          <label style="font-weight:700; margin-bottom:0.2rem;">Number of Rooms:</label>
+          <input type="number" id="modifyRooms" min="1" max="10" style="margin-bottom:1rem; width:100%; padding:10px; border-radius:7px; border:1.5px solid #e0e0e0;">
+          <label style="font-weight:700; margin-bottom:0.2rem;">Check-in Date:</label>
+          <input type="date" id="modifyCheckIn" style="margin-bottom:1rem; width:100%; padding:10px; border-radius:7px; border:1.5px solid #e0e0e0;">
+          <label style="font-weight:700; margin-bottom:0.2rem;">Check-out Date:</label>
+          <input type="date" id="modifyCheckOut" style="margin-bottom:1rem; width:100%; padding:10px; border-radius:7px; border:1.5px solid #e0e0e0;">
+          <label style="font-weight:700; margin-bottom:0.2rem;">Number of Guests:</label>
+          <input type="number" id="modifyGuests" min="1" max="10" style="margin-bottom:1rem; width:100%; padding:10px; border-radius:7px; border:1.5px solid #e0e0e0;">
+          <div id="modifyGuestAgesContainer" style="display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem;"></div>
+          <label style="font-weight:700; margin-bottom:0.2rem;">Special Requests:</label>
+          <textarea id="modifySpecial" rows="2" style="margin-bottom:1rem; width:100%; padding:10px; border-radius:7px; border:1.5px solid #e0e0e0;" placeholder="Any special requests..."></textarea>
+          <div style="display:flex; gap:10px; justify-content:flex-end;">
+            <button type="button" id="cancelModifyBtn" style="padding: 10px 20px; border: 1px solid #ddd; background: #f8f9fa; border-radius: 5px; cursor: pointer;">Cancel</button>
+            <button type="submit" style="padding: 10px 20px; background: #FFD700; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Update Booking</button>
+          </div>
+        </form>
+      `;
+      modal.appendChild(modalContent);
+      document.body.appendChild(modal);
+      // Prefill values
+      modalContent.querySelector('#modifyRoomType').value = booking.roomType;
+      modalContent.querySelector('#modifyRooms').value = booking.rooms;
+      modalContent.querySelector('#modifyCheckIn').value = booking.checkin;
+      modalContent.querySelector('#modifyCheckOut').value = booking.checkout;
+      modalContent.querySelector('#modifyGuests').value = booking.guests;
+      modalContent.querySelector('#modifySpecial').value = booking.special || '';
+      // Render guest ages
+      function renderModifyGuestAges() {
+        const numGuests = parseInt(modalContent.querySelector('#modifyGuests').value, 10) || 1;
+        const container = modalContent.querySelector('#modifyGuestAgesContainer');
+        container.innerHTML = '';
+        for (let i = 1; i <= numGuests; i++) {
+          const label = document.createElement('label');
+          label.textContent = `Age of Guest ${i}`;
+          label.setAttribute('for', `modifyGuestAge${i}`);
+          label.style.fontWeight = '500';
+          label.style.fontSize = '0.95rem';
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.min = '0';
+          input.max = '120';
+          input.required = true;
+          input.className = 'booking-input enhanced-input';
+          input.id = `modifyGuestAge${i}`;
+          input.style.marginBottom = '0.2rem';
+          if (booking.guestAges && booking.guestAges[i-1]) input.value = booking.guestAges[i-1];
+          container.appendChild(label);
+          container.appendChild(input);
+        }
+      }
+      renderModifyGuestAges();
+      modalContent.querySelector('#modifyGuests').addEventListener('input', renderModifyGuestAges);
+      // Cancel button
+      modalContent.querySelector('#cancelModifyBtn').onclick = function() {
+        document.body.removeChild(modal);
+      };
+      // Close button
+      modalContent.querySelector('#closeModifyBookingBtn').onclick = function() {
+        document.body.removeChild(modal);
+      };
+      // Submit handler
+      modalContent.querySelector('#modifyBookingForm').onsubmit = function(e) {
+        e.preventDefault();
+        // Update booking object
+        booking.roomType = modalContent.querySelector('#modifyRoomType').value;
+        booking.rooms = modalContent.querySelector('#modifyRooms').value;
+        booking.checkin = modalContent.querySelector('#modifyCheckIn').value;
+        booking.checkout = modalContent.querySelector('#modifyCheckOut').value;
+        booking.guests = modalContent.querySelector('#modifyGuests').value;
+        booking.special = modalContent.querySelector('#modifySpecial').value;
+        booking.guestAges = Array.from(modalContent.querySelectorAll('#modifyGuestAgesContainer input')).map(i => i.value);
+        // Save
+        const updated = bookings.map(b => b.id === bookingId ? booking : b);
+        localStorage.setItem('pv_bookings', JSON.stringify(updated));
+        document.body.removeChild(modal);
+        renderBookings();
+      };
+    }
+    </script>
+    <style>
+.modal-content-hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+</style>
 </body>
 
 </html>

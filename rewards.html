@@ -124,7 +124,7 @@
           </div>
           <div class="overview-content">
             <h3>Membership</h3>
-            <span class="overview-number">Pearl Gold<br><span
+            <span class="overview-number">Pearl Silver<br><span
                 style="font-size:1.1rem; font-weight:400; color:#1a2238;">Member till 15 July 2026</span></span>
           </div>
         </div>
@@ -134,7 +134,7 @@
                 class="fa-solid fa-coins" style="color:#111; font-size:2rem;"></i></span></div>
           <div class="overview-content">
             <h3>Points Available</h3>
-            <span class="overview-number">16000 pts</span>
+            <span class="overview-number">8000 pts</span>
           </div>
         </div>
       </div>
@@ -152,14 +152,13 @@
           <div class="wishlist-content">
             <h3
               style="color: #FFD700; font-size: 1.18rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 0.5px; text-align:center;">
-              Pearl Gold Benefits</h3>
+              Pearl Silver Benefits</h3>
             <ul style="color:#1a2238; font-size:1.08rem; line-height: 2;">
               <li>Complimentary Breakfast</li>
-              <li>Room Upgrade (subject to availability)</li>
-              <li>Late Checkout / Early Check-in</li>
-              <li>Free Spa or Massage Vouchers</li>
-              <li>Invitations to Exclusive Events</li>
-              <li>Birthday Surprises / Anniversary Treats</li>
+              <li>Priority Booking</li>
+              <li>5% Discount on Room Rates</li>
+              <li>Early Check-in (subject to availability)</li>
+              <li>Birthday Surprises</li>
             </ul>
           </div>
         </div>
@@ -183,17 +182,17 @@
               </tr>
               <tr>
                 <td>Pearl Silver</td>
-                <td>5000 pts</td>
+                <td>8000 pts</td>
                 <td>Priority booking, 5% discount</td>
               </tr>
               <tr>
                 <td>Pearl Gold</td>
-                <td>15000 pts</td>
+                <td>24000 pts</td>
                 <td>Free upgrades, 10% discount</td>
               </tr>
               <tr>
                 <td>Pearl Platinum</td>
-                <td>30000 pts</td>
+                <td>48000 pts</td>
                 <td>VIP Lounge, Free Tour, 20% off</td>
               </tr>
             </table>
@@ -222,7 +221,7 @@
           </div>
           <div class="info-grid"
             style="display: flex; justify-content: space-between; font-size: 15px; padding: 0 10px; flex-wrap: wrap; gap: 20px; color:#1a2238;">
-            <div><strong>Earn Points</strong><br>100 points on eligible booking</div>
+            <div><strong>Earn Points</strong><br>8000 points on eligible booking</div>
             <div><strong>Redeem Points</strong><br>Use points for discounts, free nights, upgrades or experience</div>
             <div><strong>Points Validity</strong><br>12 Months from earning date</div>
           </div>
@@ -531,7 +530,7 @@
   <script>
     // Redeem Points Function
     function redeemPoints() {
-      const currentPoints = 16000; // Get from user data
+      const currentPoints = 8000; // Get from user data
       const modalHTML = `
         <div class="rewards-modal">
           <div class="rewards-modal-content">
@@ -566,7 +565,7 @@
 
     // Upgrade Plan Function
     function upgradePlan() {
-      const currentPoints = 16000;
+      const currentPoints = 8000;
       const currentTier = 'Pearl Gold';
       const nextTier = 'Pearl Platinum';
       const pointsNeeded = 30000 - currentPoints;
@@ -631,7 +630,7 @@
       };
       
       const totalCost = pointCosts[option] * quantity;
-      const currentPoints = 16000;
+      const currentPoints = 8000;
       
       if (totalCost > currentPoints) {
         showCustomAlert('error', 'Insufficient points for this redemption', 'Insufficient Points');
@@ -656,10 +655,10 @@
     function showUpgradeInfo() {
       showCustomAlert('info', 'Upgrade to Pearl Platinum', 'Membership Upgrade', {
         'Current Tier': 'Pearl Gold',
-        'Current Points': '16,000',
+        'Current Points': '8,000',
         'Next Tier': 'Pearl Platinum',
         'Points Required': '30,000',
-        'Points Needed': '14,000'
+        'Points Needed': '22,000'
       }, 'Earn points by booking stays, dining, and using hotel services. Each $1 spent = 10 points earned.');
       
       closeUpgradeModal();

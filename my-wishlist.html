@@ -122,7 +122,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Saved Rooms</h3>
-                        <span class="overview-number">2</span>
+                        <span class="overview-number" id="wishlistRoomCount">0</span>
                     </div>
                 </div>
 
@@ -132,7 +132,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Saved Services</h3>
-                        <span class="overview-number">3</span>
+                        <span class="overview-number" id="wishlistServiceCount">0</span>
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
                     </div>
                     <div class="overview-content">
                         <h3>Total Items</h3>
-                        <span class="overview-number">5</span>
+                        <span class="overview-number" id="wishlistTotalCount">0</span>
                     </div>
                 </div>
             </div>
@@ -167,71 +167,7 @@
                 <p>Your favorite accommodations</p>
             </div>
 
-            <div class="wishlist-grid">
-                <div class="wishlist-card">
-                    <div class="wishlist-image">
-                        <img src="images/family-suite.png" alt="Family Suite">
-                        <div class="wishlist-overlay">
-                            <button class="remove-btn" onclick="removeFromWishlist('family-suite')">
-                                <i class="fas fa-heart" style="color: #ff0000;"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="wishlist-content">
-                        <h3>Family Suite</h3>
-                        <div class="wishlist-details">
-                            <span><i class="fas fa-user"></i> 4 Guests</span>
-                            <span><i class="fas fa-bed"></i> 2 Bedrooms</span>
-                            <span><i class="fas fa-wifi"></i> Free WiFi</span>
-                        </div>
-                        <div class="wishlist-price">
-                            <span class="price">$14855</span>
-                            <span class="per-night">per night</span>
-                        </div>
-                        <div class="wishlist-actions">
-                            <button class="btn signup" onclick="bookNow('family-suite')">
-                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Now
-                            </button>
-                            <button class="btn login" onclick="viewDetails('family-suite')">
-                                <i class="fas fa-eye" style="color: #000;"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wishlist-card">
-                    <div class="wishlist-image">
-                        <img src="images/executive-room.png" alt="Executive Room">
-                        <div class="wishlist-overlay">
-                            <button class="remove-btn" onclick="removeFromWishlist('executive-room')">
-                                <i class="fas fa-heart" style="color: #ff0000;"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="wishlist-content">
-                        <h3>Executive Room</h3>
-                        <div class="wishlist-details">
-                            <span><i class="fas fa-user"></i> 2 Guests</span>
-                            <span><i class="fas fa-bed"></i> 1 King Bed</span>
-                            <span><i class="fas fa-wifi"></i> Free WiFi</span>
-                        </div>
-                        <div class="wishlist-price">
-                            <span class="price">$8790</span>
-                            <span class="per-night">per night</span>
-                        </div>
-                        <div class="wishlist-actions">
-                            <button class="btn signup" onclick="bookNow('executive-room')">
-                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Now
-                            </button>
-                            <button class="btn login" onclick="viewDetails('executive-room')">
-                                <i class="fas fa-eye" style="color: #000;"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="wishlist-grid"></div>
         </div>
     </section>
 

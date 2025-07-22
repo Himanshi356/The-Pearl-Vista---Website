@@ -832,18 +832,63 @@ document.addEventListener('DOMContentLoaded', function() {
     const checkoutInput = document.getElementById('checkout');
     const guestsInput = document.getElementById('guests');
     const totalAmountInput = document.getElementById('totalAmount');
+    const guestAgesContainer = document.getElementById('guestAgesContainer');
+    const EXTRA_GUEST_CHARGE_PER_NIGHT = 2500;
+
+    // Helper: Render guest age fields
+    function renderGuestAges() {
+      const numGuests = parseInt(guestsInput.value, 10) || 1;
+      guestAgesContainer.innerHTML = '';
+      for (let i = 1; i <= numGuests; i++) {
+        const label = document.createElement('label');
+        label.textContent = `Age of Guest ${i}`;
+        label.setAttribute('for', `guestAge${i}`);
+        label.style.fontWeight = '500';
+        label.style.fontSize = '0.95rem';
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.min = '0';
+        input.max = '120';
+        input.required = true;
+        input.className = 'booking-input enhanced-input guest-age-input';
+        input.id = `guestAge${i}`;
+        guestAgesContainer.appendChild(label);
+        guestAgesContainer.appendChild(input);
+      }
+    }
+
+    // Initial render
+    renderGuestAges();
+    guestsInput.addEventListener('input', function() {
+      renderGuestAges();
+      calculateTotal();
+    });
+    guestAgesContainer.addEventListener('input', calculateTotal);
 
     function calculateTotal() {
       const roomType = roomTypeSelect.value;
       const numberOfRooms = parseInt(roomsInput.value, 10);
-      const numberOfGuests = parseInt(guestsInput.value, 10);
       const checkinDate = new Date(checkinInput.value);
       const checkoutDate = new Date(checkoutInput.value);
-
-      if (roomType && numberOfRooms > 0 && numberOfGuests > 0 && checkinInput.value && checkoutInput.value && checkoutDate > checkinDate) {
-        const price = roomPrices[roomType];
         const numberOfNights = (checkoutDate - checkinDate) / (1000 * 60 * 60 * 24);
-        const total = (price * numberOfRooms + GUEST_CHARGE_PER_NIGHT * numberOfGuests) * numberOfNights;
+      const guestAgeInputs = guestAgesContainer.querySelectorAll('.guest-age-input');
+      const guestAges = Array.from(guestAgeInputs).map(input => parseInt(input.value, 10) || 0);
+      const numAdults = guestAges.filter(age => age > 16).length;
+      const standardCapacity = numberOfRooms * 2;
+      const extraAdults = Math.max(0, numAdults - standardCapacity);
+      if (
+        roomType &&
+        numberOfRooms > 0 &&
+        checkinInput.value &&
+        checkoutInput.value &&
+        checkoutDate > checkinDate &&
+        guestAges.length === (parseInt(guestsInput.value, 10) || 1) &&
+        guestAges.every(age => !isNaN(age))
+      ) {
+        const price = roomPrices[roomType];
+        const baseAmount = price * numberOfRooms * numberOfNights;
+        const extraGuestCharge = extraAdults * EXTRA_GUEST_CHARGE_PER_NIGHT * numberOfNights;
+        const total = baseAmount + extraGuestCharge;
         totalAmountInput.value = `$${total.toFixed(2)}`;
       } else {
         totalAmountInput.value = '';
@@ -854,7 +899,6 @@ document.addEventListener('DOMContentLoaded', function() {
     roomsInput.addEventListener('input', calculateTotal);
     checkinInput.addEventListener('change', calculateTotal);
     checkoutInput.addEventListener('change', calculateTotal);
-    guestsInput.addEventListener('input', calculateTotal);
   }
 });
 
@@ -3763,1207 +3807,301 @@ function getServiceDetails(serviceId) {
   };
 }
 
-// Toggle wishlist function for HTML onclick calls
+// Toast notification function
+function showToast(message, color = '#17a2b8') {
+  // Remove any existing toast
+  const oldToast = document.getElementById('wishlist-toast');
+  if (oldToast) oldToast.remove();
+  // Create toast
+  const toast = document.createElement('div');
+  toast.id = 'wishlist-toast';
+  toast.textContent = message;
+  toast.style.position = 'fixed';
+  toast.style.top = '2rem';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.background = color;
+  toast.style.color = '#fff';
+  toast.style.padding = '1.1rem 2.2rem';
+  toast.style.borderRadius = '12px';
+  toast.style.fontSize = '1.15rem';
+  toast.style.fontWeight = '500';
+  toast.style.boxShadow = '0 4px 24px rgba(0,0,0,0.13)';
+  toast.style.zIndex = '9999';
+  toast.style.transition = 'opacity 0.3s';
+  toast.style.opacity = '1';
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => { toast.remove(); }, 400);
+  }, 2000);
+}
+
 function toggleWishlist(roomId) {
-  toggleRoomWishlist(roomId);
+  const room = roomData.find(r => r.id === roomId);
+  if (isRoomInWishlist(roomId)) {
+    removeRoomFromWishlist(roomId);
+    showToast(`${room ? room.name : 'Room'} removed from wishlist!`, '#17a2b8');
+  } else {
+    addRoomToWishlist(roomId);
+    showToast(`${room ? room.name : 'Room'} added to wishlist!`, '#28a745');
+  }
+  updateWishlistHearts && updateWishlistHearts();
 }
 
-// Enhanced wishlist management with simultaneous updates
-function toggleRoomWishlist(roomId) {
-  const heartElement = document.getElementById(`${roomId}-heart`);
-  const heartContainer = heartElement.parentElement;
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_rooms') || '[]');
-  
-  if (heartContainer.classList.contains('active')) {
-    // Remove from wishlist
-    heartContainer.classList.remove('active');
-    heartElement.style.color = '#ccc';
-    
-    // Remove from localStorage
-    const updatedWishlist = wishlistItems.filter(id => id !== roomId);
-    localStorage.setItem('pv_wishlist_rooms', JSON.stringify(updatedWishlist));
-    
-    // Update wishlist display if on wishlist page
-    if (window.location.pathname.includes('my-wishlist.html')) {
-      removeWishlistItem(roomId);
-    }
-    
-    // Update wishlist counts
-    updateWishlistCounts();
-    
-    showNotification(`${getRoomName(roomId)} removed from wishlist!`, 'info');
-  } else {
-    // Add to wishlist
-    heartContainer.classList.add('active');
-    heartElement.style.color = '#ff0000';
-    
-    // Add to localStorage
-    if (!wishlistItems.includes(roomId)) {
-      wishlistItems.push(roomId);
-      localStorage.setItem('pv_wishlist_rooms', JSON.stringify(wishlistItems));
-    }
-    
-    // Update wishlist display if on wishlist page
-    if (window.location.pathname.includes('my-wishlist.html')) {
-      addWishlistItem(roomId);
-    }
-    
-    // Update wishlist counts
-    updateWishlistCounts();
-    
-    showNotification(`${getRoomName(roomId)} added to wishlist!`, 'success');
+// --- Wishlist Sync Logic ---
+// Room data for sync (should match rooms page)
+const roomData = [
+  {
+    id: 'pearl-signature',
+    name: 'Pearl Signature Room',
+    image: 'images/sophistication-room.png',
+    price: 20695,
+    description: 'The Pearl Signature Room is the crown jewel of THE PEARL VISTA hotel—our bestseller and most luxurious offering. Enjoy breathtaking views, exquisite interiors, unmatched comfort, and world-class services.'
+  },
+  {
+    id: 'deluxe-room',
+    name: 'Deluxe Room',
+    image: 'Gallery/deluxe_room1.jpg',
+    price: 3240,
+    description: 'Perfect for solo travelers or couples seeking comfort and style.'
+  },
+  {
+    id: 'premium-room',
+    name: 'Premium Room',
+    image: 'images/Premium_room1.png',
+    price: 5580,
+    description: 'Enhanced comfort with premium amenities and stunning city views.'
+  },
+  {
+    id: 'executive-room',
+    name: 'Executive Room',
+    image: 'Gallery/Executive_room2.jpg',
+    price: 8790,
+    description: "Business travelers' choice with work space and executive lounge access."
+  },
+  {
+    id: 'luxury-suite',
+    name: 'Luxury Suite',
+    image: 'images/Luxury_suite.jpg',
+    price: 11920,
+    description: 'Ultimate luxury with separate living area and premium amenities.'
+  },
+  {
+    id: 'family-suite',
+    name: 'Family Suite',
+    image: 'images/Family_suite.jpg',
+    price: 14855,
+    description: 'Spacious accommodation perfect for families with children.'
+  }
+];
+
+function getWishlist() {
+  return JSON.parse(localStorage.getItem('pv_wishlist') || '[]');
+}
+function setWishlist(arr) {
+  localStorage.setItem('pv_wishlist', JSON.stringify(arr));
+}
+function isRoomInWishlist(roomId) {
+  return getWishlist().includes(roomId);
+}
+function addRoomToWishlist(roomId) {
+  const wishlist = getWishlist();
+  if (!wishlist.includes(roomId)) {
+    wishlist.push(roomId);
+    setWishlist(wishlist);
   }
 }
-
-// Add wishlist item to display
-function addWishlistItem(roomId) {
-  const roomDetails = getRoomDetails(roomId);
-  const wishlistGrid = document.querySelector('.wishlist-grid');
-  
-  if (!wishlistGrid) return;
-  
-  // Check if item already exists
-  const existingItem = document.querySelector(`[data-room-id="${roomId}"]`);
-  if (existingItem) return;
-  
-  const wishlistCard = document.createElement('div');
-  wishlistCard.className = 'wishlist-card';
-  wishlistCard.setAttribute('data-room-id', roomId);
-  
-  wishlistCard.innerHTML = `
-    <div class="wishlist-image">
-      <img src="images/${roomDetails.image}" alt="${roomDetails.name}">
+function removeRoomFromWishlist(roomId) {
+  const wishlist = getWishlist().filter(id => id !== roomId);
+  setWishlist(wishlist);
+}
+// For rooms page: update heart icons
+function updateWishlistHearts() {
+  roomData.forEach(room => {
+    const heart = document.getElementById(`${room.id}-heart`);
+    if (heart) {
+      if (isRoomInWishlist(room.id)) {
+        heart.classList.add('active');
+        heart.style.color = '#ff0000';
+  } else {
+        heart.classList.remove('active');
+        heart.style.color = '';
+      }
+    }
+  });
+}
+// For wishlist page: render wishlist
+function renderWishlistRooms() {
+  const wishlist = getWishlist();
+  const grid = document.querySelector('.wishlist-grid');
+  // Update the Saved Rooms count
+  const countSpan = document.getElementById('wishlistRoomCount');
+  if (countSpan) countSpan.textContent = wishlist.length;
+  // Update Saved Services count (if you have a similar system for services)
+  const serviceCountSpan = document.getElementById('wishlistServiceCount');
+  if (serviceCountSpan) serviceCountSpan.textContent = 0; // Update if you add service wishlist logic
+  // Update Total Items count
+  const totalCountSpan = document.getElementById('wishlistTotalCount');
+  if (totalCountSpan) totalCountSpan.textContent = wishlist.length + 0; // Add service count if needed
+  if (!grid) return;
+  grid.innerHTML = '';
+  if (!wishlist.length) {
+    grid.innerHTML = '<div style="padding:2rem; color:#888; text-align:center; width:100%;">No rooms in your wishlist yet.</div>';
+    return;
+  }
+  wishlist.forEach(roomId => {
+    const room = roomData.find(r => r.id === roomId);
+    if (!room) return;
+    grid.innerHTML += `
+      <div class="wishlist-card">
+        <div class="wishlist-image">
+          <img src="${room.image}" alt="${room.name}">
       <div class="wishlist-overlay">
-        <button class="remove-btn" onclick="removeFromWishlist('${roomId}')">
+            <button class="remove-btn" onclick="removeFromWishlist('${room.id}')">
           <i class="fas fa-heart" style="color: #ff0000;"></i>
         </button>
       </div>
     </div>
-
-    <div class="wishlist-content">
-      <h3>${roomDetails.name}</h3>
-      <div class="wishlist-details">
-        <span><i class="fas fa-user"></i> ${roomDetails.capacity}</span>
-        <span><i class="fas fa-bed"></i> ${roomDetails.bedType}</span>
-        <span><i class="fas fa-wifi"></i> Free WiFi</span>
+        <div class="wishlist-content">
+          <h3>${room.name}</h3>
+          <div class="wishlist-details">
+            <span><i class="fas fa-user"></i> ${room.name === 'Family Suite' ? '4 Guests' : room.name === 'Luxury Suite' ? '3 Guests' : '2 Guests'}</span>
+            <span><i class="fas fa-bed"></i> ${room.name === 'Family Suite' ? '2 Bedrooms' : 'King Bed'}</span>
+            <span><i class="fas fa-wifi"></i> Free WiFi</span>
       </div>
-      <div class="wishlist-price">
-        <span class="price">$${roomDetails.price}</span>
-        <span class="per-night">per night</span>
-      </div>
-      <div class="wishlist-actions">
-        <button class="btn signup" onclick="bookNow('${roomId}')">
-          <i class="fas fa-calendar-check" style="color: #000;"></i> Book Now
+          <div class="wishlist-price">
+            <span class="price">$${room.price}</span>
+            <span class="per-night">per night</span>
+          </div>
+          <div style="margin-bottom:0.7rem; color:#444; font-size:0.98rem;">${room.description}</div>
+          <div class="wishlist-actions">
+            <button class="btn signup" onclick="bookNow('${room.id}')">
+              <i class="fas fa-calendar-check" style="color: #000;"></i> Book Now
         </button>
-        <button class="btn login" onclick="viewDetails('${roomId}')">
+            <button class="btn login" onclick="viewDetails('${room.id}')">
           <i class="fas fa-eye" style="color: #000;"></i> View Details
         </button>
       </div>
     </div>
-  `;
-  
-  // Add animation
-  wishlistCard.style.opacity = '0';
-  wishlistCard.style.transform = 'translateY(20px)';
-  wishlistGrid.appendChild(wishlistCard);
-  
-  // Animate in
-  setTimeout(() => {
-    wishlistCard.style.transition = 'all 0.3s ease';
-    wishlistCard.style.opacity = '1';
-    wishlistCard.style.transform = 'translateY(0)';
-  }, 10);
-}
-
-// Remove wishlist item from display
-function removeWishlistItem(roomId) {
-  const wishlistItem = document.querySelector(`[data-room-id="${roomId}"]`);
-  if (!wishlistItem) return;
-  
-  // Animate out
-  wishlistItem.style.transition = 'all 0.3s ease';
-  wishlistItem.style.opacity = '0';
-  wishlistItem.style.transform = 'translateY(-20px)';
-  
-  setTimeout(() => {
-    wishlistItem.remove();
-    updateWishlistCounts();
-  }, 300);
-}
-
-// Load wishlist items on page load
-function loadWishlistItems() {
-  if (!window.location.pathname.includes('my-wishlist.html')) {
-    return;
-  }
-  
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_rooms') || '[]');
-  const wishlistGrid = document.querySelector('.wishlist-grid');
-  
-  if (!wishlistGrid) return;
-  
-  // Clear ALL existing items (both static and dynamic)
-  const existingItems = wishlistGrid.querySelectorAll('.wishlist-card');
-  existingItems.forEach(item => item.remove());
-  
-  // Add wishlist items from localStorage
-  wishlistItems.forEach(roomId => {
-    addWishlistItem(roomId);
-  });
-  
-  updateWishlistCounts();
-}
-
-// Enhanced remove from wishlist function
-function removeFromWishlist(itemId) {
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_rooms') || '[]');
-  const updatedWishlist = wishlistItems.filter(id => id !== itemId);
-  localStorage.setItem('pv_wishlist_rooms', JSON.stringify(updatedWishlist));
-  
-  // Update heart icon on other pages
-  const heartElement = document.getElementById(`${itemId}-heart`);
-  if (heartElement) {
-    const heartContainer = heartElement.parentElement;
-    heartContainer.classList.remove('active');
-    heartElement.style.color = '#ccc';
-  }
-  
-  // Remove from wishlist display
-  removeWishlistItem(itemId);
-  
-  showNotification(`${getRoomName(itemId)} removed from wishlist!`, 'info');
-}
-
-// Remove duplicate function - using the enhanced version below
-
-// Initialize wishlist on page load
-document.addEventListener('DOMContentLoaded', function() {
-  initializeWishlistHearts();
-  loadWishlistItems();
-  loadServiceWishlistItems();
-  updateWishlistCounts();
-});
-
-// Toggle wishlist for services
-function toggleServiceWishlist(serviceId) {
-  const heartElement = document.getElementById(`${serviceId}-heart`);
-  const heartContainer = heartElement.parentElement;
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_services') || '[]');
-
-  if (heartContainer.classList.contains('active')) {
-    // Remove from wishlist
-    heartContainer.classList.remove('active');
-    heartElement.style.color = '#ccc';
-    const updatedWishlist = wishlistItems.filter(id => id !== serviceId);
-    localStorage.setItem('pv_wishlist_services', JSON.stringify(updatedWishlist));
-    if (window.location.pathname.includes('my-wishlist.html')) {
-      removeServiceWishlistItem(serviceId);
-    }
-    updateWishlistCounts();
-    showNotification(`${getServiceDetails(serviceId).name} removed from wishlist!`, 'info');
-  } else {
-    // Add to wishlist
-    heartContainer.classList.add('active');
-    heartElement.style.color = '#ff0000';
-    if (!wishlistItems.includes(serviceId)) {
-      wishlistItems.push(serviceId);
-      localStorage.setItem('pv_wishlist_services', JSON.stringify(wishlistItems));
-    }
-    if (window.location.pathname.includes('my-wishlist.html')) {
-      addServiceWishlistItem(serviceId);
-    }
-    updateWishlistCounts();
-    showNotification(`${getServiceDetails(serviceId).name} added to wishlist!`, 'success');
-  }
-}
-
-// Add service wishlist item to display
-function addServiceWishlistItem(serviceId) {
-  const serviceDetails = getServiceDetails(serviceId);
-  const servicesWishlistGrid = document.querySelector('.services-wishlist-grid');
-  
-  if (!servicesWishlistGrid) return;
-  
-  // Check if item already exists
-  const existingItem = document.querySelector(`[data-service-id="${serviceId}"]`);
-  if (existingItem) return;
-  
-  const serviceWishlistCard = document.createElement('div');
-  serviceWishlistCard.className = 'service-wishlist-card';
-  serviceWishlistCard.setAttribute('data-service-id', serviceId);
-  
-  serviceWishlistCard.innerHTML = `
-    <div class="service-wishlist-image">
-      <img src="images/${serviceDetails.image}" alt="${serviceDetails.name}">
-      <div class="wishlist-overlay">
-        <button class="remove-btn" onclick="removeServiceFromWishlist('${serviceId}')">
-          <i class="fas fa-heart" style="color: #ff0000;"></i>
-        </button>
-      </div>
-    </div>
-
-    <div class="service-wishlist-content">
-      <h3>${serviceDetails.name}</h3>
-      <p>${serviceDetails.description}</p>
-      <div class="service-wishlist-features">
-        <span><i class="fas fa-clock"></i> ${serviceDetails.duration}</span>
-        <span><i class="fas fa-star"></i> ${serviceDetails.features}</span>
-      </div>
-      <div class="service-wishlist-actions">
-        <button class="btn signup" onclick="bookService('${serviceId}')">
-          <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
-        </button>
-        <button class="btn login" onclick="viewServiceDetails('${serviceId}')">
-          <i class="fas fa-eye" style="color: #000;"></i> View Details
-        </button>
-      </div>
-    </div>
-  `;
-  
-  // Add animation
-  serviceWishlistCard.style.opacity = '0';
-  serviceWishlistCard.style.transform = 'translateY(20px)';
-  servicesWishlistGrid.appendChild(serviceWishlistCard);
-  
-  // Animate in
-  setTimeout(() => {
-    serviceWishlistCard.style.transition = 'all 0.3s ease';
-    serviceWishlistCard.style.opacity = '1';
-    serviceWishlistCard.style.transform = 'translateY(0)';
-  }, 10);
-}
-
-// Remove service wishlist item from display
-function removeServiceWishlistItem(serviceId) {
-  const serviceWishlistItem = document.querySelector(`[data-service-id="${serviceId}"]`);
-  if (!serviceWishlistItem) return;
-  
-  // Animate out
-  serviceWishlistItem.style.transition = 'all 0.3s ease';
-  serviceWishlistItem.style.opacity = '0';
-  serviceWishlistItem.style.transform = 'translateY(-20px)';
-  
-  setTimeout(() => {
-    serviceWishlistItem.remove();
-    updateWishlistCounts();
-  }, 300);
-}
-
-// Enhanced remove service from wishlist function
-function removeServiceFromWishlist(serviceId) {
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_services') || '[]');
-  const updatedWishlist = wishlistItems.filter(id => id !== serviceId);
-  localStorage.setItem('pv_wishlist_services', JSON.stringify(updatedWishlist));
-  
-  // Update heart icon on services page
-  const heartElement = document.getElementById(`${serviceId}-heart`);
-  if (heartElement) {
-    const heartContainer = heartElement.parentElement;
-    heartContainer.classList.remove('active');
-    heartElement.style.color = '#ccc';
-  }
-  
-  // Remove from wishlist display
-  removeServiceWishlistItem(serviceId);
-  
-  showNotification(`${getServiceName(serviceId)} removed from wishlist!`, 'info');
-}
-
-// Load service wishlist items on page load
-function loadServiceWishlistItems() {
-  if (!window.location.pathname.includes('my-wishlist.html')) {
-    return;
-  }
-  
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_services') || '[]');
-  const servicesWishlistGrid = document.querySelector('.services-wishlist-grid');
-  
-  if (!servicesWishlistGrid) return;
-  
-  // Clear ALL existing service items (both static and dynamic)
-  const existingServiceItems = servicesWishlistGrid.querySelectorAll('.service-wishlist-card');
-  existingServiceItems.forEach(item => item.remove());
-  
-  // Add service wishlist items from localStorage
-  wishlistItems.forEach(serviceId => {
-    addServiceWishlistItem(serviceId);
-  });
-  
-  updateWishlistCounts();
-}
-
-// Enhanced update wishlist counts to include services and future dates
-function updateWishlistCounts() {
-  const wishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_rooms') || '[]');
-  const serviceWishlistItems = JSON.parse(localStorage.getItem('pv_wishlist_services') || '[]');
-  const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
-  
-  const savedRooms = wishlistItems.length;
-  const savedServices = serviceWishlistItems.length;
-  const totalItems = savedRooms + savedServices;
-  
-  // Calculate future dates from bookings
-  const today = new Date();
-  const futureBookings = bookings.filter(booking => {
-    const bookingDate = new Date(booking.date);
-    return bookingDate > today;
-  });
-  const futureDates = futureBookings.length;
-  
-  // Update overview numbers if on wishlist page
-  if (window.location.pathname.includes('my-wishlist.html')) {
-    const savedRoomsElement = document.querySelector('.overview-cards .overview-card:nth-child(1) .overview-number');
-    const savedServicesElement = document.querySelector('.overview-cards .overview-card:nth-child(2) .overview-number');
-    const futureDatesElement = document.querySelector('.overview-cards .overview-card:nth-child(3) .overview-number');
-    const totalItemsElement = document.querySelector('.overview-cards .overview-card:nth-child(4) .overview-number');
-    
-    if (savedRoomsElement) savedRoomsElement.textContent = savedRooms;
-    if (savedServicesElement) savedServicesElement.textContent = savedServices;
-    if (futureDatesElement) futureDatesElement.textContent = futureDates;
-    if (totalItemsElement) totalItemsElement.textContent = totalItems;
-  }
-  
-  // Update wishlist count in navigation if exists
-  const wishlistCountElements = document.querySelectorAll('.wishlist-count');
-  wishlistCountElements.forEach(element => {
-    element.textContent = totalItems;
-  });
-}
-
-// Initialize wishlist on page load
-document.addEventListener('DOMContentLoaded', function() {
-  initializeWishlistHearts();
-  loadWishlistItems();
-  loadServiceWishlistItems();
-  updateWishlistCounts();
-});
-
-// My Itinerary Action Functions
-
-// Book Spa Service
-function bookSpaService() {
-  showNotification('Redirecting to spa services...', 'info');
-  setTimeout(() => {
-    window.location.href = 'services.html#spa';
-  }, 1000);
-}
-
-// Reserve Table
-function reserveTable() {
-  showNotification('Redirecting to dining services...', 'info');
-  setTimeout(() => {
-    window.location.href = 'services.html#dining';
-  }, 1000);
-}
-
-// Plan an Event
-function planEvent() {
-  showNotification('Redirecting to event planning services...', 'info');
-  setTimeout(() => {
-    window.location.href = 'services.html#events';
-  }, 1000);
-}
-
-// Download Itinerary PDF
-function downloadItineraryPDF() {
-  // Get itinerary data
-  const itineraryData = {
-    title: 'My Itinerary - The Pearl Vista',
-    date: new Date().toLocaleDateString(),
-    guestInfo: {
-      name: localStorage.getItem('pv_username') || 'Guest',
-      dates: 'July 11 - July 17, 2025',
-      guests: '2 Adults, 1 Child',
-      room: 'Luxury Suite'
-    },
-    activities: []
-  };
-  
-  // Get activities from the page
-  const activityElements = document.querySelectorAll('.event');
-  activityElements.forEach((activity, index) => {
-    const timeElement = activity.querySelector('strong');
-    const descElement = activity.querySelector('span');
-    
-    if (timeElement && descElement) {
-      itineraryData.activities.push({
-        id: index + 1,
-        time: timeElement.textContent,
-        description: descElement.textContent
-      });
-    }
-  });
-  
-  // Create PDF content
-  let pdfContent = `
-    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
-      <div style="text-align: center; border-bottom: 2px solid #FFD700; padding-bottom: 20px; margin-bottom: 30px;">
-        <h1 style="color: #1a2238; margin: 0;">${itineraryData.title}</h1>
-        <p style="color: #666; margin: 10px 0;">Generated on ${itineraryData.date}</p>
-      </div>
-      
-      <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
-        <h2 style="color: #1a2238; margin-top: 0;">Guest Information</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-          <div><strong>Name:</strong> ${itineraryData.guestInfo.name}</div>
-          <div><strong>Dates:</strong> ${itineraryData.guestInfo.dates}</div>
-          <div><strong>Guests:</strong> ${itineraryData.guestInfo.guests}</div>
-          <div><strong>Room:</strong> ${itineraryData.guestInfo.room}</div>
-        </div>
-      </div>
-      
-      <div>
-        <h2 style="color: #1a2238;">Itinerary Activities</h2>
-  `;
-  
-  if (itineraryData.activities.length > 0) {
-    itineraryData.activities.forEach(activity => {
-      pdfContent += `
-        <div style="border-left: 3px solid #FFD700; padding-left: 15px; margin-bottom: 20px;">
-          <h3 style="color: #1a2238; margin: 0 0 5px 0;">${activity.time}</h3>
-          <p style="color: #666; margin: 0;">${activity.description}</p>
         </div>
       `;
     });
+}
+// Remove from wishlist from wishlist page
+function removeFromWishlist(roomId) {
+  removeRoomFromWishlist(roomId);
+  renderWishlistRooms();
+  updateWishlistHearts && updateWishlistHearts();
+}
+// On wishlist page load
+if (window.location.pathname.includes('my-wishlist.html')) {
+  document.addEventListener('DOMContentLoaded', renderWishlistRooms);
+}
+// On rooms page load
+if (window.location.pathname.includes('rooms.html')) {
+  document.addEventListener('DOMContentLoaded', updateWishlistHearts);
+}
+
+// --- Service Wishlist Logic ---
+function getServiceWishlist() {
+  return JSON.parse(localStorage.getItem('pv_service_wishlist') || '[]');
+}
+function setServiceWishlist(arr) {
+  localStorage.setItem('pv_service_wishlist', JSON.stringify(arr));
+}
+function isServiceInWishlist(serviceId) {
+  return getServiceWishlist().includes(serviceId);
+}
+function addServiceToWishlist(serviceId) {
+  const wishlist = getServiceWishlist();
+  if (!wishlist.includes(serviceId)) {
+    wishlist.push(serviceId);
+    setServiceWishlist(wishlist);
+  }
+}
+function removeServiceFromWishlist(serviceId) {
+  const wishlist = getServiceWishlist().filter(id => id !== serviceId);
+  setServiceWishlist(wishlist);
+}
+function toggleServiceWishlist(serviceId) {
+  const service = getServiceDetails(serviceId);
+  if (isServiceInWishlist(serviceId)) {
+    removeServiceFromWishlist(serviceId);
+    showToast(`${service.name} removed from wishlist!`, '#17a2b8');
   } else {
-    pdfContent += `
-      <div style="text-align: center; padding: 40px; color: #666;">
-        <p>No activities planned yet.</p>
-        <p>Use the "Add Activity" button to plan your itinerary!</p>
+    addServiceToWishlist(serviceId);
+    showToast(`${service.name} added to wishlist!`, '#28a745');
+  }
+  updateServiceWishlistHearts && updateServiceWishlistHearts();
+}
+function updateServiceWishlistHearts() {
+  const ids = Object.keys(getServiceDetails(''));
+  [
+    'dining','spa','leisure','events','concierge','kids','packages','pet-services'
+  ].forEach(serviceId => {
+    const heart = document.getElementById(`${serviceId}-heart`);
+    if (heart) {
+      if (isServiceInWishlist(serviceId)) {
+        heart.classList.add('active');
+        heart.style.color = '#ff0000';
+      } else {
+        heart.classList.remove('active');
+        heart.style.color = '#ccc';
+      }
+    }
+  });
+}
+function renderWishlistServices() {
+  const wishlist = getServiceWishlist();
+  const grid = document.querySelector('.services-wishlist-grid');
+  const countSpan = document.getElementById('wishlistServiceCount');
+  if (countSpan) countSpan.textContent = wishlist.length;
+  const totalCountSpan = document.getElementById('wishlistTotalCount');
+  if (totalCountSpan) totalCountSpan.textContent = (parseInt(document.getElementById('wishlistRoomCount')?.textContent || '0') + wishlist.length);
+  if (!grid) return;
+  grid.innerHTML = '';
+  if (!wishlist.length) {
+    grid.innerHTML = '<div style="padding:2rem; color:#888; text-align:center; width:100%;">No services in your wishlist yet.</div>';
+    return;
+  }
+  wishlist.forEach(serviceId => {
+    const service = getServiceDetails(serviceId);
+    grid.innerHTML += `
+      <div class="service-wishlist-card">
+        <div class="service-wishlist-image">
+          <img src="images/${service.image}" alt="${service.name}">
+          <div class="wishlist-overlay">
+            <button class="remove-btn" onclick="toggleServiceWishlist('${serviceId}')">
+              <i class="fas fa-heart" style="color: #ff0000;"></i>
+            </button>
+          </div>
+        </div>
+        <div class="service-wishlist-content">
+          <h3>${service.name}</h3>
+          <p>${service.description}</p>
+          <div class="service-wishlist-features">
+            <span><i class="fas fa-info-circle"></i> ${service.features}</span>
+            <span><i class="fas fa-clock"></i> ${service.duration}</span>
+          </div>
+          <div class="service-wishlist-actions">
+            <button class="btn signup" onclick="bookService('${serviceId}')">
+              <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+            </button>
+            <button class="btn login" onclick="viewServiceDetails('${serviceId}')">
+              <i class="fas fa-eye" style="color: #000;"></i> View Details
+            </button>
+          </div>
+        </div>
       </div>
     `;
-  }
-  
-  pdfContent += `
-      </div>
-      
-      <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #666;">
-        <p>Thank you for choosing The Pearl Vista!</p>
-        <p>For any changes to your itinerary, please contact our concierge.</p>
-      </div>
-    </div>
-  `;
-  
-  // Generate and download PDF
-  generateItineraryPDF(itineraryData.title, pdfContent);
-}
-
-// Generate Itinerary PDF
-function generateItineraryPDF(title, content) {
-  // Create a new window with the PDF content
-  const printWindow = window.open('', '_blank');
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>${title}</title>
-      <style>
-        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
-        @media print {
-          body { margin: 0; }
-          .no-print { display: none; }
-        }
-      </style>
-    </head>
-    <body>
-      ${content}
-      <div class="no-print" style="text-align: center; margin-top: 30px;">
-        <button onclick="window.print()" style="background: #FFD700; color: #1a2238; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-          Print PDF
-        </button>
-        <button onclick="window.close()" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-left: 10px;">
-          Close
-        </button>
-      </div>
-    </body>
-    </html>
-  `);
-  printWindow.document.close();
-  
-  showNotification('Itinerary PDF generated! Opening in new window...', 'success');
-}
-
-// ... existing code ... 
-
-function showBarMenu() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Restaurant & Bar Menu</h2>
-      <button id='closeBarMenuBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Restaurant Menu</div>
-    <div style="margin-bottom: 18px;">
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:18px 0 8px 0; border-bottom:1px solid #FFD700;'>Appetizers</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Burrata Salad</strong><br><span style='color:#FFD700;font-size:0.97em;'>Heirloom tomatoes, basil, olive oil</span></span><span style='color:#FFD700;font-weight:700;'>$2400</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Lobster Bisque</strong><br><span style='color:#FFD700;font-size:0.97em;'>Creamy lobster soup, chive oil</span></span><span style='color:#FFD700;font-weight:700;'>$2900</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Spring Rolls</strong><br><span style='color:#FFD700;font-size:0.97em;'>Vegetable filling, sweet chili sauce</span></span><span style='color:#FFD700;font-weight:700;'>$1500</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:18px 0 8px 0; border-bottom:1px solid #FFD700;'>Mains</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Grilled Salmon</strong><br><span style='color:#FFD700;font-size:0.97em;'>With lemon butter sauce, seasonal vegetables</span></span><span style='color:#FFD700;font-weight:700;'>$5200</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px; background:#2a2f4a; border-radius:8px; box-shadow:0 2px 8px #FFD70033;'><span><strong>Filet Mignon <span style="color:#FFD700; font-size:1.1em;">★</span></strong><br><span style='color:#FFD700;font-size:0.97em;'>Prime beef, truffle mashed potatoes, asparagus</span><br><span style='background:#FFD700; color:#1a2238; font-size:0.85em; font-weight:700; border-radius:4px; padding:2px 8px; margin-top:2px; display:inline-block;'>Chef's Special</span></span><span style='color:#FFD700;font-weight:700;'>$6800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Seafood Paella</strong><br><span style='color:#FFD700;font-size:0.97em;'>Saffron rice, shrimp, mussels, calamari</span></span><span style='color:#FFD700;font-weight:700;'>$5400</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Herb-Crusted Lamb Chops</strong><br><span style='color:#FFD700;font-size:0.97em;'>Rosemary jus, root vegetables</span></span><span style='color:#FFD700;font-weight:700;'>$6200</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Butter Chicken</strong><br><span style='color:#FFD700;font-size:0.97em;'>Creamy tomato sauce, basmati rice, naan</span></span><span style='color:#FFD700;font-weight:700;'>$3600</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Chicken Alfredo Pasta</strong><br><span style='color:#FFD700;font-size:0.97em;'>Creamy parmesan sauce, grilled chicken, fettuccine</span></span><span style='color:#FFD700;font-weight:700;'>$3700</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Moroccan Lamb Tagine</strong><br><span style='color:#FFD700;font-size:0.97em;'>Spiced lamb, apricots, almonds, couscous</span></span><span style='color:#FFD700;font-weight:700;'>$5800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Duck à l'Orange</strong><br><span style='color:#FFD700;font-size:0.97em;'>Roast duck, orange sauce, glazed carrots</span></span><span style='color:#FFD700;font-weight:700;'>$5900</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Grilled Swordfish</strong><br><span style='color:#FFD700;font-size:0.97em;'>Lemon caper butter, asparagus, wild rice</span></span><span style='color:#FFD700;font-weight:700;'>$5700</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Beef Bourguignon</strong><br><span style='color:#FFD700;font-size:0.97em;'>Red wine braised beef, pearl onions, mushrooms</span></span><span style='color:#FFD700;font-weight:700;'>$4900</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Chicken Cordon Bleu</strong><br><span style='color:#FFD700;font-size:0.97em;'>Stuffed chicken, ham, Swiss cheese, Dijon cream</span></span><span style='color:#FFD700;font-weight:700;'>$4100</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:18px 0 8px 0; border-bottom:1px solid #FFD700;'>Vegetarian & Vegan</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Vegetarian Risotto</strong><br><span style='color:#FFD700;font-size:0.97em;'>Wild mushrooms, parmesan, fresh herbs</span></span><span style='color:#FFD700;font-weight:700;'>$3800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Eggplant Parmesan</strong><br><span style='color:#FFD700;font-size:0.97em;'>Breaded eggplant, marinara, mozzarella</span></span><span style='color:#FFD700;font-weight:700;'>$3200</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Thai Green Curry</strong><br><span style='color:#FFD700;font-size:0.97em;'>Chicken, coconut milk, vegetables, jasmine rice</span></span><span style='color:#FFD700;font-weight:700;'>$3400</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Vegan Buddha Bowl</strong><br><span style='color:#FFD700;font-size:0.97em;'>Quinoa, chickpeas, avocado, roasted veggies</span></span><span style='color:#FFD700;font-weight:700;'>$2900</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Mushroom Stroganoff</strong><br><span style='color:#FFD700;font-size:0.97em;'>Wild mushrooms, creamy sauce, egg noodles</span></span><span style='color:#FFD700;font-weight:700;'>$3300</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Vegetable Pad Thai</strong><br><span style='color:#FFD700;font-size:0.97em;'>Rice noodles, tofu, peanuts, tamarind sauce</span></span><span style='color:#FFD700;font-weight:700;'>$2800</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:18px 0 8px 0; border-bottom:1px solid #FFD700;'>Snacks & Sides</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Truffle Fries</strong><br><span style='color:#FFD700;font-size:0.97em;'>Crispy fries, truffle oil, parmesan</span></span><span style='color:#FFD700;font-weight:700;'>$1600</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Mini Sliders</strong><br><span style='color:#FFD700;font-size:0.97em;'>Beef patties, cheddar, brioche buns</span></span><span style='color:#FFD700;font-weight:700;'>$2100</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Chicken Satay</strong><br><span style='color:#FFD700;font-size:0.97em;'>Peanut sauce, cucumber relish</span></span><span style='color:#FFD700;font-weight:700;'>$1900</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Margherita Pizza</strong><br><span style='color:#FFD700;font-size:0.97em;'>Tomato, mozzarella, basil</span></span><span style='color:#FFD700;font-weight:700;'>$2700</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Pepperoni Pizza</strong><br><span style='color:#FFD700;font-size:0.97em;'>Pepperoni, mozzarella</span></span><span style='color:#FFD700;font-weight:700;'>$2900</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Club Sandwich</strong><br><span style='color:#FFD700;font-size:0.97em;'>Turkey, bacon, lettuce, tomato, fries</span></span><span style='color:#FFD700;font-weight:700;'>$2300</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Cheese Platter</strong><br><span style='color:#FFD700;font-size:0.97em;'>Assorted cheeses, crackers, fruit</span></span><span style='color:#FFD700;font-weight:700;'>$2500</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:18px 0 8px 0; border-bottom:1px solid #FFD700;'>Desserts</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Chocolate Lava Cake</strong><br><span style='color:#FFD700;font-size:0.97em;'>Warm chocolate cake, vanilla ice cream</span></span><span style='color:#FFD700;font-weight:700;'>$1800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Classic Tiramisu</strong><br><span style='color:#FFD700;font-size:0.97em;'>Espresso, mascarpone, cocoa</span></span><span style='color:#FFD700;font-weight:700;'>$1900</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:24px 0 8px 0; border-bottom:1px solid #FFD700;'>Signature Cocktails</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Classic Martini</strong><br><span style='color:#FFD700;font-size:0.97em;'>Gin, Dry Vermouth, Olive</span></span><span style='color:#FFD700;font-weight:700;'>$4200</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Mojito</strong><br><span style='color:#FFD700;font-size:0.97em;'>White Rum, Mint, Lime, Soda</span></span><span style='color:#FFD700;font-weight:700;'>$3800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Cosmopolitan</strong><br><span style='color:#FFD700;font-size:0.97em;'>Vodka, Cointreau, Cranberry, Lime</span></span><span style='color:#FFD700;font-weight:700;'>$4000</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Margarita</strong><br><span style='color:#FFD700;font-size:0.97em;'>Tequila, Triple Sec, Lime</span></span><span style='color:#FFD700;font-weight:700;'>$4100</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Old Fashioned</strong><br><span style='color:#FFD700;font-size:0.97em;'>Bourbon, Bitters, Sugar, Orange</span></span><span style='color:#FFD700;font-weight:700;'>$4500</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Empire Manhattan</strong><br><span style='color:#FFD700;font-size:0.97em;'>Rye Whiskey, Sweet Vermouth, Luxardo Cherry</span></span><span style='color:#FFD700;font-weight:700;'>$4400</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Golden Apple Spritz</strong><br><span style='color:#FFD700;font-size:0.97em;'>Apple Brandy, Prosecco, Gold Leaf</span></span><span style='color:#FFD700;font-weight:700;'>$4800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Park Avenue Negroni</strong><br><span style='color:#FFD700;font-size:0.97em;'>Gin, Campari, Vermouth, Orange Zest</span></span><span style='color:#FFD700;font-weight:700;'>$4300</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Fifth Avenue Fizz</strong><br><span style='color:#FFD700;font-size:0.97em;'>Champagne, Gin, Lemon, Sugar</span></span><span style='color:#FFD700;font-weight:700;'>$4600</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:24px 0 8px 0; border-bottom:1px solid #FFD700;'>Wines</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Chardonnay</strong><br><span style='color:#FFD700;font-size:0.97em;'>White, California</span></span><span style='color:#FFD700;font-weight:700;'>$3800/glass</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Merlot</strong><br><span style='color:#FFD700;font-size:0.97em;'>Red, France</span></span><span style='color:#FFD700;font-weight:700;'>$4200/glass</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Cabernet Sauvignon</strong><br><span style='color:#FFD700;font-size:0.97em;'>Red, Chile</span></span><span style='color:#FFD700;font-weight:700;'>$4800/glass</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Pinot Grigio</strong><br><span style='color:#FFD700;font-size:0.97em;'>White, Italy</span></span><span style='color:#FFD700;font-weight:700;'>$4000/glass</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Château Margaux 2015</strong><br><span style='color:#FFD700;font-size:0.97em;'>Bordeaux, France</span></span><span style='color:#FFD700;font-weight:700;'>$3200/glass  $1200/bottle</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Opus One 2018</strong><br><span style='color:#FFD700;font-size:0.97em;'>Napa Valley, USA</span></span><span style='color:#FFD700;font-weight:700;'>$2950/glass  $1100/bottle</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Dom Pérignon Vintage</strong><br><span style='color:#FFD700;font-size:0.97em;'>Champagne, France</span></span><span style='color:#FFD700;font-weight:700;'>$4200/bottle</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:24px 0 8px 0; border-bottom:1px solid #FFD700;'>Beers</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Lager</strong><br><span style='color:#FFD700;font-size:0.97em;'>Crisp, Refreshing</span></span><span style='color:#FFD700;font-weight:700;'>$1800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>IPA</strong><br><span style='color:#FFD700;font-size:0.97em;'>Hoppy, Bold</span></span><span style='color:#FFD700;font-weight:700;'>$2200</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Stout</strong><br><span style='color:#FFD700;font-size:0.97em;'>Dark, Roasted</span></span><span style='color:#FFD700;font-weight:700;'>$2000</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Trappist Ale</strong><br><span style='color:#FFD700;font-size:0.97em;'>Belgian, Rare</span></span><span style='color:#FFD700;font-weight:700;'>$2800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Imperial Pilsner</strong><br><span style='color:#FFD700;font-size:0.97em;'>German, Limited Edition</span></span><span style='color:#FFD700;font-weight:700;'>$3200</span></div>
-      <div style='font-size:1.05rem; color:#FFD700; font-weight:600; margin:24px 0 8px 0; border-bottom:1px solid #FFD700;'>Non-Alcoholic</div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Fresh Juices</strong><br><span style='color:#FFD700;font-size:0.97em;'>Orange, Apple, Pineapple</span></span><span style='color:#FFD700;font-weight:700;'>$1400</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Mocktails</strong><br><span style='color:#FFD700;font-size:0.97em;'>Ask for our daily specials</span></span><span style='color:#FFD700;font-weight:700;'>$1800</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Soft Drinks</strong><br><span style='color:#FFD700;font-size:0.97em;'>Cola, Lemonade, Tonic</span></span><span style='color:#FFD700;font-weight:700;'>$1500</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Mineral Water</strong><br><span style='color:#FFD700;font-size:0.97em;'>Still or Sparkling</span></span><span style='color:#FFD700;font-weight:700;'>$1400</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Virgin Bellini</strong><br><span style='color:#FFD700;font-size:0.97em;'>Peach, Sparkling Grape Juice</span></span><span style='color:#FFD700;font-weight:700;'>$1600</span></div>
-      <div style='display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;'><span><strong>Luxury Iced Tea</strong><br><span style='color:#FFD700;font-size:0.97em;'>Darjeeling, Lemon, Gold Flakes</span></span><span style='color:#FFD700;font-weight:700;'>$1800</span></div>
-    </div>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>All prices are in USD. Please ask our staff for allergen information or special requests.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeBarMenuBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
   });
 }
-
-function showFitnessClasses() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Fitness Class Schedule</h2>
-      <button id='closeFitnessClassesBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Today's Classes</div>
-    <div style="margin-bottom: 18px;">
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>Sunrise Yoga</strong><br><span style='color:#FFD700;font-size:0.97em;'>6:30 AM – 7:30 AM | Instructor: Olivia Chen</span></span><span style='color:#FFD700;font-weight:700;'>Studio 1</span></div>
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>HIIT Blast</strong><br><span style='color:#FFD700;font-size:0.97em;'>8:00 AM – 8:45 AM | Instructor: Marcus Lee</span></span><span style='color:#FFD700;font-weight:700;'>Studio 2</span></div>
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>Pilates Fusion</strong><br><span style='color:#FFD700;font-size:0.97em;'>10:00 AM – 11:00 AM | Instructor: Sophia Martinez</span></span><span style='color:#FFD700;font-weight:700;'>Studio 1</span></div>
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>Strength & Conditioning</strong><br><span style='color:#FFD700;font-size:0.97em;'>12:00 PM – 1:00 PM | Instructor: David Kim</span></span><span style='color:#FFD700;font-weight:700;'>Studio 2</span></div>
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>Luxury Spin</strong><br><span style='color:#FFD700;font-size:0.97em;'>2:00 PM – 2:45 PM | Instructor: Emma Rossi</span></span><span style='color:#FFD700;font-weight:700;'>Spin Studio</span></div>
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>Boxing Elite</strong><br><span style='color:#FFD700;font-size:0.97em;'>4:00 PM – 5:00 PM | Instructor: Carlos Rivera</span></span><span style='color:#FFD700;font-weight:700;'>Studio 2</span></div>
-      <div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;'><span><strong>Evening Meditation</strong><br><span style='color:#FFD700;font-size:0.97em;'>7:00 PM – 7:45 PM | Instructor: Priya Singh</span></span><span style='color:#FFD700;font-weight:700;'>Studio 1</span></div>
-    </div>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>Please book your spot in advance. Private sessions available upon request.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeFitnessClassesBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
+// On services page load
+if (window.location.pathname.includes('services.html')) {
+  document.addEventListener('DOMContentLoaded', updateServiceWishlistHearts);
 }
-
-function showPoolSchedule() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Swimming Pool Schedule</h2>
-      <button id='closePoolScheduleBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Hours & Special Events</div>
-    <div style="margin-bottom: 18px;">
-      <div style='margin-bottom: 10px;'><strong>Daily Hours:</strong> <span style='color:#FFD700;'>6:00 AM – 10:00 PM</span></div>
-      <div style='margin-bottom: 10px;'><strong>Family Swim:</strong> 10:00 AM – 12:00 PM</div>
-      <div style='margin-bottom: 10px;'><strong>Adults Only:</strong> 7:00 PM – 10:00 PM</div>
-      <div style='margin-bottom: 10px;'><strong>Poolside Yoga:</strong> Saturdays 8:00 AM – 9:00 AM</div>
-      <div style='margin-bottom: 10px;'><strong>Swim-Up Bar:</strong> 4:00 PM – 8:00 PM</div>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Pool Etiquette</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 1.01rem;'>
-      <li>Shower before entering the pool</li>
-      <li>Swimwear required at all times</li>
-      <li>No glassware in pool area</li>
-      <li>Children under 12 must be supervised</li>
-      <li>Pool towels provided at entrance</li>
-    </ul>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>For private poolside events, please contact concierge.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closePoolScheduleBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showOutdoorActivities() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Outdoor Activities</h2>
-      <button id='closeOutdoorActivitiesBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Available Activities</div>
-    <div style="margin-bottom: 18px;">
-      <div style='margin-bottom: 10px;'><strong>Guided City Tour</strong> <span style='color:#FFD700;'>9:00 AM – 12:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Explore iconic NYC landmarks with a professional guide</span></div>
-      <div style='margin-bottom: 10px;'><strong>Central Park Cycling</strong> <span style='color:#FFD700;'>2:00 PM – 4:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Bikes provided, all levels welcome</span></div>
-      <div style='margin-bottom: 10px;'><strong>Rooftop Yoga</strong> <span style='color:#FFD700;'>6:30 AM – 7:30 AM</span><br><span style='color:#FFD700;font-size:0.97em;'>Sunrise session with city views</span></div>
-      <div style='margin-bottom: 10px;'><strong>Hudson Kayaking</strong> <span style='color:#FFD700;'>11:00 AM – 1:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Guided river adventure, equipment included</span></div>
-      <div style='margin-bottom: 10px;'><strong>Outdoor Personal Training</strong> <span style='color:#FFD700;'>By Appointment</span><br><span style='color:#FFD700;font-size:0.97em;'>One-on-one or group sessions in the park</span></div>
-      <div style='margin-bottom: 10px;'><strong>Evening Running Club</strong> <span style='color:#FFD700;'>7:00 PM – 8:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Join fellow guests for a scenic city run</span></div>
-      <div style='margin-bottom: 10px;'><strong>Helicopter Tour</strong> <span style='color:#FFD700;'>10:00 AM, 2:00 PM, 5:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Aerial views of Manhattan, 30-minute luxury flight</span></div>
-      <div style='margin-bottom: 10px;'><strong>Private Yacht Cruise</strong> <span style='color:#FFD700;'>By Reservation</span><br><span style='color:#FFD700;font-size:0.97em;'>Champagne, skyline views, and sunset on the Hudson</span></div>
-      <div style='margin-bottom: 10px;'><strong>Gourmet Picnic in the Park</strong> <span style='color:#FFD700;'>12:30 PM – 2:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Curated basket, butler service, and live music</span></div>
-      <div style='margin-bottom: 10px;'><strong>Horseback Riding</strong> <span style='color:#FFD700;'>9:00 AM – 11:00 AM</span><br><span style='color:#FFD700;font-size:0.97em;'>Central Park bridle paths, all skill levels</span></div>
-      <div style='margin-bottom: 10px;'><strong>Tennis Lessons</strong> <span style='color:#FFD700;'>By Appointment</span><br><span style='color:#FFD700;font-size:0.97em;'>Private or group, professional instructor</span></div>
-      <div style='margin-bottom: 10px;'><strong>Exclusive Golf Outing</strong> <span style='color:#FFD700;'>By Reservation</span><br><span style='color:#FFD700;font-size:0.97em;'>Private transfer to top NY golf clubs, caddie included</span></div>
-    </div>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>Contact concierge to reserve your spot or request a custom outdoor experience.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeOutdoorActivitiesBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showFamilyActivities() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Family Activities</h2>
-      <button id='closeFamilyActivitiesBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Today's Activities</div>
-    <div style="margin-bottom: 18px;">
-      <div style='margin-bottom: 10px;'><strong>Family Board Games</strong> <span style='color:#FFD700;'>10:00 AM – 11:30 AM</span><br><span style='color:#FFD700;font-size:0.97em;'>Classic and modern games for all ages</span></div>
-      <div style='margin-bottom: 10px;'><strong>Arts & Crafts Workshop</strong> <span style='color:#FFD700;'>12:00 PM – 1:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Painting, origami, and creative fun</span></div>
-      <div style='margin-bottom: 10px;'><strong>Gourmet Cookie Decorating</strong> <span style='color:#FFD700;'>1:45 PM – 2:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Luxury cookies, chef-led, take home your creations</span></div>
-      <div style='margin-bottom: 10px;'><strong>Family Karaoke</strong> <span style='color:#FFD700;'>2:45 PM – 3:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Sing your favorites in our private lounge</span></div>
-      <div style='margin-bottom: 10px;'><strong>Family Movie Matinee</strong> <span style='color:#FFD700;'>3:45 PM – 5:15 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Luxury screening room, popcorn included</span></div>
-      <div style='margin-bottom: 10px;'><strong>Pool Games</strong> <span style='color:#FFD700;'>5:30 PM – 6:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Fun competitions and prizes at the pool</span></div>
-      <div style='margin-bottom: 10px;'><strong>Magic Show</strong> <span style='color:#FFD700;'>6:15 PM – 6:45 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Live performance by a world-class magician</span></div>
-      <div style='margin-bottom: 10px;'><strong>Science Fun</strong> <span style='color:#FFD700;'>7:00 PM – 7:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Interactive experiments for curious minds</span></div>
-      <div style='margin-bottom: 10px;'><strong>Scavenger Hunt</strong> <span style='color:#FFD700;'>7:45 PM – 8:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Team up for a fun hotel-wide adventure</span></div>
-      <div style='margin-bottom: 10px;'><strong>Family Talent Show</strong> <span style='color:#FFD700;'>8:45 PM – 9:30 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Showcase your family's unique talents</span></div>
-      <div style='margin-bottom: 10px;'><strong>Evening Storytime</strong> <span style='color:#FFD700;'>9:30 PM – 10:00 PM</span><br><span style='color:#FFD700;font-size:0.97em;'>Hosted by our guest storyteller</span></div>
-    </div>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>Please sign up at the Kids Club desk or contact concierge for private family events.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeFamilyActivitiesBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showFamilyAdventure() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Family Adventure Package</h2>
-      <button id='closeFamilyAdventureBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Package Highlights</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 1.01rem;'>
-      <li>Private family suite with welcome amenities</li>
-      <li>Daily breakfast for the whole family</li>
-      <li>Guided city adventure tour</li>
-      <li>Kids Club access and exclusive activities</li>
-      <li>Family movie night with gourmet snacks</li>
-      <li>Luxury picnic in Central Park</li>
-      <li>Complimentary pool games and prizes</li>
-      <li>Late checkout for extra family time</li>
-      <li>Private museum tour with expert guide</li>
-      <li>Family spa session (massage & wellness for all ages)</li>
-      <li>Chef's table dinner with interactive cooking for kids</li>
-      <li>Exclusive family photo session with professional photographer</li>
-    </ul>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>Contact concierge to book or customize your adventure.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeFamilyAdventureBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showSeasonalSpecials() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #1a2238;
-    padding: 36px 28px 28px 28px;
-    border-radius: 18px;
-    max-width: 520px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(26,34,56,0.22), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Seasonal Specials</h2>
-      <button id='closeSeasonalSpecialsBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; font-size: 1.08rem; color: #FFD700; font-weight: 600; letter-spacing: 0.5px;">Current Exclusive Offers</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 1.01rem;'>
-      <li><strong>Spring in the City:</strong> Complimentary spa treatment with every suite booking</li>
-      <li><strong>Summer Family Escape:</strong> Kids stay and dine free, poolside movie nights</li>
-      <li><strong>Autumn Gourmet Getaway:</strong> Private chef dinner and wine pairing</li>
-      <li><strong>Winter Wonderland:</strong> Ice skating passes and hot chocolate bar</li>
-      <li><strong>Anniversary Celebration:</strong> Champagne, flowers, and late checkout</li>
-      <li><strong>Exclusive Suite Upgrade:</strong> Book a deluxe room, get a complimentary upgrade</li>
-      <li><strong>New Year's Gala:</strong> Black-tie event, live orchestra, midnight fireworks</li>
-      <li><strong>Valentine's Romance:</strong> Rose petal turndown, couples massage, private dinner</li>
-      <li><strong>VIP Shopping Experience:</strong> Personal stylist, private transport, exclusive access to luxury boutiques</li>
-    </ul>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.8;'>Contact concierge for details and availability. Limited time only.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeSeasonalSpecialsBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showRomanceOffer() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #111;
-    padding: 36px 28px 28px 28px;
-    border-radius: 24px;
-    max-width: 480px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(212,175,55,0.18), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-    border: 2.5px solid #FFD700;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Romance in the City</h2>
-      <button id='closeRomanceOfferBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; color: #FFD700; font-size: 1.13rem; font-weight: 600;">Offer Highlights</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 1.01rem;'>
-      <li>Champagne on arrival in your luxury suite</li>
-      <li>Couple's spa treatment and wellness ritual</li>
-      <li>Private candlelit dinner overlooking Manhattan skyline</li>
-      <li>Rose petal turndown and chocolate amenities</li>
-      <li>Late checkout for a relaxed morning</li>
-      <li>Personalized concierge for romantic requests</li>
-      <li>Private butler service for the evening</li>
-      <li>In-room breakfast with skyline views</li>
-      <li>Custom floral arrangement and handwritten note</li>
-      <li>Luxury car transfer for a night out in NYC</li>
-    </ul>
-    <div style='margin-bottom: 18px; color: #FFD700; font-size: 1.13rem; font-weight: 600;'>Tasting Menu Preview</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 0.98rem;'>
-      <li>Oysters with Champagne Mignonette</li>
-      <li>Truffle Risotto</li>
-      <li>Filet Mignon with Foie Gras</li>
-      <li>Chocolate Fondant with Gold Leaf</li>
-    </ul>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.85;'>Contact us to reserve your romantic escape.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeRomanceOfferBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showSpaOffer() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #111;
-    padding: 36px 28px 28px 28px;
-    border-radius: 24px;
-    max-width: 480px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(212,175,55,0.18), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-    border: 2.5px solid #FFD700;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Ultimate Spa Retreat</h2>
-      <button id='closeSpaOfferBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; color: #FFD700; font-size: 1.13rem; font-weight: 600;">Offer Highlights</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 1.01rem;'>
-      <li>Full-day luxury spa access for two</li>
-      <li>Signature massages and facials</li>
-      <li>Private wellness suite with amenities</li>
-      <li>Healthy gourmet lunch and herbal teas</li>
-      <li>Personalized wellness consultation</li>
-      <li>Access to sauna, steam, and hydrotherapy</li>
-      <li>Couple's aromatherapy ritual</li>
-      <li>Infinity pool and relaxation lounge access</li>
-      <li>Exclusive spa gift set to take home</li>
-      <li>Guided meditation or yoga session</li>
-    </ul>
-    <div style='margin-bottom: 18px; color: #FFD700; font-size: 1.13rem; font-weight: 600;'>Signature Rituals</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 0.98rem;'>
-      <li>Gold Leaf Facial</li>
-      <li>Hot Stone Massage</li>
-      <li>Detoxifying Seaweed Wrap</li>
-      <li>Champagne Bubble Bath</li>
-    </ul>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.85;'>Contact us to reserve your spa retreat.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeSpaOfferBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
-}
-
-function showGourmetOffer() {
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: #111;
-    padding: 36px 28px 28px 28px;
-    border-radius: 24px;
-    max-width: 480px;
-    width: 95%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(212,175,55,0.18), 0 2px 12px rgba(255,215,0,0.13);
-    font-family: 'Lato', Arial, sans-serif;
-    color: #fff;
-    border: 2.5px solid #FFD700;
-  `;
-  modalContent.innerHTML = `
-    <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;'>
-      <h2 style="color: #FFD700; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin: 0; letter-spacing: 1px;">Gourmet Escape</h2>
-      <button id='closeGourmetOfferBtn' style='background: none; border: none; font-size: 28px; cursor: pointer; color: #FFD700;'>&times;</button>
-    </div>
-    <div style="margin-bottom: 18px; color: #FFD700; font-size: 1.13rem; font-weight: 600;">Offer Highlights</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 1.01rem;'>
-      <li>Curated tasting menu by our executive chef</li>
-      <li>Wine pairings from our award-winning cellar</li>
-      <li>Private chef's table experience</li>
-      <li>Exclusive kitchen tour and meet the chef</li>
-      <li>Personalized menu for dietary preferences</li>
-      <li>Complimentary after-dinner digestif</li>
-      <li>Sommelier-led wine tasting</li>
-      <li>Table with skyline views</li>
-      <li>Live music during dinner</li>
-      <li>Luxury car transfer for your evening</li>
-    </ul>
-    <div style='margin-bottom: 18px; color: #FFD700; font-size: 1.13rem; font-weight: 600;'>Sample Tasting Menu</div>
-    <ul style='margin-bottom: 18px; color: #FFD700; padding-left: 18px; font-size: 0.98rem;'>
-      <li>Osetra Caviar & Blinis</li>
-      <li>Lobster Bisque</li>
-      <li>Wagyu Beef with Truffle Jus</li>
-      <li>Grand Marnier Soufflé</li>
-    </ul>
-    <div style='margin-top: 18px; text-align: right; font-size: 0.98rem; color: #FFD700; opacity: 0.85;'>Contact us to reserve your gourmet escape.</div>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-  document.getElementById('closeGourmetOfferBtn').onclick = function() {
-    document.body.removeChild(modal);
-  };
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
+// On wishlist page load
+if (window.location.pathname.includes('my-wishlist.html')) {
+  document.addEventListener('DOMContentLoaded', renderWishlistServices);
 }

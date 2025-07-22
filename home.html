@@ -753,8 +753,9 @@
         <input type="date" id="checkin" name="checkin" required class="booking-input enhanced-input">
         <label for="checkout" class="booking-label">Check-out Date</label>
         <input type="date" id="checkout" name="checkout" required class="booking-input enhanced-input">
-        <label for="guests" class="booking-label">Guests</label>
+        <label for="guests" class="booking-label">Guests (Please specify ages below)</label>
         <input type="number" id="guests" name="guests" min="1" max="10" value="1" required class="booking-input enhanced-input">
+        <div id="guestAgesContainer" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
         <label for="roomType" class="booking-label">Room Type</label>
         <select id="roomType" name="roomType" required class="booking-input enhanced-input">
           <option value="Pearl Signature Room">Pearl Signature Room</option>
@@ -780,6 +781,9 @@
       </div>
       <h3 style="color:#1a1a1a; font-size:1.35rem; font-weight:800; margin-bottom:0.7rem; text-align:center; font-family:'Playfair Display',serif;">Thank you for your booking!</h3>
       <div id="confirmationDetails" style="font-size:1.08rem; color:#333; margin-bottom:1.4rem; text-align:center; line-height:1.6;"></div>
+      <div id="confirmationTotalAmount" style="font-size:1.18rem; font-weight:900; color:#1a365d; margin-bottom:0.5rem; text-align:center; letter-spacing:0.5px; border-radius:8px; background:#f7f7fa; padding:0.5rem 0.7rem; display:inline-block;"></div>
+      <div id="confirmationPaymentNote" style="font-size:1.01rem; color:#b96a16; margin-bottom:0.7rem; text-align:center; background:#fff7e6; border-radius:7px; padding:0.5rem 0.7rem; display:none; border:1.5px solid #ffd699;"></div>
+      <div id="confirmationNextSteps" style="font-size:1.01rem; color:#1a365d; margin-bottom:1.2rem; text-align:center; background:#eaf6ff; border-radius:7px; padding:0.5rem 0.7rem; display:none; border:1.5px solid #b3e0ff;"></div>
       <button id="downloadReceiptBtn" class="luxury-btn-filled" style="margin-bottom:0.7rem; width:100%; font-size:1.08rem; border-width:2.5px;">Download Receipt</button>
       <button id="closeConfirmationBtn" class="luxury-btn-outline" style="width:100%; font-size:1.08rem; border-width:2.5px;">Close</button>
     </div>
@@ -857,9 +861,60 @@
       var checkout = document.getElementById('checkout').value;
       var guests = document.getElementById('guests').value;
       var rooms = document.getElementById('rooms').value;
+      var totalAmount = document.getElementById('totalAmount').value;
+      var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
+      var special = document.getElementById('specialInstructions').value;
+      var phone = document.getElementById('phone').value;
+      var email = document.getElementById('email').value;
+      var bookingId = 'PV' + Math.floor(Math.random()*90000+10000);
       document.getElementById('confirmationDetails').innerHTML =
         'Thank you, <b>' + name + '</b>!<br>Your booking for <b>' + roomType + '</b> (' + rooms + ' room(s), ' + guests + ' guest(s))<br>from <b>' + checkin + '</b> to <b>' + checkout + '</b> has been received.';
+      document.getElementById('confirmationTotalAmount').innerHTML = 'Total Amount: <span style="color:#bfa13a">' + (totalAmount ? totalAmount : '-') + '</span>';
+      var note = '';
+      if (totalAmount && totalAmount.startsWith('$')) {
+        var amountNum = parseFloat(totalAmount.replace(/[^\d.]/g, ''));
+        if (!isNaN(amountNum)) {
+          var advance = (amountNum * 0.45).toFixed(2);
+          note = 'To confirm your reservation, please pay <b>45%</b> of the total amount (<b style="color:#bfa13a">$' + advance + '</b>) at the reception within <b>72 hours</b> of booking. Failure to do so may result in automatic cancellation.';
+        }
+      }
+      var noteDiv = document.getElementById('confirmationPaymentNote');
+      if (note) {
+        noteDiv.innerHTML = note;
+        noteDiv.style.display = 'block';
+      } else {
+        noteDiv.innerHTML = '';
+        noteDiv.style.display = 'none';
+      }
+      // Next steps message
+      var nextSteps = 'You can review and manage your booking at the <a href="my-bookings.html" style="color:#0077cc; text-decoration:underline; font-weight:600;">My Bookings</a> page.';
+      var nextDiv = document.getElementById('confirmationNextSteps');
+      nextDiv.innerHTML = nextSteps;
+      nextDiv.style.display = 'block';
       document.getElementById('bookingConfirmationModal').style.display = 'flex';
+      // Save booking to localStorage for My Bookings page
+      var bookingObj = {
+        id: bookingId,
+        name: name,
+        phone: phone,
+        email: email,
+        roomType: roomType,
+        checkin: checkin,
+        checkout: checkout,
+        guests: guests,
+        guestAges: guestAges,
+        rooms: rooms,
+        totalAmount: totalAmount,
+        special: special,
+        status: 'Confirmed',
+        created: new Date().toISOString()
+      };
+      var bookings = [];
+      try {
+        bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+      } catch(e) { bookings = []; }
+      bookings.push(bookingObj);
+      localStorage.setItem('pv_bookings', JSON.stringify(bookings));
     };
     document.getElementById('closeConfirmationBtn').onclick = function() {
       document.getElementById('bookingConfirmationModal').style.display = 'none';
