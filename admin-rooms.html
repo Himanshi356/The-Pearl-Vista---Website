@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Rooms | The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
+    .admin-dashboard { display: flex; min-height: 100vh; }
+    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
+    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
+    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
+    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
+    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
+    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
+    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
+    .admin-profile { position:fixed; top:32px; right:48px; z-index:1000; display:flex; align-items:center; gap:0.7rem; color: #101a2b; cursor:pointer; }
+    .admin-profile .avatar { width: 36px; height: 36px; border-radius: 50%; background: #FFD700; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #101a2b; font-size: 1.2rem; }
+    #adminDropdown { display:none; position:absolute; top:48px; right:0; background:#fff; color:#101a2b; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.12); min-width:180px; padding:1rem; font-size:1rem; }
+    #adminDropdown button { margin-bottom:0.5em; }
+    .rooms-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1.5rem 2rem; min-width: 350px; max-width: 1100px; margin: 0 auto; }
+    .rooms-table table { width: 100%; border-collapse: collapse; }
+    .rooms-table th, .rooms-table td { padding: 1.1rem 1.1rem; text-align: left; border-bottom: 1px solid #222; }
+    .rooms-table tr:hover { background: #232b3b; }
+    .rooms-table th { color: #FFD700; font-size: 1rem; font-weight: 700; }
+    .rooms-table td { font-size: 1rem; color: #fff; }
+    .action-btn { background: #FFD700; color: #101a2b; border: none; border-radius: 6px; padding: 0.4em 1.2em; font-weight: 600; cursor: pointer; margin-right: 0.5em; transition: background 0.2s; }
+    .action-btn:hover { background: #e6c200; }
+    .add-room-btn { background: #101a2b; color: #FFD700; border: 1px solid #FFD700; border-radius: 6px; padding: 0.4em 1.2em; font-weight: 600; cursor: pointer; margin-bottom: 1em; }
+    .room-form { background: #f7f8fa; color: #101a2b; border-radius: 10px; padding: 1.2em 1.5em; margin-top: 1.5em; max-width: 500px; }
+    .room-form label { font-weight: 600; margin-top: 0.7em; display: block; }
+    .room-form input, .room-form select { width: 100%; padding: 0.5em; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 1em; font-size: 1rem; }
+    .room-form .form-actions { display: flex; gap: 1em; }
+    .room-form .form-actions button { flex: 1; }
+    .status {
+      display: inline-block;
+      padding: 0.3em 1.1em;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1em;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .status.available { background: #1a7f37; }
+    .status.maintenance { background: #FFD700; color: #101a2b; }
+    .status.reserved { background: #d32f2f; }
+  </style>
+</head>
+<body>
+  <div class="admin-dashboard">
+    <aside class="sidebar">
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-rooms.html" class="active">Rooms</a>
+        <a href="admin-bookings.html">Bookings</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-reports.html">Reports</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header>
+        <h2>Welcome To The Pearl Vista</h2>
+      </header>
+      <div class="admin-profile" id="adminProfile">
+        <span>Admin</span>
+        <div class="avatar">A</div>
+        <div id="adminDropdown">
+          <div style="font-weight:700; margin-bottom:0.2em;">Admin</div>
+          <div style="font-size:0.95em; margin-bottom:0.2em; color:#767676;">admin@pearlvista.com</div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Department: <span style='color:#101a2b;'>Management</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Phone: <span style='color:#101a2b;'>+1 234 567 8901</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.7em; color:#767676;">Last login: <span style='color:#101a2b;'>23 Jul 2025, 14:44</span></div>
+          <button onclick="window.location.href='admin-profile.html'" style="background:#101a2b; color:#FFD700; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Profile</button>
+          <button onclick="window.location.href='admin-settings.html'" style="background:#fff; color:#101a2b; border:1px solid #101a2b; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Settings</button>
+          <button onclick="logoutAdmin()" style="background:#FFD700; color:#101a2b; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%;">Logout</button>
+        </div>
+      </div>
+      <section style="max-width:1500px;margin:0 auto;">
+        <h1 style="font-size:1.5rem; font-weight:700; color: #101a2b; margin-bottom:0.2em;">Rooms Management</h1>
+        <div style="color:#767676; font-size:1.05rem; margin-bottom:1.2em;">Manage all hotel rooms, their types, status, and pricing. Edit or delete existing rooms, or add new ones below.</div>
+        <div style="display:flex; gap:1em; margin-bottom:1em;">
+          <button class="add-room-btn" onclick="showRoomForm()">+ Add Room</button>
+          <button class="add-room-btn" style="background:#FFD700; color:#101a2b; border:1px solid #FFD700;" onclick="showAvailabilityForm()">Check Availability</button>
+        </div>
+        <div id="availabilityForm" style="display:none; background:#f7f8fa; border-radius:10px; padding:1.2em 1.5em; margin-bottom:1.5em; max-width:500px;">
+          <h3 style="margin-top:0;">Check Room Availability</h3>
+          <label for="checkRoomNumber">Enter Room Number or Range</label>
+          <input type="text" id="checkRoomNumber" placeholder="e.g. 101 or 751-776" style="width:100%;padding:0.5em;margin-bottom:1em;" />
+          <button class="action-btn" onclick="checkRoomAvailability()" type="button">Check</button>
+          <span id="availabilityResult" style="display:block;margin-top:1em;font-weight:600;"></span>
+          <button class="action-btn" style="background:#fff; color:#101a2b; border:1px solid #101a2b; margin-top:1em;" type="button" onclick="hideAvailabilityForm()">Close</button>
+        </div>
+        <div class="rooms-table" style="margin-top:1.2em;">
+          <table>
+            <thead>
+              <tr>
+                <th>Room Numbers</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Floor</th>
+                <th>Total Rooms</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="roomsTbody">
+              <tr>
+                <td>751-776</td>
+                <td>Pearl Signature Room</td>
+                <td>King bed, skyline balcony, butler service, jacuzzi, and 24/7 dining</td>
+                <td>6</td>
+                <td>25</td>
+                <td><span class="status reserved">Reserved</span></td>
+                <td>$20695</td>
+                <td>
+                  <div style="display: flex; gap: 0.7em;">
+                    <button class="action-btn" onclick="editRoom('702-727')">Edit</button>
+                    <button class="action-btn" onclick="deleteRoom('702-727')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>101-241</td>
+                <td>Deluxe Room</td>
+                <td>King bed, modern ensuite, WiFi, tea/coffee set, and daily housekeeping</td>
+                <td>1</td>
+                <td>140</td>
+                <td><span class="status available">Available</span></td>
+                <td>$3240</td>
+                <td>
+                  <div style="display: flex; gap: 0.7em;">
+                    <button class="action-btn" onclick="editRoom('101-241')">Edit</button>
+                    <button class="action-btn" onclick="deleteRoom('101-241')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>251-381</td>
+                <td>Premium Room</td>
+                <td>King bed, city view lounge, minibar, smart TV, and welcome amenities</td>
+                <td>2</td>
+                <td>130</td>
+                <td><span class="status maintenance">Under Maintenance</span></td>
+                <td>$5580</td>
+                <td>
+                  <div style="display: flex; gap: 0.7em;">
+                    <button class="action-btn" onclick="editRoom('242-372')">Edit</button>
+                    <button class="action-btn" onclick="deleteRoom('242-372')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>391-511</td>
+                <td>Executive Room</td>
+                <td>Executive king bed, workspace, lounge access, Nespresso, and concierge</td>
+                <td>3</td>
+                <td>120</td>
+                <td><span class="status available">Available</span></td>
+                <td>$8790</td>
+                <td>
+                  <div style="display: flex; gap: 0.7em;">
+                    <button class="action-btn" onclick="editRoom('372-492')">Edit</button>
+                    <button class="action-btn" onclick="deleteRoom('372-492')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>521-631</td>
+                <td>Luxury Suite</td>
+                <td>King bed, private lounge, butler service, marble bath, and VIP perks</td>
+                <td>4</td>
+                <td>110</td>
+                <td><span class="status available">Available</span></td>
+                <td>$11920</td>
+                <td>
+                  <div style="display: flex; gap: 0.7em;">
+                    <button class="action-btn" onclick="editRoom('492-602')">Edit</button>
+                    <button class="action-btn" onclick="deleteRoom('492-602')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>641-741</td>
+                <td>Family Suite</td>
+                <td>Two bedrooms (king + twin), living area, kid-friendly amenities, and late check-out</td>
+                <td>5</td>
+                <td>100</td>
+                <td><span class="status reserved">Reserved</span></td>
+                <td>$14855</td>
+                <td>
+                  <div style="display: flex; gap: 0.7em;">
+                    <button class="action-btn" onclick="editRoom('602-702')">Edit</button>
+                    <button class="action-btn" onclick="deleteRoom('602-702')">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <form id="roomForm" class="room-form" style="display:none;">
+        <h3 id="formTitle">Add Room</h3>
+        <label for="roomNumber">Room Number</label>
+        <input type="text" id="roomNumber" required />
+        <label for="roomType">Type</label>
+        <select id="roomType" required onchange="toggleOtherRoomType()">
+          <option value="Pearl Signature Room">Pearl Signature Room</option>
+          <option value="Deluxe Room">Deluxe Room</option>
+          <option value="Premium Room">Premium Room</option>
+          <option value="Executive Room">Executive Room</option>
+          <option value="Luxury Suite">Luxury Suite</option>
+          <option value="Family Suite">Family Suite</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" id="otherRoomType" placeholder="Enter new room type" style="display:none; margin-top:0.7em;" />
+        <label for="roomStatus">Status</label>
+        <select id="roomStatus" required>
+          <option value="Available">Available</option>
+          <option value="Occupied">Reserved</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+        <label for="roomPrice">Price</label>
+        <input type="number" id="roomPrice" required min="0" />
+        <div class="form-actions">
+          <button type="submit" class="action-btn">Save</button>
+          <button type="button" class="action-btn" onclick="hideRoomForm()">Cancel</button>
+        </div>
+      </form>
+    </main>
+  </div>
+  <script>
+    // Admin dropdown logic (same as dashboard)
+    document.getElementById('adminProfile').onclick = function(e) {
+      e.stopPropagation();
+      var dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    };
+    document.addEventListener('click', function(e) {
+      var dropdown = document.getElementById('adminDropdown');
+      if (dropdown) dropdown.style.display = 'none';
+    });
+    document.getElementById('adminDropdown').onclick = function(e) { e.stopPropagation(); };
+    function logoutAdmin() { window.location.href = 'index.html'; }
+    // Room form logic (demo only)
+    function showRoomForm() {
+      document.getElementById('roomForm').style.display = 'block';
+      document.getElementById('formTitle').innerText = 'Add Room';
+    }
+    // Prevent negative or zero price on form submit
+    document.getElementById('roomForm').onsubmit = function(e) {
+      var price = parseFloat(document.getElementById('roomPrice').value);
+      if (isNaN(price) || price <= 0) {
+        alert('Price must be a positive number.');
+        e.preventDefault();
+        return false;
+      }
+    };
+    function hideRoomForm() {
+      document.getElementById('roomForm').style.display = 'none';
+    }
+    function editRoom(roomNumber) {
+      showRoomForm();
+      document.getElementById('formTitle').innerText = 'Edit Room';
+      document.getElementById('roomNumber').value = roomNumber;
+      // Set type and price based on roomNumber/range
+      var type = '';
+      var price = '';
+      switch(roomNumber) {
+        case '751-776':
+          type = 'Pearl Signature Room'; price = 20695; break;
+        case '101-241':
+          type = 'Deluxe Room'; price = 3240; break;
+        case '251-381':
+          type = 'Premium Room'; price = 5580; break;
+        case '391-511':
+          type = 'Executive Room'; price = 8790; break;
+        case '521-631':
+          type = 'Luxury Suite'; price = 11920; break;
+        case '641-741':
+          type = 'Family Suite'; price = 14855; break;
+        default:
+          type = '';
+          price = '';
+      }
+      document.getElementById('roomType').value = type;
+      document.getElementById('roomPrice').value = price;
+      document.getElementById('roomStatus').value = 'Available';
+    }
+    function deleteRoom(roomNumber) {
+      if (confirm('Delete room ' + roomNumber + '?')) {
+        // Demo: just hide the row
+        var rows = document.querySelectorAll('#roomsTbody tr');
+        rows.forEach(function(row) {
+          if (row.children[0].innerText == roomNumber) row.style.display = 'none';
+        });
+      }
+    }
+    function toggleOtherRoomType() {
+      var select = document.getElementById('roomType');
+      var otherInput = document.getElementById('otherRoomType');
+      if (select.value === 'Other') {
+        otherInput.style.display = 'block';
+        otherInput.required = true;
+      } else {
+        otherInput.style.display = 'none';
+        otherInput.required = false;
+      }
+    }
+    // Check Availability logic
+    function showAvailabilityForm() {
+      document.getElementById('availabilityForm').style.display = 'block';
+    }
+    function hideAvailabilityForm() {
+      document.getElementById('availabilityForm').style.display = 'none';
+      document.getElementById('availabilityResult').textContent = '';
+      document.getElementById('checkRoomNumber').value = '';
+    }
+    function checkRoomAvailability() {
+      var input = document.getElementById('checkRoomNumber').value.trim();
+      var result = document.getElementById('availabilityResult');
+      // Demo: check against the current table data
+      var rooms = [
+        {number:'751-776', status:'Reserved'},
+        {number:'101-241', status:'Available'},
+        {number:'251-381', status:'Maintenance'},
+        {number:'391-511', status:'Available'},
+        {number:'521-631', status:'Available'},
+        {number:'641-741', status:'Reserved'}
+      ];
+      var found = rooms.find(r => r.number === input);
+      if (found) {
+        if (found.status === 'Available') {
+          result.textContent = 'Room(s) ' + input + ' are AVAILABLE.';
+          result.style.color = '#1a7f37';
+        } else if (found.status === 'Reserved') {
+          result.textContent = 'Room(s) ' + input + ' are RESERVED.';
+          result.style.color = '#b59f00';
+        } else {
+          result.textContent = 'Room(s) ' + input + ' are under MAINTENANCE.';
+          result.style.color = '#d32f2f';
+        }
+      } else {
+        result.textContent = 'Room(s) ' + input + ' not found.';
+        result.style.color = '#d32f2f';
+      }
+    }
+  </script>
+</body>
+</html> 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Settings | The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: #fff;
+      font-family: 'Lato', Arial, sans-serif;
+      margin: 0;
+      color: #101a2b;
+    }
+    .settings-container {
+      max-width: 420px;
+      margin: 3rem auto;
+      background: #101a2b;
+      color: #FFD700;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+      padding: 2.5rem 2rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      color: #FFD700;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .settings-section {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .settings-section label {
+      font-size: 1rem;
+      color: #FFD700;
+      font-weight: 600;
+      margin-bottom: 0.2em;
+      display: block;
+    }
+    .settings-section input[type="password"] {
+      width: 100%;
+      padding: 0.5em;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 0.7em;
+      font-size: 1rem;
+    }
+    .settings-section .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+    .settings-section input[type="checkbox"] {
+      accent-color: #FFD700;
+      margin-right: 0.5em;
+    }
+    .save-btn, .back-btn {
+      background: #FFD700;
+      color: #101a2b;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1.5em;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .save-btn:hover, .back-btn:hover {
+      background: #e6c200;
+    }
+    .back-btn {
+      margin-left: 0.5em;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-container">
+    <h2>Admin Settings</h2>
+    <form>
+      <div class="settings-section">
+        <label for="newPassword">Change Password</label>
+        <input type="password" id="newPassword" placeholder="New Password" />
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" />
+      </div>
+      <div class="settings-section">
+        <label>Notification Preferences</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" checked /> Email Notifications</label>
+          <label><input type="checkbox" /> SMS Notifications</label>
+          <label><input type="checkbox" checked /> System Alerts</label>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="save-btn">Save Changes</button>
+        <button type="button" class="back-btn" onclick="window.location.href='admin-dashboard.html'">Back to Dashboard</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html> 

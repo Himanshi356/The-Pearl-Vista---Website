@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Reports | The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
+    .admin-dashboard { display: flex; min-height: 100vh; }
+    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
+    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
+    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
+    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
+    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
+    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
+    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
+    .admin-profile { position:fixed; top:32px; right:48px; z-index:1000; display:flex; align-items:center; gap:0.7rem; color: #101a2b; cursor:pointer; }
+    .admin-profile .avatar { width: 36px; height: 36px; border-radius: 50%; background: #FFD700; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #101a2b; font-size: 1.2rem; }
+    #adminDropdown { display:none; position:absolute; top:48px; right:0; background:#fff; color:#101a2b; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.12); min-width:180px; padding:1rem; font-size:1rem; }
+    #adminDropdown button { margin-bottom:0.5em; }
+    .reports-section { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1rem 1.2rem; margin-bottom: 2rem; }
+    .reports-section h3 { color: #FFD700; font-size: 1.1rem; font-weight: 700; margin-bottom: 1em; }
+    .bar-chart-placeholder { width: 100%; height: 180px; background: linear-gradient(90deg, #FFD70022 0%, #fff 100%); border-radius: 8px; display: flex; align-items: flex-end; gap: 0.5rem; padding: 1rem 0; }
+    .bar { flex: 1; background: #FFD700; border-radius: 4px 4px 0 0; min-width: 10px; transition: height 0.3s; }
+    .progress-bar-container { width: 100%; background: #fff; border-radius: 8px; height: 32px; margin-top: 1em; }
+    .progress-bar { height: 100%; background: #FFD700; border-radius: 8px; text-align: right; padding-right: 1em; font-weight: 700; color: #101a2b; line-height: 32px; }
+  </style>
+</head>
+<body>
+  <div class="admin-dashboard">
+    <aside class="sidebar">
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-rooms.html">Rooms</a>
+        <a href="admin-bookings.html">Bookings</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-reports.html" class="active">Reports</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header>
+        <h2>Welcome To The Pearl Vista</h2>
+      </header>
+      <div class="admin-profile" id="adminProfile">
+        <span>Admin</span>
+        <div class="avatar">A</div>
+        <div id="adminDropdown">
+          <div style="font-weight:700; margin-bottom:0.2em;">Admin</div>
+          <div style="font-size:0.95em; margin-bottom:0.2em; color:#767676;">admin@pearlvista.com</div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Department: <span style='color:#101a2b;'>Management</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Phone: <span style='color:#101a2b;'>+1 234 567 8901</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.7em; color:#767676;">Last login: <span style='color:#101a2b;'>23 Jul 2025, 14:44</span></div>
+          <button onclick="window.location.href='admin-profile.html'" style="background:#101a2b; color:#FFD700; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Profile</button>
+          <button onclick="window.location.href='admin-settings.html'" style="background:#fff; color:#101a2b; border:1px solid #101a2b; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Settings</button>
+          <button onclick="logoutAdmin()" style="background:#FFD700; color:#101a2b; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%;">Logout</button>
+        </div>
+      </div>
+      <h1 style="font-size:1.3rem; font-weight:600; color: #101a2b; margin-bottom:1rem;">Reports</h1>
+      <!-- KPI CARDS -->
+      <div class="kpi-cards-row simple">
+        <div class="kpi-card simple"><div class="kpi-label">Bookings</div><div class="kpi-value" id="kpiBookings">-</div></div>
+        <div class="kpi-card simple"><div class="kpi-label">Revenue</div><div class="kpi-value" id="kpiRevenue">-</div></div>
+        <div class="kpi-card simple"><div class="kpi-label">Occupancy</div><div class="kpi-value" id="kpiOccupancy">-</div></div>
+        <div class="kpi-card simple"><div class="kpi-label">Satisfaction</div><div class="kpi-value" id="kpiSatisfaction">-</div></div>
+        <div class="kpi-card simple">
+          <div class="kpi-label">Guest Repeat Rate</div>
+          <div class="kpi-value" id="kpiRepeatRate">-</div>
+        </div>
+        <div class="kpi-card simple">
+          <div class="kpi-label">Peak Booking Time</div>
+          <div class="kpi-value" id="kpiPeakTime">-</div>
+        </div>
+      </div>
+      <!-- FILTER BAR -->
+      <div class="filter-bar simple">
+        <select id="filterTimePeriod" aria-label="Time Period">
+          <option value="today">Today</option>
+          <option value="last7">Last 7 Days</option>
+          <option value="lastMonth">Last Month</option>
+          <option value="custom">Custom Range</option>
+        </select>
+        <input type="date" id="filterStart" aria-label="Start Date" placeholder="Start Date" style="display:none;">
+        <span id="dateDash" style="display:none;">-</span>
+        <input type="date" id="filterEnd" aria-label="End Date" placeholder="End Date" style="display:none;">
+        <select id="filterRoomType" aria-label="Room Type"><option>All Rooms</option><option>Pearl Signature Room</option><option>Deluxe Room</option><option>Premium Room</option><option>Executive Room</option><option>Luxury Suite</option><option>Family Suite</option></select>
+        <select id="filterChannel" aria-label="Booking Channel"><option>All Channels</option><option>Website</option><option>Phone</option><option>Walk-in</option></select>
+        <select id="filterCustomerType" aria-label="Customer Type"><option>All Customers</option><option>New</option><option>Returning</option></select>
+        <button id="applyFiltersBtn">Filter</button>
+      </div>
+      <!-- CHARTS SECTION -->
+      <div class="charts-row simple">
+        <div class="chart-card simple"><h3 class="chart-heading">Booking Trends</h3><canvas id="bookingsTrendChart"></canvas></div>
+        <div class="chart-card simple"><h3 class="chart-heading">Revenue Growth</h3><canvas id="revenueChart"></canvas></div>
+        <div class="chart-card simple"><h3 class="chart-heading">Room Type Popularity</h3><canvas id="roomTypePieChart"></canvas></div>
+        <div class="chart-card simple"><h3 class="chart-heading">Guest Demographics</h3><canvas id="demographicsChart"></canvas></div>
+      </div>
+      <div class="charts-row simple" style="max-width:900px; margin:2em auto; display:grid; grid-template-columns:1fr 1fr; gap:2em;">
+        <div class="chart-card simple">
+          <h3 class="chart-heading">Year-over-Year Comparison</h3>
+          <canvas id="kpiYoYChart" width="350" height="90" style="margin:0 auto;display:block;"></canvas>
+        </div>
+        <div class="chart-card simple">
+          <h3 class="chart-heading">Month-over-Month Comparison</h3>
+          <canvas id="kpiMoMChart" width="350" height="90" style="margin:0 auto;display:block;"></canvas>
+        </div>
+      </div>
+      <!-- ADDITIONAL INSIGHTS -->
+      <div class="insights-row">
+        <div class="insight-card">
+          <h3>Top Performing Rooms</h3>
+          <ul id="topRoomsList"></ul>
+        </div>
+        <div class="insight-card">
+          <h3>Most Loyal Customers</h3>
+          <ul id="loyalCustomersList"></ul>
+        </div>
+        <div class="insight-card">
+          <h3>Cancellation Trends</h3>
+          <canvas id="cancellationChart"></canvas>
+        </div>
+        <div class="insight-card">
+          <h3>Monthly Target Progress</h3>
+          <div class="progress-bar-container"><div class="progress-bar" id="targetProgressBar">-</div></div>
+        </div>
+        <div class="insight-card">
+          <h3>Customer Feedback</h3>
+          <div id="feedbackSummary"></div>
+        </div>
+        <div class="insight-card">
+          <h3>Most Booked Channel</h3>
+          <ul id="mostBookedChannelList"></ul>
+        </div>
+      </div>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.css" />
+      <style>
+        .kpi-cards-row.simple {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 1.5em;
+          max-width: 1200px;
+          margin: 0 auto 2em auto;
+        }
+        .kpi-card.simple {
+          background: #f8fafc;
+          color: #222;
+          border-radius: 10px;
+          box-shadow: none;
+          padding: 1.2em 1em;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-width: 0;
+          min-height: 80px;
+          border: 1px solid #e6e6e6;
+          justify-content: center;
+        }
+        .kpi-label { font-size: 1em; color: #555; font-weight: 600; text-align: center; }
+        .kpi-value { font-size: 2em; font-weight: 800; color: #2d5be3; margin-bottom: 0.2em; }
+        .kpi-card.simple canvas { margin-top: 0.2em; }
+        .filter-bar.simple {
+          display: flex;
+          gap: 1em;
+          align-items: center;
+          background: #fff;
+          border-radius: 8px;
+          padding: 0.7em 1.5em;
+          margin-bottom: 2em;
+          max-width: 900px;
+          margin-left: auto;
+          margin-right: auto;
+          box-shadow: none;
+          border: 1px solid #e6e6e6;
+        }
+        .filter-bar.simple input, .filter-bar.simple select {
+          padding: 0.4em 0.8em;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 1em;
+        }
+        .filter-bar.simple button {
+          background: #2d5be3;
+          color: #fff;
+          border: none;
+          border-radius: 7px;
+          padding: 0.6em 1.2em;
+          font-size: 1em;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.18s, box-shadow 0.18s;
+        }
+        .filter-bar.simple button:hover, .filter-bar.simple button:focus {
+          background: #1746a2;
+          box-shadow: 0 2px 8px rgba(45,91,227,0.10);
+          outline: none;
+        }
+        .filter-bar.simple button:active {
+          background: #11336b;
+        }
+        .charts-row.simple {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2em;
+          max-width: 900px;
+          margin: 0 auto 2em auto;
+        }
+        .chart-card.simple {
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: none;
+          padding: 1.2em 1em 1.5em 1em;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border: 1px solid #e6e6e6;
+        }
+        .insights-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2em;
+          max-width: 1200px;
+          margin: 0 auto 2em auto;
+        }
+        @media (max-width: 1200px) {
+          .insights-row { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 900px) {
+          .insights-row { grid-template-columns: 1fr; }
+        }
+        .insight-card {
+          background: #101a2b;
+          color: #FFD700;
+          border-radius: 12px;
+          box-shadow: 0 2px 12px rgba(25,118,210,0.10);
+          padding: 1.8em 2em 1.5em 2em;
+          min-height: 180px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+        }
+        .insight-card h3 {
+          color: #FFD700;
+          font-size: 1.25rem;
+          font-weight: 800;
+          margin-bottom: 1em;
+          text-align: left;
+          width: 100%;
+        }
+        .insight-card ul {
+          padding-left: 1.2em;
+          margin: 0 0 0.5em 0;
+          list-style: disc inside;
+          color: #FFD700;
+          font-size: 1.08em;
+        }
+        .insight-card li {
+          margin-bottom: 0.3em;
+          padding-left: 0.1em;
+        }
+        .insight-card .progress-bar-container {
+          margin-top: 0.7em;
+        }
+        .insight-card .progress-bar {
+          font-size: 1.1em;
+          font-weight: 700;
+        }
+        .insight-card #feedbackSummary {
+          color: #FFD700;
+          font-size: 1.08em;
+          text-align: left;
+        }
+        .insight-card #feedbackSummary div {
+          margin-bottom: 0.4em;
+        }
+        .progress-bar-container { width: 100%; background: #fff; border-radius: 8px; height: 32px; margin-top: 1em; }
+        .progress-bar { height: 100%; background: #FFD700; border-radius: 8px; text-align: right; padding-right: 1em; font-weight: 700; color: #101a2b; line-height: 32px; }
+        .insight-card ul#mostBookedChannelList {
+          margin-top: 0.2em;
+        }
+        .insight-card ul#mostBookedChannelList li {
+          font-size: 1.08em;
+          margin-bottom: 0.3em;
+        }
+        @media (max-width: 900px) {
+          .kpi-cards-row.simple { grid-template-columns: 1fr 1fr; }
+          .charts-row.simple { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+          .kpi-cards-row, .charts-row, .insights-row { grid-template-columns: 1fr; }
+        }
+        .filter-bar.simple input[type="date"]::placeholder {
+          color: #888;
+          font-size: 1em;
+          letter-spacing: 0.5px;
+        }
+        .chart-heading {
+          font-size: 1.1em;
+          font-weight: 700;
+          color: #222;
+          margin-bottom: 0.7em;
+          text-align: center;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+      <script>
+        // Show/hide date pickers based on time period
+        document.addEventListener('DOMContentLoaded', function() {
+          var timePeriod = document.getElementById('filterTimePeriod');
+          var startDate = document.getElementById('filterStart');
+          var endDate = document.getElementById('filterEnd');
+          var dash = document.getElementById('dateDash');
+          function updateDatePickers() {
+            if (timePeriod.value === 'custom') {
+              startDate.style.display = '';
+              endDate.style.display = '';
+              dash.style.display = '';
+            } else {
+              startDate.style.display = 'none';
+              endDate.style.display = 'none';
+              dash.style.display = 'none';
+            }
+          }
+          timePeriod.addEventListener('change', updateDatePickers);
+          updateDatePickers();
+        });
+        // Demo data for KPIs
+        const kpiData = {
+          bookings: 1240,
+          revenue: 245000,
+          occupancy: 87,
+          satisfaction: '9.1/10'
+        };
+        document.getElementById('kpiBookings').textContent = kpiData.bookings;
+        document.getElementById('kpiRevenue').textContent = '$' + kpiData.revenue.toLocaleString();
+        document.getElementById('kpiOccupancy').textContent = kpiData.occupancy + '%';
+        document.getElementById('kpiSatisfaction').textContent = kpiData.satisfaction;
+        // Color palette
+        const palette = [
+          '#2d5be3', '#f7b731', '#26de81', '#fc5c65', '#8854d0', '#fd9644', '#45aaf2', '#a55eea', '#20bf6b', '#4b6584'
+        ];
+        // Chart.js chart instances
+        let bookingsChart, revenueChart, roomTypeChart, demographicsChart;
+        // Helper to randomize data for demo
+        function randomData(len, min, max) {
+          return Array.from({length: len}, () => Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        // Update charts with new demo data
+        function updateCharts() {
+          // Get filter values
+          const period = document.getElementById('filterTimePeriod').value;
+          const roomType = document.getElementById('filterRoomType').value;
+          const channel = document.getElementById('filterChannel').value;
+          const custType = document.getElementById('filterCustomerType').value;
+          // Demo: update chart data and titles
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+          bookingsChart.data.datasets[0].data = randomData(7, 100, 250);
+          bookingsChart.options.plugins.title = {display:true, text:`Bookings (${roomType}, ${period.replace(/([A-Z])/g, ' $1')})`};
+          bookingsChart.update();
+          revenueChart.data.datasets[0].data = randomData(7, 10000, 25000);
+          revenueChart.options.plugins.title = {display:true, text:`Revenue (${channel}, ${period.replace(/([A-Z])/g, ' $1')})`};
+          revenueChart.update();
+          roomTypeChart.data.datasets[0].data = randomData(6, 10, 30);
+          roomTypeChart.options.plugins.title = {display:true, text:`Room Type Popularity (${roomType})`};
+          roomTypeChart.update();
+          demographicsChart.data.datasets[0].data = randomData(5, 10, 40);
+          demographicsChart.options.plugins.title = {display:true, text:`Guest Demographics (${custType})`};
+          demographicsChart.update();
+          // Ensure datalabels plugin is used on update
+          roomTypeChart.options.plugins.datalabels = {
+            color: '#222', font: { weight: 'bold', size: 14 },
+            formatter: (value, ctx) => {
+              const data = ctx.chart.data.datasets[0].data;
+              const total = data.reduce((a, b) => a + b, 0);
+              const pct = total ? (value / total * 100) : 0;
+              return pct > 0 ? pct.toFixed(1) + '%' : '';
+            }
+          };
+          demographicsChart.options.plugins.datalabels = {
+            color: '#222', font: { weight: 'bold', size: 14 },
+            formatter: (value, ctx) => {
+              const data = ctx.chart.data.datasets[0].data;
+              const total = data.reduce((a, b) => a + b, 0);
+              const pct = total ? (value / total * 100) : 0;
+              return pct > 0 ? pct.toFixed(1) + '%' : '';
+            }
+          };
+        }
+        // Responsive/clickable Filter button logic
+        document.addEventListener('DOMContentLoaded', function() {
+          var filterBtn = document.getElementById('applyFiltersBtn');
+          filterBtn.addEventListener('click', function() {
+            filterBtn.disabled = true;
+            filterBtn.textContent = 'Filtering...';
+            setTimeout(() => {
+              updateCharts();
+              filterBtn.disabled = false;
+              filterBtn.textContent = 'Filter';
+            }, 700);
+          });
+        });
+        bookingsChart = new Chart(document.getElementById('bookingsTrendChart').getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+              label: 'Bookings',
+              data: [120, 150, 170, 140, 200, 180, 210],
+              borderColor: palette[0],
+              backgroundColor: 'rgba(45,91,227,0.10)',
+              tension: 0.4,
+              fill: true,
+              pointBackgroundColor: palette[1],
+              pointBorderColor: palette[0],
+              pointRadius: 5
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { grid: { display: false } }, y: { beginAtZero: true } }
+          }
+        });
+        revenueChart = new Chart(document.getElementById('revenueChart').getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+              label: 'Revenue',
+              data: [12000, 15000, 17000, 14000, 20000, 18000, 21000],
+              backgroundColor: palette.slice(0,7),
+              borderRadius: 6
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { grid: { display: false } }, y: { beginAtZero: true } }
+          }
+        });
+        roomTypeChart = new Chart(document.getElementById('roomTypePieChart').getContext('2d'), {
+          type: 'pie',
+          data: {
+            labels: ['Pearl Signature', 'Deluxe', 'Premium', 'Executive', 'Luxury Suite', 'Family Suite'],
+            datasets: [{
+              data: [18, 22, 15, 20, 13, 12],
+              backgroundColor: palette.slice(0,6)
+            }]
+          },
+          options: {
+            plugins: {
+              legend: { position: 'bottom', labels: { color: '#222', font: { weight: 'bold' } } },
+              datalabels: {
+                color: '#222',
+                font: { weight: 'bold', size: 14 },
+                formatter: (value, ctx) => {
+                  const data = ctx.chart.data.datasets[0].data;
+                  const total = data.reduce((a, b) => a + b, 0);
+                  const pct = total ? (value / total * 100) : 0;
+                  return pct > 0 ? pct.toFixed(1) + '%' : '';
+                }
+              }
+            }
+          },
+          plugins: [ChartDataLabels]
+        });
+        demographicsChart = new Chart(document.getElementById('demographicsChart').getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: ['USA', 'UK', 'India', 'Germany', 'Other'],
+            datasets: [{
+              data: randomData(5, 10, 40),
+              backgroundColor: palette.slice(0,5)
+            }]
+          },
+          options: {
+            plugins: {
+              legend: { position: 'bottom', labels: { color: '#222', font: { weight: 'bold' } } },
+              datalabels: {
+                color: '#222',
+                font: { weight: 'bold', size: 14 },
+                formatter: (value, ctx) => {
+                  const data = ctx.chart.data.datasets[0].data;
+                  const total = data.reduce((a, b) => a + b, 0);
+                  const pct = total ? (value / total * 100) : 0;
+                  return pct > 0 ? pct.toFixed(1) + '%' : '';
+                }
+              }
+            }
+          },
+          plugins: [ChartDataLabels]
+        });
+        // Top Rooms
+        const topRooms = [
+          'Pearl Signature Room',
+          'Deluxe Room',
+          'Premium Room',
+          'Executive Room',
+          'Luxury Suite',
+          'Family Suite'
+        ];
+        document.getElementById('topRoomsList').innerHTML = topRooms.map(r => `<li>${r}</li>`).join('');
+        // Loyal Customers
+        const loyalCustomers = ['John Smith', 'Linda Evans', 'Rajesh Kumar', 'Anna Müller', 'David Brown'];
+        document.getElementById('loyalCustomersList').innerHTML = loyalCustomers.map(c => `<li>${c}</li>`).join('');
+        // Most Booked Channel
+        const mostBookedChannels = [
+          { channel: 'Website', count: 620 },
+          { channel: 'Phone', count: 410 },
+          { channel: 'Walk-in', count: 210 }
+        ];
+        document.getElementById('mostBookedChannelList').innerHTML = mostBookedChannels.map(c => `<li><b>${c.channel}:</b> ${c.count} bookings</li>`).join('');
+        // Cancellation Trends
+        new Chart(document.getElementById('cancellationChart').getContext('2d'), {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+              label: 'Cancellations',
+              data: [8, 12, 7, 10, 6, 9, 5],
+              borderColor: '#d32f2f',
+              backgroundColor: 'rgba(211,47,47,0.12)',
+              tension: 0.4,
+              fill: true
+            }]
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { grid: { display: false } }, y: { beginAtZero: true } }
+          }
+        });
+        // Target Progress
+        document.getElementById('targetProgressBar').style.width = '92%';
+        document.getElementById('targetProgressBar').textContent = '92%';
+        // Feedback Summary
+        document.getElementById('feedbackSummary').innerHTML = `
+          <div style='font-size:1.1em; margin-bottom:0.5em;'>"Wonderful stay, great staff!"</div>
+          <div style='font-size:1em; color:#FFD700;'>★★★★★</div>
+          <div style='font-size:0.95em; margin-top:0.5em;'>Most guests praise cleanliness, comfort, and service. Some suggest more dining options.</div>
+        `;
+        // KPI: YoY and MoM Comparison mini bar charts
+        let kpiYoYChart, kpiMoMChart;
+        document.addEventListener('DOMContentLoaded', function() {
+          kpiYoYChart = new Chart(document.getElementById('kpiYoYChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+              labels: ['2021', '2022', '2023', '2024', '2025'],
+              datasets: [{
+                label: 'Bookings',
+                data: [900, 1050, 1120, 1200, 1240],
+                backgroundColor: ['#2d5be3', '#f7b731', '#26de81', '#fc5c65', '#8854d0'],
+                borderRadius: 4
+              }]
+            },
+            options: {
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { grid: { display: false }, ticks: { color: '#555', font: { size: 12 } } },
+                y: { grid: { display: false }, ticks: { color: '#555', font: { size: 12 }, stepSize: 200, beginAtZero: true } }
+              },
+              responsive: false,
+              maintainAspectRatio: false
+            }
+          });
+          kpiMoMChart = new Chart(document.getElementById('kpiMoMChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              datasets: [{
+                label: 'Bookings',
+                data: [120, 150, 170, 140, 200, 180, 210],
+                backgroundColor: ['#2d5be3', '#f7b731', '#26de81', '#fc5c65', '#8854d0', '#fd9644', '#45aaf2'],
+                borderRadius: 4
+              }]
+            },
+            options: {
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { grid: { display: false }, ticks: { color: '#555', font: { size: 12 } } },
+                y: { grid: { display: false }, ticks: { color: '#555', font: { size: 12 }, stepSize: 50, beginAtZero: true } }
+              },
+              responsive: false,
+              maintainAspectRatio: false
+            }
+          });
+          // Set demo values for new KPIs
+          document.getElementById('kpiRepeatRate').textContent = '38%';
+          document.getElementById('kpiPeakTime').textContent = 'Sat 7-9pm';
+        });
+      </script>
+    </main>
+  </div>
+  <script>
+    // Admin dropdown logic (same as dashboard)
+    document.getElementById('adminProfile').onclick = function(e) {
+      e.stopPropagation();
+      var dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    };
+    document.addEventListener('click', function(e) {
+      var dropdown = document.getElementById('adminDropdown');
+      if (dropdown) dropdown.style.display = 'none';
+    });
+    document.getElementById('adminDropdown').onclick = function(e) { e.stopPropagation(); };
+    function logoutAdmin() { window.location.href = 'index.html'; }
+  </script>
+</body>
+</html> 

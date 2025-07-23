@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Bookings | The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
+    .admin-dashboard { display: flex; min-height: 100vh; }
+    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
+    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
+    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
+    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
+    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
+    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
+    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
+    .admin-profile { position:fixed; top:32px; right:48px; z-index:1000; display:flex; align-items:center; gap:0.7rem; color: #101a2b; cursor:pointer; }
+    .admin-profile .avatar { width: 36px; height: 36px; border-radius: 50%; background: #FFD700; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #101a2b; font-size: 1.2rem; }
+    #adminDropdown { display:none; position:absolute; top:48px; right:0; background:#fff; color:#101a2b; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.12); min-width:180px; padding:1rem; font-size:1rem; }
+    #adminDropdown button { margin-bottom:0.5em; }
+    .bookings-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1rem 1.2rem; min-width: 350px; }
+    .bookings-table table { width: 100%; border-collapse: collapse; }
+    .bookings-table th, .bookings-table td { padding: 0.7rem 0.5rem; text-align: left; border-bottom: 1px solid #222; }
+    .bookings-table th { color: #FFD700; font-size: 1rem; font-weight: 700; }
+    .bookings-table td { font-size: 1rem; color: #fff; }
+    .status { padding: 0.2em 0.8em; border-radius: 12px; font-size: 0.95em; font-weight: 600; display: inline-block; }
+    .status.Confirmed { background: #e6f7e6; color: #1a7f37; }
+    .status.Pending { background: #fffbe6; color: #b59f00; }
+    .status.Checked-In { background: #1976d2; color: #fff; box-shadow: 0 2px 8px rgba(25,118,210,0.15); font-weight: 800; }
+    .status.Checked-Out { background: #8e24aa; color: #fff; box-shadow: 0 2px 8px rgba(142,36,170,0.15); font-weight: 800; }
+    .status.Cancelled { background: #ffeaea; color: #d32f2f; }
+    .payment {
+      display: inline-block;
+      padding: 0.3em 1.1em;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1em;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .payment.paid { background: #1a7f37; }
+    .payment.pending { background: #FFD700; color: #101a2b; }
+    .payment.failed { background: #d32f2f; }
+    .center-dash { text-align: center; color: #888; font-size: 1.1em; font-weight: 600; }
+    .customer-popup {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      background: #fff;
+      color: #101a2b;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      padding: 1.2em 1.5em;
+      min-width: 270px;
+      max-width: 350px;
+      font-size: 1rem;
+      font-family: 'Lato', Arial, sans-serif;
+      pointer-events: none;
+    }
+    .customer-popup strong { color: #FFD700; font-weight: 700; }
+    .customer-popup .popup-label { color: #767676; font-size: 0.97em; font-weight: 600; }
+    .customer-popup .popup-value { color: #101a2b; font-size: 1em; font-weight: 600; }
+    .customer-popup .popup-row { margin-bottom: 0.5em; }
+    .modal-bg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal {
+      background: #fff;
+      color: #101a2b;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 2em 2.5em 1.5em 2.5em;
+      min-width: 340px;
+      max-width: 420px;
+      max-height: 80vh;
+      overflow-y: auto;
+      font-family: 'Lato', Arial, sans-serif;
+      position: relative;
+      scrollbar-width: none; /* Firefox */
+    }
+    .modal::-webkit-scrollbar { display: none; }
+    .modal h3 { margin-top: 0; color: #FFD700; font-size: 1.3em; }
+    .modal label { font-weight: 600; margin-top: 1em; display: block; }
+    .modal input, .modal select, .modal textarea {
+      width: 100%; padding: 0.5em; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 1em; font-size: 1em;
+    }
+    .modal .modal-actions { display: flex; gap: 1em; margin-top: 1em; }
+    .modal .modal-actions button { flex: 1; }
+    .modal .close-btn {
+      position: absolute; top: 1em; right: 1em; background: none; border: none; font-size: 1.3em; cursor: pointer;
+      outline: none;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+      transition: none;
+    }
+    .modal .close-btn:hover,
+    .modal .close-btn:focus,
+    .modal .close-btn:active {
+      background: none !important;
+      border: none !important;
+      color: inherit !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+    .modal .cancelled-label { color: #d32f2f; font-weight: 700; margin-bottom: 1em; }
+  </style>
+</head>
+<body>
+  <div class="admin-dashboard">
+    <aside class="sidebar">
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-rooms.html">Rooms</a>
+        <a href="admin-bookings.html" class="active">Bookings</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-reports.html">Reports</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header>
+        <h2>Welcome To The Pearl Vista</h2>
+      </header>
+      <div style="max-width: 900px; margin: 0 auto 1.5em auto; display: flex; justify-content: space-between; align-items: center; gap: 1em;">
+        <button style="background:#FFD700; color:#101a2b; border:none; border-radius:8px; padding:0.7em 2em; font-weight:700; font-size:1rem; cursor:pointer; transition:background 0.2s; margin-right:1em;" onclick="openManageModal()">Manage Bookings</button>
+        <select id="statusFilter" style="padding: 0.7em 1.2em; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; color: #555;" onchange="filterBookings()">
+          <option value="">All Statuses</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Pending">Pending</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Checked-In">Checked-In</option>
+          <option value="Checked-Out">Checked-Out</option>
+        </select>
+        <input id="bookingSearch" type="text" placeholder="Search bookings..." style="width: 320px; padding: 0.7em 1.2em; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;" oninput="filterBookings()" />
+      </div>
+      <div class="admin-profile" id="adminProfile">
+        <span>Admin</span>
+        <div class="avatar">A</div>
+        <div id="adminDropdown">
+          <div style="font-weight:700; margin-bottom:0.2em;">Admin</div>
+          <div style="font-size:0.95em; margin-bottom:0.2em; color:#767676;">admin@pearlvista.com</div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Department: <span style='color:#101a2b;'>Management</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Phone: <span style='color:#101a2b;'>+1 234 567 8901</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.7em; color:#767676;">Last login: <span style='color:#101a2b;'>23 Jul 2025, 14:44</span></div>
+          <button onclick="window.location.href='admin-profile.html'" style="background:#101a2b; color:#FFD700; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Profile</button>
+          <button onclick="window.location.href='admin-settings.html'" style="background:#fff; color:#101a2b; border:1px solid #101a2b; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Settings</button>
+          <button onclick="logoutAdmin()" style="background:#FFD700; color:#101a2b; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%;">Logout</button>
+        </div>
+      </div>
+      <h1 style="font-size:1.3rem; font-weight:600; color: #101a2b; margin-bottom:1rem;">All Bookings</h1>
+      <div class="bookings-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Customer</th>
+              <th>Room</th>
+              <th>Room Number</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Total Amount</th>
+              <th>Payment Status</th>
+              <th>Booking Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PV1001</td>
+              <td>John Smith</td>
+              <td>Pearl Signature Room</td>
+              <td>752</td>
+              <td>2025-07-20</td>
+              <td>2025-07-23</td>
+              <td>$62085</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Checked-In">Checked-In</span></td>
+            </tr>
+            <tr>
+              <td>PV1002</td>
+              <td>Jane Doe</td>
+              <td>Deluxe Room</td>
+              <td>110</td>
+              <td>2025-07-21</td>
+              <td>2025-07-24</td>
+              <td>$9720</td>
+              <td><span class="payment pending">Pending</span></td>
+              <td><span class="status Pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>PV1003</td>
+              <td>Tom Fernton</td>
+              <td>Premium Room</td>
+              <td>260</td>
+              <td>2025-07-22</td>
+              <td>2025-07-25</td>
+              <td>$16740</td>
+              <td><span class="payment failed">Failed</span></td>
+              <td><span class="status Cancelled">Cancelled</span></td>
+            </tr>
+            <tr>
+              <td>PV1004</td>
+              <td>Emily Clark</td>
+              <td>Executive Room</td>
+              <td>400</td>
+              <td>2025-07-18</td>
+              <td>2025-07-22</td>
+              <td>$35160</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>PV1005</td>
+              <td>Michael Lee</td>
+              <td>Luxury Suite</td>
+              <td>500, 501</td>
+              <td>2025-07-19</td>
+              <td>2025-07-23</td>
+              <td>$47680</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>PV1006</td>
+              <td>Priya Patel</td>
+              <td>Family Suite</td>
+              <td>650</td>
+              <td>2025-07-20</td>
+              <td>2025-07-24</td>
+              <td>$59420</td>
+              <td><span class="payment pending">Pending</span></td>
+              <td><span class="status Pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>PV1007</td>
+              <td>Sarah Johnson</td>
+              <td>Deluxe Room</td>
+              <td>120</td>
+              <td>2025-07-25</td>
+              <td>2025-07-28</td>
+              <td>$9720</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>PV1008</td>
+              <td>David Kim</td>
+              <td>Premium Room</td>
+              <td>275</td>
+              <td>2025-07-26</td>
+              <td>2025-07-29</td>
+              <td>$16740</td>
+              <td><span class="payment pending">Pending</span></td>
+              <td><span class="status Pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>PV1009</td>
+              <td>Linda Martinez</td>
+              <td>Luxury Suite</td>
+              <td>510, 511</td>
+              <td>2025-07-27</td>
+              <td>2025-07-30</td>
+              <td>$35760</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>PV1010</td>
+              <td>Omar Farouk</td>
+              <td>Executive Room</td>
+              <td>420</td>
+              <td>2025-07-28</td>
+              <td>2025-07-31</td>
+              <td>$26370</td>
+              <td><span class="payment failed">Failed</span></td>
+              <td><span class="status Cancelled">Cancelled</span></td>
+            </tr>
+            <tr>
+              <td>PV1011</td>
+              <td>Anna Petrova</td>
+              <td>Family Suite</td>
+              <td>705, 706</td>
+              <td>2025-07-29</td>
+              <td>2025-08-01</td>
+              <td>$44565</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Confirmed">Confirmed</span></td>
+            </tr>
+            <tr>
+              <td>PV1012</td>
+              <td>Lucas Brown</td>
+              <td>Pearl Signature Room</td>
+              <td>760</td>
+              <td>2025-07-30</td>
+              <td>2025-08-02</td>
+              <td>$62085</td>
+              <td><span class="payment pending">Pending</span></td>
+              <td><span class="status Pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>PV1013</td>
+              <td>Maria Rossi</td>
+              <td>Luxury Suite</td>
+              <td>520, 521</td>
+              <td>2025-07-10</td>
+              <td>2025-07-15</td>
+              <td>$59600</td>
+              <td><span class="payment paid">Paid</span></td>
+              <td><span class="status Checked-Out">Checked-Out</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="customerPopup" class="customer-popup"></div>
+    </main>
+    <div id="manageModalBg" class="modal-bg">
+      <div class="modal" id="manageModal">
+        <button class="close-btn" onclick="closeManageModal()">&times;</button>
+        <h3>Manage Booking</h3>
+        <label for="manageBookingSelect">Select Booking</label>
+        <select id="manageBookingSelect" onchange="loadBookingDetails()">
+          <option value="">-- Select --</option>
+        </select>
+        <form id="manageBookingForm" style="display:none;">
+          <label>Name</label>
+          <input type="text" id="manageName" required />
+          <label>Email</label>
+          <input type="email" id="manageEmail" required />
+          <label>Age</label>
+          <input type="number" id="manageAge" min="0" required />
+          <label>Guests</label>
+          <input type="text" id="manageGuests" required />
+          <label>Room Type</label>
+          <select id="manageRoomType" required>
+            <option value="Pearl Signature Room">Pearl Signature Room</option>
+            <option value="Deluxe Room">Deluxe Room</option>
+            <option value="Premium Room">Premium Room</option>
+            <option value="Executive Room">Executive Room</option>
+            <option value="Luxury Suite">Luxury Suite</option>
+            <option value="Family Suite">Family Suite</option>
+          </select>
+          <label>Room Number</label>
+          <input type="text" id="manageRoomNumber" required />
+          <label>Check-in</label>
+          <input type="date" id="manageCheckin" required />
+          <label>Check-out</label>
+          <input type="date" id="manageCheckout" required />
+          <label>Payment Status</label>
+          <select id="managePayment" required>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+            <option value="Failed">Failed</option>
+          </select>
+          <label>Booking Status</label>
+          <select id="manageStatus" required>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Pending">Pending</option>
+            <option value="Checked-In">Checked-In</option>
+            <option value="Checked-Out">Checked-Out</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <label>No. of Rooms</label>
+          <input type="number" id="manageNoOfRooms" min="1" required />
+          <label>Special Requests</label>
+          <textarea id="manageSpecial" rows="2"></textarea>
+          <div class="modal-actions">
+            <button type="button" class="action-btn" onclick="saveBookingDetails()">Save Changes</button>
+            <button type="button" class="action-btn" style="background:#d32f2f; color:#fff;" onclick="cancelBookingAction()">Cancel Booking</button>
+          </div>
+          <div id="cancelledLabel" class="cancelled-label" style="display:none;">Booking Cancelled</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Admin dropdown logic (same as dashboard)
+    document.getElementById('adminProfile').onclick = function(e) {
+      e.stopPropagation();
+      var dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    };
+    document.addEventListener('click', function(e) {
+      var dropdown = document.getElementById('adminDropdown');
+      if (dropdown) dropdown.style.display = 'none';
+    });
+    document.getElementById('adminDropdown').onclick = function(e) { e.stopPropagation(); };
+    function logoutAdmin() { window.location.href = 'index.html'; }
+
+    // Booking table search filter
+    function filterBookings() {
+      var input = document.getElementById('bookingSearch').value.toLowerCase();
+      var status = document.getElementById('statusFilter').value;
+      var table = document.querySelector('.bookings-table table');
+      var rows = table.querySelectorAll('tbody tr');
+      rows.forEach(function(row) {
+        var text = row.textContent.toLowerCase();
+        var statusText = row.querySelector('.status')?.textContent || '';
+        var statusMatch = !status || statusText === status;
+        var searchMatch = text.indexOf(input) > -1;
+        if (statusMatch && searchMatch) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // Customer details data for popups
+    const bookingDetails = [
+      {
+        name: 'John Smith', email: 'john.smith@email.com', phone: '+1 555 123 4567', age: 34, guests: '2 (2 adults)', payment: 'Paid', checkin: '2025-07-20', checkout: '2025-07-23', status: 'Checked-In', special: 'Late check-in', room: 'Pearl Signature Room', rooms: 1
+      },
+      {
+        name: 'Jane Doe', email: 'jane.doe@email.com', phone: '+1 555 987 6543', age: 29, guests: '3 (2 adults, 1 kid)', payment: 'Pending', checkin: '2025-07-21', checkout: '2025-07-24', status: 'Pending', special: 'Extra pillows', room: 'Deluxe Room', rooms: 2
+      },
+      {
+        name: 'Tom Fernton', email: 'tom.fernton@email.com', phone: '+1 555 222 3333', age: 41, guests: '1 (1 adult)', payment: 'Failed', checkin: '2025-07-22', checkout: '2025-07-25', status: 'Cancelled', special: '-', room: 'Premium Room', rooms: 1
+      },
+      {
+        name: 'Emily Clark', email: 'emily.clark@email.com', phone: '+1 555 444 5555', age: 36, guests: '2 (2 adults)', payment: 'Paid', checkin: '2025-07-18', checkout: '2025-07-22', status: 'Confirmed', special: 'Airport pickup', room: 'Executive Room', rooms: 1
+      },
+      {
+        name: 'Michael Lee', email: 'michael.lee@email.com', phone: '+1 555 666 7777', age: 38, guests: '4 (2 adults, 2 kids)', payment: 'Paid', checkin: '2025-07-19', checkout: '2025-07-23', status: 'Confirmed', special: 'Birthday cake', room: 'Luxury Suite', rooms: 2
+      },
+      {
+        name: 'Priya Patel', email: 'priya.patel@email.com', phone: '+1 555 888 9999', age: 32, guests: '3 (2 adults, 1 kid)', payment: 'Pending', checkin: '2025-07-20', checkout: '2025-07-24', status: 'Pending', special: 'Vegetarian meals', room: 'Family Suite', rooms: 1
+      },
+      {
+        name: 'Sarah Johnson', email: 'sarah.johnson@email.com', phone: '+1 555 111 2222', age: 27, guests: '2 (2 adults)', payment: 'Paid', checkin: '2025-07-25', checkout: '2025-07-28', status: 'Confirmed', special: 'High floor', room: 'Deluxe Room', rooms: 1
+      },
+      {
+        name: 'David Kim', email: 'david.kim@email.com', phone: '+1 555 333 4444', age: 30, guests: '1 (1 adult)', payment: 'Pending', checkin: '2025-07-26', checkout: '2025-07-29', status: 'Pending', special: 'Early check-in', room: 'Premium Room', rooms: 1
+      },
+      {
+        name: 'Linda Martinez', email: 'linda.martinez@email.com', phone: '+1 555 555 6666', age: 45, guests: '4 (2 adults, 2 kids)', payment: 'Paid', checkin: '2025-07-27', checkout: '2025-07-30', status: 'Confirmed', special: 'Anniversary setup', room: 'Luxury Suite', rooms: 2
+      },
+      {
+        name: 'Omar Farouk', email: 'omar.farouk@email.com', phone: '+1 555 777 8888', age: 40, guests: '2 (2 adults)', payment: 'Failed', checkin: '2025-07-28', checkout: '2025-07-31', status: 'Cancelled', special: 'Baby cot', room: 'Executive Room', rooms: 1
+      },
+      {
+        name: 'Anna Petrova', email: 'anna.petrova@email.com', phone: '+1 555 999 0000', age: 35, guests: '5 (2 adults, 3 kids)', payment: 'Paid', checkin: '2025-07-29', checkout: '2025-08-01', status: 'Confirmed', special: 'Extra towels', room: 'Family Suite', rooms: 2
+      },
+      {
+        name: 'Lucas Brown', email: 'lucas.brown@email.com', phone: '+1 555 123 7890', age: 28, guests: '2 (2 adults)', payment: 'Pending', checkin: '2025-07-30', checkout: '2025-08-02', status: 'Pending', special: '-', room: 'Pearl Signature Room', rooms: 1
+      },
+      {
+        name: 'Maria Rossi', email: 'maria.rossi@email.com', phone: '+39 06 1234 5678', age: 42, guests: '3 (2 adults, 1 kid)', payment: 'Paid', checkin: '2025-07-10', checkout: '2025-07-15', status: 'Checked-Out', special: 'Late check-out', room: 'Luxury Suite', rooms: 2
+      }
+    ];
+
+    // Attach hover events to table rows after DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      var rows = document.querySelectorAll('.bookings-table tbody tr');
+      rows.forEach(function(row, idx) {
+        row.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var popup = document.getElementById('customerPopup');
+          if (popup.style.display === 'block' && popup.dataset.row == idx) {
+            hideCustomerPopup();
+          } else {
+            showCustomerPopup(e, bookingDetails[idx]);
+            popup.dataset.row = idx;
+          }
+        });
+      });
+      document.addEventListener('click', function() {
+        hideCustomerPopup();
+      });
+    });
+
+    function showCustomerPopup(e, details) {
+      var popup = document.getElementById('customerPopup');
+      popup.innerHTML =
+        '<div class="popup-row"><span class="popup-label">Name:</span> <span class="popup-value">' + details.name + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Email:</span> <span class="popup-value">' + details.email + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Phone:</span> <span class="popup-value">' + details.phone + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Age:</span> <span class="popup-value">' + details.age + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Guests:</span> <span class="popup-value">' + details.guests + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Payment Status:</span> <span class="popup-value">' + details.payment + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Check-in:</span> <span class="popup-value">' + details.checkin + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Check-out:</span> <span class="popup-value">' + details.checkout + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Booking Status:</span> <span class="popup-value">' + details.status + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Special Requests:</span> <span class="popup-value">' + (details.special && details.special !== '-' ? details.special : '-') + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">Room Type:</span> <span class="popup-value">' + details.room + '</span></div>' +
+        '<div class="popup-row"><span class="popup-label">No. of Rooms:</span> <span class="popup-value">' + details.rooms + '</span></div>';
+      popup.style.display = 'block';
+      moveCustomerPopup(e);
+    }
+    function moveCustomerPopup(e) {
+      var popup = document.getElementById('customerPopup');
+      var popupWidth = popup.offsetWidth || 320;
+      var popupHeight = popup.offsetHeight || 250;
+      var x = e.clientX + 20;
+      var y = e.clientY + 10;
+      var viewportWidth = window.innerWidth;
+      var viewportHeight = window.innerHeight;
+      // If popup would overflow right, shift left
+      if (x + popupWidth > viewportWidth - 10) {
+        x = viewportWidth - popupWidth - 10;
+      }
+      // If popup would overflow bottom, show above cursor
+      if (y + popupHeight > viewportHeight - 10) {
+        y = e.clientY - popupHeight - 10;
+        if (y < 0) y = 10;
+      }
+      popup.style.left = x + 'px';
+      popup.style.top = y + 'px';
+    }
+    function hideCustomerPopup() {
+      var popup = document.getElementById('customerPopup');
+      popup.style.display = 'none';
+    }
+
+    // Manage Bookings Modal Logic
+    function openManageModal() {
+      document.getElementById('manageModalBg').style.display = 'flex';
+      var select = document.getElementById('manageBookingSelect');
+      select.innerHTML = '<option value="">-- Select --</option>';
+      bookingDetails.forEach(function(b, i) {
+        select.innerHTML += '<option value="' + i + '">' + b.name + ' (' + b.room + ')</option>';
+      });
+      document.getElementById('manageBookingForm').style.display = 'none';
+      document.getElementById('cancelledLabel').style.display = 'none';
+    }
+    function closeManageModal() {
+      document.getElementById('manageModalBg').style.display = 'none';
+    }
+    function loadBookingDetails() {
+      var idx = document.getElementById('manageBookingSelect').value;
+      if (idx === '') {
+        document.getElementById('manageBookingForm').style.display = 'none';
+        return;
+      }
+      var b = bookingDetails[idx];
+      document.getElementById('manageName').value = b.name;
+      document.getElementById('manageEmail').value = b.email;
+      document.getElementById('manageAge').value = b.age;
+      document.getElementById('manageGuests').value = b.guests;
+      document.getElementById('manageRoomType').value = b.room;
+      document.getElementById('manageRoomNumber').value = document.querySelectorAll('.bookings-table tbody tr')[idx].children[3].textContent;
+      document.getElementById('manageCheckin').value = b.checkin;
+      document.getElementById('manageCheckout').value = b.checkout;
+      document.getElementById('managePayment').value = b.payment;
+      document.getElementById('manageStatus').value = b.status;
+      document.getElementById('manageNoOfRooms').value = b.rooms;
+      document.getElementById('manageSpecial').value = b.special && b.special !== '-' ? b.special : '';
+      document.getElementById('manageBookingForm').style.display = '';
+      document.getElementById('cancelledLabel').style.display = b.status === 'Cancelled' ? '' : 'none';
+    }
+    function saveBookingDetails() {
+      var idx = document.getElementById('manageBookingSelect').value;
+      if (idx === '') return;
+      var b = bookingDetails[idx];
+      b.name = document.getElementById('manageName').value;
+      b.email = document.getElementById('manageEmail').value;
+      b.age = document.getElementById('manageAge').value;
+      b.guests = document.getElementById('manageGuests').value;
+      b.special = document.getElementById('manageSpecial').value || '-';
+      b.room = document.getElementById('manageRoomType').value;
+      b.checkin = document.getElementById('manageCheckin').value;
+      b.checkout = document.getElementById('manageCheckout').value;
+      b.payment = document.getElementById('managePayment').value;
+      b.status = document.getElementById('manageStatus').value;
+      b.rooms = document.getElementById('manageNoOfRooms').value;
+      // Update table row
+      var row = document.querySelectorAll('.bookings-table tbody tr')[idx];
+      row.children[1].textContent = b.name;
+      row.children[2].textContent = b.room;
+      row.children[3].textContent = document.getElementById('manageRoomNumber').value;
+      row.children[4].textContent = b.checkin;
+      row.children[5].textContent = b.checkout;
+      // Payment status
+      var payCell = row.children[6];
+      payCell.textContent = b.payment;
+      payCell.className = 'payment ' + b.payment.toLowerCase();
+      // Booking status
+      var statCell = row.children[7];
+      statCell.textContent = b.status;
+      statCell.className = 'status ' + b.status;
+      closeManageModal();
+    }
+    function cancelBookingAction() {
+      var idx = document.getElementById('manageBookingSelect').value;
+      if (idx === '') return;
+      if (!confirm('Are you sure you want to cancel this booking?')) return;
+      var b = bookingDetails[idx];
+      b.status = 'Cancelled';
+      // Update table row
+      var row = document.querySelectorAll('.bookings-table tbody tr')[idx];
+      row.querySelector('.status')?.classList.remove('Confirmed', 'Pending', 'Checked-In', 'Checked-Out');
+      row.querySelector('.status')?.classList.add('Cancelled');
+      row.querySelector('.status').textContent = 'Cancelled';
+      document.getElementById('cancelledLabel').style.display = '';
+    }
+  </script>
+</body>
+</html> 

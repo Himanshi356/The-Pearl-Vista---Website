@@ -737,17 +737,25 @@ if (document.getElementById('loginForm')) {
     event.preventDefault();
     const username = document.getElementById("loginUsername").value.trim();
     const password = document.getElementById("loginPassword").value;
-    if (!username || !password) {
-      showNotification("Please enter both username and password.", "error");
+    const role = document.getElementById("loginRole").value; // <-- Get role
+
+    if (!username || !password || !role) {
+      showNotification("Please enter all fields.", "error");
       return;
     }
     localStorage.setItem('pv_logged_in', '1');
     localStorage.setItem('pv_username', username);
+    localStorage.setItem('pv_role', role); // <-- Store role
+
     // Set flag for home page modal
     localStorage.setItem('justLoggedIn', '1');
     showNotification("Login successful! Welcome back.", "success");
     setTimeout(() => {
+      if (role === "admin") {
+        window.location.href = 'admin-dashboard.html'; // Or your admin page
+      } else {
       window.location.href = 'home.html';
+      }
     }, 1500);
   };
 }
@@ -1007,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', function() {
       this.parentElement.classList.remove('focused');
     });
   });
-}
+});
 
 // Function to apply language and currency changes
 function applyLanguageAndCurrencyChanges(language, currency) {
@@ -1376,7 +1384,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   var openDeluxeBtn = document.getElementById('openDeluxeDetailsBtn');
@@ -1410,7 +1418,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   var openPremiumBtn = document.getElementById('openPremiumDetailsBtn');
@@ -1444,7 +1452,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   var openExecutiveBtn = document.getElementById('openExecutiveDetailsBtn');
@@ -1478,7 +1486,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}
+});
+
 
 document.addEventListener('DOMContentLoaded', function() {
   var openLuxuryBtn = document.getElementById('openLuxuryDetailsBtn');
@@ -1512,7 +1521,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   var openFamilyBtn = document.getElementById('openFamilyDetailsBtn');
@@ -1546,7 +1555,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     };
   }
-}
+});
 
 // --- My Bookings Page Functions ---
 
