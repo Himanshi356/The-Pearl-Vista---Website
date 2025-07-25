@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact The Pearl Vista - Get in touch with us for bookings, inquiries, and support" />
+    <meta name="description"
+        content="Contact The Pearl Vista - Get in touch with us for bookings, inquiries, and support" />
     <meta name="keywords" content="contact, pearl vista, hotel contact, booking, support" />
     <title>Pearl Vista - Contact Us</title>
     <link rel="stylesheet" href="styles.css">
@@ -17,23 +19,26 @@
             align-items: center;
             justify-content: space-between;
             background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             padding: 0 32px;
             height: 70px;
             position: sticky;
             top: 0;
             z-index: 100;
         }
+
         .header .profile {
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
         }
+
         .header .profile i {
             font-size: 1.5rem;
             color: #d4af37;
         }
+
         .header .logo {
             display: flex;
             align-items: center;
@@ -43,13 +48,16 @@
             letter-spacing: 1px;
             color: #1a1a1a;
         }
+
         .header .logo img {
             height: 36px;
         }
+
         .header .nav {
             display: flex;
             gap: 28px;
         }
+
         .header .nav a {
             text-decoration: none;
             color: #222;
@@ -58,27 +66,35 @@
             transition: color 0.2s;
             position: relative;
         }
-        .header .nav a.active, .header .nav a:hover {
+
+        .header .nav a.active,
+        .header .nav a:hover {
             color: #d4af37;
         }
+
         /* Ensure text colors match About Us page */
         .about-hero {
             color: #fff !important;
         }
+
         .about-hero h1 {
             color: #fff !important;
         }
+
         .hero-subtitle {
             color: #fff !important;
             opacity: 0.9;
         }
+
         .stat-label {
             color: #fff !important;
         }
+
         /* Make the phone icon in Request Callback button black */
         .btn.login i {
             color: #000 !important;
         }
+
         .user-dropdown {
             display: none;
             position: absolute;
@@ -87,14 +103,16 @@
             min-width: 240px;
             background: #fff;
             border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.13);
             z-index: 1001;
             overflow: hidden;
             font-family: 'Lato', Arial, sans-serif;
         }
+
         .user-dropdown.show {
             display: block;
         }
+
         .user-header {
             background: #000 !important;
             color: #fff !important;
@@ -106,14 +124,17 @@
             border-radius: 0 !important;
             box-shadow: none !important;
         }
+
         .user-dropdown ul {
             list-style: none;
             margin: 0;
             padding: 0.7rem 0 0.2rem 0;
         }
+
         .user-dropdown li {
             margin-bottom: 0.5rem;
         }
+
         .user-dropdown a {
             display: flex;
             align-items: center;
@@ -124,6 +145,7 @@
             font-weight: 600;
             font-size: 1.05rem;
         }
+
         .user-dropdown .logout {
             color: #e60000;
             font-weight: 700;
@@ -131,12 +153,14 @@
             cursor: pointer;
             padding: 0.7rem 0 0.5rem 0;
         }
+
         .footer {
             background: #1a1a1a;
             color: #fff;
             padding: 2.5rem 0 1rem 0;
             margin-top: 3rem;
         }
+
         .footer-content {
             display: flex;
             flex-wrap: wrap;
@@ -146,10 +170,12 @@
             margin: 0 auto 1.5rem auto;
             padding: 0 1.5rem;
         }
+
         .footer-col {
             min-width: 180px;
             flex: 1;
         }
+
         .footer-logo {
             display: flex;
             align-items: center;
@@ -158,51 +184,77 @@
             font-weight: 700;
             margin-bottom: 0.7rem;
         }
+
         .footer-logo img {
             height: 28px;
         }
-        .footer-links, .footer-contact {
+
+        .footer-links,
+        .footer-contact {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        .footer-links li, .footer-contact li {
+
+        .footer-links li,
+        .footer-contact li {
             margin-bottom: 0.5rem;
         }
+
         .footer-links a {
             color: #fff;
             text-decoration: none;
             transition: color 0.2s;
         }
+
         .footer-links a:hover {
             color: #d4af37;
         }
+
         .footer-social {
             display: flex;
             gap: 12px;
             margin-top: 0.7rem;
         }
+
         .footer-social a {
             color: #fff;
             font-size: 1.2rem;
             transition: color 0.2s;
         }
+
         .footer-social a:hover {
             color: #d4af37;
         }
+
         .footer-bottom {
             text-align: center;
             color: #bbb;
             font-size: 0.98rem;
             margin-top: 1.5rem;
         }
+
         @media (max-width: 900px) {
-            .footer-content { flex-direction: column; gap: 1.5rem; }
-            .header { flex-direction: column; height: auto; padding: 0 10px; }
-            .header .nav { gap: 12px; }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .header {
+                flex-direction: column;
+                height: auto;
+                padding: 0 10px;
+            }
+
+            .header .nav {
+                gap: 12px;
+            }
         }
+
         @media (max-width: 600px) {
-            .footer-content { padding: 0 0.5rem; }
+            .footer-content {
+                padding: 0 0.5rem;
+            }
         }
 
         /* Chat Interface Styles */
@@ -214,7 +266,7 @@
             height: 500px;
             background: #fff;
             border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             display: flex;
             flex-direction: column;
@@ -339,7 +391,7 @@
             padding: 15px 20px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -360,6 +412,7 @@
                 bottom: 80px;
             }
         }
+
         /* Remove hover effect from close (X) buttons in modals and chat */
         .close-chat:hover,
         #callbackModal button[onclick*='closeCallbackModal']:hover,
@@ -371,6 +424,7 @@
             transition: none !important;
             cursor: pointer;
         }
+
         .map-placeholder {
             position: relative;
             background: #f5f5f5 url('images/manhattan-map.png') center center/cover no-repeat;
@@ -380,23 +434,26 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 12px rgba(26,34,56,0.06);
+            box-shadow: 0 2px 12px rgba(26, 34, 56, 0.06);
             z-index: 1;
         }
-        .map-placeholder > * {
+
+        .map-placeholder>* {
             position: relative;
             z-index: 2;
         }
+
         .map-placeholder::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(245,245,245,0.82);
+            background: rgba(245, 245, 245, 0.82);
             border-radius: 24px;
             z-index: 1;
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -415,47 +472,79 @@
     </header>
 
     <!-- User Dropdown Menu -->
-    <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1001; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
+    <div id="userDropdown" class="user-dropdown"
+        style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1001; overflow:hidden; font-family:'Lato',Arial,sans-serif;">
         <div class="user-header">Hey [User]!</div>
         <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
-            <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
-            <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
-            <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
-            <li><a href="my-itinerary.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
-            <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
-            <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
-            <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
-            <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
-            <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
-            <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+            <li><a href="user-info.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
+            <li><a href="my-bookings.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
+            <li><a href="my-wishlist.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
+            <li><a href="my-itinerary.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
+            <li><a href="rewards.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
+            <li><a href="privacy-policy.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
+            <li><a href="language.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
+            <li><a href="contact_us.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
+            <li><a href="settings.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
+            <li><a href="share.html"
+                    style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;opacity:1;"><i
+                        class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
         </ul>
-        <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
+        <div class="logout"
+            style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;"
+            onclick="logout()">Logout</div>
     </div>
 
     <!-- Custom Modal for Request Callback -->
-    <div id="callbackModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
-      <div style="background:#fff; border-radius:18px; max-width:350px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative;">
-        <h2 style="color:#1a2238; font-size:1.3rem; margin-bottom:1.2rem;">Request a Callback</h2>
-        <input id="callbackName" type="text" placeholder="Your Name" style="width:100%;padding:0.7rem 1rem;margin-bottom:1rem;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
-        <input id="callbackPhone" type="text" placeholder="Your Phone Number" style="width:100%;padding:0.7rem 1rem;margin-bottom:1.2rem;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
-        <div style="display:flex;gap:1rem;justify-content:center;">
-          <button onclick="submitCallbackModal()" style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">Submit</button>
-          <button onclick="closeCallbackModal()" style="background:#eee;color:#222;font-weight:600;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">Cancel</button>
+    <div id="callbackModal"
+        style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+        <div
+            style="background:#fff; border-radius:18px; max-width:350px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative;">
+            <h2 style="color:#1a2238; font-size:1.3rem; margin-bottom:1.2rem;">Request a Callback</h2>
+            <input id="callbackName" type="text" placeholder="Your Name"
+                style="width:100%;padding:0.7rem 1rem;margin-bottom:1rem;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
+            <input id="callbackPhone" type="text" placeholder="Your Phone Number"
+                style="width:100%;padding:0.7rem 1rem;margin-bottom:1.2rem;border-radius:8px;border:1px solid #ccc;font-size:1rem;">
+            <div style="display:flex;gap:1rem;justify-content:center;">
+                <button onclick="submitCallbackModal()"
+                    style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">Submit</button>
+                <button onclick="closeCallbackModal()"
+                    style="background:#eee;color:#222;font-weight:600;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">Cancel</button>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Custom Modal for Callback Confirmation -->
-    <div id="callbackConfirmModal" style="display:none; position:fixed; z-index:2001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
-      <div style="background:#fff; border-radius:18px; max-width:350px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative;">
-        <h2 style="color:#1a2238; font-size:1.2rem; margin-bottom:1.2rem;">Thank You!</h2>
-        <div id="callbackConfirmMsg" style="color:#222; font-size:1.05rem; margin-bottom:1.5rem;"></div>
-        <button onclick="closeCallbackConfirmModal()" style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">OK</button>
-      </div>
+    <div id="callbackConfirmModal"
+        style="display:none; position:fixed; z-index:2001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+        <div
+            style="background:#fff; border-radius:18px; max-width:350px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative;">
+            <h2 style="color:#1a2238; font-size:1.2rem; margin-bottom:1.2rem;">Thank You!</h2>
+            <div id="callbackConfirmMsg" style="color:#222; font-size:1.05rem; margin-bottom:1.5rem;"></div>
+            <button onclick="closeCallbackConfirmModal()"
+                style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">OK</button>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const loggedIn = localStorage.getItem('pv_logged_in') === '1';
             const username = localStorage.getItem('pv_username') || 'User';
             const profileIcon = document.getElementById('userProfileIcon');
@@ -476,20 +565,20 @@
         });
         const userIcon = document.querySelector('.profile');
         if (userIcon) {
-            userIcon.addEventListener('click', function(event) {
+            userIcon.addEventListener('click', function (event) {
                 event.stopPropagation();
-                      const userDropdown = document.getElementById('userDropdown');
-      if (userDropdown) {
-        userDropdown.classList.toggle('show');
-      }
+                const userDropdown = document.getElementById('userDropdown');
+                if (userDropdown) {
+                    userDropdown.classList.toggle('show');
+                }
             });
         }
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const userDropdown = document.getElementById('userDropdown');
             const userIcon = document.getElementById('userProfileIcon');
-                if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
-      userDropdown.classList.remove('show');
-    }
+            if (userDropdown && userIcon && !userDropdown.contains(event.target) && !userIcon.contains(event.target)) {
+                userDropdown.classList.remove('show');
+            }
         };
         function logout() {
             localStorage.removeItem('pv_logged_in');
@@ -528,11 +617,11 @@
                 <h2>Get in Touch</h2>
                 <p>We're here to help and answer any questions you might have</p>
             </div>
-            
+
             <div class="contact-grid">
                 <div class="contact-card">
                     <div class="contact-icon">
-                    <i class="fas fa-phone"></i>
+                        <i class="fas fa-phone"></i>
                     </div>
                     <div class="contact-content">
                         <h3>Reception</h3>
@@ -544,7 +633,7 @@
 
                 <div class="contact-card">
                     <div class="contact-icon">
-                    <i class="fas fa-envelope"></i>
+                        <i class="fas fa-envelope"></i>
                     </div>
                     <div class="contact-content">
                         <h3>Email</h3>
@@ -555,7 +644,7 @@
 
                 <div class="contact-card">
                     <div class="contact-icon">
-                    <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="contact-content">
                         <h3>Address</h3>
@@ -566,7 +655,7 @@
 
                 <div class="contact-card">
                     <div class="contact-icon">
-                    <i class="fas fa-clock"></i>
+                        <i class="fas fa-clock"></i>
                     </div>
                     <div class="contact-content">
                         <h3>Operating Hours</h3>
@@ -577,7 +666,7 @@
 
                 <div class="contact-card">
                     <div class="contact-icon">
-                    <i class="fas fa-calendar-check"></i>
+                        <i class="fas fa-calendar-check"></i>
                     </div>
                     <div class="contact-content">
                         <h3>Check-In/Out</h3>
@@ -589,7 +678,7 @@
 
                 <div class="contact-card">
                     <div class="contact-icon">
-                    <i class="fas fa-concierge-bell"></i>
+                        <i class="fas fa-concierge-bell"></i>
                     </div>
                     <div class="contact-content">
                         <h3>24/7 Support</h3>
@@ -601,61 +690,63 @@
         </div>
     </section>
 
-        <!-- Contact Form Section -->
+    <!-- Contact Form Section -->
     <section class="contact-form-section">
         <div class="container">
             <div class="form-container">
                 <div class="form-content">
                     <div class="form-header">
-            <h2>Send us a Message</h2>
+                        <h2>Send us a Message</h2>
                         <p>Fill out the form below and we'll get back to you as soon as possible</p>
                     </div>
-                    
-            <form id="contactForm" onsubmit="handleContactSubmit(event)">
+
+                    <form id="contactForm" action="php/contact_process.php" method="POST">
                         <div class="form-row">
-                <div class="form-group">
-                    <label for="name"><i class="fas fa-user"></i> Full Name</label>
+                            <div class="form-group">
+                                <label for="name"><i class="fas fa-user"></i> Full Name</label>
                                 <input type="text" id="name" name="name" required placeholder="Enter your full name">
-                </div>
-
-                <div class="form-group">
-                    <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
-                                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                             </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                            <div class="form-group">
+                                <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required
+                                    placeholder="Enter your phone number">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
                             <input type="email" id="email" name="email" required placeholder="Enter your email address">
-                </div>
+                        </div>
 
-                <div class="form-group">
-                    <label for="subject"><i class="fas fa-tag"></i> Subject</label>
-                    <select id="subject" name="subject" required>
-                        <option value="">Select a subject</option>
-                        <option value="booking">Booking Inquiry</option>
-                        <option value="reservation">Reservation</option>
-                        <option value="general">General Inquiry</option>
-                        <option value="support">Customer Support</option>
-                        <option value="feedback">Feedback</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
+                        <div class="form-group">
+                            <label for="subject"><i class="fas fa-tag"></i> Subject</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="booking">Booking Inquiry</option>
+                                <option value="reservation">Reservation</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Customer Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
 
-                <div class="form-group">
-                    <label for="message"><i class="fas fa-comment-dots"></i> Message</label>
-                    <textarea id="message" name="message" rows="5" required placeholder="Please describe your inquiry..."></textarea>
-                </div>
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-comment-dots"></i> Message</label>
+                            <textarea id="message" name="message" rows="5" required
+                                placeholder="Please describe your inquiry..."></textarea>
+                        </div>
 
-                <div class="form-buttons">
+                        <div class="form-buttons">
                             <button type="submit" class="btn signup">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
                             <button type="button" class="btn login" onclick="requestCallback()">
-                        <i class="fas fa-phone"></i> Request Callback
-                    </button>
-                </div>
-            </form>
+                                <i class="fas fa-phone"></i> Request Callback
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="form-sidebar">
@@ -681,8 +772,8 @@
                                 <span>Response time</span>
                                 <p>Within 2 hours</p>
                             </div>
-        </div>
-    </div>
+                        </div>
+                    </div>
 
                     <div class="sidebar-card">
                         <h3>Why Choose Us?</h3>
@@ -749,38 +840,61 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer" style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
-        <div class="footer-content" style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
-            <div class="footer-col" style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
-                <img src="images/logo.png" alt="Pearl Vista Logo" style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
+    <footer class="footer"
+        style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
+        <div class="footer-content"
+            style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
+            <div class="footer-col"
+                style="flex:1 1 220px; min-width:220px; display:flex; flex-direction:column; align-items:flex-start; margin-bottom:24px;">
+                <img src="images/logo.png" alt="Pearl Vista Logo"
+                    style="height:200px; width:200px; object-fit:contain; margin-bottom:0.7rem;">
             </div>
             <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
-                <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Quick Links</div>
+                <div
+                    style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+                    Quick Links</div>
                 <ul style="list-style:none; padding:0; margin:0; line-height:2;">
-                    <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a></li>
-                    <li><a href="reviews.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
-                    <li><a href="gallery.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
-                    <li><a href="contact_us.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
-                    <li><a href="privacy-policy.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy Policy</a></li>
+                    <li><a href="home.html" style="color:#eee; text-decoration:none; transition:color 0.2s;">Home</a>
+                    </li>
+                    <li><a href="reviews.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Reviews</a></li>
+                    <li><a href="gallery.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Gallery</a></li>
+                    <li><a href="contact_us.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Help</a></li>
+                    <li><a href="privacy-policy.html"
+                            style="color:#eee; text-decoration:none; transition:color 0.2s;">Privacy Policy</a></li>
                 </ul>
             </div>
             <div class="footer-col" style="flex:1 1 220px; min-width:220px; margin-bottom:24px;">
-                <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Contact</div>
-                <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1 (212) 555-0123</div>
-                <div style="margin-bottom:8px;"><i class="fa fa-envelope" style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
+                <div
+                    style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+                    Contact</div>
+                <div style="margin-bottom:8px;"><i class="fa fa-phone" style="color:#FFD700; margin-right:8px;"></i>+1
+                    (212) 555-0123</div>
+                <div style="margin-bottom:8px;"><i class="fa fa-envelope"
+                        style="color:#FFD700; margin-right:8px;"></i>info@pearlvista.com</div>
                 <div><i class="fa fa-map-marker-alt" style="color:#FFD700; margin-right:8px;"></i>Manhattan, NY</div>
             </div>
             <div class="footer-col" style="flex:1 1 180px; min-width:180px; margin-bottom:24px;">
-                <div style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">Follow Us</div>
+                <div
+                    style="font-weight:700; color:#FFD700; margin-bottom:12px; font-size:1.13rem; letter-spacing:0.5px;">
+                    Follow Us</div>
                 <div style="display:flex; gap:18px; justify-content:flex-start;">
-                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-facebook"></i></a>
-                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-twitter"></i></a>
-                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i class="fab fa-youtube"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-facebook"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-twitter"></i></a>
+                    <a href="#" style="color:#FFD700; font-size:1.4rem; transition:color 0.2s;"><i
+                            class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom" style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">© 2025 Pearl Vista. All rights reserved.</div>
+        <div class="footer-bottom"
+            style="text-align:center; color:#ccc; font-size:1rem; margin-top:32px; padding-bottom:18px; letter-spacing:0.2px;">
+            © 2025 Pearl Vista. All rights reserved.</div>
     </footer>
 
     <script src="main.js"></script>
@@ -788,10 +902,10 @@
         // Contact page specific functionality
         function handleContactSubmit(event) {
             event.preventDefault();
-            
+
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData);
-            
+
             // Validate form data
             if (!data.name || !data.email || !data.phone || !data.subject || !data.message) {
                 showNotification('Please fill in all required fields.', 'error');
@@ -841,11 +955,11 @@
         function sendMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
-            
+
             if (message) {
                 addMessage(message, 'user');
                 input.value = '';
-                
+
                 // Simulate bot response
                 setTimeout(() => {
                     const botResponse = getBotResponse(message);
@@ -864,23 +978,23 @@
             const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-            
-            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
+
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
             messageDiv.innerHTML = `
                 <div class="message-content">
                     <p>${text}</p>
                     <span class="message-time">${time}</span>
                 </div>
             `;
-            
+
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         function getBotResponse(userMessage) {
             const message = userMessage.toLowerCase();
-            
+
             if (message.includes('booking') || message.includes('reservation')) {
                 return "I can help you with bookings! Please visit our rooms page or call us at +59741122566 for immediate assistance.";
             } else if (message.includes('price') || message.includes('cost') || message.includes('rate')) {
@@ -901,13 +1015,57 @@
         function openDirections() {
             window.open('https://www.google.com/maps/search/?api=1&query=THE+PEARL+VISTA+hotel,+Manhattan,+New+York', '_blank');
         }
-        
+
         // Initialize language and currency on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             if (typeof initializeLanguageAndCurrency === 'function') {
                 initializeLanguageAndCurrency();
             }
         });
     </script>
+    <!-- SweetAlert2 CSS & JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var form = e.target;
+    var formData = new FormData(form);
+    var userName = form.querySelector('[name="name"]').value;
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.includes('Thank you for contacting us!')) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Thank you, ' + userName + '!',
+                text: 'We have received your message and will get back to you soon.',
+                confirmButtonColor: '#d4af37'
+            });
+            form.reset();
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'There was an error submitting the form. Please try again.',
+                confirmButtonColor: '#d4af37'
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'There was an error submitting the form. Please try again.',
+            confirmButtonColor: '#d4af37'
+        });
+    });
+});
+</script>
 </body>
+
 </html>

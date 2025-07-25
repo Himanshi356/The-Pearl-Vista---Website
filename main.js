@@ -91,8 +91,8 @@ const translations = {
     'You may need to refresh the page to see changes': 'You may need to refresh the page to see changes'
   },
   'en-UK': {
-    // Navigation
-    'HOME': 'HOME',
+      // Navigation
+      'HOME': 'HOME',
     'ABOUT US': 'ABOUT US',
     'ROOMS': 'ROOMS',
     'SERVICES': 'SERVICES',
@@ -176,7 +176,7 @@ const translations = {
     'Selection Required': 'Selection Required',
     'Settings Updated': 'Settings Updated',
     'Active': 'Active',
-    'You may need to refresh the page to see changes': 'You may need to refresh the page to see changes'
+    'You may need to refresh the page to see changes': 'You may need to refresh the page to see changes',
   },
   'fr': {
     // Navigation
@@ -4240,3 +4240,50 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 // ... existing code ...
+
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = e.target;
+    var formData = new FormData(form);
+
+    // Add guest ages as JSON string if needed
+    var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
+    formData.append('guestAges', JSON.stringify(guestAges));
+
+    fetch('php/booking_process.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.includes('Thank you for your booking!')) {
+            // Show a beautiful modal or SweetAlert2 popup here
+            alert('Thank you for your booking! We have received your reservation.');
+            form.reset();
+        } else {
+            alert('There was an error submitting your booking. Please try again.');
+        }
+    })
+    .catch(error => {
+        alert('There was an error submitting your booking. Please try again.');
+    });
+});
+
+const guestsInput = document.getElementById('guests');
+const guestAgesContainer = document.getElementById('guestAgesContainer');
+
+guestsInput.addEventListener('input', function() {
+    const numGuests = parseInt(this.value, 10) || 1;
+    guestAgesContainer.innerHTML = '';
+    for (let i = 1; i <= numGuests; i++) {
+        const label = document.createElement('label');
+        label.textContent = `Age of Guest ${i}`;
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.name = 'guestAges[]';
+        input.min = 0;
+        input.required = true;
+        guestAgesContainer.appendChild(label);
+        guestAgesContainer.appendChild(input);
+    }
+});
