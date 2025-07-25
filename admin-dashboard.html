@@ -236,39 +236,30 @@
       <nav>
         <a href="#" class="active">Dashboard</a>
         <a href="admin-rooms.html">Rooms</a>
+        <a href="admin-services.html">Services</a>
         <a href="admin-bookings.html">Bookings</a>
         <a href="admin-customers.html">Customers</a>
         <a href="admin-reports.html">Reports</a>
       </nav>
     </aside>
     <main class="main-content">
-      <header style="width:100%; text-align:center; margin-bottom:1.2rem;">
-        <h2 style="font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0;">Welcome To The Pearl Vista</h2>
-      </header>
-      <div class="admin-profile" id="adminProfile" style="position:fixed; top:32px; right:48px; z-index:1000; display:flex; align-items:center; gap:0.7rem; color: #101a2b; cursor:pointer;">
+      <div class="topbar">
+        <div></div>
+        <div class="admin-profile">
         <span>Admin</span>
         <div class="avatar">A</div>
-        <div id="adminDropdown" style="display:none; position:absolute; top:48px; right:0; background:#fff; color:#101a2b; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.12); min-width:180px; padding:1rem; font-size:1rem;">
-          <div style="font-weight:700; margin-bottom:0.2em;">Admin</div>
-          <div style="font-size:0.95em; margin-bottom:0.2em; color:#767676;">admin@pearlvista.com</div>
-          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Department: <span style='color:#101a2b;'>Management</span></div>
-          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Phone: <span style='color:#101a2b;'>+1 234 567 8901</span></div>
-          <div style="font-size:0.92em; margin-bottom:0.7em; color:#767676;">Last login: <span style='color:#101a2b;'>23 Jul 2025, 14:44</span></div>
-          <button onclick="window.location.href='admin-profile.html'" style="background:#101a2b; color:#FFD700; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Profile</button>
-          <button onclick="window.location.href='admin-settings.html'" style="background:#fff; color:#101a2b; border:1px solid #101a2b; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Settings</button>
-          <button onclick="logoutAdmin()" style="background:#FFD700; color:#101a2b; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%;">Logout</button>
         </div>
       </div>
-      <h1 style="font-size:1.3rem; font-weight:600; color: #101a2b; margin-bottom:1rem;">Dashboard</h1>
+      <h2 class="dashboard-title">Welcome to The Pearl Vista</h2>
       <div class="dashboard-cards">
         <div class="dashboard-card">
           <span class="icon"><i class="fa-regular fa-calendar-days"></i></span>
-          <span class="value">120</span>
+          <span class="value">13</span>
           <span class="label">Total Bookings</span>
         </div>
         <div class="dashboard-card">
           <span class="icon"><i class="fa-solid fa-bed"></i></span>
-          <span class="value">45</span>
+          <span class="value">612</span>
           <span class="label">Available Rooms</span>
         </div>
         <div class="dashboard-card">
@@ -278,50 +269,73 @@
         </div>
         <div class="dashboard-card">
           <span class="icon"><i class="fa-solid fa-users"></i></span>
-          <span class="value">85</span>
+          <span class="value">18</span>
           <span class="label">Active Customers</span>
         </div>
       </div>
+      <!-- New Dashboard Enhancements -->
+      <!-- Removed dashboard-enhancements section with four cards -->
       <div class="dashboard-section">
         <div class="dashboard-table">
           <div class="overview-title">Recent Bookings</div>
           <table>
             <thead>
               <tr>
+                <th>Booking ID</th>
                 <th>Customer</th>
                 <th>Room</th>
+                <th>Check-in</th>
                 <th>Check-out</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>PV1001</td>
                 <td>John Smith</td>
-                <td>Room 245</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
+                <td>Pearl Signature Room</td>
+                <td>2025-07-20</td>
+                <td>2025-07-23</td>
+                <td><span class="status Checked-In">Checked-In</span></td>
               </tr>
               <tr>
-                <td>Tom Fernton</td>
-                <td>Room 242</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-              </tr>
-              <tr>
-                <td>Dina Michay</td>
-                <td>Room 245</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-              </tr>
-              <tr>
-                <td>Joe Park</td>
-                <td>Room 245</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-              </tr>
-              <tr>
-                <td>John Harris</td>
-                <td>Room 227</td>
+                <td>PV1002</td>
+                <td>Jane Doe</td>
+                <td>Deluxe Room</td>
+                <td>2025-07-21</td>
+                <td>2025-07-24</td>
                 <td><span class="status Pending">Pending</span></td>
               </tr>
               <tr>
-                <td>John Smith</td>
-                <td>Room 247</td>
+                <td>PV1003</td>
+                <td>Tom Fernton</td>
+                <td>Premium Room</td>
+                <td>2025-07-22</td>
+                <td>2025-07-25</td>
+                <td><span class="status Cancelled">Cancelled</span></td>
+              </tr>
+              <tr>
+                <td>PV1004</td>
+                <td>Emily Clark</td>
+                <td>Executive Room</td>
+                <td>2025-07-18</td>
+                <td>2025-07-22</td>
+                <td><span class="status Confirmed">Confirmed</span></td>
+              </tr>
+              <tr>
+                <td>PV1005</td>
+                <td>Michael Lee</td>
+                <td>Luxury Suite</td>
+                <td>2025-07-19</td>
+                <td>2025-07-23</td>
+                <td><span class="status Confirmed">Confirmed</span></td>
+              </tr>
+              <tr>
+                <td>PV1006</td>
+                <td>Priya Patel</td>
+                <td>Family Suite</td>
+                <td>2025-07-20</td>
+                <td>2025-07-24</td>
                 <td><span class="status Pending">Pending</span></td>
               </tr>
             </tbody>
@@ -329,65 +343,129 @@
         </div>
         <div class="dashboard-overview">
           <div class="overview-title">Bookings Overview</div>
-          <canvas id="bookingsOverviewChart" style="width:100%;max-width:420px;height:180px;margin:0 auto;display:block;"></canvas>
+          <div class="overview-toggle">
+            <button id="dayViewBtn" class="toggle-btn active">Day</button>
+          </div>
+          <div id="bookingsOverviewDemoChart" class="overview-chart"></div>
         </div>
       </div>
     </main>
   </div>
   <script>
-    // Toggle admin dropdown
-    document.getElementById('adminProfile').onclick = function(e) {
-      e.stopPropagation();
-      var dropdown = document.getElementById('adminDropdown');
-      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    };
-    // Hide dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      var dropdown = document.getElementById('adminDropdown');
-      if (dropdown) dropdown.style.display = 'none';
-    });
-    // Prevent closing when clicking inside dropdown
-    document.getElementById('adminDropdown').onclick = function(e) {
-      e.stopPropagation();
-    };
-    // Dummy logout function
-    function logoutAdmin() {
-      alert('Logged out!');
-      // Add your logout logic here
-      window.location.href = 'index.html';
-    }
+    // --- Dynamic Bookings Overview Chart ---
+    const bookings = [
+      { id: 'PV1001', customer: 'John Smith', room: 'Pearl Signature Room', checkin: '2025-07-20', checkout: '2025-07-23', status: 'Checked-In' },
+      { id: 'PV1002', customer: 'Jane Doe', room: 'Deluxe Room', checkin: '2025-07-21', checkout: '2025-07-24', status: 'Pending' },
+      { id: 'PV1003', customer: 'Tom Fernton', room: 'Premium Room', checkin: '2025-07-22', checkout: '2025-07-25', status: 'Cancelled' },
+      { id: 'PV1004', customer: 'Emily Clark', room: 'Executive Room', checkin: '2025-07-18', checkout: '2025-07-22', status: 'Confirmed' },
+      { id: 'PV1005', customer: 'Michael Lee', room: 'Luxury Suite', checkin: '2025-07-19', checkout: '2025-07-23', status: 'Confirmed' },
+      { id: 'PV1006', customer: 'Priya Patel', room: 'Family Suite', checkin: '2025-07-20', checkout: '2025-07-24', status: 'Pending' }
+    ];
 
-    // Chart.js for Bookings Overview
-    window.addEventListener('DOMContentLoaded', function() {
-      if (window.Chart) {
-        new Chart(document.getElementById('bookingsOverviewChart').getContext('2d'), {
-          type: 'bar',
-          data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-              label: 'Bookings',
-              data: [18, 22, 15, 20, 25, 30, 28],
-              backgroundColor: '#2d5be3',
-              borderRadius: 6
-            }]
-          },
-          options: {
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { grid: { display: false }, ticks: { color: '#555', font: { size: 13 } } },
-              y: { grid: { display: false }, ticks: { color: '#555', font: { size: 13 }, stepSize: 5, beginAtZero: true } }
-            },
-            responsive: true,
-            maintainAspectRatio: false
+    function getDayCounts() {
+      // Count bookings per check-in day (18-23)
+      const days = ['18', '19', '20', '21', '22', '23'];
+      const counts = days.map(day => bookings.filter(b => b.checkin.endsWith('-' + day)).length);
+      return { days, counts };
+    }
+    function renderLineChart(labels, data, xLabel = '', yLabel = '') {
+      // SVG chart dimensions
+      const w = 420, h = 180, chartH = 120, chartY = 150, chartX = 40, chartW = 360;
+      const max = Math.max(...data, 6);
+      // Calculate points
+      const step = chartW / (labels.length - 1);
+      const pointsArr = data.map((v, i) => [chartX + i * step, chartY - (v / max) * chartH]);
+      const points = pointsArr.map(([x, y]) => `${x},${y}`);
+      // Area polygon
+      const areaPoints = [`${chartX},${chartY}`].concat(points, [`${chartX + (labels.length - 1) * step},${chartY}`, `${chartX},${chartY}`]).join(' ');
+      // Dots and values
+      const dots = pointsArr.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="5" fill="#2d5be3" stroke="#fff" stroke-width="2" />
+        <text x="${x}" y="${y - 12}" font-size="13" fill="#3a7bfd" text-anchor="middle" font-weight="bold">${data[i]}</text>`).join('');
+      // X labels
+      const xLabels = labels.map((l, i) => `<text x="${chartX + i * step}" y="170" font-size="13" fill="#bbb" text-anchor="middle">${l}</text>`).join('');
+      // Y labels
+      const yLabels = [0, 2, 4, 6].map((v, i) => `<text x="30" y="${chartY - (v / max) * chartH}" font-size="12" fill="#888" text-anchor="end">${v}</text>`).join('');
+      // Axis titles
+      const xAxisTitle = xLabel ? `<text x="${chartX + chartW/2}" y="178" font-size="13" fill="#888" text-anchor="middle">${xLabel}</text>` : '';
+      const yAxisTitle = yLabel ? `<text x="10" y="${chartY - chartH/2}" font-size="13" fill="#888" text-anchor="middle" transform="rotate(-90 10,${chartY - chartH/2})">${yLabel}</text>` : '';
+      // SVG with gradient and animated line
+      return `<svg viewBox="0 0 420 180" width="100%" height="180">
+        <defs>
+          <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a7bfd" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#3a7bfd" stop-opacity="0.01"/>
+          </linearGradient>
+        </defs>
+        <line x1="${chartX}" y1="${chartY}" x2="${chartX + chartW}" y2="${chartY}" stroke="#e6e6e6" stroke-width="2" />
+        <line x1="${chartX}" y1="30" x2="${chartX}" y2="${chartY}" stroke="#e6e6e6" stroke-width="2" />
+        <polygon points="${areaPoints}" fill="url(#chartGradient)" />
+        <polyline points="${points.join(' ')}" fill="none" stroke="#3a7bfd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <animate attributeName="points" dur="1s" to="${points.join(' ')}" fill="freeze" />
+        </polyline>
+        ${dots}
+        ${xLabels}
+        ${yLabels}
+        ${xAxisTitle}
+        ${yAxisTitle}
+      </svg>`;
+    }
+    function updateChart() {
+      const { days, counts } = getDayCounts();
+      const html = renderLineChart(days, counts, 'Day of July', 'Bookings');
+      document.getElementById('bookingsOverviewDemoChart').innerHTML = html;
+    }
+    // Only day button logic
+    document.getElementById('dayViewBtn').onclick = function() {
+      this.classList.add('active');
+      updateChart();
+    };
+    // Initial render
+    updateChart();
+  </script>
+  <script>
+    // Mini Calendar Demo (simple static calendar with events)
+    function renderMiniCalendar() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const events = {
+        18: { type: 'checkin', label: 'Check-in' },
+        19: { type: 'checkout', label: 'Check-out' },
+        20: { type: 'checkin', label: 'Check-in' },
+        21: { type: 'maintenance', label: 'Maintenance' },
+        22: { type: 'checkin', label: 'Check-in' },
+        23: { type: 'checkout', label: 'Check-out' }
+      };
+      let html = `<table class='mini-calendar'><tr><th colspan='7' class='calendar-header'>${today.toLocaleString('default', { month: 'long' })} ${year}</th></tr>`;
+      html += '<tr class="calendar-days"><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>';
+      let day = 1;
+      const firstDay = new Date(year, month, 1).getDay();
+      for (let w = 0; w < 6 && day <= daysInMonth; w++) {
+        html += '<tr>';
+        for (let d = 0; d < 7; d++) {
+          if ((w === 0 && d < firstDay) || day > daysInMonth) {
+            html += '<td></td>';
+          } else {
+            const event = events[day];
+            let eventDot = '';
+            if (event) {
+              let color = event.type === 'checkin' ? '#3a7bfd' : event.type === 'checkout' ? '#FFD700' : '#d32f2f';
+              eventDot = `<div class='calendar-dot' style='background:${color}'></div>`;
+            }
+            html += `<td class='calendar-cell' onclick='showDayDetails(${day})'>${eventDot}<span>${day}</span></td>`;
+            day++;
           }
-        });
-      } else {
-        var script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
-        script.onload = function() { window.dispatchEvent(new Event('DOMContentLoaded')); };
-        document.head.appendChild(script);
+        }
+        html += '</tr>';
       }
-    });
+      html += '</table>';
+      document.getElementById('miniCalendar').innerHTML = html;
+    }
+    function showDayDetails(day) {
+      alert('Events for ' + day + ':\n' + (day === 18 ? 'Check-in: John Smith' : day === 19 ? 'Check-out: Michael Lee' : day === 20 ? 'Check-in: Priya Patel' : day === 21 ? 'Maintenance: Room 110' : day === 22 ? 'Check-in: Emily Clark' : day === 23 ? 'Check-out: Jane Doe' : 'No events.'));
+    }
+    renderMiniCalendar();
   </script>
 </body>
 </html> 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Services | The Pearl Vista</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
+    .admin-dashboard { display: flex; min-height: 100vh; }
+    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
+    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
+    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
+    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
+    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
+    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
+    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
+    .admin-profile { position:fixed; top:32px; right:48px; z-index:1000; display:flex; align-items:center; gap:0.7rem; color: #101a2b; cursor:pointer; }
+    .admin-profile .avatar { width: 36px; height: 36px; border-radius: 50%; background: #FFD700; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #101a2b; font-size: 1.2rem; }
+    #adminDropdown { display:none; position:absolute; top:48px; right:0; background:#fff; color:#101a2b; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.12); min-width:180px; padding:1rem; font-size:1rem; }
+    #adminDropdown button { margin-bottom:0.5em; }
+    .services-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1.5rem 2rem; min-width: 350px; max-width: 1100px; margin: 0 auto; }
+    .services-table table { width: 100%; border-collapse: collapse; }
+    .services-table th, .services-table td { padding: 1.1rem 1.1rem; text-align: left; border-bottom: 1px solid #222; }
+    .services-table tr:hover { background: #232b3b; }
+    .services-table th { color: #FFD700; font-size: 1rem; font-weight: 700; }
+    .services-table td { font-size: 1rem; color: #fff; }
+    .action-btn { background: #FFD700; color: #101a2b; border: none; border-radius: 6px; padding: 0.4em 1.2em; font-weight: 600; cursor: pointer; margin-right: 0.5em; transition: background 0.2s; }
+    .action-btn:hover { background: #e6c200; }
+    .status {
+      display: inline-block;
+      padding: 0.3em 1.1em;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1em;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .status.Confirmed { background: #1a7f37; }
+    .status.Pending { background: #FFD700; color: #101a2b; }
+    .status.Cancelled { background: #d32f2f; }
+  </style>
+</head>
+<body>
+  <div class="admin-dashboard">
+    <aside class="sidebar">
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-rooms.html">Rooms</a>
+        <a href="admin-services.html" class="active">Services</a>
+        <a href="admin-bookings.html">Bookings</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-reports.html">Reports</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header>
+        <h2>Hotel Services Management</h2>
+      </header>
+      <div class="admin-profile" id="adminProfile">
+        <span>Admin</span>
+        <div class="avatar">A</div>
+        <div id="adminDropdown">
+          <div style="font-weight:700; margin-bottom:0.2em;">Admin</div>
+          <div style="font-size:0.95em; margin-bottom:0.2em; color:#767676;">admin@pearlvista.com</div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Department: <span style='color:#101a2b;'>Management</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Phone: <span style='color:#101a2b;'>+1 234 567 8901</span></div>
+          <div style="font-size:0.92em; margin-bottom:0.7em; color:#767676;">Last login: <span style='color:#101a2b;'>23 Jul 2025, 14:44</span></div>
+          <button onclick="window.location.href='admin-profile.html'" style="background:#101a2b; color:#FFD700; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Profile</button>
+          <button onclick="window.location.href='admin-settings.html'" style="background:#fff; color:#101a2b; border:1px solid #101a2b; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Settings</button>
+          <button onclick="logoutAdmin()" style="background:#FFD700; color:#101a2b; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%;">Logout</button>
+        </div>
+      </div>
+      <section style="max-width:1500px;margin:0 auto;">
+        <h1 style="font-size:1.5rem; font-weight:700; color: #101a2b; margin-bottom:0.2em;">Service Categories</h1>
+        <div style="color:#767676; font-size:1.05rem; margin-bottom:1.2em;">Dining, Spa, Fitness, Activities, Concierge, Kids, Pets, Packages</div>
+        <div class="services-table" style="margin-top:1.2em;">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Service Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dining/Bar</td>
+                <td>Fine Dining Restaurant</td>
+                <td>Gourmet cuisine, wine selection, open 6pm-11pm</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Spa/Fitness</td>
+                <td>Spa & Massage</td>
+                <td>Relaxing treatments, open 9am-9pm</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Activities</td>
+                <td>Swimming Pool</td>
+                <td>Outdoor heated pool, open 7am-10pm</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Concierge</td>
+                <td>City Tours</td>
+                <td>Guided tours, booking required</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Kids</td>
+                <td>Kids Club</td>
+                <td>Supervised play area, activities for children</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Pets</td>
+                <td>Pet Sitting</td>
+                <td>Professional pet care during stay</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Packages</td>
+                <td>Romance Package</td>
+                <td>Special amenities for couples</td>
+                <td><span class="status Confirmed">Active</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section style="max-width:1500px;margin:0 auto;">
+        <h1 style="font-size:1.5rem; font-weight:700; color: #101a2b; margin-bottom:0.2em;">Customer Service Bookings</h1>
+        <div style="color:#767676; font-size:1.05rem; margin-bottom:1.2em;">View and manage customer bookings for hotel services.</div>
+        <div class="services-table" style="margin-top:1.2em;">
+          <table>
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SV1001</td>
+                <td>John Smith</td>
+                <td>Spa & Massage</td>
+                <td>2025-07-25</td>
+                <td><span class="status Confirmed">Confirmed</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Cancel</button></td>
+              </tr>
+              <tr>
+                <td>SV1002</td>
+                <td>Jane Doe</td>
+                <td>Fine Dining Restaurant</td>
+                <td>2025-07-26</td>
+                <td><span class="status Pending">Pending</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Cancel</button></td>
+              </tr>
+              <tr>
+                <td>SV1003</td>
+                <td>Tom Fernton</td>
+                <td>Swimming Pool</td>
+                <td>2025-07-27</td>
+                <td><span class="status Confirmed">Confirmed</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Cancel</button></td>
+              </tr>
+              <tr>
+                <td>SV1004</td>
+                <td>Emily Clark</td>
+                <td>City Tours</td>
+                <td>2025-07-28</td>
+                <td><span class="status Cancelled">Cancelled</span></td>
+                <td><button class="action-btn">Edit</button> <button class="action-btn">Cancel</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html> 
