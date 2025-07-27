@@ -70,6 +70,9 @@
       display: flex;
       align-items: center;
       gap: 0.7rem;
+      cursor: pointer;
+      position: relative;
+      color: #000;
     }
     .admin-profile .avatar {
       width: 36px;
@@ -82,6 +85,123 @@
       font-weight: bold;
       color: #101a2b;
       font-size: 1.2rem;
+    }
+    #adminDropdown {
+      display: none;
+      position: absolute;
+      top: 48px;
+      right: 0;
+      background: #fff;
+      color: #101a2b;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      min-width: 240px;
+      padding: 1.8rem;
+      font-size: 0.95rem;
+      border: 1px solid #f8f9fa;
+      animation: dropdownFadeIn 0.3s ease;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-15px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #adminDropdown .user-info {
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    #adminDropdown .user-info::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    }
+    #adminDropdown .user-name {
+      font-weight: 700; 
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #101a2b;
+      letter-spacing: 0.5px;
+    }
+    #adminDropdown .user-email {
+      font-size: 0.9rem; 
+      margin-bottom: 0.8rem; 
+      color: #666;
+      font-weight: 500;
+    }
+    #adminDropdown .user-detail {
+      font-size: 0.85rem; 
+      margin-bottom: 0.4rem; 
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #adminDropdown .user-detail i {
+      width: 14px;
+      color: #FFD700;
+      font-size: 0.8rem;
+    }
+    #adminDropdown .user-detail span {
+      color: #101a2b;
+      font-weight: 600;
+    }
+    #adminDropdown .dropdown-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    #adminDropdown button {
+      padding: 0.8rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    #adminDropdown button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    #adminDropdown button:hover::before {
+      left: 100%;
+    }
+    #adminDropdown button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    #adminDropdown .btn-profile {
+      background: linear-gradient(135deg, #101a2b, #1a2332);
+      color: #FFD700;
+      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.2);
+    }
+    #adminDropdown .btn-settings {
+      background: #fff;
+      color: #101a2b;
+      border: 2px solid #101a2b;
+      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.1);
+    }
+    #adminDropdown .btn-logout {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #101a2b;
+      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
     }
     .dashboard-cards {
       display: grid;
@@ -245,9 +365,32 @@
     <main class="main-content">
       <div class="topbar">
         <div></div>
-        <div class="admin-profile">
-        <span>Admin</span>
-        <div class="avatar">A</div>
+        <div class="admin-profile" id="adminProfile">
+          <span>Admin</span>
+          <div class="avatar">A</div>
+          <div id="adminDropdown">
+            <div class="user-info">
+              <div class="user-name">Admin</div>
+              <div class="user-email">admin@pearlvista.com</div>
+              <div class="user-detail">
+                <i class="fas fa-building"></i>
+                Department: <span>Management</span>
+              </div>
+              <div class="user-detail">
+                <i class="fas fa-phone"></i>
+                Phone: <span>+1 234 567 8901</span>
+              </div>
+              <div class="user-detail">
+                <i class="fas fa-clock"></i>
+                Last login: <span>23 Jul 2025, 14:44</span>
+              </div>
+            </div>
+            <div class="dropdown-buttons">
+              <button class="btn-profile" onclick="window.location.href='admin-profile.html'">Profile</button>
+              <button class="btn-settings" onclick="window.location.href='admin-settings.html'">Settings</button>
+              <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+            </div>
+          </div>
         </div>
       </div>
       <h2 class="dashboard-title">Welcome to The Pearl Vista</h2>
@@ -421,6 +564,19 @@
     };
     // Initial render
     updateChart();
+    
+    // Admin dropdown logic
+    document.getElementById('adminProfile').onclick = function(e) {
+      e.stopPropagation();
+      var dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    };
+    document.addEventListener('click', function(e) {
+      var dropdown = document.getElementById('adminDropdown');
+      if (dropdown) dropdown.style.display = 'none';
+    });
+    document.getElementById('adminDropdown').onclick = function(e) { e.stopPropagation(); };
+    function logoutAdmin() { window.location.href = 'index.html'; }
   </script>
   <script>
     // Mini Calendar Demo (simple static calendar with events)
@@ -467,5 +623,6 @@
     }
     renderMiniCalendar();
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
 </body>
 </html> 

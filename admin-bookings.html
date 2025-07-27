@@ -15,10 +15,155 @@
     .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
     header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
     h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
-    .admin-profile { position:fixed; top:32px; right:48px; z-index:1000; display:flex; align-items:center; gap:0.7rem; color: #101a2b; cursor:pointer; }
-    .admin-profile .avatar { width: 36px; height: 36px; border-radius: 50%; background: #FFD700; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #101a2b; font-size: 1.2rem; }
-    #adminDropdown { display:none; position:absolute; top:48px; right:0; background:#fff; color:#101a2b; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.12); min-width:180px; padding:1rem; font-size:1rem; }
-    #adminDropdown button { margin-bottom:0.5em; }
+    .admin-profile { 
+      position: fixed; 
+      top: 32px; 
+      right: 48px; 
+      z-index: 1000; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.8rem; 
+      color: #101a2b; 
+      cursor: pointer; 
+      transition: all 0.2s ease;
+    }
+    .admin-profile:hover { 
+      transform: translateY(-1px);
+    }
+    .admin-profile .avatar { 
+      width: 40px; 
+      height: 40px; 
+      border-radius: 50%; 
+      background: #FFD700; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-weight: bold; 
+      color: #101a2b; 
+      font-size: 1.3rem;
+      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+      transition: all 0.2s ease;
+    }
+    .admin-profile:hover .avatar {
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+      transform: scale(1.05);
+    }
+    #adminDropdown { 
+      display: none; 
+      position: absolute; 
+      top: 52px; 
+      right: 0; 
+      background: #fff; 
+      color: #101a2b; 
+      border-radius: 16px; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
+      min-width: 240px; 
+      padding: 1.8rem; 
+      font-size: 0.95rem;
+      border: 1px solid #f8f9fa;
+      animation: dropdownFadeIn 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-15px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #adminDropdown .user-info {
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    #adminDropdown .user-info::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    }
+    #adminDropdown .user-name {
+      font-weight: 700; 
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #101a2b;
+      letter-spacing: 0.5px;
+    }
+    #adminDropdown .user-email {
+      font-size: 0.9rem; 
+      margin-bottom: 0.8rem; 
+      color: #666;
+      font-weight: 500;
+    }
+    #adminDropdown .user-detail {
+      font-size: 0.85rem; 
+      margin-bottom: 0.4rem; 
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #adminDropdown .user-detail i {
+      width: 14px;
+      color: #FFD700;
+      font-size: 0.8rem;
+    }
+    #adminDropdown .user-detail span {
+      color: #101a2b;
+      font-weight: 600;
+    }
+    #adminDropdown .dropdown-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    #adminDropdown button { 
+      padding: 0.8rem 1.2rem; 
+      border-radius: 10px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      width: 100%; 
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    #adminDropdown button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    #adminDropdown button:hover::before {
+      left: 100%;
+    }
+    #adminDropdown button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    #adminDropdown .btn-profile {
+      background: linear-gradient(135deg, #101a2b, #1a2332); 
+      color: #FFD700;
+      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.2);
+    }
+    #adminDropdown .btn-settings {
+      background: #fff; 
+      color: #101a2b; 
+      border: 2px solid #101a2b;
+      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.1);
+    }
+    #adminDropdown .btn-logout {
+      background: linear-gradient(135deg, #FFD700, #FFA500); 
+      color: #101a2b;
+      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
+    }
     .bookings-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1rem 1.2rem; min-width: 350px; }
     .bookings-table table { width: 100%; border-collapse: collapse; }
     .bookings-table th, .bookings-table td { padding: 0.7rem 0.5rem; text-align: left; border-bottom: 1px solid #222; }
@@ -119,6 +264,7 @@
       <nav>
         <a href="admin-dashboard.html">Dashboard</a>
         <a href="admin-rooms.html">Rooms</a>
+        <a href="admin-services.html">Services</a>
         <a href="admin-bookings.html" class="active">Bookings</a>
         <a href="admin-customers.html">Customers</a>
         <a href="admin-reports.html">Reports</a>
@@ -144,14 +290,27 @@
         <span>Admin</span>
         <div class="avatar">A</div>
         <div id="adminDropdown">
-          <div style="font-weight:700; margin-bottom:0.2em;">Admin</div>
-          <div style="font-size:0.95em; margin-bottom:0.2em; color:#767676;">admin@pearlvista.com</div>
-          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Department: <span style='color:#101a2b;'>Management</span></div>
-          <div style="font-size:0.92em; margin-bottom:0.2em; color:#767676;">Phone: <span style='color:#101a2b;'>+1 234 567 8901</span></div>
-          <div style="font-size:0.92em; margin-bottom:0.7em; color:#767676;">Last login: <span style='color:#101a2b;'>23 Jul 2025, 14:44</span></div>
-          <button onclick="window.location.href='admin-profile.html'" style="background:#101a2b; color:#FFD700; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Profile</button>
-          <button onclick="window.location.href='admin-settings.html'" style="background:#fff; color:#101a2b; border:1px solid #101a2b; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%; margin-bottom:0.5em;">Settings</button>
-          <button onclick="logoutAdmin()" style="background:#FFD700; color:#101a2b; border:none; border-radius:6px; padding:0.4em 1.2em; font-weight:600; cursor:pointer; width:100%;">Logout</button>
+          <div class="user-info">
+            <div class="user-name">Admin</div>
+            <div class="user-email">admin@pearlvista.com</div>
+            <div class="user-detail">
+              <i class="fas fa-building"></i>
+              Department: <span>Management</span>
+            </div>
+            <div class="user-detail">
+              <i class="fas fa-phone"></i>
+              Phone: <span>+1 234 567 8901</span>
+            </div>
+            <div class="user-detail">
+              <i class="fas fa-clock"></i>
+              Last login: <span>23 Jul 2025, 14:44</span>
+            </div>
+          </div>
+          <div class="dropdown-buttons">
+            <button class="btn-profile" onclick="window.location.href='admin-profile.html'">Profile</button>
+            <button class="btn-settings" onclick="window.location.href='admin-settings.html'">Settings</button>
+            <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+          </div>
         </div>
       </div>
       <h1 style="font-size:1.3rem; font-weight:600; color: #101a2b; margin-bottom:1rem;">All Bookings</h1>
@@ -379,18 +538,43 @@
     </div>
   </div>
   <script>
-    // Admin dropdown logic (same as dashboard)
-    document.getElementById('adminProfile').onclick = function(e) {
-      e.stopPropagation();
-      var dropdown = document.getElementById('adminDropdown');
-      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    };
-    document.addEventListener('click', function(e) {
-      var dropdown = document.getElementById('adminDropdown');
-      if (dropdown) dropdown.style.display = 'none';
+    // Admin Dropdown Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const adminProfile = document.getElementById('adminProfile');
+      const adminDropdown = document.getElementById('adminDropdown');
+
+      if (adminProfile && adminDropdown) {
+        // Toggle dropdown on click
+        adminProfile.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const isVisible = adminDropdown.style.display === 'block';
+          adminDropdown.style.display = isVisible ? 'none' : 'block';
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!adminProfile.contains(e.target)) {
+            adminDropdown.style.display = 'none';
+          }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        adminDropdown.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
     });
-    document.getElementById('adminDropdown').onclick = function(e) { e.stopPropagation(); };
-    function logoutAdmin() { window.location.href = 'index.html'; }
+
+    // Logout function
+    function logoutAdmin() {
+      if (confirm('Are you sure you want to logout?')) {
+        // Clear any admin session data
+        localStorage.removeItem('admin_logged_in');
+        localStorage.removeItem('admin_username');
+        // Redirect to login page
+        window.location.href = 'index.html';
+      }
+    }
 
     // Booking table search filter
     function filterBookings() {
@@ -599,5 +783,6 @@
       document.getElementById('cancelledLabel').style.display = '';
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
 </body>
 </html> 
