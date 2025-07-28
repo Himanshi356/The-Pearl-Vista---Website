@@ -4214,20 +4214,149 @@ document.addEventListener('DOMContentLoaded', function() {
     if (availForm) {
       availForm.onsubmit = function(e) {
         e.preventDefault();
-        var checkin = document.getElementById('checkinDate').value;
-        var checkout = document.getElementById('checkoutDate').value;
-        var guests = parseInt(document.getElementById('guests').value, 10);
-        var roomType = document.getElementById('roomType').value;
-        var numRooms = parseInt(document.getElementById('numRooms').value, 10);
-        // Simple logic: available if <=5 rooms and guests <=10
-        var available = (numRooms <= 5 && guests <= 10);
-        formModal.style.display = 'none';
-        if (available) {
-          showNotification('Your preferred room is available! You can proceed to book.', 'success');
-        } else {
-          showNotification('Sorry, the preferred room is not available for the selected criteria.', 'error');
-        }
+        
+        // Get form data
+        var formData = new FormData();
+        formData.append('checkinDate', document.getElementById('checkinDate').value);
+        formData.append('checkoutDate', document.getElementById('checkoutDate').value);
+        formData.append('guests', document.getElementById('guests').value);
+        formData.append('roomType', document.getElementById('roomType').value);
+        formData.append('numRooms', document.getElementById('numRooms').value);
+        
+        // Show loading state
+        var submitBtn = availForm.querySelector('button[type="submit"]');
+        var originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Checking...';
+        submitBtn.disabled = true;
+        
+        // Send request to backend
+        fetch('php/check_availability.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          formModal.style.display = 'none';
+          
+          if (data.success) {
+            if (data.available) {
+              // Show detailed availability modal
+              showAvailabilityResult(data);
+            } else {
+              showNotification(data.message, 'error');
+            }
+          } else {
+            showNotification('Error: ' + data.message, 'error');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showNotification('Network error. Please try again.', 'error');
+        })
+        .finally(() => {
+          // Restore button state
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        });
       };
+    }
+    
+    // Function to show detailed availability result
+    function showAvailabilityResult(data) {
+      var resultModal = document.createElement('div');
+      resultModal.id = 'availabilityResultModal';
+      resultModal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.45);
+        z-index: 10003;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeInBg 0.4s;
+      `;
+      
+      resultModal.innerHTML = `
+        <div style="background: #fff; padding: 44px 36px 36px 36px; border-radius: 28px; box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 0 24px 4px rgba(212,175,55,0.28); min-width: 400px; max-width: 500px; width: 95vw; text-align: center; border: 2px solid #d4af37; animation: fadeInModal 0.5s;">
+          <h2 style="margin-bottom: 28px; color: #d4af37; font-size: 2rem; font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: 0.5px;">Room Available!</h2>
+          
+          <div style="text-align: left; margin-bottom: 24px;">
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Room Type:</strong> ${data.room_type}
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Check-in:</strong> ${formatDate(data.check_in_date)}
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Check-out:</strong> ${formatDate(data.check_out_date)}
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Duration:</strong> ${data.duration} night(s)
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Guests:</strong> ${data.guests} person(s)
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Rooms:</strong> ${data.requested_rooms} room(s)
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134;">Base Price:</strong> $${data.base_price_per_night}/night
+            </div>
+            ${data.guest_surcharge > 0 ? `<div style="margin-bottom: 16px;"><strong style="color: #bfa134;">Guest Surcharge:</strong> $${data.guest_surcharge}</div>` : ''}
+            <div style="margin-bottom: 24px; padding: 16px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #28a745;">
+              <strong style="color: #28a745; font-size: 1.2rem;">Total Amount: $${data.total_amount}</strong>
+            </div>
+          </div>
+          
+          <div style="display: flex; justify-content: center; gap: 14px; margin-top: 8px;">
+            <button onclick="closeAvailabilityResult()" style="background: #eee; color: #222; border: none; border-radius: 24px; padding: 0.8rem 2.1rem; font-size: 1.08rem; font-weight: 600; cursor: pointer; font-family: 'Lato', sans-serif; transition: background 0.18s, color 0.18s;" onmouseover="this.style.background='#e0e0e0';this.style.color='#bfa134';" onmouseout="this.style.background='#eee';this.style.color='#222';">Close</button>
+            <button onclick="proceedToBooking(${JSON.stringify(data).replace(/"/g, '&quot;')})" style="background: #d4af37; color: #222; border: none; border-radius: 24px; padding: 0.8rem 2.3rem; font-size: 1.13rem; font-weight: 700; cursor: pointer; font-family: 'Lato', sans-serif; box-shadow: 0 2px 8px rgba(212,175,55,0.10); transition: background 0.18s, color 0.18s, box-shadow 0.18s;" onmouseover="this.style.background='#bfa134';this.style.color='#fff';this.style.boxShadow='0 4px 16px rgba(212,175,55,0.18)';" onmouseout="this.style.background='#d4af37';this.style.color='#222';this.style.boxShadow='0 2px 8px rgba(212,175,55,0.10)';">Book Now</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(resultModal);
+      
+      // Close modal when clicking outside
+      resultModal.addEventListener('click', function(e) {
+        if (e.target === resultModal) {
+          closeAvailabilityResult();
+        }
+      });
+    }
+    
+    // Function to close availability result modal
+    function closeAvailabilityResult() {
+      var modal = document.getElementById('availabilityResultModal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+    
+    // Function to proceed to booking
+    function proceedToBooking(data) {
+      closeAvailabilityResult();
+      // Store booking data in localStorage for the booking form
+      localStorage.setItem('pendingBooking', JSON.stringify(data));
+      // Redirect to rooms page or show booking form
+      showNotification('Redirecting to booking form...', 'success');
+      setTimeout(() => {
+        window.location.href = 'rooms.html';
+      }, 1500);
+    }
+    
+    // Helper function to format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
     }
     // Close modal when clicking outside
     [document.getElementById('checkAvailabilityModal'), document.getElementById('availabilityFormModal')].forEach(function(modal) {

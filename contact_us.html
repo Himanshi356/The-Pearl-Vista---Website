@@ -9,7 +9,7 @@
     <meta name="keywords" content="contact, pearl vista, hotel contact, booking, support" />
     <title>Pearl Vista - Contact Us</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="images/logo.png" />
@@ -292,10 +292,19 @@
         .close-chat {
             background: none;
             border: none;
-            color: #000;
+            color: #000 !important;
             font-size: 1.2rem;
             cursor: pointer;
             padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-chat i {
+            color: #000 !important;
+            font-size: 1.2rem !important;
+            display: block !important;
         }
 
         .chat-messages {
@@ -382,6 +391,35 @@
             background: #c19b2e;
         }
 
+        .chat-input button span {
+            color: #000000 !important;
+            font-size: 1.2rem !important;
+            font-weight: bold !important;
+            display: block !important;
+        }
+
+        .chat-input button:hover span {
+            color: #000000 !important;
+        }
+
+        .chat-input button {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .chat-input button:hover {
+            background: #c19b2e;
+        }
+
         .chat-widget {
             position: fixed;
             bottom: 30px;
@@ -423,6 +461,10 @@
             border: none !important;
             transition: none !important;
             cursor: pointer;
+        }
+
+        .close-chat:hover i {
+            color: #000 !important;
         }
 
         .map-placeholder {
@@ -816,11 +858,10 @@
     <div id="chatInterface" class="chat-interface" style="display: none;">
         <div class="chat-header">
             <div class="chat-title">
-                <i class="fas fa-comments" style="color: #000;"></i>
                 <span>Chat with Pearl Vista</span>
             </div>
-            <button class="close-chat" onclick="closeChat()">
-                <i class="fas fa-times"></i>
+            <button class="close-chat" onclick="closeChat()" title="Close chat">
+                <span style="color: #000 !important; font-size: 1.5rem; font-weight: bold; display: block;">✕</span>
             </button>
         </div>
         <div class="chat-messages" id="chatMessages">
@@ -833,8 +874,8 @@
         </div>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
-            <button onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i>
+            <button onclick="sendMessage()" title="Send message" style="position: relative;">
+                <span style="color: #000000 !important; font-size: 1.2rem; font-weight: bold; display: block;">➤</span>
             </button>
         </div>
     </div>
@@ -941,15 +982,128 @@
             document.getElementById('callbackConfirmModal').style.display = 'none';
         }
 
+        // Chat session management
+        let chatSessionId = null;
+        let chatUserName = 'Guest';
+
         function openChat() {
             const chatInterface = document.getElementById('chatInterface');
             chatInterface.style.display = 'flex';
             document.getElementById('chatInput').focus();
+            
+            // Clear any existing messages to prevent duplicates
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            
+            // Create new chat session if not exists
+            if (!chatSessionId) {
+                createChatSession();
+            } else {
+                // Load existing messages
+                loadChatMessages();
+            }
         }
 
         function closeChat() {
             const chatInterface = document.getElementById('chatInterface');
             chatInterface.style.display = 'none';
+            
+            // Close chat session
+            if (chatSessionId) {
+                closeChatSession();
+            }
+        }
+
+        function createChatSession() {
+            // Get user name from localStorage if available
+            const loggedInUser = localStorage.getItem('pv_username');
+            if (loggedInUser) {
+                chatUserName = loggedInUser;
+            }
+
+            // Check if session already exists to prevent duplicates
+            if (chatSessionId) {
+                return;
+            }
+
+            fetch('php/chat_api.php?action=create_session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_name: chatUserName,
+                    user_email: ''
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    chatSessionId = data.session_id;
+                    
+                    if (data.existing_session) {
+                        // Load existing messages for existing session
+                        loadChatMessages();
+                    } else {
+                        // Clear existing messages and add welcome message for new session
+                        const chatMessages = document.getElementById('chatMessages');
+                        chatMessages.innerHTML = '';
+                        addMessage(data.welcome_message, 'bot');
+                    }
+                } else {
+                    console.error('Failed to create chat session:', data.error);
+                    // Fallback to local chat
+                    addMessage("Hello! Welcome to Pearl Vista. How can I assist you today?", 'bot');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating chat session:', error);
+                // Fallback to local chat
+                addMessage("Hello! Welcome to Pearl Vista. How can I assist you today?", 'bot');
+            });
+        }
+
+        function loadChatMessages() {
+            if (!chatSessionId) return;
+
+            fetch(`php/chat_api.php?action=get_messages&session_id=${chatSessionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.messages) {
+                    const chatMessages = document.getElementById('chatMessages');
+                    chatMessages.innerHTML = '';
+                    
+                    data.messages.forEach(msg => {
+                        addMessage(msg.message, msg.message_type);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error loading messages:', error);
+            });
+        }
+
+        function closeChatSession() {
+            if (!chatSessionId) return;
+
+            fetch('php/chat_api.php?action=close_session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    session_id: chatSessionId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    chatSessionId = null;
+                }
+            })
+            .catch(error => {
+                console.error('Error closing chat session:', error);
+            });
         }
 
         function sendMessage() {
@@ -957,14 +1111,46 @@
             const message = input.value.trim();
 
             if (message) {
+                // Add user message immediately
                 addMessage(message, 'user');
                 input.value = '';
 
-                // Simulate bot response
-                setTimeout(() => {
-                    const botResponse = getBotResponse(message);
-                    addMessage(botResponse, 'bot');
-                }, 1000);
+                // Send to server if session exists
+                if (chatSessionId) {
+                    fetch('php/chat_api.php?action=send_message', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            session_id: chatSessionId,
+                            user_name: chatUserName,
+                            message: message
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Add bot response
+                            addMessage(data.bot_response, 'bot');
+                        } else {
+                            console.error('Failed to send message:', data.error);
+                            // Fallback response
+                            addMessage("I'm sorry, there was an error processing your message. Please try again or contact us directly.", 'bot');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error sending message:', error);
+                        // Fallback response
+                        addMessage("I'm sorry, there was an error processing your message. Please try again or contact us directly.", 'bot');
+                    });
+                } else {
+                    // Fallback to local response if no session
+                    setTimeout(() => {
+                        const botResponse = getBotResponse(message);
+                        addMessage(botResponse, 'bot');
+                    }, 1000);
+                }
             }
         }
 
@@ -992,6 +1178,7 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
+        // Fallback bot response function (for when API is not available)
         function getBotResponse(userMessage) {
             const message = userMessage.toLowerCase();
 
@@ -1021,6 +1208,33 @@
             if (typeof initializeLanguageAndCurrency === 'function') {
                 initializeLanguageAndCurrency();
             }
+            
+            // Ensure send button icon is visible
+            const sendButton = document.querySelector('.chat-input button span');
+            if (sendButton) {
+                // Force icon visibility and black color
+                sendButton.style.display = 'block';
+                sendButton.style.color = '#000000';
+                sendButton.style.fontSize = '1.2rem';
+                sendButton.style.fontWeight = 'bold';
+                sendButton.style.setProperty('color', '#000000', 'important');
+                
+                // Ensure only arrow is shown
+                const button = sendButton.parentElement;
+                if (button) {
+                    button.innerHTML = '<span style="color: #000000 !important; font-size: 1.2rem; font-weight: bold; display: block;">➤</span>';
+                }
+            }
+
+            // Ensure close button icon is visible
+            const closeButton = document.querySelector('.close-chat i');
+            if (closeButton) {
+                // Force close icon visibility
+                closeButton.style.display = 'block';
+                closeButton.style.color = '#000';
+                closeButton.style.fontSize = '1.2rem';
+                closeButton.style.setProperty('color', '#000', 'important');
+            }
         });
     </script>
     <!-- SweetAlert2 CSS & JS -->
@@ -1033,11 +1247,28 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     var formData = new FormData(form);
     var userName = form.querySelector('[name="name"]').value;
 
+    // Show loading state
+    Swal.fire({
+        title: 'Sending message...',
+        text: 'Please wait while we process your request.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     fetch(form.action, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
     .then(data => {
         if (data.includes('Thank you for contacting us!')) {
             Swal.fire({
@@ -1051,12 +1282,13 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'There was an error submitting the form. Please try again.',
+                text: data || 'There was an error submitting the form. Please try again.',
                 confirmButtonColor: '#d4af37'
             });
         }
     })
     .catch(error => {
+        console.error('Error:', error);
         Swal.fire({
             icon: 'error',
             title: 'Oops...',

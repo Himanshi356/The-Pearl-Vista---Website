@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearl Vista - Chat Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="images/logo.png" />
+    <style>
+        .admin-header {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+            color: #d4af37;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .admin-nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .admin-nav a:hover {
+            background: #d4af37;
+            color: #000;
+        }
+
+        .chat-admin-container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        .chat-sessions-panel {
+            width: 300px;
+            background: #f5f5f5;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+        }
+
+        .chat-sessions-header {
+            padding: 1rem;
+            background: #d4af37;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .chat-session-item {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chat-session-item:hover {
+            background: #e0e0e0;
+        }
+
+        .chat-session-item.active {
+            background: #d4af37;
+            color: #000;
+        }
+
+        .session-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-name {
+            font-weight: bold;
+        }
+
+        .session-status {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        .status-active {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .status-closed {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .session-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .chat-messages-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .btn-primary {
+            background: #d4af37;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #c19b2e;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .user-message .message-content {
+            background: #d4af37;
+            color: #000;
+        }
+
+        .bot-message .message-content {
+            background: #fff;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        .message-sender {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .no-session {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .refresh-btn {
+            background: none;
+            border: none;
+            color: #d4af37;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+
+        .refresh-btn:hover {
+            color: #c19b2e;
+        }
+
+        .stats-panel {
+            padding: 1rem;
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d4af37;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <h1><i class="fas fa-comments"></i> Chat Admin Panel</h1>
+        <nav class="admin-nav">
+            <a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="admin-bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="admin-customers.html"><i class="fas fa-users"></i> Customers</a>
+            <a href="admin-chat.html" style="background: #d4af37; color: #000;"><i class="fas fa-comments"></i> Chat</a>
+            <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
+            <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <!-- Chat Admin Container -->
+    <div class="chat-admin-container">
+        <!-- Chat Sessions Panel -->
+        <div class="chat-sessions-panel">
+            <div class="chat-sessions-header">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Active Sessions</span>
+                    <button class="refresh-btn" onclick="loadChatSessions()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Panel -->
+            <div class="stats-panel">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalSessions">0</div>
+                        <div class="stat-label">Total Sessions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeSessions">0</div>
+                        <div class="stat-label">Active Sessions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalMessages">0</div>
+                        <div class="stat-label">Total Messages</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatSessionsList">
+                <!-- Chat sessions will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Chat Messages Panel -->
+        <div class="chat-messages-panel">
+            <div class="chat-header">
+                <div class="chat-title" id="currentSessionTitle">Select a chat session to view messages</div>
+                <div class="chat-actions" id="chatActions" style="display: none;">
+                    <button class="btn btn-primary" onclick="sendAdminMessage()">
+                        <i class="fas fa-reply"></i> Reply
+                    </button>
+                    <button class="btn btn-danger" onclick="closeCurrentSession()">
+                        <i class="fas fa-times"></i> Close Session
+                    </button>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="no-session">
+                    <i class="fas fa-comments" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
+                    <br>
+                    Select a chat session from the left panel to view messages
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSessionId = null;
+        let chatSessions = [];
+        let messagePollingInterval = null;
+
+        // Load chat sessions on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadChatSessions();
+            loadStats();
+            
+            // Poll for new sessions every 30 seconds
+            setInterval(loadChatSessions, 30000);
+        });
+
+        function loadChatSessions() {
+            fetch('php/chat_api.php?action=get_sessions')
+            .then(response => response.json())
+            .then(data => {
+                if (data.sessions) {
+                    chatSessions = data.sessions;
+                    displayChatSessions();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading chat sessions:', error);
+            });
+        }
+
+        function loadStats() {
+            fetch('php/chat_api.php?action=get_stats')
+            .then(response => response.json())
+            .then(data => {
+                if (data.stats) {
+                    document.getElementById('totalSessions').textContent = data.stats.total_sessions || 0;
+                    document.getElementById('activeSessions').textContent = data.stats.active_sessions || 0;
+                    document.getElementById('totalMessages').textContent = data.stats.total_messages || 0;
+                }
+            })
+            .catch(error => {
+                console.error('Error loading stats:', error);
+            });
+        }
+
+        function displayChatSessions() {
+            const sessionsList = document.getElementById('chatSessionsList');
+            sessionsList.innerHTML = '';
+
+            if (chatSessions.length === 0) {
+                sessionsList.innerHTML = '<div style="padding: 1rem; text-align: center; color: #666;">No chat sessions found</div>';
+                return;
+            }
+
+            chatSessions.forEach(session => {
+                const sessionDiv = document.createElement('div');
+                sessionDiv.className = 'chat-session-item';
+                if (session.session_id === currentSessionId) {
+                    sessionDiv.classList.add('active');
+                }
+
+                const statusClass = session.status === 'active' ? 'status-active' : 'status-closed';
+                const statusText = session.status === 'active' ? 'Active' : 'Closed';
+
+                sessionDiv.innerHTML = `
+                    <div class="session-info">
+                        <div class="session-name">${session.user_name}</div>
+                        <span class="session-status ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="session-time">${formatTime(session.created_at)}</div>
+                `;
+
+                sessionDiv.onclick = () => selectChatSession(session.session_id);
+                sessionsList.appendChild(sessionDiv);
+            });
+        }
+
+        function selectChatSession(sessionId) {
+            currentSessionId = sessionId;
+            const session = chatSessions.find(s => s.session_id === sessionId);
+            
+            if (session) {
+                document.getElementById('currentSessionTitle').textContent = `Chat with ${session.user_name}`;
+                document.getElementById('chatActions').style.display = 'flex';
+                loadChatMessages(sessionId);
+                
+                // Start polling for new messages
+                if (messagePollingInterval) {
+                    clearInterval(messagePollingInterval);
+                }
+                messagePollingInterval = setInterval(() => loadChatMessages(sessionId), 5000);
+            }
+
+            // Update active state in sessions list
+            document.querySelectorAll('.chat-session-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.chat-session-item').classList.add('active');
+        }
+
+        function loadChatMessages(sessionId) {
+            fetch(`php/chat_api.php?action=get_messages&session_id=${sessionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.messages) {
+                    displayChatMessages(data.messages);
+                }
+            })
+            .catch(error => {
+                console.error('Error loading messages:', error);
+            });
+        }
+
+        function displayChatMessages(messages) {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+
+            messages.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${msg.message_type}-message`;
+
+                const time = new Date(msg.created_at).toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-sender">${msg.user_name}</div>
+                        <p>${msg.message}</p>
+                        <span class="message-time">${time}</span>
+                    </div>
+                `;
+
+                chatMessages.appendChild(messageDiv);
+            });
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendAdminMessage() {
+            if (!currentSessionId) return;
+
+            const message = prompt('Enter your message:');
+            if (message && message.trim()) {
+                fetch('php/chat_api.php?action=send_admin_message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_id: currentSessionId,
+                        message: message.trim()
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadChatMessages(currentSessionId);
+                    } else {
+                        alert('Failed to send message: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending message:', error);
+                    alert('Failed to send message');
+                });
+            }
+        }
+
+        function closeCurrentSession() {
+            if (!currentSessionId) return;
+
+            if (confirm('Are you sure you want to close this chat session?')) {
+                fetch('php/chat_api.php?action=close_session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_id: currentSessionId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentSessionId = null;
+                        document.getElementById('currentSessionTitle').textContent = 'Select a chat session to view messages';
+                        document.getElementById('chatActions').style.display = 'none';
+                        document.getElementById('chatMessages').innerHTML = `
+                            <div class="no-session">
+                                <i class="fas fa-comments" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
+                                <br>
+                                Select a chat session from the left panel to view messages
+                            </div>
+                        `;
+                        
+                        if (messagePollingInterval) {
+                            clearInterval(messagePollingInterval);
+                        }
+                        
+                        loadChatSessions();
+                        loadStats();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error closing session:', error);
+                });
+            }
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffInHours = (now - date) / (1000 * 60 * 60);
+
+            if (diffInHours < 1) {
+                return 'Just now';
+            } else if (diffInHours < 24) {
+                return `${Math.floor(diffInHours)}h ago`;
+            } else {
+                return date.toLocaleDateString();
+            }
+        }
+    </script>
+</body>
+
+</html> 

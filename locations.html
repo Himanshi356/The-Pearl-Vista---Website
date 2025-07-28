@@ -148,22 +148,22 @@
           </div>
           <form class="guided-tour-form"
             style="max-width: 350px; min-width: 320px; box-shadow: 0 2px 12px rgba(26,34,56,0.10); border-radius: 22px; background: #fff; padding: 2.2rem 2rem 2rem 2rem; display: flex; flex-direction: column; align-items: center; margin-left: 0;"
-            id="tourForm">
+            id="tourForm" action="php/tour_booking_process.php" method="POST">
             <h2
               style="font-size: 2rem; font-weight: 800; color: #222; margin-bottom: 1.2rem; font-family: 'Playfair Display', serif;">
               Book a Guided Tour with Pearl Vista</h2>
             <p style="color: #666; font-size: 1rem; margin-bottom: 1.2rem; text-align: center;">Let our concierge team
               arrange a personalized city experience, including transport and tickets to these top attractions.</p>
-            <input type="text" placeholder="Full Name" required
+            <input type="text" name="full_name" placeholder="Full Name" required
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
-            <input type="email" placeholder="Email" required
+            <input type="email" name="email" placeholder="Email" required
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
-            <input type="tel" placeholder="Phone No." required
+            <input type="tel" name="phone" placeholder="Phone No." required
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
-            <input type="text" id="dateInput" placeholder="Select a Date" required onfocus="(this.type='date')"
+            <input type="text" id="dateInput" name="tour_date" placeholder="Select a Date" required onfocus="(this.type='date')"
               onblur="if(this.value===''){this.type='text'}"
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
-            <input type="text" id="timeInput" placeholder="Select a Time" required onfocus="(this.type='time')"
+            <input type="text" id="timeInput" name="tour_time" placeholder="Select a Time" required onfocus="(this.type='time')"
               onblur="if(this.value===''){this.type='text'}"
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
             <!-- Custom Places to Visit Dropdown -->
@@ -171,7 +171,7 @@
               <input type="text" id="placeDisplay" placeholder="Places To Visit" readonly required
                 style="width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d; cursor: pointer;"
                 onclick="togglePlaceDropdown()">
-              <input type="hidden" id="placeSelectHidden" required>
+              <input type="hidden" id="placeSelectHidden" name="places_to_visit" required>
               <div id="placeDropdown"
                 style="display: none; position: absolute; top: 110%; left: 0; width: 100%; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 10px; box-shadow: 0 2px 12px rgba(26,34,56,0.10); z-index: 10; max-height: 180px; overflow-y: auto;">
                 <label style="display: block; padding: 0.5rem 1rem; color: #222; font-size: 1.08rem;"><input
@@ -197,17 +197,17 @@
               </div>
             </div>
             <!-- Replace the No. Of Travellers dropdown with a number input -->
-            <input id="travellersSelect" type="number" min="1" max="10" placeholder="No. Of Travellers" required
+            <input id="travellersSelect" name="number_of_travellers" type="number" min="1" max="10" placeholder="No. Of Travellers" required
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
-            <select id="vehicleSelect" required
+            <select id="vehicleSelect" name="vehicle_type" required
               style="margin-bottom: 1rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;">
               <option value="">Choose Your Vehicle</option>
-              <option>Car</option>
-              <option>Van</option>
-              <option>Bus</option>
-              <option>Limousine</option>
+              <option value="Car">Car</option>
+              <option value="Van">Van</option>
+              <option value="Bus">Bus</option>
+              <option value="Limousine">Limousine</option>
             </select>
-            <input id="amountField" type="text" placeholder="Amount To Be Paid" min="0" required
+            <input id="amountField" name="amount_paid" type="text" placeholder="Amount To Be Paid" min="0" required
               style="margin-bottom: 1.2rem; width: 100%; border-radius: 10px; border: 1.5px solid #e0e0e0; padding: 0.7rem 1rem; font-size: 1.08rem; background: #f8f9fa; color: #1a365d;"
               readonly>
             <button type="submit" class="btn gold" style="width: 100%;">BOOK NOW</button>
@@ -308,36 +308,60 @@
       const form = document.getElementById('tourForm');
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        // Get all required fields
-        const fullName = document.querySelector('input[placeholder="Full Name"]').value.trim();
-        const email = document.querySelector('input[placeholder="Email"]').value.trim();
-        const phone = document.querySelector('input[placeholder="Phone No."]').value.trim();
-        const date = document.getElementById('dateInput').value.trim();
-        const time = document.getElementById('timeInput').value.trim();
-        const places = document.getElementById('placeSelectHidden').value.split(',').map(p => p.trim()).filter(p => p);
-        const travellers = document.getElementById('travellersSelect').value;
-        const vehicle = document.getElementById('vehicleSelect').value;
-        const allFilled = fullName && email && phone && date && time && places.length && travellers && vehicle;
-        if (allFilled) {
-          // Save itinerary to localStorage
-          const itinerary = {
-            id: `IT-${Date.now()}`,
-            type: 'tour',
-            title: 'Guided City Tour',
-            date: date,
-            time: time,
-            details: `${travellers} people, using ${vehicle}`,
-            places: places
-          };
-          const itineraries = JSON.parse(localStorage.getItem('pv_itinerary') || '[]');
-          itineraries.push(itinerary);
-          localStorage.setItem('pv_itinerary', JSON.stringify(itineraries));
-          
-          // Show custom modal
-          document.getElementById('bookingModal').style.display = 'flex';
-        } else {
-          alert('Please fill all required fields to confirm your booking.');
-        }
+        
+        // Get form data
+        const formData = new FormData(form);
+        
+        // Show loading state
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Processing...';
+        submitButton.disabled = true;
+        
+        // Submit form via AJAX
+        fetch('php/tour_booking_process.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Save itinerary to localStorage for display in My Itinerary
+            const itinerary = {
+              id: `IT-${Date.now()}`,
+              type: 'tour',
+              title: 'Guided City Tour',
+              date: formData.get('tour_date'),
+              time: formData.get('tour_time'),
+              details: `${formData.get('number_of_travellers')} people, using ${formData.get('vehicle_type')}`,
+              places: formData.get('places_to_visit').split(',').map(p => p.trim()).filter(p => p),
+              booking_id: data.booking_id
+            };
+            const itineraries = JSON.parse(localStorage.getItem('pv_itinerary') || '[]');
+            itineraries.push(itinerary);
+            localStorage.setItem('pv_itinerary', JSON.stringify(itineraries));
+            
+            // Show success modal
+            document.getElementById('bookingModal').style.display = 'flex';
+            
+            // Reset form
+            form.reset();
+            document.getElementById('placeDisplay').value = '';
+            document.getElementById('placeSelectHidden').value = '';
+            document.getElementById('amountField').value = '';
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while processing your booking. Please try again.');
+        })
+        .finally(() => {
+          // Reset button state
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
+        });
       });
       // Modal close button
       document.getElementById('closeBookingModal').onclick = function () {
