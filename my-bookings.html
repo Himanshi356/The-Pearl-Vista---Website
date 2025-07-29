@@ -290,12 +290,45 @@
       const pastGrid = document.getElementById('pastBookingsGrid');
       currentGrid.innerHTML = '';
       pastGrid.innerHTML = '';
-      if (!bookings.length) {
+      
+      // Filter out specific bookings to remove
+      const filteredBookings = bookings.filter(booking => {
+        const bookingId = booking.id || '';
+        const totalAmount = booking.totalAmount || '';
+        
+        // Debug logging
+        console.log('Checking booking:', { id: bookingId, amount: totalAmount });
+        
+        // Remove bookings with IDs "#1", "#2", "#3", "#4" and amounts "$2100"
+        const shouldRemoveById = (
+          (bookingId === '#1' || bookingId === '#2' || bookingId === '#3' || bookingId === '#4') &&
+          (totalAmount.includes('$2100') || totalAmount.includes('2100'))
+        );
+        
+        // Also remove any booking with $2100 amount regardless of ID
+        const shouldRemoveByAmount = (
+          totalAmount.includes('$2100') || totalAmount.includes('2100')
+        );
+        
+        const shouldRemove = shouldRemoveById || shouldRemoveByAmount;
+        
+        if (shouldRemove) {
+          console.log('Removing booking:', { id: bookingId, amount: totalAmount });
+        }
+        
+        return !shouldRemove;
+      });
+      
+      console.log('Original bookings count:', bookings.length);
+      console.log('Filtered bookings count:', filteredBookings.length);
+      
+      if (!filteredBookings.length) {
         currentGrid.innerHTML = '<div style="padding:2rem; color:#888; text-align:center; width:100%;">No current bookings found.</div>';
         pastGrid.innerHTML = '<div style="padding:2rem; color:#888; text-align:center; width:100%;">No past bookings found.</div>';
         return;
       }
-      bookings.forEach(booking => {
+      
+      filteredBookings.forEach(booking => {
         const checkin = new Date(booking.checkin);
         const checkout = new Date(booking.checkout);
         const isPast = checkout < now;
@@ -353,13 +386,13 @@
         `;
       });
       // --- Overview Cards Real-Time Update ---
-      const activeCount = bookings.filter(b => new Date(b.checkout) >= now).length;
-      const pastCount = bookings.filter(b => new Date(b.checkout) < now).length;
+      const activeCount = filteredBookings.filter(b => new Date(b.checkout) >= now).length;
+      const pastCount = filteredBookings.filter(b => new Date(b.checkout) < now).length;
       // Points: 8000 per completed stay (example logic)
       const totalPoints = pastCount * 8000;
       // Next Stay: days until next check-in
       let nextStayDays = null;
-      const futureBookings = bookings.filter(b => new Date(b.checkin) >= now);
+      const futureBookings = filteredBookings.filter(b => new Date(b.checkin) >= now);
       if (futureBookings.length) {
         const next = futureBookings.map(b => new Date(b.checkin)).sort((a, b) => a - b)[0];
         nextStayDays = Math.ceil((next - now) / (1000*60*60*24));

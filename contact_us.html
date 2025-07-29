@@ -95,6 +95,59 @@
             color: #000 !important;
         }
 
+        /* Override global button hover effect for OK button in thank you modal */
+        #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:hover {
+            background: #FFD700 !important;
+            color: #111 !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transform: none !important;
+        }
+        
+        /* Additional override to ensure no hover effects on the OK button */
+        #callbackConfirmModal button[onclick*='closeCallbackConfirmModal'] {
+            transition: none !important;
+        }
+        
+        #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:hover,
+        #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:focus,
+        #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:active {
+            background: #FFD700 !important;
+            color: #111 !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        
+        /* Maximum specificity override for the OK button */
+        body #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:hover,
+        body #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:focus,
+        body #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:active {
+            background: #FFD700 !important;
+            color: #111 !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        
+        /* Even more specific override */
+        html body #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:hover,
+        html body #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:focus,
+        html body #callbackConfirmModal button[onclick*='closeCallbackConfirmModal']:active {
+            background: #FFD700 !important;
+            color: #111 !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transform: none !important;
+            transition: none !important;
+        }
+
         .user-dropdown {
             display: none;
             position: absolute;
@@ -461,6 +514,7 @@
             border: none !important;
             transition: none !important;
             cursor: pointer;
+            transform: none !important;
         }
 
         .close-chat:hover i {
@@ -581,7 +635,9 @@
             <h2 style="color:#1a2238; font-size:1.2rem; margin-bottom:1.2rem;">Thank You!</h2>
             <div id="callbackConfirmMsg" style="color:#222; font-size:1.05rem; margin-bottom:1.5rem;"></div>
             <button onclick="closeCallbackConfirmModal()"
-                style="background:#FFD700;color:#111;font-weight:700;padding:0.7rem 1.5rem;border:none;border-radius:8px;cursor:pointer;">OK</button>
+                style="background:#FFD700 !important;color:#111 !important;font-weight:700;padding:0.7rem 1.5rem;border:none !important;border-radius:8px;cursor:pointer;transition:none !important;box-shadow:none !important;transform:none !important;" 
+                onmouseover="this.style.background='#FFD700';this.style.color='#111';this.style.border='none';this.style.transform='none';" 
+                onmouseout="this.style.background='#FFD700';this.style.color='#111';this.style.border='none';this.style.transform='none';">OK</button>
         </div>
     </div>
 
@@ -981,6 +1037,39 @@
         function closeCallbackConfirmModal() {
             document.getElementById('callbackConfirmModal').style.display = 'none';
         }
+        
+        // Additional JavaScript to prevent hover effects on the OK button
+        document.addEventListener('DOMContentLoaded', function() {
+            const okButton = document.querySelector('#callbackConfirmModal button[onclick*="closeCallbackConfirmModal"]');
+            if (okButton) {
+                // Remove any existing hover event listeners
+                okButton.addEventListener('mouseenter', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.style.background = '#FFD700';
+                    this.style.color = '#111';
+                    this.style.border = 'none';
+                    this.style.transform = 'none';
+                    return false;
+                }, true);
+                
+                okButton.addEventListener('mouseleave', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.style.background = '#FFD700';
+                    this.style.color = '#111';
+                    this.style.border = 'none';
+                    this.style.transform = 'none';
+                    return false;
+                }, true);
+                
+                // Override any CSS hover effects
+                okButton.style.setProperty('background', '#FFD700', 'important');
+                okButton.style.setProperty('color', '#111', 'important');
+                okButton.style.setProperty('border', 'none', 'important');
+                okButton.style.setProperty('transform', 'none', 'important');
+            }
+        });
 
         // Chat session management
         let chatSessionId = null;

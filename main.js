@@ -820,7 +820,7 @@ if (window.location.pathname.endsWith('home.html')) {
       const arrivalDate = document.getElementById('arrivalDate').value;
       const departureDate = document.getElementById('departureDate').value;
       const guestCount = document.getElementById('guestCount').value;
-      alert('Availability search submitted! We will contact you soon.');
+              // alert('Availability search submitted! We will contact you soon.');
     };
   }
   // Logout
@@ -4379,7 +4379,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
     formData.append('guestAges', JSON.stringify(guestAges));
 
-    fetch('php/booking_process.php', {
+    fetch('php/home_booking_process.php', {
         method: 'POST',
         body: formData
     })
@@ -4387,14 +4387,14 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     .then(data => {
         if (data.includes('Thank you for your booking!')) {
             // Show a beautiful modal or SweetAlert2 popup here
-            alert('Thank you for your booking! We have received your reservation.');
+            // alert('Thank you for your booking! We have received your reservation.');
             form.reset();
         } else {
-            alert('There was an error submitting your booking. Please try again.');
+            // alert('There was an error submitting your booking. Please try again.');
         }
     })
     .catch(error => {
-        alert('There was an error submitting your booking. Please try again.');
+        // alert('There was an error submitting your booking. Please try again.');
     });
 });
 

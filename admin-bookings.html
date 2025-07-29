@@ -316,7 +316,10 @@
       </div>
       <h1 style="font-size:1.3rem; font-weight:600; color: #101a2b; margin-bottom:1rem;">All Bookings</h1>
       <div class="bookings-table">
-        <table>
+        <div id="loadingMessage" style="text-align: center; padding: 2rem; color: #FFD700; font-size: 1.1rem;">
+          <i class="fas fa-spinner fa-spin"></i> Loading bookings...
+        </div>
+        <table id="bookingsTable" style="display: none;">
           <thead>
             <tr>
               <th>Booking ID</th>
@@ -330,152 +333,13 @@
               <th>Booking Status</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>PV1001</td>
-              <td>John Smith</td>
-              <td>Pearl Signature Room</td>
-              <td>752</td>
-              <td>2025-07-20</td>
-              <td>2025-07-23</td>
-              <td>$62085</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Checked-In">Checked-In</span></td>
-            </tr>
-            <tr>
-              <td>PV1002</td>
-              <td>Jane Doe</td>
-              <td>Deluxe Room</td>
-              <td>110</td>
-              <td>2025-07-21</td>
-              <td>2025-07-24</td>
-              <td>$9720</td>
-              <td><span class="payment pending">Pending</span></td>
-              <td><span class="status Pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>PV1003</td>
-              <td>Tom Fernton</td>
-              <td>Premium Room</td>
-              <td>260</td>
-              <td>2025-07-22</td>
-              <td>2025-07-25</td>
-              <td>$16740</td>
-              <td><span class="payment failed">Failed</span></td>
-              <td><span class="status Cancelled">Cancelled</span></td>
-            </tr>
-            <tr>
-              <td>PV1004</td>
-              <td>Emily Clark</td>
-              <td>Executive Room</td>
-              <td>400</td>
-              <td>2025-07-18</td>
-              <td>2025-07-22</td>
-              <td>$35160</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Confirmed">Confirmed</span></td>
-            </tr>
-            <tr>
-              <td>PV1005</td>
-              <td>Michael Lee</td>
-              <td>Luxury Suite</td>
-              <td>500, 501</td>
-              <td>2025-07-19</td>
-              <td>2025-07-23</td>
-              <td>$47680</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Confirmed">Confirmed</span></td>
-            </tr>
-            <tr>
-              <td>PV1006</td>
-              <td>Priya Patel</td>
-              <td>Family Suite</td>
-              <td>650</td>
-              <td>2025-07-20</td>
-              <td>2025-07-24</td>
-              <td>$59420</td>
-              <td><span class="payment pending">Pending</span></td>
-              <td><span class="status Pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>PV1007</td>
-              <td>Sarah Johnson</td>
-              <td>Deluxe Room</td>
-              <td>120</td>
-              <td>2025-07-25</td>
-              <td>2025-07-28</td>
-              <td>$9720</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Confirmed">Confirmed</span></td>
-            </tr>
-            <tr>
-              <td>PV1008</td>
-              <td>David Kim</td>
-              <td>Premium Room</td>
-              <td>275</td>
-              <td>2025-07-26</td>
-              <td>2025-07-29</td>
-              <td>$16740</td>
-              <td><span class="payment pending">Pending</span></td>
-              <td><span class="status Pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>PV1009</td>
-              <td>Linda Martinez</td>
-              <td>Luxury Suite</td>
-              <td>510, 511</td>
-              <td>2025-07-27</td>
-              <td>2025-07-30</td>
-              <td>$35760</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Confirmed">Confirmed</span></td>
-            </tr>
-            <tr>
-              <td>PV1010</td>
-              <td>Omar Farouk</td>
-              <td>Executive Room</td>
-              <td>420</td>
-              <td>2025-07-28</td>
-              <td>2025-07-31</td>
-              <td>$26370</td>
-              <td><span class="payment failed">Failed</span></td>
-              <td><span class="status Cancelled">Cancelled</span></td>
-            </tr>
-            <tr>
-              <td>PV1011</td>
-              <td>Anna Petrova</td>
-              <td>Family Suite</td>
-              <td>705, 706</td>
-              <td>2025-07-29</td>
-              <td>2025-08-01</td>
-              <td>$44565</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Confirmed">Confirmed</span></td>
-            </tr>
-            <tr>
-              <td>PV1012</td>
-              <td>Lucas Brown</td>
-              <td>Pearl Signature Room</td>
-              <td>760</td>
-              <td>2025-07-30</td>
-              <td>2025-08-02</td>
-              <td>$62085</td>
-              <td><span class="payment pending">Pending</span></td>
-              <td><span class="status Pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>PV1013</td>
-              <td>Maria Rossi</td>
-              <td>Luxury Suite</td>
-              <td>520, 521</td>
-              <td>2025-07-10</td>
-              <td>2025-07-15</td>
-              <td>$59600</td>
-              <td><span class="payment paid">Paid</span></td>
-              <td><span class="status Checked-Out">Checked-Out</span></td>
-            </tr>
+          <tbody id="bookingsTableBody">
+            <!-- Dynamic content will be loaded here -->
           </tbody>
         </table>
+        <div id="noBookingsMessage" style="text-align: center; padding: 2rem; color: #FFD700; font-size: 1.1rem; display: none;">
+          <i class="fas fa-info-circle"></i> No bookings found
+        </div>
       </div>
       <div id="customerPopup" class="customer-popup"></div>
     </main>

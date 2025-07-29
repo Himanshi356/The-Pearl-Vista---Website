@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Bookings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #d4af37;
+            color: #222;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px;
+        }
+        button:hover {
+            background: #bfa13a;
+        }
+        .danger {
+            background: #dc3545;
+            color: white;
+        }
+        .danger:hover {
+            background: #c82333;
+        }
+        .success {
+            background: #28a745;
+            color: white;
+        }
+        .success:hover {
+            background: #218838;
+        }
+        .info {
+            background: #17a2b8;
+            color: white;
+        }
+        .info:hover {
+            background: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clear Bookings</h1>
+        <p>This page will help you clear all bookings from localStorage.</p>
+        
+        <div id="currentBookings">
+            <h3>Current Bookings:</h3>
+            <div id="bookingsList"></div>
+        </div>
+        
+        <div style="margin: 20px 0;">
+            <button class="danger" onclick="clearAllBookings()">Clear All Bookings</button>
+            <button class="info" onclick="refreshPage()">Refresh Page</button>
+            <button class="success" onclick="goToMyBookings()">Go to My Bookings</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function loadCurrentBookings() {
+            const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+            const bookingsList = document.getElementById('bookingsList');
+            
+            if (bookings.length === 0) {
+                bookingsList.innerHTML = '<p style="color: #666;">No bookings found.</p>';
+            } else {
+                let html = '<ul>';
+                bookings.forEach((booking, index) => {
+                    html += `<li><strong>${booking.name}</strong> - ${booking.roomType} (${booking.checkin} to ${booking.checkout})</li>`;
+                });
+                html += '</ul>';
+                bookingsList.innerHTML = html;
+            }
+        }
+        
+        function clearAllBookings() {
+            if (confirm('Are you sure you want to clear ALL bookings? This action cannot be undone.')) {
+                localStorage.removeItem('pv_bookings');
+                document.getElementById('result').innerHTML = '<p style="color: green; font-weight: bold;">✅ All bookings have been cleared!</p>';
+                loadCurrentBookings();
+            }
+        }
+        
+        function refreshPage() {
+            location.reload();
+        }
+        
+        function goToMyBookings() {
+            window.location.href = 'my-bookings.html';
+        }
+        
+        // Load current bookings when page loads
+        loadCurrentBookings();
+    </script>
+</body>
+</html> 

@@ -11,6 +11,257 @@
   <link rel="icon" type="image/x-icon" href="images/logo.png" />
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  
+  <!-- Modal Styles -->
+  <style>
+    /* Menu Modal Styles */
+    #menuModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #menuModal button[onclick*="closeMenuModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Fitness Classes Modal Styles */
+    #fitnessClassesModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #fitnessClassesModal button[onclick*="closeFitnessClassesModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Pool Schedule Modal Styles */
+    #poolScheduleModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #poolScheduleModal button[onclick*="closePoolScheduleModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Outdoor Activities Modal Styles */
+    #outdoorActivitiesModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #outdoorActivitiesModal button[onclick*="closeOutdoorActivitiesModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Family Activities Modal Styles */
+    #familyActivitiesModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #familyActivitiesModal button[onclick*="closeFamilyActivitiesModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Family Adventure Modal Styles */
+    #familyAdventureModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #familyAdventureModal button[onclick*="closeFamilyAdventureModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Seasonal Specials Modal Styles */
+    #seasonalSpecialsModal > div::-webkit-scrollbar {
+      display: none;
+    }
+    #seasonalSpecialsModal button[onclick*="closeSeasonalSpecialsModal"]:hover {
+      background: none !important;
+      border: none !important;
+      color: #666 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* Mini Services Overview Styles */
+    .mini-services-overview {
+      background: #111 !important;
+      padding: 2.2rem 0 1.2rem 0;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #222;
+    }
+    .mini-services-overview .mini-service-cards-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0.7rem;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      width: 100%;
+      padding-bottom: 0.5rem;
+    }
+    .mini-services-overview .mini-service-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(26,34,56,0.06);
+      padding: 0.7rem 0.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      min-width: 70px;
+      max-width: 90px;
+      width: 100%;
+      transition: box-shadow 0.18s, transform 0.18s;
+      border: 1px solid #f2f2f2;
+      cursor: pointer;
+      flex: 1 1 70px;
+    }
+    .mini-services-overview .mini-service-card:hover {
+      box-shadow: 0 6px 24px rgba(26,34,56,0.18);
+      transform: translateY(-6px) scale(1.04);
+      border-color: #FFD700;
+    }
+    .mini-services-overview .mini-service-card:hover i,
+    .mini-services-overview .mini-service-card:hover span {
+      color: #FFD700 !important;
+    }
+    .mini-services-overview .mini-service-card i {
+      color: #FFD700;
+      font-size: 1.1rem;
+      transition: color 0.18s;
+    }
+    .mini-services-overview .mini-service-card span {
+      font-weight: 600;
+      color: #1a2238;
+      font-size: 0.85rem;
+      letter-spacing: 0.01em;
+      transition: color 0.18s;
+    }
+    
+    /* Common Styles to Replace Long Inline Styles */
+    .user-dropdown {
+      display: none;
+      position: absolute;
+      top: 70px;
+      left: 32px;
+      min-width: 240px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+      z-index: 1;
+      overflow: hidden;
+      font-family: 'Lato', Arial, sans-serif;
+    }
+    
+    .user-header {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 0.7rem 0;
+      border-radius: 0px !important;
+      box-shadow: none !important;
+    }
+    
+    .user-dropdown ul {
+      list-style: none;
+      margin: 0;
+      padding: 0.7rem 0 0.2rem 0;
+    }
+    
+    .user-dropdown li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      color: #222;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    
+    .user-dropdown li a i {
+      color: #FFD700;
+    }
+    
+    .logout {
+      color: #e60000;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      padding: 0.7rem 0 0.5rem 0;
+    }
+    
+    .wishlist-heart {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .wishlist-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(26,34,56,0.1);
+      padding: 2.2rem 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .wishlist-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .modal-container {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 1000px;
+      width: 95%;
+      margin: auto;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 8px 32px rgba(26,34,56,0.18);
+      text-align: center;
+      position: relative;
+      max-height: 85vh;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .modal-container::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -30,21 +281,21 @@
     </nav>
   </header>
   <!-- User Dropdown Menu -->
-  <div id="userDropdown" class="user-dropdown" style="display:none; position:absolute; top:70px; left:32px; min-width:240px; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(0,0,0,0.13); z-index:1; overflow:hidden; font-family:'Lato,Arial,sans-serif;">
-    <div class="user-header" id="userDropdownHeader" style="background:#000; color:#fff; text-align:center; font-size:1.3rem; font-weight:700; letter-spacing:0.5px; padding:0.7rem 0; border-radius:0 !important; box-shadow:none !important;"></div>
-    <ul style="list-style:none; margin:0; padding:0.7rem 0 0.2rem 0;">
-      <li><a href="user-info.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-user" style="color:#FFD700;"></i> Personal Information</a></li>
-      <li><a href="my-bookings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-house" style="color:#FFD700;"></i> My Bookings</a></li>
-      <li><a href="my-wishlist.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-heart" style="color:#FFD700;"></i> Wishlist</a></li>
-      <li><a href="my-itinerary.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-clipboard" style="color:#FFD700;"></i> My Itinerary</a></li>
-      <li><a href="rewards.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-gem" style="color:#FFD700;"></i> Rewards & Membership</a></li>
-      <li><a href="privacy-policy.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-lock" style="color:#FFD700;"></i> Privacy Policy</a></li>
-      <li><a href="language.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-language" style="color:#FFD700;"></i> Language & Currency Switch</a></li>
-      <li><a href="contact_us.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-question-circle" style="color:#FFD700;"></i> Help</a></li>
-      <li><a href="settings.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-cog" style="color:#FFD700;"></i> Settings</a></li>
-      <li><a href="share.html" style="display:flex;align-items:center;gap:10px;padding:0.6rem 1.2rem;text-decoration:none;color:#222;font-weight:600;font-size:1.05rem;"><i class="fa fa-comment" style="color:#FFD700;"></i> Feedback</a></li>
+  <div id="userDropdown" class="user-dropdown">
+    <div class="user-header" id="userDropdownHeader"></div>
+    <ul>
+      <li><a href="user-info.html"><i class="fa fa-user"></i> Personal Information</a></li>
+      <li><a href="my-bookings.html"><i class="fa fa-house"></i> My Bookings</a></li>
+      <li><a href="my-wishlist.html"><i class="fa fa-heart"></i> Wishlist</a></li>
+      <li><a href="my-itinerary.html"><i class="fa fa-clipboard"></i> My Itinerary</a></li>
+      <li><a href="rewards.html"><i class="fa fa-gem"></i> Rewards & Membership</a></li>
+      <li><a href="privacy-policy.html"><i class="fa fa-lock"></i> Privacy Policy</a></li>
+      <li><a href="language.html"><i class="fa fa-language"></i> Language & Currency Switch</a></li>
+      <li><a href="contact_us.html"><i class="fa fa-question-circle"></i> Help</a></li>
+      <li><a href="settings.html"><i class="fa fa-cog"></i> Settings</a></li>
+      <li><a href="share.html"><i class="fa fa-comment"></i> Feedback</a></li>
     </ul>
-    <div class="logout" style="color:#e60000;font-weight:700;text-align:center;cursor:pointer;padding:0.7rem 0 0.5rem 0;" onclick="logout()">Logout</div>
+    <div class="logout" onclick="logout()">Logout</div>
   </div>
   <script>
   // User dropdown toggle
@@ -122,74 +373,17 @@
     </div>
   </section>
 
-  <style>
-    .mini-services-overview {
-      background: #111 !important;
-      padding: 2.2rem 0 1.2rem 0;
-      margin-bottom: 2.5rem;
-      border-bottom: 1px solid #222;
-    }
-    .mini-services-overview .mini-service-cards-row {
-      display: flex;
-      flex-direction: row;
-      gap: 0.7rem;
-      justify-content: center;
-      align-items: stretch;
-      flex-wrap: nowrap;
-      width: 100%;
-      padding-bottom: 0.5rem;
-    }
-    .mini-services-overview .mini-service-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(26,34,56,0.06);
-      padding: 0.7rem 0.2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      min-width: 70px;
-      max-width: 90px;
-      width: 100%;
-      transition: box-shadow 0.18s, transform 0.18s;
-      border: 1px solid #f2f2f2;
-      cursor: pointer;
-      flex: 1 1 70px;
-    }
-    .mini-services-overview .mini-service-card:hover {
-      box-shadow: 0 6px 24px rgba(26,34,56,0.18);
-      transform: translateY(-6px) scale(1.04);
-      border-color: #FFD700;
-    }
-    .mini-services-overview .mini-service-card:hover i,
-    .mini-services-overview .mini-service-card:hover span {
-      color: #FFD700 !important;
-    }
-    .mini-services-overview .mini-service-card i {
-      color: #FFD700;
-      font-size: 1.1rem;
-      transition: color 0.18s;
-    }
-    .mini-services-overview .mini-service-card span {
-      font-weight: 600;
-      color: #1a2238;
-      font-size: 0.85rem;
-      letter-spacing: 0.01em;
-      transition: color 0.18s;
-    }
-  </style>
-
   <!-- Services Content -->
   <section class="wishlist-overview">
     <div class="container">
       <div class="overview-cards" style="display:block;">
         
         <!-- Dining & Culinary Excellence -->
-        <div id="dining" class="wishlist-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(26,34,56,0.1); padding: 2.2rem 1.5rem; margin-bottom:2rem; position: relative;">
-          <div class="wishlist-heart" onclick="toggleServiceWishlist('dining')" style="position: absolute; top: 1rem; right: 1rem; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; z-index: 10; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+        <div id="dining" class="wishlist-card">
+          <div class="wishlist-heart" onclick="toggleServiceWishlist('dining')">
             <i class="fas fa-heart" id="dining-heart" style="font-size: 1.2rem; color: #ccc; transition: color 0.3s ease;"></i>
           </div>
-          <div class="wishlist-content" style="display:flex; flex-direction:column; gap:1.5rem;">
+          <div class="wishlist-content">
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
               <i class="fa fa-utensils" style="color:#FFD700; font-size:1.5rem;"></i>
               <h2 style="font-size:1.8rem; color:#1a2238; font-weight:700; margin:0;">Dining & Culinary Excellence</h2>
@@ -598,6 +792,972 @@
     </div>
   </section>
 
+  <!-- Menu Modal -->
+  <div id="menuModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:1000px; width:95%; margin:auto; padding:2.5rem 2rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:85vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closeMenuModal()" style="position:absolute; top:1.5rem; right:1.5rem; background:none; border:none; font-size:1.8rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      
+      <!-- Header Section -->
+      <div style="text-align:center; margin-bottom:2rem; border-bottom:3px solid #FFD700; padding-bottom:1rem;">
+        <h2 style="color:#1a2238; font-size:2rem; margin-bottom:0.5rem; font-family:'Playfair Display', serif;">Restaurant & Lounge Bar</h2>
+        <p style="color:#666; font-size:1.1rem; margin-bottom:0.5rem;">Culinary Excellence • Premium Service • Luxury Dining</p>
+        <div style="display:flex; justify-content:center; gap:2rem; margin-top:1rem; font-size:0.9rem; color:#888;">
+          <span><i class="fas fa-clock" style="color:#FFD700;"></i> Open Daily 11:00 AM - 2:00 AM</span>
+          <span><i class="fas fa-phone" style="color:#FFD700;"></i> Reservations: +1 (212) 555-0123</span>
+        </div>
+      </div>
+      
+      <div style="text-align:left;">
+        <!-- Signature Dishes Section -->
+        <div style="margin-bottom:3rem;">
+          <h3 style="color:#1a2238; font-size:1.5rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+            <i class="fas fa-star" style="color:#FFD700;"></i>Chef's Signature Dishes
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:1.5rem;">
+            <div style="background:linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding:1.5rem; border-radius:12px; border-left:4px solid #FFD700; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.2rem; font-weight:600;">Wagyu Beef Tenderloin</h4>
+                <span style="color:#FFD700; font-weight:bold; font-size:1.1rem;">$1,250</span>
+              </div>
+              <p style="color:#666; font-size:0.95rem; margin-bottom:0.5rem; line-height:1.4;">Grade A5 Japanese Wagyu, truffle mashed potatoes, seasonal vegetables, red wine reduction</p>
+              <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fire" style="color:#FFD700;"></i> Signature Dish</span>
+                <span><i class="fas fa-leaf" style="color:#FFD700;"></i> Gluten-Free Option</span>
+              </div>
+            </div>
+            <div style="background:linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding:1.5rem; border-radius:12px; border-left:4px solid #FFD700; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.2rem; font-weight:600;">Lobster Thermidor</h4>
+                <span style="color:#FFD700; font-weight:bold; font-size:1.1rem;">$1,450</span>
+              </div>
+              <p style="color:#666; font-size:0.95rem; margin-bottom:0.5rem; line-height:1.4;">Fresh Maine lobster, cognac cream sauce, gruyère cheese, herb breadcrumbs</p>
+              <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> Chef's Special</span>
+                <span><i class="fas fa-fish" style="color:#FFD700;"></i> Sustainable</span>
+              </div>
+            </div>
+            <div style="background:linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding:1.5rem; border-radius:12px; border-left:4px solid #FFD700; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.2rem; font-weight:600;">Truffle Risotto</h4>
+                <span style="color:#FFD700; font-weight:bold; font-size:1.1rem;">$1,350</span>
+              </div>
+              <p style="color:#666; font-size:0.95rem; margin-bottom:0.5rem; line-height:1.4;">Carnaroli rice, black truffle, aged parmesan, wild mushrooms, truffle oil</p>
+              <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-seedling" style="color:#FFD700;"></i> Vegetarian</span>
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> House Specialty</span>
+              </div>
+            </div>
+            <div style="background:linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding:1.5rem; border-radius:12px; border-left:4px solid #FFD700; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.2rem; font-weight:600;">Foie Gras Torchon</h4>
+                <span style="color:#FFD700; font-weight:bold; font-size:1.1rem;">$1,650</span>
+              </div>
+              <p style="color:#666; font-size:0.95rem; margin-bottom:0.5rem; line-height:1.4;">Duck liver torchon, brioche toast, fig compote, aged balsamic</p>
+              <div style="display:flex; gap:1rem; font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-crown" style="color:#FFD700;"></i> Luxury Item</span>
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> Chef's Selection</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appetizers Section -->
+        <div style="margin-bottom:3rem;">
+          <h3 style="color:#1a2238; font-size:1.4rem; margin-bottom:1.5rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+            <i class="fas fa-utensils" style="color:#FFD700;"></i>Appetizers & Starters
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef; transition:transform 0.2s;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Truffle Arancini</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Crispy risotto balls filled with mozzarella, black truffle aioli, parmesan crisp</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-seedling" style="color:#FFD700;"></i> Vegetarian</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Lobster Bisque</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Creamy lobster soup with cognac, crème fraîche, chive oil</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fish" style="color:#FFD700;"></i> Contains Shellfish</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Wagyu Carpaccio</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Thinly sliced A5 Wagyu beef, aged parmesan, truffle oil, arugula</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> Premium Cut</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Burrata Caprese</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,150</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Fresh burrata, heirloom tomatoes, aged balsamic, basil oil</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-seedling" style="color:#FFD700;"></i> Vegetarian</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Oysters Rockefeller</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,750</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Fresh oysters, spinach, herbs, breadcrumbs, pernod sauce</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fish" style="color:#FFD700;"></i> Contains Shellfish</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Caviar Service</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Beluga caviar, blinis, crème fraîche, chives, lemon</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-crown" style="color:#FFD700;"></i> Luxury Item</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Courses Section -->
+        <div style="margin-bottom:3rem;">
+          <h3 style="color:#1a2238; font-size:1.4rem; margin-bottom:1.5rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+            <i class="fas fa-drumstick-bite" style="color:#FFD700;"></i>Main Courses
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Filet Mignon</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">8oz center-cut filet, truffle mashed potatoes, seasonal vegetables, red wine reduction</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fire" style="color:#FFD700;"></i> Medium Rare Recommended</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Truffle Pasta</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Fresh tagliatelle, black truffle, parmesan, butter sauce, chives</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-seedling" style="color:#FFD700;"></i> Vegetarian</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Pan-Seared Sea Bass</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,450</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Wild-caught sea bass, saffron risotto, asparagus, lemon butter sauce</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fish" style="color:#FFD700;"></i> Sustainable</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Duck Confit</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Confit duck leg, potato gratin, red wine reduction, crispy skin</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> House Specialty</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Rack of Lamb</h4>
+                <span style="color:#FFD700; font-weight:bold;">$3,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Herb-crusted lamb, mint jus, roasted potatoes, baby carrots</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fire" style="color:#FFD700;"></i> Medium Rare</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Lobster Mac & Cheese</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,150</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Fresh lobster, aged cheddar, truffle oil, breadcrumbs</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fish" style="color:#FFD700;"></i> Contains Shellfish</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cocktails & Beverages Section -->
+        <div style="margin-bottom:3rem;">
+          <h3 style="color:#1a2238; font-size:1.4rem; margin-bottom:1.5rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+            <i class="fas fa-cocktail" style="color:#FFD700;"></i>Cocktails & Premium Beverages
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Pearl Vista Martini</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Gin, dry vermouth, pearl dust rim, lemon twist</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> Signature Cocktail</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Champagne Selection</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,500-5,500</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Dom Pérignon, Krug, Moët & Chandon, Veuve Clicquot</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-bottle-water" style="color:#FFD700;"></i> Premium Selection</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Wine Flight</h4>
+                <span style="color:#FFD700; font-weight:bold;">$3,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Premium wine tasting experience, 4 selections, sommelier guided</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-wine-glass" style="color:#FFD700;"></i> Sommelier Selection</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Old Fashioned</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,150</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Bourbon, bitters, sugar cube, orange peel, cherry</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-ice-cube" style="color:#FFD700;"></i> Hand-Carved Ice</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Negroni</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Gin, Campari, sweet vermouth, orange peel</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> Classic Cocktail</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Whiskey Flight</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Premium whiskey tasting, 4 selections, expert guidance</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-bottle-water" style="color:#FFD700;"></i> Premium Selection</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desserts Section -->
+        <div style="margin-bottom:3rem;">
+          <h3 style="color:#1a2238; font-size:1.4rem; margin-bottom:1.5rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+            <i class="fas fa-birthday-cake" style="color:#FFD700;"></i>Desserts & Sweet Endings
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Chocolate Soufflé</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,150</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Warm chocolate soufflé, vanilla bean ice cream, chocolate sauce</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-clock" style="color:#FFD700;"></i> 20 min preparation</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Crème Brûlée</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,050</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Classic vanilla crème brûlée, caramelized sugar, fresh berries</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fire" style="color:#FFD700;"></i> Torched to Order</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Cheese Platter</h4>
+                <span style="color:#FFD700; font-weight:bold;">$2,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Artisanal cheeses, honey, nuts, dried fruits, crackers</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-cheese" style="color:#FFD700;"></i> 5 Cheese Selection</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Tiramisu</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,250</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Classic Italian dessert, mascarpone, espresso, cocoa powder</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-coffee" style="color:#FFD700;"></i> House Made</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Chocolate Lava Cake</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,350</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Warm chocolate cake, molten center, vanilla bean ice cream, gold leaf</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-fire" style="color:#FFD700;"></i> Baked to Order</span>
+              </div>
+            </div>
+            <div style="background:#f8f9fa; padding:1.5rem; border-radius:12px; border:1px solid #e9ecef;">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:0.5rem;">
+                <h4 style="color:#1a2238; margin:0; font-size:1.1rem; font-weight:600;">Pearl Vista Sundae</h4>
+                <span style="color:#FFD700; font-weight:bold;">$1,850</span>
+              </div>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem; line-height:1.4;">Vanilla ice cream, chocolate sauce, caramel, nuts, whipped cream, cherry</p>
+              <div style="font-size:0.8rem; color:#888;">
+                <span><i class="fas fa-star" style="color:#FFD700;"></i> Signature Dessert</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div style="background:linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); padding:2rem; border-radius:12px; border:2px solid #FFD700; margin-bottom:2rem;">
+          <h3 style="color:#1a2238; font-size:1.3rem; margin-bottom:1rem; text-align:center;">Dining Information</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem; text-align:center;">
+            <div>
+              <i class="fas fa-calendar-alt" style="color:#FFD700; font-size:1.5rem; margin-bottom:0.5rem;"></i>
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Reservations</h4>
+              <p style="color:#666; font-size:0.9rem;">Recommended for dinner service. Call or book online.</p>
+            </div>
+            <div>
+              <i class="fas fa-utensils" style="color:#FFD700; font-size:1.5rem; margin-bottom:0.5rem;"></i>
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Dietary Options</h4>
+              <p style="color:#666; font-size:0.9rem;">Vegetarian, vegan, gluten-free, and allergy-friendly options available.</p>
+            </div>
+            <div>
+              <i class="fas fa-wine-glass" style="color:#FFD700; font-size:1.5rem; margin-bottom:0.5rem;"></i>
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Wine Pairing</h4>
+              <p style="color:#666; font-size:0.9rem;">Expert sommelier recommendations available for all dishes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closeMenuModal()" style="background:#FFD700; color:#111; font-weight:700; padding:1rem 2rem; border:none; border-radius:8px; cursor:pointer; font-size:1.1rem; transition:all 0.2s;">Close Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fitness Classes Modal -->
+  <div id="fitnessClassesModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:700px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closeFitnessClassesModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      <h2 style="color:#1a2238; font-size:1.5rem; margin-bottom:1.5rem;">Fitness Classes Schedule</h2>
+      
+      <div style="text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Daily Classes</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Morning Yoga</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">6:00 AM - 7:00 AM</p>
+              <span style="color:#FFD700; font-weight:bold;">Instructor: Sarah</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">HIIT Training</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">7:30 AM - 8:30 AM</p>
+              <span style="color:#FFD700; font-weight:bold;">Instructor: Mike</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pilates</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">9:00 AM - 10:00 AM</p>
+              <span style="color:#FFD700; font-weight:bold;">Instructor: Lisa</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Evening Yoga</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">6:00 PM - 7:00 PM</p>
+              <span style="color:#FFD700; font-weight:bold;">Instructor: David</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Strength Training</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">7:30 PM - 8:30 PM</p>
+              <span style="color:#FFD700; font-weight:bold;">Instructor: Alex</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Meditation</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">8:00 PM - 8:30 PM</p>
+              <span style="color:#FFD700; font-weight:bold;">Instructor: Zen Master</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Special Classes</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Aqua Fitness</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Saturday 10:00 AM</p>
+              <span style="color:#FFD700; font-weight:bold;">Pool Area</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Zumba Dance</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Sunday 11:00 AM</p>
+              <span style="color:#FFD700; font-weight:bold;">Studio A</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Personal Training</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">By Appointment</p>
+              <span style="color:#FFD700; font-weight:bold;">Custom Programs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closeFitnessClassesModal()" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Schedule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pool Schedule Modal -->
+  <div id="poolScheduleModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:800px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closePoolScheduleModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      <h2 style="color:#1a2238; font-size:1.5rem; margin-bottom:1.5rem;">Swimming Pool Schedule</h2>
+      
+      <div style="text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Pool Hours & Services</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Regular Hours</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">6:00 AM - 10:00 PM</p>
+              <span style="color:#FFD700; font-weight:bold;">Daily Access</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Poolside Service</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">7:00 AM - 9:00 PM</p>
+              <span style="color:#FFD700; font-weight:bold;">Food & Beverages</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Adult Swim</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">6:00 AM - 8:00 AM</p>
+              <span style="color:#FFD700; font-weight:bold;">Lap Swimming</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Family Hours</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">9:00 AM - 6:00 PM</p>
+              <span style="color:#FFD700; font-weight:bold;">All Ages Welcome</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Pool Services</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Poolside Cabanas</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Private cabanas with service</p>
+              <span style="color:#FFD700; font-weight:bold;">Reservation Required</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Swimming Lessons</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Private and group lessons</p>
+              <span style="color:#FFD700; font-weight:bold;">Certified Instructors</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pool Equipment</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Towels, floats, and gear</p>
+              <span style="color:#FFD700; font-weight:bold;">Complimentary</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Aqua Fitness</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Water aerobics classes</p>
+              <span style="color:#FFD700; font-weight:bold;">Saturday 10:00 AM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closePoolScheduleModal()" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Schedule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outdoor Activities Modal -->
+  <div id="outdoorActivitiesModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:900px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closeOutdoorActivitiesModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      <h2 style="color:#1a2238; font-size:1.5rem; margin-bottom:1.5rem;">Outdoor Activities & Tours</h2>
+      
+      <div style="text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Guided City Tours</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Manhattan Highlights</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Times Square, Central Park, Empire State</p>
+              <span style="color:#FFD700; font-weight:bold;">Duration: 3 hours</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Cultural District</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Museums, galleries, theaters</p>
+              <span style="color:#FFD700; font-weight:bold;">Duration: 2.5 hours</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Food & Market Tour</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Local markets, food tastings</p>
+              <span style="color:#FFD700; font-weight:bold;">Duration: 2 hours</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Night City Lights</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Evening tour of illuminated landmarks</p>
+              <span style="color:#FFD700; font-weight:bold;">Duration: 2 hours</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Outdoor Sports & Activities</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Central Park Cycling</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Bike rentals and guided tours</p>
+              <span style="color:#FFD700; font-weight:bold;">Available Daily</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Hudson River Kayaking</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Guided kayak tours on the river</p>
+              <span style="color:#FFD700; font-weight:bold;">Seasonal Activity</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Rock Climbing</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Indoor and outdoor climbing</p>
+              <span style="color:#FFD700; font-weight:bold;">All Skill Levels</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Golf Outings</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Nearby golf courses and lessons</p>
+              <span style="color:#FFD700; font-weight:bold;">Transportation Included</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Adventure Activities</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Helicopter Tours</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Aerial views of Manhattan</p>
+              <span style="color:#FFD700; font-weight:bold;">Weather Dependent</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Zipline Adventure</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Thrilling zipline experience</p>
+              <span style="color:#FFD700; font-weight:bold;">Safety Equipment Provided</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Escape Room Challenges</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Interactive puzzle experiences</p>
+              <span style="color:#FFD700; font-weight:bold;">Team Building</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Scavenger Hunts</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Interactive city exploration</p>
+              <span style="color:#FFD700; font-weight:bold;">Family Friendly</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closeOutdoorActivitiesModal()" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Activities</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Family Activities Modal -->
+  <div id="familyActivitiesModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:900px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closeFamilyActivitiesModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      <h2 style="color:#1a2238; font-size:1.5rem; margin-bottom:1.5rem;">Family Activities & Entertainment</h2>
+      
+      <div style="text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Indoor Games & Entertainment</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Board Games Lounge</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Classic and modern board games for all ages</p>
+              <span style="color:#FFD700; font-weight:bold;">Available Daily</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Video Game Arcade</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Latest gaming consoles and arcade machines</p>
+              <span style="color:#FFD700; font-weight:bold;">All Ages Welcome</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Movie Theater</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Family-friendly movies and screenings</p>
+              <span style="color:#FFD700; font-weight:bold;">Daily Showings</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Indoor Playground</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Safe play area for children under 12</p>
+              <span style="color:#FFD700; font-weight:bold;">Supervised Play</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Arts & Crafts Studio</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Painting Classes</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Watercolor, acrylic, and finger painting</p>
+              <span style="color:#FFD700; font-weight:bold;">Ages 3-12</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Craft Workshops</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">DIY projects and creative activities</p>
+              <span style="color:#FFD700; font-weight:bold;">Daily Sessions</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pottery Making</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Clay modeling and ceramic painting</p>
+              <span style="color:#FFD700; font-weight:bold;">Ages 6+</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Jewelry Making</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Beading and jewelry design</p>
+              <span style="color:#FFD700; font-weight:bold;">Ages 8+</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Family Bonding Activities</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Cooking Classes</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Family cooking sessions and baking</p>
+              <span style="color:#FFD700; font-weight:bold;">Chef Guided</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Story Time</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Interactive storytelling and reading</p>
+              <span style="color:#FFD700; font-weight:bold;">Daily at 3:00 PM</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Family Yoga</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Gentle yoga for parents and children</p>
+              <span style="color:#FFD700; font-weight:bold;">Sunday Mornings</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Science Experiments</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Fun and educational experiments</p>
+              <span style="color:#FFD700; font-weight:bold;">Ages 5-12</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Special Events & Celebrations</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Birthday Parties</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Customized birthday celebrations</p>
+              <span style="color:#FFD700; font-weight:bold;">Advance Booking</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Holiday Celebrations</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Seasonal events and activities</p>
+              <span style="color:#FFD700; font-weight:bold;">Monthly Events</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Family Photo Sessions</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Professional family photography</p>
+              <span style="color:#FFD700; font-weight:bold;">Photographer Available</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Talent Shows</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Family performance opportunities</p>
+              <span style="color:#FFD700; font-weight:bold;">Monthly Showcase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closeFamilyActivitiesModal()" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Activities</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Family Adventure Modal -->
+  <div id="familyAdventureModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:1000px; width:95%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closeFamilyAdventureModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      <h2 style="color:#1a2238; font-size:1.8rem; margin-bottom:0.5rem; font-family:'Playfair Display', serif;">Family Adventure Package</h2>
+      <p style="color:#666; font-size:1rem; margin-bottom:2rem;">Fun-filled activities and perks for the whole family</p>
+      
+      <div style="text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Package Highlights</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:linear-gradient(135deg, #FFD700, #FFA500); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">All-Inclusive Activities</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">Unlimited access to all family activities</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$2,850</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #FFD700, #FFA500); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Adventure Guide</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">Personal guide for family excursions</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$3,250</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #FFD700, #FFA500); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Premium Experience</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">VIP treatment and exclusive access</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$4,850</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Adventure Activities Included</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">City Exploration Tours</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Guided tours of Manhattan landmarks</p>
+              <span style="color:#FFD700; font-weight:bold;">Daily Departures</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Museum Adventures</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Interactive museum visits and workshops</p>
+              <span style="color:#FFD700; font-weight:bold;">Educational Fun</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Outdoor Sports</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Family-friendly sports and games</p>
+              <span style="color:#FFD700; font-weight:bold;">All Ages Welcome</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Creative Workshops</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Arts, crafts, and DIY projects</p>
+              <span style="color:#FFD700; font-weight:bold;">Take Home Souvenirs</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Family Perks & Benefits</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Priority Reservations</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">First access to all activities and dining</p>
+              <span style="color:#FFD700; font-weight:bold;">Exclusive Access</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Family Photo Sessions</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Professional family photography included</p>
+              <span style="color:#FFD700; font-weight:bold;">Digital & Prints</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Customized Itineraries</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Personalized adventure planning</p>
+              <span style="color:#FFD700; font-weight:bold;">Tailored Experience</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Memory Book Creation</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Compile your adventure memories</p>
+              <span style="color:#FFD700; font-weight:bold;">Keepsake Included</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Package Details</h3>
+          <div style="background:#f8f9fa; padding:1.5rem; border-radius:8px;">
+            <ul style="color:#666; line-height:1.6; margin:0; padding-left:1.5rem;">
+              <li>Minimum 3-day stay required</li>
+              <li>Includes accommodation for family of 4</li>
+              <li>Daily breakfast and one family dinner</li>
+              <li>Transportation to all activities included</li>
+              <li>24/7 family concierge service</li>
+              <li>Flexible scheduling and customization</li>
+              <li>Emergency support and medical assistance</li>
+              <li>Post-trip follow-up and photo delivery</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closeFamilyAdventureModal()" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Adventure</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seasonal Specials Modal -->
+  <div id="seasonalSpecialsModal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:18px; max-width:1000px; width:95%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <button onclick="closeSeasonalSpecialsModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
+      <h2 style="color:#1a2238; font-size:1.8rem; margin-bottom:0.5rem; font-family:'Playfair Display', serif;">Seasonal Specials & Packages</h2>
+      <p style="color:#666; font-size:1rem; margin-bottom:2rem;">Limited-time packages with unique experiences</p>
+      
+      <div style="text-align:left;">
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Winter Wonderland Package</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:linear-gradient(135deg, #87CEEB, #4682B4); padding:1.5rem; border-radius:12px; color:#fff; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Holiday Magic</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">December 15 - January 5</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$3,850</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #87CEEB, #4682B4); padding:1.5rem; border-radius:12px; color:#fff; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">New Year's Eve</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">December 30 - January 2</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$5,250</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #87CEEB, #4682B4); padding:1.5rem; border-radius:12px; color:#fff; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Valentine's Special</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">February 10 - 15</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$2,850</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Spring Bloom Package</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:linear-gradient(135deg, #90EE90, #32CD32); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Cherry Blossom</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">March 20 - April 15</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$2,650</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #90EE90, #32CD32); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Easter Weekend</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">April 5 - 8</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$3,150</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #90EE90, #32CD32); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Mother's Day</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">May 10 - 12</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$2,950</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Summer Splash Package</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:linear-gradient(135deg, #FFB347, #FF8C00); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Fourth of July</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">July 1 - 5</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$4,250</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #FFB347, #FF8C00); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Beach Week</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">July 15 - 22</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$3,850</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #FFB347, #FF8C00); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Labor Day</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">August 30 - September 2</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$3,450</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Autumn Colors Package</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:linear-gradient(135deg, #DAA520, #CD853F); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Thanksgiving</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">November 20 - 25</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$4,850</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #DAA520, #CD853F); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Fall Foliage</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">October 10 - 20</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$2,950</span>
+            </div>
+            <div style="background:linear-gradient(135deg, #DAA520, #CD853F); padding:1.5rem; border-radius:12px; color:#111; text-align:center;">
+              <h4 style="margin-bottom:0.5rem; font-size:1.2rem;">Halloween Special</h4>
+              <p style="font-size:0.9rem; margin-bottom:0.5rem;">October 28 - 31</p>
+              <span style="font-weight:bold; font-size:1.1rem;">$3,250</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Exclusive Benefits</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Priority Booking</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Early access to seasonal packages</p>
+              <span style="color:#FFD700; font-weight:bold;">VIP Treatment</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Special Events</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Exclusive seasonal celebrations</p>
+              <span style="color:#FFD700; font-weight:bold;">Unique Experiences</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Limited Availability</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Small group experiences</p>
+              <span style="color:#FFD700; font-weight:bold;">Intimate Settings</span>
+            </div>
+            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
+              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Seasonal Menus</h4>
+              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Special holiday dining experiences</p>
+              <span style="color:#FFD700; font-weight:bold;">Chef's Special</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:2rem;">
+          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Booking Information</h3>
+          <div style="background:#f8f9fa; padding:1.5rem; border-radius:8px;">
+            <ul style="color:#666; line-height:1.6; margin:0; padding-left:1.5rem;">
+              <li>Advance booking required (3-6 months recommended)</li>
+              <li>Non-refundable deposits required</li>
+              <li>Flexible cancellation policies available</li>
+              <li>Special dietary requirements accommodated</li>
+              <li>Transportation and activities included</li>
+              <li>Professional photography services available</li>
+              <li>Customized experiences upon request</li>
+              <li>24/7 concierge support during stay</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top:2rem; text-align:center;">
+        <button onclick="closeSeasonalSpecialsModal()" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Specials</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer" style="background:#1a1a1a; color:#fff; padding:48px 0 0 0; margin-top:0; border-top:4px solid #FFD700;">
     <div class="footer-content" style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:40px; padding:0 32px;">
@@ -635,6 +1795,47 @@
 
   <script src="main.js"></script>
   <script>
+    // Service booking function
+    function bookService(serviceType, isPrivate = false) {
+      // Check if user is logged in
+      const isLoggedIn = localStorage.getItem('pv_logged_in');
+      if (!isLoggedIn) {
+        alert('Please log in to book services.');
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      // Show booking confirmation
+      const serviceName = serviceType.charAt(0).toUpperCase() + serviceType.slice(1).replace('-', ' ');
+      const message = isPrivate ? 
+        `Private ${serviceName} booking request submitted. Our team will contact you within 24 hours.` :
+        `${serviceName} booking request submitted. Our team will contact you within 2 hours.`;
+      
+      alert(message);
+      console.log(`Service booking requested: ${serviceType}, Private: ${isPrivate}`);
+    }
+
+    // Wishlist toggle function
+    function toggleServiceWishlist(serviceId) {
+      const heartIcon = document.getElementById(`${serviceId}-heart`);
+      if (heartIcon) {
+        const isWishlisted = heartIcon.style.color === 'red';
+        heartIcon.style.color = isWishlisted ? '#ccc' : 'red';
+        
+        // Store wishlist state
+        const wishlist = JSON.parse(localStorage.getItem('pv_service_wishlist') || '[]');
+        if (isWishlisted) {
+          const index = wishlist.indexOf(serviceId);
+          if (index > -1) wishlist.splice(index, 1);
+        } else {
+          wishlist.push(serviceId);
+        }
+        localStorage.setItem('pv_service_wishlist', JSON.stringify(wishlist));
+        
+        console.log(`Service wishlist toggled: ${serviceId}, Wishlisted: ${!isWishlisted}`);
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       const cardMap = {
         'Dining': 'dining',
@@ -665,6 +1866,160 @@
       // Initialize language and currency on page load
       if (typeof initializeLanguageAndCurrency === 'function') {
         initializeLanguageAndCurrency();
+      }
+      
+      // Initialize wishlist states
+      const wishlist = JSON.parse(localStorage.getItem('pv_service_wishlist') || '[]');
+      wishlist.forEach(serviceId => {
+        const heartIcon = document.getElementById(`${serviceId}-heart`);
+        if (heartIcon) {
+          heartIcon.style.color = 'red';
+        }
+      });
+    });
+
+    // Menu Modal Functions
+    function showBarMenu() {
+      document.getElementById('menuModal').style.display = 'flex';
+    }
+
+    function closeMenuModal() {
+      document.getElementById('menuModal').style.display = 'none';
+    }
+
+    // Fitness Classes Modal Functions
+    function showFitnessClasses() {
+      const modal = document.getElementById('fitnessClassesModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        console.log('Fitness classes modal opened');
+      } else {
+        console.error('Fitness classes modal not found');
+      }
+    }
+
+    function closeFitnessClassesModal() {
+      document.getElementById('fitnessClassesModal').style.display = 'none';
+    }
+
+    // Pool Schedule Modal Functions
+    function showPoolSchedule() {
+      const modal = document.getElementById('poolScheduleModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        console.log('Pool schedule modal opened');
+      } else {
+        console.error('Pool schedule modal not found');
+      }
+    }
+
+    function closePoolScheduleModal() {
+      document.getElementById('poolScheduleModal').style.display = 'none';
+    }
+
+    // Outdoor Activities Modal Functions
+    function showOutdoorActivities() {
+      const modal = document.getElementById('outdoorActivitiesModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        console.log('Outdoor activities modal opened');
+      } else {
+        console.error('Outdoor activities modal not found');
+      }
+    }
+
+    function closeOutdoorActivitiesModal() {
+      document.getElementById('outdoorActivitiesModal').style.display = 'none';
+    }
+
+    // Family Activities Modal Functions
+    function showFamilyActivities() {
+      const modal = document.getElementById('familyActivitiesModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        console.log('Family activities modal opened');
+      } else {
+        console.error('Family activities modal not found');
+      }
+    }
+
+    function closeFamilyActivitiesModal() {
+      document.getElementById('familyActivitiesModal').style.display = 'none';
+    }
+
+    // Family Adventure Modal Functions
+    function showFamilyAdventure() {
+      const modal = document.getElementById('familyAdventureModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        console.log('Family adventure modal opened');
+      } else {
+        console.error('Family adventure modal not found');
+      }
+    }
+
+    function closeFamilyAdventureModal() {
+      document.getElementById('familyAdventureModal').style.display = 'none';
+    }
+
+    // Seasonal Specials Modal Functions
+    function showSeasonalSpecials() {
+      const modal = document.getElementById('seasonalSpecialsModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        console.log('Seasonal specials modal opened');
+      } else {
+        console.error('Seasonal specials modal not found');
+      }
+    }
+
+    function closeSeasonalSpecialsModal() {
+      document.getElementById('seasonalSpecialsModal').style.display = 'none';
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+      const menuModal = document.getElementById('menuModal');
+      const fitnessModal = document.getElementById('fitnessClassesModal');
+      const poolModal = document.getElementById('poolScheduleModal');
+      const outdoorModal = document.getElementById('outdoorActivitiesModal');
+      const familyModal = document.getElementById('familyActivitiesModal');
+      const familyAdventureModal = document.getElementById('familyAdventureModal');
+      const seasonalSpecialsModal = document.getElementById('seasonalSpecialsModal');
+      
+      if (event.target === menuModal) {
+        closeMenuModal();
+      }
+      if (event.target === fitnessModal) {
+        closeFitnessClassesModal();
+      }
+      if (event.target === poolModal) {
+        closePoolScheduleModal();
+      }
+      if (event.target === outdoorModal) {
+        closeOutdoorActivitiesModal();
+      }
+      if (event.target === familyModal) {
+        closeFamilyActivitiesModal();
+      }
+      if (event.target === familyAdventureModal) {
+        closeFamilyAdventureModal();
+      }
+      if (event.target === seasonalSpecialsModal) {
+        closeSeasonalSpecialsModal();
+      }
+    });
+
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeMenuModal();
+        closeFitnessClassesModal();
+        closePoolScheduleModal();
+        closeOutdoorActivitiesModal();
+        closeFamilyActivitiesModal();
+        closeFamilyAdventureModal();
+        closeSeasonalSpecialsModal();
       }
     });
   </script>

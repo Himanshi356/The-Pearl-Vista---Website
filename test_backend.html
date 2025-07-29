@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backend Test</title>
+</head>
+<body>
+    <h1>Backend Test</h1>
+    <button onclick="testBackend()">Test Backend</button>
+    <div id="result"></div>
+
+    <script>
+        function testBackend() {
+            const formData = new FormData();
+            formData.append('name', 'Test User');
+            formData.append('phone', '1234567890');
+            formData.append('email', 'test@example.com');
+            formData.append('roomType', 'Pearl Signature Room');
+            formData.append('checkin', '2025-08-01');
+            formData.append('checkout', '2025-08-02');
+            formData.append('guests', '2');
+            formData.append('rooms', '1');
+            formData.append('totalAmount', '1000');
+            formData.append('specialInstructions', 'Test booking');
+
+            console.log('Testing backend...');
+            
+            fetch('php/home_booking_process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(text => {
+                console.log('Response text:', text);
+                document.getElementById('result').innerHTML = '<pre>' + text + '</pre>';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = '<pre>Error: ' + error.message + '</pre>';
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -496,6 +496,71 @@
       margin-bottom: 0.18rem;
       letter-spacing: 0.1px;
     }
+    
+    .booking-input {
+      border-radius: 12px;
+      border: 1.5px solid #e0e0e0;
+      padding: 0.8rem 1rem;
+      font-size: 1.08rem;
+      background: #f8f9fa;
+      color: #1a365d;
+      transition: border 0.2s, box-shadow 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .booking-input:focus {
+      border: 2px solid #d4af37;
+      background: #fff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+    
+    .enhanced-input {
+      font-family: 'Lato', sans-serif;
+    }
+    
+    .enhanced-submit-btn {
+      background: #d4af37;
+      color: #222;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    
+    .enhanced-submit-btn:hover {
+      background: #bfa13a;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+    }
+    
+    .enhanced-submit-btn:disabled {
+      background: #ccc;
+      color: #666;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -758,15 +823,26 @@
         <div id="guestAgesContainer" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
         <label for="roomType" class="booking-label">Room Type</label>
         <select id="roomType" name="roomType" required class="booking-input enhanced-input">
-          <option value="Pearl Signature Room">Pearl Signature Room</option>
-          <option value="Deluxe Room">Deluxe Room</option>
-          <option value="Premium Room">Premium Room</option>
-          <option value="Executive Room">Executive Room</option>
-          <option value="Luxury Suite">Luxury Suite</option>
-          <option value="Family Suite">Family Suite</option>
+          <option value="">Select Room Type</option>
+          <option value="Pearl Signature Room">Pearl Signature Room - $20,695/night</option>
+          <option value="Deluxe Room">Deluxe Room - $18,500/night</option>
+          <option value="Premium Room">Premium Room - $22,500/night</option>
+          <option value="Executive Room">Executive Room - $25,000/night</option>
+          <option value="Luxury Suite">Luxury Suite - $35,000/night</option>
+          <option value="Family Suite">Family Suite - $28,000/night</option>
         </select>
         <label for="totalAmount" class="booking-label">Total Amount</label>
-        <input type="text" id="totalAmount" name="totalAmount" readonly class="booking-input enhanced-input">
+        <div style="display: flex; gap: 0.5rem; align-items: center; position: relative;">
+          <div style="position: relative; flex: 1;">
+            <input type="text" id="totalAmount" name="totalAmount" readonly class="booking-input enhanced-input" style="width: 100%; padding-right: 2.5rem;">
+            <i class="fa fa-info-circle" id="totalAmountInfo" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #d4af37; cursor: pointer; font-size: 1.1rem; transition: color 0.2s ease;" title="Click to see amount breakdown"></i>
+          </div>
+          <button type="button" onclick="calculateTotalAmount()" style="background: #d4af37; color: #222; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; flex-shrink: 0;">Calculate</button>
+          <div id="amountBreakdown" style="opacity: 0; visibility: hidden; background: #f8f9fa; border: 1px solid #d4af37; border-radius: 8px; padding: 1rem; font-size: 0.9rem; color: #333; word-wrap: break-word; overflow-wrap: break-word; transition: opacity 0.2s ease, visibility 0.2s ease; position: absolute; top: 100%; left: 0; right: 0; z-index: 10; margin-top: 0.5rem;">
+            <div style="font-weight: 700; color: #d4af37; margin-bottom: 0.5rem;">Amount Breakdown:</div>
+            <div id="breakdownContent" style="word-wrap: break-word; overflow-wrap: break-word;"></div>
+          </div>
+        </div>
         <label for="specialInstructions" class="booking-label">Special Instructions</label>
         <textarea id="specialInstructions" name="specialInstructions" rows="3" placeholder="Any special requests or instructions?" class="booking-input enhanced-input"></textarea>
         <button type="submit" class="luxury-btn-filled enhanced-submit-btn">Submit Booking</button>
@@ -775,14 +851,23 @@
   </div>
   <!-- Booking Confirmation Modal -->
   <div id="bookingConfirmationModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:10000; align-items:center; justify-content:center;">
-    <div style="background:#fff; color:#222; border-radius:28px; max-width:370px; width:92vw; margin:auto; padding:2.2rem 1.7rem 1.5rem 1.7rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.18), 0 2px 16px rgba(0,0,0,0.13); display:flex; flex-direction:column; align-items:center; border:3px solid #FFD700;">
-      <div style="background:#FFD700; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; margin-bottom:1.1rem; box-shadow:0 2px 8px rgba(212,175,55,0.18);">
-        <i class="fa fa-check" style="color:#222; font-size:2.2rem;"></i>
+    <div style="background:#fff; color:#222; border-radius:28px; max-width:420px; width:92vw; margin:auto; padding:2.2rem 1.7rem 1.5rem 1.7rem; position:relative; box-shadow:0 12px 40px rgba(212,175,55,0.18), 0 2px 16px rgba(0,0,0,0.13); display:flex; flex-direction:column; align-items:center; border:3px solid #FFD700; max-height:90vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
+      <style>
+        #bookingConfirmationModal > div::-webkit-scrollbar {
+          display: none;
+        }
+        #bookingConfirmationModal > div {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+      </style>
+      <div style="background:linear-gradient(135deg, #4CAF50 0%, #45a049 100%); border-radius:50%; width:70px; height:70px; display:flex; align-items:center; justify-content:center; margin-bottom:1.2rem; box-shadow:0 4px 15px rgba(76,175,80,0.3); border:3px solid #fff;">
+        <i class="fa fa-check" style="color:#fff; font-size:2.5rem; text-shadow:0 2px 4px rgba(0,0,0,0.2);"></i>
       </div>
       <h3 style="color:#1a1a1a; font-size:1.35rem; font-weight:800; margin-bottom:0.7rem; text-align:center; font-family:'Playfair Display',serif;">Thank you for your booking!</h3>
       <div id="confirmationDetails" style="font-size:1.08rem; color:#333; margin-bottom:1.4rem; text-align:center; line-height:1.6;"></div>
-      <div id="confirmationTotalAmount" style="font-size:1.18rem; font-weight:900; color:#1a365d; margin-bottom:0.5rem; text-align:center; letter-spacing:0.5px; border-radius:8px; background:#f7f7fa; padding:0.5rem 0.7rem; display:inline-block;"></div>
-      <div id="confirmationPaymentNote" style="font-size:1.01rem; color:#b96a16; margin-bottom:0.7rem; text-align:center; background:#fff7e6; border-radius:7px; padding:0.5rem 0.7rem; display:none; border:1.5px solid #ffd699;"></div>
+      <div id="confirmationTotalAmount" style="font-size:1.18rem; font-weight:900; color:#1a365d; margin-bottom:0.8rem; text-align:center; letter-spacing:0.5px; border-radius:8px; background:#f7f7fa; padding:0.5rem 0.7rem; display:inline-block;"></div>
+      <div id="confirmationPaymentNote" style="width:100%; margin-bottom:1rem; text-align:left;"></div>
       <div id="confirmationNextSteps" style="font-size:1.01rem; color:#1a365d; margin-bottom:1.2rem; text-align:center; background:#eaf6ff; border-radius:7px; padding:0.5rem 0.7rem; display:none; border:1.5px solid #b3e0ff;"></div>
       <button id="downloadReceiptBtn" class="luxury-btn-filled" style="margin-bottom:0.7rem; width:100%; font-size:1.08rem; border-width:2.5px;">Download Receipt</button>
       <button id="closeConfirmationBtn" class="luxury-btn-outline" style="width:100%; font-size:1.08rem; border-width:2.5px;">Close</button>
@@ -830,7 +915,7 @@
         <span style="background:#e6ffe6; border-radius:50%; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:0.3rem;"><i class="fa fa-check" style="color:#1a8f2b;"></i></span>
         <div style="font-size:1.08rem; color:#1a8f2b; font-weight:700; display:inline-block; margin-left:0.5rem;">Thank You For Choosing THE PEARL VISTA</div>
       </div>
-      <div style="padding:0 1.5rem 1.2rem 1.5rem; text-align:center; color:#888; font-size:1.01rem; font-style:italic;">We are grateful for your trust in us. Wishing you a wonderful stay and memorable experience!</div>
+      <div style="padding:0 1.5rem 1.5rem 1.5rem; text-align:center; color:#666; font-size:1.02rem; font-style:italic; line-height:1.4; border-top:1px solid #f0f0f0; margin-top:0.5rem;">We are grateful for your trust in us. Wishing you a wonderful stay and memorable experience!</div>
     </div>
   </div>
   <!-- Check Availability Modal -->
@@ -887,8 +972,8 @@
       <input type="date" id="checkoutDate" name="checkoutDate" required style="width:100%; margin-bottom:18px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" placeholder="dd-mm-yyyy" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
       <label for="guests" style="display:block; margin-bottom:7px; font-weight:700; color:#bfa134; font-size:1.08rem; font-family:'Lato',sans-serif;">Number of Guests</label>
       <input type="number" id="guests" name="guests" min="1" max="10" value="1" required style="width:100%; margin-bottom:18px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
-      <label for="roomType" style="display:block; margin-bottom:7px; font-weight:700; color:#bfa134; font-size:1.08rem; font-family:'Lato',sans-serif;">Type of Room</label>
-      <select id="roomType" name="roomType" required style="width:100%; margin-bottom:18px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
+      <label for="availabilityRoomType" style="display:block; margin-bottom:7px; font-weight:700; color:#bfa134; font-size:1.08rem; font-family:'Lato',sans-serif;">Type of Room</label>
+      <select id="availabilityRoomType" name="availabilityRoomType" required style="width:100%; margin-bottom:18px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
         <option value="Pearl Signature Room">Pearl Signature Room</option>
         <option value="Deluxe Room">Deluxe Room</option>
         <option value="Premium Room">Premium Room</option>
@@ -946,6 +1031,8 @@
   <script>
     document.getElementById('openBookingModalBtn').onclick = function() {
       document.getElementById('bookingModal').style.display = 'flex';
+      // Calculate total amount when modal opens
+      setTimeout(calculateTotalAmount, 100);
     };
     document.getElementById('closeBookingModalBtn').onclick = function() {
       document.getElementById('bookingModal').style.display = 'none';
@@ -961,70 +1048,442 @@
         document.getElementById('idUpload').value = '';
       }
     };
-    document.getElementById('bookingForm').onsubmit = function(e) {
-      e.preventDefault();
-      document.getElementById('bookingModal').style.display = 'none';
-      // Fill confirmation details with personalized info
-      var name = document.getElementById('name').value;
-      var roomType = document.getElementById('roomType').value;
-      var checkin = document.getElementById('checkin').value;
-      var checkout = document.getElementById('checkout').value;
-      var guests = document.getElementById('guests').value;
-      var rooms = document.getElementById('rooms').value;
-      var totalAmount = document.getElementById('totalAmount').value;
-      var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
-      var special = document.getElementById('specialInstructions').value;
-      var phone = document.getElementById('phone').value;
-      var email = document.getElementById('email').value;
-      var bookingId = 'PV' + Math.floor(Math.random()*90000+10000);
-      document.getElementById('confirmationDetails').innerHTML =
-        'Thank you, <b>' + name + '</b>!<br>Your booking for <b>' + roomType + '</b> (' + rooms + ' room(s), ' + guests + ' guest(s))<br>from <b>' + checkin + '</b> to <b>' + checkout + '</b> has been received.';
-      document.getElementById('confirmationTotalAmount').innerHTML = 'Total Amount: <span style="color:#bfa13a">' + (totalAmount ? totalAmount : '-') + '</span>';
-      var note = '';
-      if (totalAmount && totalAmount.startsWith('$')) {
-        var amountNum = parseFloat(totalAmount.replace(/[^\d.]/g, ''));
-        if (!isNaN(amountNum)) {
-          var advance = (amountNum * 0.45).toFixed(2);
-          note = 'To confirm your reservation, please pay <b>45%</b> of the total amount (<b style="color:#bfa13a">$' + advance + '</b>) at the reception within <b>72 hours</b> of booking. Failure to do so may result in automatic cancellation.';
+    
+    // Handle guest ages dynamically (optimized)
+    var guestAgesCache = {};
+    
+    document.getElementById('guests').onchange = function() {
+      var guests = parseInt(this.value);
+      var container = document.getElementById('guestAgesContainer');
+      
+      // Use cached HTML if available
+      if (guestAgesCache[guests]) {
+        container.innerHTML = guestAgesCache[guests];
+      } else {
+        // Generate HTML string instead of DOM manipulation
+        var html = '';
+        for (var i = 1; i <= guests; i++) {
+          html += `
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <label style="font-weight: 600; color: #1a1a1a; font-size: 0.98rem; min-width: 120px;">Age of Guest ${i}:</label>
+              <input type="number" min="1" max="120" required class="booking-input enhanced-input" style="flex: 1;">
+            </div>
+          `;
+        }
+        container.innerHTML = html;
+        guestAgesCache[guests] = html;
+      }
+      
+      // Recalculate total amount after updating guest ages
+      debouncedCalculateTotalAmount();
+    };
+    
+    // Set minimum dates for check-in and check-out
+    var today = new Date();
+    var tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    var checkinInput = document.getElementById('checkin');
+    var checkoutInput = document.getElementById('checkout');
+    
+    // Format date for input field (YYYY-MM-DD)
+    function formatDate(date) {
+      var year = date.getFullYear();
+      var month = String(date.getMonth() + 1).padStart(2, '0');
+      var day = String(date.getDate()).padStart(2, '0');
+      return year + '-' + month + '-' + day;
+    }
+    
+    checkinInput.min = formatDate(tomorrow);
+    checkoutInput.min = formatDate(tomorrow);
+    
+    // Update checkout minimum date when checkin changes
+    checkinInput.onchange = function() {
+      if (this.value) {
+        var checkinDate = new Date(this.value);
+        var nextDay = new Date(checkinDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+        checkoutInput.min = formatDate(nextDay);
+        
+        // If checkout date is before checkin date, clear it
+        if (checkoutInput.value && new Date(checkoutInput.value) <= checkinDate) {
+          checkoutInput.value = '';
         }
       }
-      var noteDiv = document.getElementById('confirmationPaymentNote');
-      if (note) {
-        noteDiv.innerHTML = note;
-        noteDiv.style.display = 'block';
-      } else {
-        noteDiv.innerHTML = '';
-        noteDiv.style.display = 'none';
-      }
-      // Next steps message
-      var nextSteps = 'You can review and manage your booking at the <a href="my-bookings.html" style="color:#0077cc; text-decoration:underline; font-weight:600;">My Bookings</a> page.';
-      var nextDiv = document.getElementById('confirmationNextSteps');
-      nextDiv.innerHTML = nextSteps;
-      nextDiv.style.display = 'block';
-      document.getElementById('bookingConfirmationModal').style.display = 'flex';
-      // Save booking to localStorage for My Bookings page
-      var bookingObj = {
-        id: bookingId,
-        name: name,
-        phone: phone,
-        email: email,
-        roomType: roomType,
-        checkin: checkin,
-        checkout: checkout,
-        guests: guests,
-        guestAges: guestAges,
-        rooms: rooms,
-        totalAmount: totalAmount,
-        special: special,
-        status: 'Confirmed',
-        created: new Date().toISOString()
+      calculateTotalAmount();
+    };
+    
+    // Debounce function to limit calculation frequency
+    var calculationTimeout;
+    function debouncedCalculateTotalAmount() {
+      clearTimeout(calculationTimeout);
+      calculationTimeout = setTimeout(calculateTotalAmount, 100);
+    }
+    
+    // Calculate total amount based on room type, dates, and guest charges
+    function calculateTotalAmount() {
+      var roomTypeSelect = document.getElementById('roomType');
+      var roomType = roomTypeSelect.value;
+      var checkin = document.getElementById('checkin').value;
+      var checkout = document.getElementById('checkout').value;
+      var rooms = parseInt(document.getElementById('rooms').value) || 1;
+      var totalGuests = parseInt(document.getElementById('guests').value) || 1;
+      
+      // Room prices per night
+      var roomPrices = {
+        'Pearl Signature Room': 20695,
+        'Deluxe Room': 18500,
+        'Premium Room': 22500,
+        'Executive Room': 25000,
+        'Luxury Suite': 35000,
+        'Family Suite': 28000
       };
-      var bookings = [];
-      try {
-        bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
-      } catch(e) { bookings = []; }
-      bookings.push(bookingObj);
-      localStorage.setItem('pv_bookings', JSON.stringify(bookings));
+      
+      var pricePerNight = roomPrices[roomType] || 20000;
+      
+      // Guest pricing logic
+      var standardGuestsPerRoom = 2; // Standard: 2 adults per room
+      var extraGuestCharge = 2500; // $2500 per extra guest (adult >16)
+      var totalStandardGuests = rooms * standardGuestsPerRoom;
+      var extraGuests = Math.max(0, totalGuests - totalStandardGuests);
+      
+      if (checkin && checkout) {
+        var checkinDate = new Date(checkin);
+        var checkoutDate = new Date(checkout);
+        var nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+        
+        if (nights > 0) {
+          // Calculate room charges
+          var roomCharges = pricePerNight * nights * rooms;
+          
+          // Calculate extra guest charges
+          var extraGuestCharges = extraGuests * extraGuestCharge * nights;
+          
+          // Calculate total amount
+          var totalAmount = roomCharges + extraGuestCharges;
+          
+          var formattedAmount = '$' + totalAmount.toLocaleString();
+          document.getElementById('totalAmount').value = formattedAmount;
+          window.currentTotalAmount = totalAmount; // Store for receipt generation
+          
+          // Store breakdown details for hover display
+          window.amountBreakdown = {
+            roomType: roomType,
+            pricePerNight: pricePerNight,
+            rooms: rooms,
+            nights: nights,
+            totalGuests: totalGuests,
+            standardGuestsPerRoom: 2,
+            extraGuests: extraGuests,
+            extraGuestCharge: extraGuestCharge,
+            roomCharges: roomCharges,
+            extraGuestCharges: extraGuestCharges,
+            totalAmount: totalAmount
+          };
+        } else {
+          document.getElementById('totalAmount').value = '';
+          window.currentTotalAmount = 0;
+        }
+      } else {
+        document.getElementById('totalAmount').value = '';
+        window.currentTotalAmount = 0;
+      }
+    }
+    
+    // Add event listeners for total amount calculation (debounced)
+    document.getElementById('roomType').onchange = debouncedCalculateTotalAmount;
+    document.getElementById('rooms').onchange = debouncedCalculateTotalAmount;
+    document.getElementById('guests').onchange = debouncedCalculateTotalAmount;
+    document.getElementById('checkout').onchange = debouncedCalculateTotalAmount;
+    
+    // Calculate initial total amount
+    calculateTotalAmount();
+    
+    // Debug: Log room type on page load
+    console.log('DEBUG: Page loaded, roomType value = "' + document.getElementById('roomType').value + '"');
+    console.log('DEBUG: roomType element =', document.getElementById('roomType'));
+    
+    // Optimized hover functions with CSS transitions
+    var breakdownCache = {};
+    var isBreakdownVisible = false;
+    
+    function showAmountBreakdown() {
+      var breakdown = window.amountBreakdown;
+      if (!breakdown || isBreakdownVisible) {
+        return;
+      }
+      
+      // Use cached content if available
+      var cacheKey = breakdown.roomType + '_' + breakdown.rooms + '_' + breakdown.nights + '_' + breakdown.totalGuests;
+      if (breakdownCache[cacheKey]) {
+        document.getElementById('breakdownContent').innerHTML = breakdownCache[cacheKey];
+      } else {
+        // Generate content
+        var content = document.getElementById('breakdownContent');
+        
+        var html = `
+          <div style="margin-bottom: 0.8rem;">
+            <strong>Room Charges:</strong><br>
+            ${breakdown.roomType}<br>
+            <span style="color: #d4af37;">$${breakdown.pricePerNight.toLocaleString()}/night × ${breakdown.rooms} room × ${breakdown.nights} night = $${breakdown.roomCharges.toLocaleString()}</span>
+          </div>
+        `;
+        
+        if (breakdown.extraGuests > 0) {
+          html += `
+            <div style="margin-bottom: 0.8rem;">
+              <strong>Extra Guest Charges:</strong><br>
+              ${breakdown.extraGuests} extra guest × $${breakdown.extraGuestCharge.toLocaleString()}/night × ${breakdown.nights} night<br>
+              <span style="color: #d4af37;">$${breakdown.extraGuestCharge.toLocaleString()} × ${breakdown.extraGuests} × ${breakdown.nights} = $${breakdown.extraGuestCharges.toLocaleString()}</span>
+            </div>
+          `;
+        } else {
+          html += `
+            <div style="margin-bottom: 0.8rem;">
+              <strong>Guest Charges:</strong><br>
+              <span style="color: #28a745;">✓ ${breakdown.totalGuests} guest included in standard rate (${breakdown.standardGuestsPerRoom} per room)</span>
+            </div>
+          `;
+        }
+        
+        html += `
+          <div style="border-top: 1px solid #d4af37; padding-top: 0.5rem; font-weight: 700;">
+            <strong>Total Amount: $${breakdown.totalAmount.toLocaleString()}</strong>
+          </div>
+          <div style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+            <strong>Pricing Policy:</strong><br>
+            • Standard: ${breakdown.standardGuestsPerRoom} guests per room<br>
+            • Extra guests: $${breakdown.extraGuestCharge.toLocaleString()}/night
+          </div>
+        `;
+        
+        // Cache the content
+        breakdownCache[cacheKey] = html;
+        content.innerHTML = html;
+      }
+      
+      // Show with CSS transition
+      var breakdownDiv = document.getElementById('amountBreakdown');
+      breakdownDiv.style.visibility = 'visible';
+      breakdownDiv.style.opacity = '1';
+      isBreakdownVisible = true;
+    }
+    
+    function hideAmountBreakdown() {
+      if (!isBreakdownVisible) {
+        return;
+      }
+      
+      var breakdownDiv = document.getElementById('amountBreakdown');
+      breakdownDiv.style.opacity = '0';
+      
+      // Hide after transition
+      setTimeout(function() {
+        breakdownDiv.style.visibility = 'hidden';
+        isBreakdownVisible = false;
+      }, 200);
+    }
+    
+    // Add event listeners for info icon click
+    var infoIcon = document.getElementById('totalAmountInfo');
+    infoIcon.addEventListener('click', function() {
+      if (isBreakdownVisible) {
+        hideAmountBreakdown();
+      } else {
+        showAmountBreakdown();
+      }
+    });
+    
+    // Add hover effect for better UX
+    infoIcon.addEventListener('mouseenter', function() {
+      this.style.color = '#bfa13a';
+    });
+    
+    infoIcon.addEventListener('mouseleave', function() {
+      this.style.color = '#d4af37';
+    });
+    
+    // Set default dates for calculation if none are set
+    setTimeout(function() {
+      var checkin = document.getElementById('checkin').value;
+      var checkout = document.getElementById('checkout').value;
+      
+      if (!checkin || !checkout) {
+        // Set default dates for calculation
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var dayAfter = new Date();
+        dayAfter.setDate(dayAfter.getDate() + 2);
+        
+        document.getElementById('checkin').value = formatDate(tomorrow);
+        document.getElementById('checkout').value = formatDate(dayAfter);
+        
+        // Calculate with default dates
+        calculateTotalAmount();
+      }
+    }, 500);
+    document.getElementById('bookingForm').onsubmit = function(e) {
+      e.preventDefault();
+      
+      // Show loading state
+      var submitBtn = document.querySelector('#bookingForm button[type="submit"]');
+      var originalText = submitBtn.textContent;
+              submitBtn.innerHTML = '<span class="loading-spinner"></span>Submitting...';
+      submitBtn.disabled = true;
+      
+      // Gather form data
+      var formData = new FormData();
+      formData.append('name', document.getElementById('name').value);
+      formData.append('phone', document.getElementById('phone').value);
+      formData.append('email', document.getElementById('email').value);
+      formData.append('idType', document.getElementById('idType').value);
+      formData.append('rooms', document.getElementById('rooms').value);
+      formData.append('checkin', document.getElementById('checkin').value);
+      formData.append('checkout', document.getElementById('checkout').value);
+      formData.append('guests', document.getElementById('guests').value);
+      var roomTypeValue = document.getElementById('roomType').value;
+      console.log('DEBUG: roomType value = "' + roomTypeValue + '"');
+      console.log('DEBUG: roomType element =', document.getElementById('roomType'));
+      formData.append('roomType', roomTypeValue);
+      formData.append('totalAmount', window.currentTotalAmount || 0);
+      formData.append('specialInstructions', document.getElementById('specialInstructions').value);
+      
+      // Add guest ages if available
+      var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
+      formData.append('guestAges', JSON.stringify(guestAges));
+      
+      // Add file upload if present
+      var idUpload = document.getElementById('idUpload');
+      if (idUpload.files.length > 0) {
+        formData.append('idUpload', idUpload.files[0]);
+      }
+      
+      // Send data to backend
+      console.log('Submitting to: php/home_booking_process.php');
+      console.log('Form data:', Object.fromEntries(formData));
+      fetch('php/home_booking_process.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        return response.text().then(text => {
+          console.log('Response text:', text);
+          try {
+            return JSON.parse(text);
+          } catch (e) {
+            console.error('JSON parse error:', e);
+            console.error('Response text that failed to parse:', text);
+            throw new Error('Invalid JSON response: ' + text);
+          }
+        });
+      })
+      .then(data => {
+        console.log('Parsed response data:', data);
+        // Reset button state
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        if (data.success) {
+          // Hide booking modal
+          document.getElementById('bookingModal').style.display = 'none';
+          
+          // Fill confirmation details
+          var name = data.details.customer_name;
+          var roomType = data.details.room_type;
+          var checkin = data.details.check_in_date;
+          var checkout = data.details.check_out_date;
+          var guests = data.details.num_guests;
+          var rooms = data.details.num_rooms;
+          var totalAmount = data.details.total_amount;
+          var special = data.details.special_instructions;
+          var phone = data.details.customer_phone;
+          var email = data.details.customer_email;
+          var bookingId = data.booking_id;
+          var advanceAmount = data.advance_amount;
+          
+          document.getElementById('confirmationDetails').innerHTML =
+            'Thank you, <b>' + name + '</b>!<br>Your booking for <b>' + roomType + '</b> (' + rooms + ' room(s), ' + guests + ' guest(s))<br>from <b>' + checkin + '</b> to <b>' + checkout + '</b> has been received.';
+          document.getElementById('confirmationTotalAmount').innerHTML = 'Total Amount: <span style="color:#bfa13a">$' + totalAmount + '</span>';
+          
+          // Payment note - Always show the deposit requirement
+          // Convert totalAmount to number (remove commas and dollar signs)
+          var totalAmountNum = parseFloat(totalAmount.replace(/[$,]/g, '')) || 0;
+          var depositAmount = (totalAmountNum * 0.45).toFixed(2);
+          
+          // Debug logging
+          console.log('Original totalAmount:', totalAmount);
+          console.log('Converted totalAmountNum:', totalAmountNum);
+          console.log('Calculated depositAmount:', depositAmount);
+          
+          var note = '<div style="background:#fff3cd; border:1px solid #ffeaa7; border-radius:8px; padding:12px; margin:8px 0; color:#856404; font-size:1.02rem; line-height:1.4;">' +
+                     '<div style="font-weight:700; margin-bottom:4px; color:#b96a16;">⚠️ Important Payment Notice:</div>' +
+                     'To confirm your reservation, please pay <b>45%</b> of the total amount (<b style="color:#bfa13a">$' + depositAmount + '</b>) at the reception in <b>cash</b> within <b>72 hours</b> of booking. ' +
+                     '<span style="color:#d63031; font-weight:600;">Failure to do so will lead to automatic cancellation of your booking.</span>' +
+                     '</div>';
+          
+          var noteDiv = document.getElementById('confirmationPaymentNote');
+          noteDiv.innerHTML = note;
+          noteDiv.style.display = 'block';
+          
+          // Next steps message
+          var nextSteps = 'You can review and manage your booking at the <a href="my-bookings.html" style="color:#0077cc; text-decoration:underline; font-weight:600;">My Bookings</a> page.';
+          var nextDiv = document.getElementById('confirmationNextSteps');
+          nextDiv.innerHTML = nextSteps;
+          nextDiv.style.display = 'block';
+          
+          // Show confirmation modal
+          document.getElementById('bookingConfirmationModal').style.display = 'flex';
+          
+          // Save booking to localStorage for My Bookings page
+          var bookingObj = {
+            id: bookingId,
+            name: name,
+            phone: phone,
+            email: email,
+            roomType: roomType,
+            checkin: checkin,
+            checkout: checkout,
+            guests: guests,
+            guestAges: guestAges,
+            rooms: rooms,
+            totalAmount: '$' + totalAmount,
+            special: special,
+            status: 'Confirmed',
+            created: new Date().toISOString()
+          };
+          
+          // Store current booking globally for receipt generation
+          window.currentBookingData = bookingObj;
+          
+          var bookings = [];
+          try {
+            bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
+          } catch(e) { bookings = []; }
+          bookings.push(bookingObj);
+          localStorage.setItem('pv_bookings', JSON.stringify(bookings));
+          
+          // Reset form
+          document.getElementById('bookingForm').reset();
+          document.getElementById('idUploadWrapper').style.display = 'none';
+          document.getElementById('guestAgesContainer').innerHTML = '';
+          
+        } else {
+          // Show error message
+          console.error('Backend returned error:', data);
+          // alert('Error: ' + data.message);
+        }
+      })
+      .catch(error => {
+        // Reset button state
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        console.error('Error:', error);
+        console.error('Error details:', error.message);
+        // alert('An error occurred while submitting your booking. Please try again.');
+      });
     };
     document.getElementById('closeConfirmationBtn').onclick = function() {
       document.getElementById('bookingConfirmationModal').style.display = 'none';
@@ -1040,12 +1499,22 @@
       document.getElementById('receiptGuests').innerHTML = '<b>No. Of Guests :</b> ' + booking.guests;
       document.getElementById('receiptRooms').innerHTML = '<b>No. Of Rooms :</b> ' + booking.rooms;
       document.getElementById('receiptRoomType').innerHTML = '<b>Booked Room :</b> ' + booking.roomType;
-      var totalAmountNum = parseFloat(booking.totalAmount) || 0;
+      
+      // Handle total amount - remove dollar sign if present and convert to number
+      var totalAmountStr = booking.totalAmount || '0';
+      var totalAmountNum = parseFloat(totalAmountStr.replace(/[$,]/g, '')) || 0;
       var advanceAmount = (totalAmountNum * 0.45).toFixed(2);
+      
+      // Debug logging for receipt
+      console.log('Receipt - Original totalAmount:', totalAmountStr);
+      console.log('Receipt - Converted totalAmountNum:', totalAmountNum);
+      console.log('Receipt - Calculated advanceAmount:', advanceAmount);
+      
       document.getElementById('receiptAmount').innerHTML = '<b>Amount To Be Paid After Booking Confirmation :</b> $' + advanceAmount;
       document.getElementById('receiptPaymentMode').innerHTML = '<b>Payment Mode :</b> Cash';
       document.getElementById('receiptDeadline').innerHTML = '<b>Payment Deadline :</b> Within 72 Hours of booking';
       document.getElementById('receiptTotal').textContent = '$' + totalAmountNum.toLocaleString();
+      
       if (booking.special && booking.special.trim() !== "") {
         document.getElementById('receiptSpecialInstructionsSection').style.display = 'block';
         document.getElementById('receiptSpecialInstructions').textContent = booking.special;
@@ -1055,32 +1524,60 @@
       }
     }
     document.getElementById('downloadReceiptBtn').onclick = function() {
-      // Gather booking details from form
-      var booking = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        id: 'PV' + Math.floor(Math.random()*90000+10000),
-        checkin: document.getElementById('checkin').value,
-        checkout: document.getElementById('checkout').value,
-        guests: document.getElementById('guests').value,
-        rooms: document.getElementById('rooms').value,
-        roomType: document.getElementById('roomType').value,
-        totalAmount: window.currentTotalAmount, // Use the global variable for accuracy
-        special: document.getElementById('specialInstructions').value,
-        created: new Date().toISOString()
-      };
-      fillBookingReceipt(booking);
+      // Use the stored current booking data instead of form values
+      if (window.currentBookingData) {
+        fillBookingReceipt(window.currentBookingData);
+      } else {
+        // Fallback to form values if no stored data
+        var booking = {
+          name: document.getElementById('name').value,
+          phone: document.getElementById('phone').value,
+          email: document.getElementById('email').value,
+          id: 'PV' + Math.floor(Math.random()*90000+10000),
+          checkin: document.getElementById('checkin').value,
+          checkout: document.getElementById('checkout').value,
+          guests: document.getElementById('guests').value,
+          rooms: document.getElementById('rooms').value,
+          roomType: document.getElementById('roomType').value,
+          totalAmount: window.currentTotalAmount, // Use the global variable for accuracy
+          special: document.getElementById('specialInstructions').value,
+          created: new Date().toISOString()
+        };
+        fillBookingReceipt(booking);
+      }
       // Show and download PDF
       var element = document.getElementById('bookingReceiptTemplate');
       element.style.display = 'block';
-      html2pdf().set({ margin:0.2, filename:'PearlVista_Booking_Receipt.pdf', html2canvas:{scale:2}, jsPDF:{unit:'in', format:'letter', orientation:'portrait'} }).from(element).save().then(() => {
-        element.style.display = 'none';
-      });
+      
+      // Small delay to ensure content is fully rendered
+      setTimeout(() => {
+        // Improved PDF generation settings to capture full content
+        html2pdf().set({ 
+          margin: [0.3, 0.3, 0.3, 0.3], // Increased margins
+          filename: 'PearlVista_Booking_Receipt.pdf', 
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            scrollY: 0,
+            scrollX: 0
+          }, 
+          jsPDF: {
+            unit: 'in', 
+            format: 'letter', 
+            orientation: 'portrait',
+            compress: true
+          }
+        }).from(element).save().then(() => {
+          element.style.display = 'none';
+        });
+      }, 100);
     };
     document.querySelectorAll('.openBookingModalBtn').forEach(function(btn) {
       btn.onclick = function() {
         document.getElementById('bookingModal').style.display = 'flex';
+        // Calculate total amount when modal opens
+        setTimeout(calculateTotalAmount, 100);
       };
     });
   </script>

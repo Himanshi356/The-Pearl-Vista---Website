@@ -350,12 +350,12 @@
             document.getElementById('placeSelectHidden').value = '';
             document.getElementById('amountField').value = '';
           } else {
-            alert('Error: ' + data.message);
+            // alert('Error: ' + data.message);
           }
         })
         .catch(error => {
           console.error('Error:', error);
-          alert('An error occurred while processing your booking. Please try again.');
+          // alert('An error occurred while processing your booking. Please try again.');
         })
         .finally(() => {
           // Reset button state
