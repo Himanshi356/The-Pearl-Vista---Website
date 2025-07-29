@@ -2923,6 +2923,9 @@ html, body {
   overflow: hidden;
   transition: var(--transition);
   border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 450px;
 }
 
 .booking-card:hover {
@@ -2970,6 +2973,7 @@ html, body {
   grid-template-columns: 200px 1fr;
   gap: 1.5rem;
   padding: 1.5rem;
+  flex-grow: 1;
 }
 
 .booking-image {
@@ -3052,21 +3056,81 @@ html, body {
 
 .booking-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.8rem;
   padding: 1rem 1.5rem;
   background: var(--muted);
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+}
+
+/* Override for booking cards to use grid layout */
+.booking-card .booking-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 0.8rem !important;
+  padding: 1rem 1.5rem !important;
+  background: var(--muted) !important;
+  align-items: center !important;
+  min-height: 60px !important;
+  margin-top: auto !important;
+  width: 100% !important;
+  flex-wrap: unset !important;
+  justify-content: unset !important;
 }
 
 .booking-actions .btn {
   flex: 1;
   min-width: 120px;
+  max-width: 140px;
   font-size: 0.9rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
 }
 
 .booking-card.past .booking-content {
   opacity: 0.8;
+}
+
+/* Ensure consistent button positioning for all booking cards */
+.booking-card .booking-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+  background: var(--muted);
+  align-items: center;
+  min-height: 60px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.booking-card .booking-actions .btn {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: unset !important;
+  font-size: 0.85rem !important;
+  padding: 0.5rem 0.6rem !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.3rem !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  box-sizing: border-box !important;
+  flex: unset !important;
 }
 
 .booking-actions-section {
@@ -3170,7 +3234,10 @@ html, body {
   .overview-cards { grid-template-columns: 1fr; }
   .bookings-grid { grid-template-columns: 1fr; }
   .booking-content { grid-template-columns: 1fr; gap: 1rem; }
-  .booking-actions { flex-direction: column; }
+  .booking-card .booking-actions { 
+    grid-template-columns: 1fr; 
+    gap: 0.5rem;
+  }
   .booking-actions .btn { min-width: unset; }
   .booking-actions-section .actions-grid { flex-direction: column; align-items: center; }
   .booking-actions-section .btn { min-width: unset; width: 100%; max-width: 300px; }
@@ -3207,7 +3274,7 @@ html, body {
 
 .wishlist-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
 }
@@ -3219,6 +3286,9 @@ html, body {
   overflow: hidden;
   transition: var(--transition);
   border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .wishlist-card:hover {
@@ -3228,7 +3298,7 @@ html, body {
 
 .wishlist-image {
   position: relative;
-  height: 200px;
+  height: 280px;
   overflow: hidden;
 }
 
@@ -3249,10 +3319,15 @@ html, body {
   right: 1rem;
   opacity: 0;
   transition: var(--transition);
+  z-index: 10;
 }
 
-.wishlist-card:hover .wishlist-overlay {
-  opacity: 1;
+.wishlist-card:hover .wishlist-overlay,
+.service-wishlist-card:hover .wishlist-overlay,
+.service-wishlist-card .wishlist-overlay {
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
 }
 
 .remove-btn {
@@ -3267,6 +3342,8 @@ html, body {
   justify-content: center;
   cursor: pointer;
   transition: var(--transition);
+  z-index: 20;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .remove-btn:hover {
@@ -3276,6 +3353,11 @@ html, body {
 
 .wishlist-content {
   padding: 1.5rem;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
 }
 
 .wishlist-content h3 {
@@ -3329,6 +3411,13 @@ html, body {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
 }
 
 .wishlist-actions .btn {
@@ -3352,6 +3441,9 @@ html, body {
   overflow: hidden;
   transition: var(--transition);
   border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .service-wishlist-card:hover {
@@ -3378,6 +3470,11 @@ html, body {
 
 .service-wishlist-content {
   padding: 1.5rem;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
 }
 
 .service-wishlist-content h3 {
@@ -3419,6 +3516,13 @@ html, body {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
 }
 
 .service-wishlist-actions .btn {

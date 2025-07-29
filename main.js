@@ -2662,301 +2662,7 @@ function viewDetails(roomId) {
   });
 }
 
-// Book Service function for services
-function bookService(serviceId, singleSelect) {
-  showNotification(`Opening service booking for ${serviceId}...`, 'info');
-  // Create a modal for service booking
-  const modal = document.createElement('div');
-  modal.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-  `;
-  const modalContent = document.createElement('div');
-  modalContent.style.cssText = `
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  `;
-  const serviceDetails = getServiceDetails(serviceId);
-  // Helper to get input type
-  const inputType = singleSelect ? 'radio' : 'checkbox';
-  // Helper to get name attribute for radio group
-  const inputName = singleSelect ? 'serviceOption' : '';
-  // Label text
-  const labelText = singleSelect ? 'Select Service (Choose One):' : 'Select Services (Choose Multiple):';
-  // Only show Dining & Bar for private-dining
-  let showDiningOnly = serviceId === 'private-dining';
-  modalContent.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-      <h2 style="color: #FFD700; margin: 0;">Book Service</h2>
-      <button id="closeServiceModalBtn" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666; transition: none !important; box-shadow: none !important;">&times;</button>
-    </div>
-    <form id="serviceBookingForm">
-      <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 10px; font-weight: bold; color: #333;">${labelText}</label>
-        <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background: #f9f9f9;">
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Dining & Bar</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="fine-dining" style="margin-right: 8px;"> Fine Dining Restaurant - $${servicePrices['fine-dining']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="casual-dining" style="margin-right: 8px;"> Casual Dining - $${servicePrices['casual-dining']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="bar-lounge" style="margin-right: 8px;"> Bar & Lounge - $${servicePrices['bar-lounge']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="room-service" style="margin-right: 8px;"> Room Service - $${servicePrices['room-service']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="breakfast-buffet" style="margin-right: 8px;"> Breakfast Buffet - $${servicePrices['breakfast-buffet']}
-            </label>
-          </div>
-          ${!showDiningOnly ? `
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Wellness & Spa</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="spa-massage" style="margin-right: 8px;"> Spa & Massage - $${servicePrices['spa-massage']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="facial-treatment" style="margin-right: 8px;"> Facial Treatment - $${servicePrices['facial-treatment']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="body-treatment" style="margin-right: 8px;"> Body Treatment - $${servicePrices['body-treatment']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="sauna-steam" style="margin-right: 8px;"> Sauna & Steam Room - $${servicePrices['sauna-steam']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="fitness-center" style="margin-right: 8px;"> Fitness Center - $${servicePrices['fitness-center']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="yoga-classes" style="margin-right: 8px;"> Yoga Classes - $${servicePrices['yoga-classes']}
-            </label>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Leisure & Activities</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="swimming-pool" style="margin-right: 8px;"> Swimming Pool - $${servicePrices['swimming-pool']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="tennis-court" style="margin-right: 8px;"> Tennis Court - $${servicePrices['tennis-court']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="golf-course" style="margin-right: 8px;"> Golf Course - $${servicePrices['golf-course']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="gym-workout" style="margin-right: 8px;"> Gym & Workout - $${servicePrices['gym-workout']}
-            </label>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Events & Meetings</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="conference-room" style="margin-right: 8px;"> Conference Room - $${servicePrices['conference-room']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="meeting-space" style="margin-right: 8px;"> Meeting Space - $${servicePrices['meeting-space']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="wedding-venue" style="margin-right: 8px;"> Wedding Venue - $${servicePrices['wedding-venue']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="event-planning" style="margin-right: 8px;"> Event Planning - $${servicePrices['event-planning']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="audio-visual" style="margin-right: 8px;"> Audio Visual Equipment - $${servicePrices['audio-visual']}
-            </label>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Concierge Services</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="concierge-service" style="margin-right: 8px;"> Concierge Service - $${servicePrices['concierge-service']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="transportation" style="margin-right: 8px;"> Transportation - $${servicePrices['transportation']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="ticket-booking" style="margin-right: 8px;"> Ticket Booking - $${servicePrices['ticket-booking']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="restaurant-reservation" style="margin-right: 8px;"> Restaurant Reservation - $${servicePrices['restaurant-reservation']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="shopping-assistance" style="margin-right: 8px;"> Shopping Assistance - $${servicePrices['shopping-assistance']}
-            </label>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Packages & Offers</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="romance-package" style="margin-right: 8px;"> Romance Package - $${servicePrices['romance-package']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="family-package" style="margin-right: 8px;"> Family Package - $${servicePrices['family-package']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="business-package" style="margin-right: 8px;"> Business Package - $${servicePrices['business-package']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="wellness-package" style="margin-right: 8px;"> Wellness Package - $${servicePrices['wellness-package']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="adventure-package" style="margin-right: 8px;"> Adventure Package - $${servicePrices['adventure-package']}
-            </label>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Kids & Family</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="kids-club" style="margin-right: 8px;"> Kids Club - $${servicePrices['kids-club']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="babysitting" style="margin-right: 8px;"> Babysitting Service - $${servicePrices['babysitting']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="family-activities" style="margin-right: 8px;"> Family Activities - $${servicePrices['family-activities']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="children-menu" style="margin-right: 8px;"> Children's Menu - $${servicePrices['children-menu']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="playground" style="margin-right: 8px;"> Playground - $${servicePrices['playground']}
-            </label>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <h4 style="margin: 0 0 8px 0; color: #FFD700; font-size: 14px;">Pet Services</h4>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="pet-sitting" style="margin-right: 8px;"> Pet Sitting - $${servicePrices['pet-sitting']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="pet-walking" style="margin-right: 8px;"> Pet Walking - $${servicePrices['pet-walking']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="pet-grooming" style="margin-right: 8px;"> Pet Grooming - $${servicePrices['pet-grooming']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="pet-friendly-room" style="margin-right: 8px;"> Pet-Friendly Room - $${servicePrices['pet-friendly-room']}
-            </label>
-            <label style="display: block; margin-bottom: 5px; cursor: pointer; color: #333;">
-              <input type="${inputType}" name="${inputName}" value="pet-amenities" style="margin-right: 8px;"> Pet Amenities - $${servicePrices['pet-amenities']}
-            </label>
-          </div>
-          ` : ''}
-        </div>
-      </div>
-      <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Date:</label>
-        <input type="date" id="serviceDate" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-      </div>
-      <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Time:</label>
-        <input type="time" id="serviceTime" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-      </div>
-      <div style="margin-bottom: 15px;">
-        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Number of People:</label>
-        <input type="number" id="servicePeople" min="1" max="10" value="1" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-      </div>
-      <div style="margin-top: 20px; text-align: right; font-size: 1.2rem; font-weight: bold; color: #333;" id="serviceTotalAmount">
-        Total: $0
-      </div>
-      <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
-        <button type="submit" 
-                style="padding: 12px 24px; background: #FFD700; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-          Confirm Booking
-        </button>
-      </div>
-    </form>
-  `;
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
-
-  const form = modalContent.querySelector('#serviceBookingForm');
-  const serviceCheckboxes = form.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-  const totalAmountEl = document.getElementById('serviceTotalAmount');
-
-  function updateServiceTotal() {
-    let total = 0;
-    const people = document.getElementById('servicePeople').value || 1;
-    serviceCheckboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        const price = servicePrices[checkbox.value];
-        if (price) {
-          total += price;
-        }
-      }
-    });
-    totalAmountEl.textContent = `Total: $${total * people}`;
-  }
-
-  serviceCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', updateServiceTotal);
-  });
-
-  document.getElementById('servicePeople').addEventListener('input', updateServiceTotal);
-
-  const closeBtn = modalContent.querySelector('#closeServiceModalBtn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function() {
-      modal.remove();
-    });
-  }
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const selectedServices = Array.from(form.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked'))
-      .map(input => input.value);
-    
-    if (selectedServices.length === 0) {
-      showNotification('Please select at least one service.', 'error');
-      return;
-    }
-    
-    const totalText = totalAmountEl.textContent;
-    const totalAmount = parseFloat(totalText.replace('Total: $', ''));
-    
-    const booking = {
-      id: `SB-${Date.now()}`,
-      type: 'service',
-      services: selectedServices,
-      date: document.getElementById('serviceDate').value,
-      time: document.getElementById('serviceTime').value,
-      people: document.getElementById('servicePeople').value,
-      total: totalAmount,
-      status: 'Confirmed'
-    };
-    
-    const bookings = JSON.parse(localStorage.getItem('pv_bookings') || '[]');
-    bookings.push(booking);
-    localStorage.setItem('pv_bookings', JSON.stringify(bookings));
-    
-    showNotification('Service Booked Successfully! Kindly check my bookings page to review your booking', 'success');
-    modal.remove();
-    
-    if (window.location.pathname.includes('my-bookings.html')) {
-      loadBookings();
-    }
-  });
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      modal.remove();
-    }
-  });
-  modal.setAttribute('aria-modal', 'true');
-  modal.setAttribute('role', 'dialog');
-}
+// Book Service function for services - REMOVED (replaced by services.html modal)
 
 // View Service Details function for services
 function viewServiceDetails(serviceId) {
@@ -4370,49 +4076,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // ... existing code ...
 
-document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    var form = e.target;
-    var formData = new FormData(form);
+// Only add event listener if bookingForm exists
+const bookingForm = document.getElementById('bookingForm');
+if (bookingForm) {
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = e.target;
+        var formData = new FormData(form);
 
-    // Add guest ages as JSON string if needed
-    var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
-    formData.append('guestAges', JSON.stringify(guestAges));
+        // Add guest ages as JSON string if needed
+        var guestAges = Array.from(document.querySelectorAll('#guestAgesContainer input')).map(i => i.value);
+        formData.append('guestAges', JSON.stringify(guestAges));
 
-    fetch('php/home_booking_process.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.includes('Thank you for your booking!')) {
-            // Show a beautiful modal or SweetAlert2 popup here
-            // alert('Thank you for your booking! We have received your reservation.');
-            form.reset();
-        } else {
+        fetch('php/home_booking_process.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.includes('Thank you for your booking!')) {
+                // Show a beautiful modal or SweetAlert2 popup here
+                // alert('Thank you for your booking! We have received your reservation.');
+                form.reset();
+            } else {
+                // alert('There was an error submitting your booking. Please try again.');
+            }
+        })
+        .catch(error => {
             // alert('There was an error submitting your booking. Please try again.');
-        }
-    })
-    .catch(error => {
-        // alert('There was an error submitting your booking. Please try again.');
+        });
     });
-});
+}
 
+// Only add event listener if guests input exists
 const guestsInput = document.getElementById('guests');
 const guestAgesContainer = document.getElementById('guestAgesContainer');
 
-guestsInput.addEventListener('input', function() {
-    const numGuests = parseInt(this.value, 10) || 1;
-    guestAgesContainer.innerHTML = '';
-    for (let i = 1; i <= numGuests; i++) {
-        const label = document.createElement('label');
-        label.textContent = `Age of Guest ${i}`;
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.name = 'guestAges[]';
-        input.min = 0;
-        input.required = true;
-        guestAgesContainer.appendChild(label);
-        guestAgesContainer.appendChild(input);
-    }
-});
+if (guestsInput && guestAgesContainer) {
+    guestsInput.addEventListener('input', function() {
+        const numGuests = parseInt(this.value, 10) || 1;
+        guestAgesContainer.innerHTML = '';
+        for (let i = 1; i <= numGuests; i++) {
+            const label = document.createElement('label');
+            label.textContent = `Age of Guest ${i}`;
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.name = 'guestAges[]';
+            input.min = 0;
+            input.required = true;
+            guestAgesContainer.appendChild(label);
+            guestAgesContainer.appendChild(input);
+        }
+    });
+}

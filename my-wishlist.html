@@ -180,15 +180,15 @@
             </div>
 
             <div class="services-wishlist-grid">
-                <div class="service-wishlist-card">
-                    <div class="service-wishlist-image">
-                        <img src="images/spa.png" alt="Spa & Wellness">
-                        <div class="wishlist-overlay">
-                            <button class="remove-btn" onclick="removeFromWishlist('spa')">
-                                <i class="fas fa-heart" style="color: #ff0000;"></i>
-                            </button>
-                        </div>
-                    </div>
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Spa & Wellness">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('spa')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
 
                     <div class="service-wishlist-content">
                         <h3>Spa & Wellness</h3>
@@ -208,15 +208,15 @@
                     </div>
                 </div>
 
-                <div class="service-wishlist-card">
-                    <div class="service-wishlist-image">
-                        <img src="Gallery/Fine_dining.jpg" alt="Fine Dining">
-                        <div class="wishlist-overlay">
-                            <button class="remove-btn" onclick="removeFromWishlist('dining')">
-                                <i class="fas fa-heart" style="color: #ff0000;"></i>
-                            </button>
-                        </div>
-                    </div>
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg?v=20241221" alt="Fine Dining" style="display: block !important; max-width: 100%; height: auto;">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('dining')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
 
                     <div class="service-wishlist-content">
                         <h3>Fine Dining</h3>
@@ -236,15 +236,15 @@
                     </div>
                 </div>
 
-                <div class="service-wishlist-card">
-                    <div class="service-wishlist-image">
-                        <img src="images/pool.png" alt="Swimming Pool">
-                        <div class="wishlist-overlay">
-                            <button class="remove-btn" onclick="removeFromWishlist('pool')">
-                                <i class="fas fa-heart" style="color: #ff0000;"></i>
-                            </button>
-                        </div>
-                    </div>
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Swimming Pool">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('pool')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
 
                     <div class="service-wishlist-content">
                         <h3>Swimming Pool</h3>
@@ -258,6 +258,174 @@
                                 <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
                             </button>
                             <button class="btn login" onclick="viewServiceDetails('pool')">
+                                <i class="fas fa-eye" style="color: #000;"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Leisure & Activities">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('leisure')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
+
+                    <div class="service-wishlist-content">
+                        <h3>Leisure & Activities</h3>
+                        <p>Stay active and entertained with our range of leisure activities</p>
+                        <div class="service-wishlist-features">
+                            <span><i class="fas fa-swimming-pool"></i> Swimming Pool</span>
+                            <span><i class="fas fa-dumbbell"></i> Recreation Center</span>
+                        </div>
+                        <div class="service-wishlist-actions">
+                            <button class="btn signup" onclick="bookService('leisure')">
+                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+                            </button>
+                            <button class="btn login" onclick="viewServiceDetails('leisure')">
+                                <i class="fas fa-eye" style="color: #000;"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Packages & Experiences">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('packages')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
+
+                    <div class="service-wishlist-content">
+                        <h3>Packages & Experiences</h3>
+                        <p>Limited-time packages with unique experiences</p>
+                        <div class="service-wishlist-features">
+                            <span><i class="fas fa-heart"></i> Romantic Escape</span>
+                            <span><i class="fas fa-users"></i> Family Adventure</span>
+                        </div>
+                        <div class="service-wishlist-actions">
+                            <button class="btn signup" onclick="bookService('packages')">
+                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+                            </button>
+                            <button class="btn login" onclick="viewServiceDetails('packages')">
+                                <i class="fas fa-eye" style="color: #000;"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Events & Meetings">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('events')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
+
+                    <div class="service-wishlist-content">
+                        <h3>Events & Meetings</h3>
+                        <p>Professional event spaces and meeting facilities for corporate and social gatherings</p>
+                        <div class="service-wishlist-features">
+                            <span><i class="fas fa-building"></i> Conference Rooms</span>
+                            <span><i class="fas fa-clock"></i> Flexible Hours</span>
+                        </div>
+                        <div class="service-wishlist-actions">
+                            <button class="btn signup" onclick="bookService('events')">
+                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+                            </button>
+                            <button class="btn login" onclick="viewServiceDetails('events')">
+                                <i class="fas fa-eye" style="color: #000;"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Concierge Services">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('concierge')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
+
+                    <div class="service-wishlist-content">
+                        <h3>Concierge Services</h3>
+                        <p>Personalized assistance and exclusive services to enhance your stay</p>
+                        <div class="service-wishlist-features">
+                            <span><i class="fas fa-plane"></i> Travel Arrangements</span>
+                            <span><i class="fas fa-clock"></i> 24/7 Available</span>
+                        </div>
+                        <div class="service-wishlist-actions">
+                            <button class="btn signup" onclick="bookService('concierge')">
+                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+                            </button>
+                            <button class="btn login" onclick="viewServiceDetails('concierge')">
+                                <i class="fas fa-eye" style="color: #000;"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Kids & Family">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('kids')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
+
+                    <div class="service-wishlist-content">
+                        <h3>Kids & Family</h3>
+                        <p>Family-friendly activities and services for guests of all ages</p>
+                        <div class="service-wishlist-features">
+                            <span><i class="fas fa-child"></i> Kids Club</span>
+                            <span><i class="fas fa-users"></i> Family Activities</span>
+                        </div>
+                        <div class="service-wishlist-actions">
+                            <button class="btn signup" onclick="bookService('kids')">
+                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+                            </button>
+                            <button class="btn login" onclick="viewServiceDetails('kids')">
+                                <i class="fas fa-eye" style="color: #000;"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                  <div class="service-wishlist-card">
+                      <div class="service-wishlist-image">
+                          <img src="Gallery/service.jpg" alt="Pet Services">
+                          <div class="wishlist-overlay" style="position: absolute; top: 1rem; right: 1rem; opacity: 1; z-index: 10; display: block !important; visibility: visible !important;">
+                              <button class="remove-btn" onclick="removeFromWishlist('pets')" style="background: rgba(220, 53, 69, 0.9); color: #fff; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                  <i class="fas fa-heart" style="color: #ffffff; font-size: 16px;"></i>
+                              </button>
+                          </div>
+                      </div>
+
+                    <div class="service-wishlist-content">
+                        <h3>Pet Services</h3>
+                        <p>Pet-friendly accommodations and services for your furry companions</p>
+                        <div class="service-wishlist-features">
+                            <span><i class="fas fa-paw"></i> Pet-Friendly Rooms</span>
+                            <span><i class="fas fa-home"></i> Pet Sitting</span>
+                        </div>
+                        <div class="service-wishlist-actions">
+                            <button class="btn signup" onclick="bookService('pets')">
+                                <i class="fas fa-calendar-check" style="color: #000;"></i> Book Service
+                            </button>
+                            <button class="btn login" onclick="viewServiceDetails('pet-services')">
                                 <i class="fas fa-eye" style="color: #000;"></i> View Details
                             </button>
                         </div>
@@ -293,6 +461,7 @@
         <a href="home.html" style="color:#3FA8B1; font-weight:700; text-decoration:none; font-size:1.25rem;">
             &larr; Back
         </a>
+
     </div>
     <!-- Footer -->
     <footer class="footer"
@@ -354,6 +523,862 @@
 
 
     <script src="main.js"></script>
+    <script>
+        // Function to book service - redirects to services page with booking modal
+        function bookService(serviceType) {
+            // Map service types to the services page with booking modal
+            const serviceMap = {
+                'spa': 'luxury-spa',
+                'dining': 'main-restaurant',
+                'pool': 'swimming-pool',
+                'leisure': 'outdoor-activities',
+                'packages': 'romantic-escape',
+                'events': 'conference-rooms',
+                'concierge': 'travel-arrangements',
+                'kids': 'kids-club',
+                'pets': 'pet-friendly-rooms'
+            };
+            
+            const mappedService = serviceMap[serviceType] || serviceType;
+            
+            // Navigate to services page with booking modal and pre-select the service
+            window.location.href = `services.html?openServiceBooking=true&serviceType=${mappedService}`;
+        }
+        
+        // Function to view service details
+        function viewServiceDetails(serviceType) {
+            console.log('viewServiceDetails called with:', serviceType);
+            // Show the appropriate service detail modal
+            const modalMap = {
+                'spa': 'spaServiceModal',
+                'dining': 'diningServiceModal',
+                'pool': 'poolServiceModal',
+                'leisure': 'leisureServiceModal',
+                'packages': 'packagesServiceModal',
+                'events': 'eventsServiceModal',
+                'concierge': 'conciergeServiceModal',
+                'kids': 'kidsServiceModal',
+                'pets': 'petsServiceModal',
+                'pet-services': 'petsServiceModal'
+            };
+            
+            const modalId = modalMap[serviceType];
+            console.log('Modal ID:', modalId);
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                console.log('Modal element:', modal);
+                if (modal) {
+                    modal.style.display = 'flex';
+                    console.log('Modal should now be visible');
+                } else {
+                    console.error('Modal element not found:', modalId);
+                }
+            } else {
+                console.error('No modal mapping found for service type:', serviceType);
+            }
+        }
+        
+        // Function to close service modals
+        function closeServiceModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Function to remove from wishlist
+        function removeFromWishlist(serviceType) {
+            // Get current wishlist
+            const wishlist = JSON.parse(localStorage.getItem('pv_service_wishlist') || '[]');
+            
+            // Remove the service from wishlist
+            const updatedWishlist = wishlist.filter(item => item !== serviceType);
+            localStorage.setItem('pv_service_wishlist', JSON.stringify(updatedWishlist));
+            
+            // Refresh the page to update the display
+            location.reload();
+        }
+        
+        // Function to add more rooms
+        function addMoreRooms() {
+            window.location.href = 'rooms.html';
+        }
+        
+        // Function to add more services
+        function addMoreServices() {
+            window.location.href = 'services.html';
+        }
+        
+        // Function to clear wishlist
+        function clearWishlist() {
+            if (confirm('Are you sure you want to clear your entire wishlist?')) {
+                localStorage.removeItem('pv_service_wishlist');
+                location.reload();
+            }
+        }
+    </script>
+
+    <!-- Service Detail Modals -->
+    <!-- Spa & Wellness Modal -->
+    <div id="spaServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('spaServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg" alt="Spa & Wellness" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Spa & Wellness</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Rejuvenate your body and mind with our luxury spa treatments</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-spa" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Premium Treatments</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-leaf" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Natural Products</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-heart" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Relaxation Therapy</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Flexible Scheduling</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Private Treatment Rooms</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Expert Therapists</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Aromatherapy Sessions</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Wellness Consultations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,850</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">2-4 hours</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('spa')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fine Dining Modal -->
+    <div id="diningServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('diningServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg?v=20241221" alt="Fine Dining" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Fine Dining</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Experience culinary excellence with our award-winning restaurants</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-star" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Michelin Quality</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #FFD700;"></i>
+                            <span style="color: #333;">All Day Dining</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-utensils" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Gourmet Cuisine</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-wine-glass-alt" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Premium Wine Selection</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">International Cuisine</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Chef's Special Menu</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Private Dining Rooms</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Wine Pairing Service</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Dietary Accommodations</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Room Service Available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,250</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">2-3 hours</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('dining')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swimming Pool Modal -->
+    <div id="poolServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('poolServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="images/pool.png" alt="Swimming Pool" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Swimming Pool</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Relax in our infinity pool with stunning city skyline views</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-swimming-pool" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Infinity Pool</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-umbrella-beach" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Poolside Service</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-sun" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Heated Pool</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Extended Hours</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Lounge Chairs</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Towels Provided</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Poolside Bar</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Kids Pool Area</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Swimming Lessons</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Aqua Fitness Classes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,150</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">Unlimited access</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('pool')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leisure & Activities Modal -->
+    <div id="leisureServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('leisureServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg" alt="Leisure & Activities" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Leisure & Activities</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Stay active and entertained with our range of leisure activities and recreational facilities</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-swimming-pool" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Swimming Pool</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-dumbbell" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Recreation Center</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-hiking" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Outdoor Activities</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Extended Hours</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Fitness Equipment</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Guided Tours</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Sports Facilities</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Adventure Activities</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Equipment Rental</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Professional Instructors</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,450</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">Full day access</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('leisure')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Packages & Experiences Modal -->
+    <div id="packagesServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('packagesServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg" alt="Packages & Experiences" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Packages & Experiences</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Limited-time packages with unique experiences and unforgettable memories</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-heart" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Romantic Escape</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-users" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Family Adventure</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-calendar-alt" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Seasonal Specials</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-star" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Premium Experiences</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Customized Itineraries</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Private Guides</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Exclusive Access</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Photo Services</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Transportation Included</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Gourmet Meals</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$3,850</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">1-3 days</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('packages')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events & Meetings Modal -->
+    <div id="eventsServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('eventsServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg" alt="Events & Meetings" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Events & Meetings</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Professional event spaces and meeting facilities for corporate and social gatherings</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-building" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Conference Rooms</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-heart" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Wedding Venues</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-users" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Social Events</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Flexible Hours</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Audio-Visual Equipment</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Catering Services</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Event Planning</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Professional Staff</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Parking Available</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">WiFi Access</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$2,850</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">Half-day to full-day</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('events')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Concierge Services Modal -->
+    <div id="conciergeServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('conciergeServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg" alt="Concierge Services" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Concierge Services</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Personalized assistance and exclusive services to enhance your stay</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-plane" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Travel Arrangements</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-map-marked-alt" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Tourist Services</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-shopping-bag" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Personal Shopping</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clock" style="color: #FFD700;"></i>
+                            <span style="color: #333;">24/7 Available</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Reservation Services</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Transportation Booking</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Local Recommendations</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Priority Access</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Multilingual Staff</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Express Services</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,250</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">As needed</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('concierge')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kids & Family Modal -->
+    <div id="kidsServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+            <button onclick="closeServiceModal('kidsServiceModal')" style="position: absolute; top: 1rem; right: 1rem; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #666; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#333';" onmouseout="this.style.color='#666';">×</button>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+                <img src="Gallery/service.jpg" alt="Kids & Family" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+                <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Kids & Family</h3>
+                <p style="color: #666; font-size: 1rem; line-height: 1.6;">Family-friendly activities and services for guests of all ages</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-child" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Kids Club</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-users" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Family Activities</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-baby" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Babysitting</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-gamepad" style="color: #FFD700;"></i>
+                            <span style="color: #333;">Entertainment</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+                    <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Supervised Activities</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Educational Programs</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Safe Environment</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Age-Appropriate Activities</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Flexible Scheduling</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check" style="color: #28a745;"></i>
+                            <span style="color: #333;">Parental Peace of Mind</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,150</span></div>
+                        <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">Half-day to full-day</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button onclick="bookService('kids')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+                    <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+         <!-- Pet Services Modal -->
+     <div id="petsServiceModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999;">
+         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+             <button onclick="document.getElementById('petsServiceModal').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">×</button>
+             
+             <h2 style="color: #FFD700; text-align: center; margin-bottom: 1rem;">Pet Services</h2>
+                             <img src="Gallery/service.jpg" alt="Pet Services" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+             
+             <h3 style="color: #333; margin-bottom: 0.5rem;">Pet-Friendly Accommodations</h3>
+             <p style="color: #666; margin-bottom: 1rem;">Comprehensive care and amenities for your beloved pets</p>
+             
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                 <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                     <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+                     <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-paw" style="color: #FFD700;"></i>
+                             <span style="color: #333;">Pet-Friendly Rooms</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-home" style="color: #FFD700;"></i>
+                             <span style="color: #333;">Pet Sitting</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-cut" style="color: #FFD700;"></i>
+                             <span style="color: #333;">Pet Grooming</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-heart" style="color: #FFD700;"></i>
+                             <span style="color: #333;">Pet Wellness</span>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                     <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+                     <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-check" style="color: #28a745;"></i>
+                             <span style="color: #333;">24/7 Pet Care</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-check" style="color: #28a745;"></i>
+                             <span style="color: #333;">Safe Environment</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-check" style="color: #28a745;"></i>
+                             <span style="color: #333;">Professional Staff</span>
+                         </div>
+                         <div style="display: flex; align-items: center; gap: 0.5rem;">
+                             <i class="fas fa-check" style="color: #28a745;"></i>
+                             <span style="color: #333;">Emergency Care</span>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             
+             <div style="margin-bottom: 1.5rem;">
+                 <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                     <div>
+                         <span style="color: #666; font-size: 0.9rem;">Price:</span>
+                         <span style="color: #FFD700; font-weight: bold; font-size: 1.1rem; margin-left: 0.5rem;">$1,350</span>
+                     </div>
+                     <div>
+                         <span style="color: #666; font-size: 0.9rem;">Duration:</span>
+                         <span style="color: #333; font-weight: bold; margin-left: 0.5rem;">24/7 Available</span>
+                     </div>
+                 </div>
+             </div>
+             
+             <div style="text-align: center;">
+                 <button onclick="bookService('pets')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; font-weight: 700; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; margin: 0 auto;">
+                     <i class="fas fa-calendar" style="color: #fff;"></i>
+                     BOOK NOW
+                 </button>
+             </div>
+         </div>
+     </div>
 </body>
 
 </html>
