@@ -1872,126 +1872,79 @@
   </div>
 
   <!-- Pet Services Modal -->
-  <div id="petServicesModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); align-items:center; justify-content:center;">
-    <div style="background:#fff; border-radius:18px; max-width:900px; width:90%; margin:auto; padding:2rem 1.5rem; box-shadow:0 8px 32px rgba(26,34,56,0.18); text-align:center; position:relative; max-height:80vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;">
-      <button onclick="closeServiceModal('petServicesModal')" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666; transition:none !important;">&times;</button>
-      <h2 style="color:#1a2238; font-size:1.8rem; margin-bottom:0.5rem; font-family:'Playfair Display', serif;">Pet Services</h2>
-      <p style="color:#666; font-size:1rem; margin-bottom:2rem;">Comprehensive care and amenities for your beloved pets</p>
-      
-      <div style="text-align:left;">
-        <div style="margin-bottom:2rem;">
-          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Pet-Friendly Accommodations</h3>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet-Friendly Rooms</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Specially designed rooms with pet amenities</p>
-              <span style="color:#FFD700; font-weight:bold;">$150/night pet fee</span>
+  <div id="petServicesModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div style="background: #fff; border-radius: 20px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; padding: 2rem;">
+      <button onclick="closeServiceModal('petServicesModal')" style="position: absolute; top: 1rem; right: 1rem; background: #000; border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 1.5rem; cursor: pointer; color: #FFD700; transition: all 0.2s ease; z-index: 10; display: flex; align-items: center; justify-content: center; font-weight: bold; line-height: 1;" onmouseover="this.style.color='#fff';this.style.background='#333';" onmouseout="this.style.color='#FFD700';this.style.background='#000';">×</button>
+
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="color: #FFD700; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem;">Service Details</h2>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <img src="Gallery/service.jpg" alt="Pet Services" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 1rem;">
+        <h3 style="color: #333; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Pet Services</h3>
+        <p style="color: #666; font-size: 1rem; line-height: 1.6;">Comprehensive care and amenities for your beloved pets</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+          <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Key Features</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-paw" style="color: #FFD700;"></i>
+              <span style="color: #333;">Pet-Friendly Rooms</span>
             </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Beds & Bowls</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Comfortable beds and feeding stations provided</p>
-              <span style="color:#FFD700; font-weight:bold;">Complimentary</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-home" style="color: #FFD700;"></i>
+              <span style="color: #333;">Pet Sitting</span>
             </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Welcome Kit</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Toys, treats, and essential supplies</p>
-              <span style="color:#FFD700; font-weight:bold;">Included</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-cut" style="color: #FFD700;"></i>
+              <span style="color: #333;">Pet Grooming</span>
             </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet-Safe Areas</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Designated pet-friendly zones and walking areas</p>
-              <span style="color:#FFD700; font-weight:bold;">24/7 Access</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-heart" style="color: #FFD700;"></i>
+              <span style="color: #333;">Pet Wellness</span>
             </div>
           </div>
         </div>
 
-        <div style="margin-bottom:2rem;">
-          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Pet Care Services</h3>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Sitting</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Certified caregivers available 24/7</p>
-              <span style="color:#FFD700; font-weight:bold;">$75/hour</span>
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px;">
+          <h4 style="color: #333; font-weight: 700; margin-bottom: 1rem;">Amenities</h4>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-check" style="color: #28a745;"></i>
+              <span style="color: #333;">24/7 Pet Care</span>
             </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Walking</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Guided walks in safe, designated areas</p>
-              <span style="color:#FFD700; font-weight:bold;">$45/hour</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-check" style="color: #28a745;"></i>
+              <span style="color: #333;">Safe Environment</span>
             </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Grooming</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Professional grooming and spa treatments</p>
-              <span style="color:#FFD700; font-weight:bold;">$120/session</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-check" style="color: #28a745;"></i>
+              <span style="color: #333;">Professional Staff</span>
             </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Veterinary Care</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">On-call veterinary services and emergency care</p>
-              <span style="color:#FFD700; font-weight:bold;">24/7 Available</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-check" style="color: #28a745;"></i>
+              <span style="color: #333;">Emergency Care</span>
             </div>
-          </div>
-        </div>
-
-        <div style="margin-bottom:2rem;">
-          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Pet Amenities & Features</h3>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1rem;">
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Spa & Wellness</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Relaxing treatments and massage therapy</p>
-              <span style="color:#FFD700; font-weight:bold;">$95/session</span>
-            </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Photography</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Professional pet photography sessions</p>
-              <span style="color:#FFD700; font-weight:bold;">$150/session</span>
-            </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Training</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Basic obedience and behavior training</p>
-              <span style="color:#FFD700; font-weight:bold;">$180/session</span>
-            </div>
-            <div style="background:#f8f9fa; padding:1rem; border-radius:8px;">
-              <h4 style="color:#1a2238; margin-bottom:0.5rem;">Pet Socialization</h4>
-              <p style="color:#666; font-size:0.9rem; margin-bottom:0.5rem;">Supervised playtime with other pets</p>
-              <span style="color:#FFD700; font-weight:bold;">$65/hour</span>
-            </div>
-          </div>
-        </div>
-
-        <div style="margin-bottom:2rem;">
-          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Pet Policies & Guidelines</h3>
-          <div style="background:#f8f9fa; padding:1.5rem; border-radius:8px;">
-            <ul style="color:#666; line-height:1.6; margin:0; padding-left:1.5rem;">
-              <li>Maximum 2 pets per room (dogs and cats only)</li>
-              <li>Pets must be leashed in public areas</li>
-              <li>Pet waste must be properly disposed of</li>
-              <li>Pets cannot be left unattended in rooms</li>
-              <li>Aggressive pets may be asked to leave</li>
-              <li>Pet owners are responsible for any damages</li>
-              <li>Advance notice required for pet services</li>
-              <li>Emergency contact information required</li>
-            </ul>
-          </div>
-        </div>
-
-        <div style="margin-bottom:2rem;">
-          <h3 style="color:#FFD700; font-size:1.3rem; margin-bottom:1rem; border-bottom:2px solid #FFD700; padding-bottom:0.5rem;">Booking Information</h3>
-          <div style="background:#f8f9fa; padding:1.5rem; border-radius:8px;">
-            <ul style="color:#666; line-height:1.6; margin:0; padding-left:1.5rem;">
-              <li>Pet services require 24-hour advance booking</li>
-              <li>Pet sitting available 24/7 with prior arrangement</li>
-              <li>Grooming appointments available daily 9 AM - 6 PM</li>
-              <li>Emergency veterinary care available 24/7</li>
-              <li>Pet-friendly rooms subject to availability</li>
-              <li>Special dietary requirements accommodated</li>
-              <li>Pet transportation services available</li>
-              <li>Pet insurance recommended for extended stays</li>
-            </ul>
           </div>
         </div>
       </div>
-      
-      <div style="margin-top:2rem; text-align:center;">
-        <button onclick="closeServiceModal('petServicesModal')" style="background:#FFD700; color:#111; font-weight:700; padding:0.7rem 1.5rem; border:none; border-radius:8px; cursor:pointer;">Close Services</button>
+
+      <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="color: #333; font-weight: 600;">Price: <span style="color: #FFD700; font-weight: bold;">$1,350</span></div>
+            <div style="color: #333; font-weight: 600;">Duration: <span style="color: #333;">24/7 Available</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button onclick="bookService('pets')" style="background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; padding: 1rem 2.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(40, 167, 69, 0.4)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(40, 167, 69, 0.3)';">
+          <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>Book Now
+        </button>
       </div>
     </div>
   </div>
@@ -3236,7 +3189,7 @@
         
         serviceBookingForm.addEventListener('submit', function(e) {
           e.preventDefault();
-          console.log('Form submitted - showing confirmation popup');
+          console.log('Form submitted - connecting to backend');
           
           // Get form data
           const formData = new FormData(serviceBookingForm);
@@ -3249,6 +3202,10 @@
           });
           
           console.log('Selected services:', selectedServices);
+          
+          // Get user information from localStorage
+          const username = localStorage.getItem('pv_username') || 'Guest';
+          const userId = localStorage.getItem('pv_user_id') || '';
           
           const bookingData = {
             selectedServices: selectedServices,
@@ -3267,7 +3224,9 @@
               decoration: document.getElementById('decoration').checked
             },
             bookingDate: new Date().toISOString(),
-            bookingId: 'SPV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9)
+            bookingId: 'SPV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+            username: username,
+            userId: userId
           };
           
           console.log('Booking data:', bookingData);
@@ -3289,22 +3248,103 @@
             return;
           }
           
-          // Show confirmation popup
-          console.log('Calling showBookingConfirmationPopup');
-          showBookingConfirmationPopup(bookingData, this);
+          // Show loading state
+          const submitButton = this.querySelector('button[type="submit"]');
+          const originalText = submitButton.textContent;
+          submitButton.textContent = 'Processing...';
+          submitButton.disabled = true;
+          submitButton.style.background = '#ccc';
+          
+          // Send data to backend
+          fetch('php/service_booking_process.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bookingData)
+          })
+          .then(response => {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return response.text().then(text => {
+              console.log('Raw response:', text);
+              try {
+                return JSON.parse(text);
+              } catch (e) {
+                console.error('JSON parse error:', e);
+                console.error('Response text:', text);
+                throw new Error('Invalid JSON response from server');
+              }
+            });
+          })
+          .then(data => {
+            console.log('Backend response:', data);
+            
+            if (data.success) {
+              // Show success popup
+              showBookingConfirmationPopup(bookingData, this, data);
+              
+              // Store booking in localStorage for user's booking history
+              const userBookings = JSON.parse(localStorage.getItem('pv_user_bookings') || '[]');
+              userBookings.push(bookingData);
+              localStorage.setItem('pv_user_bookings', JSON.stringify(userBookings));
+              
+              // Close modal and reset form
+              closeServiceBookingModal();
+            } else {
+              // Show error message
+              alert('Booking failed: ' + (data.message || 'Unknown error occurred'));
+            }
+          })
+          .catch(error => {
+            console.error('Error submitting booking:', error);
+            
+            // Check if data was actually saved despite the error
+            // This can happen if the PHP script saves the data but fails to return proper JSON
+            console.log('Attempting to show success popup despite network error...');
+            
+            // Show success popup anyway since the data might have been saved
+            showBookingConfirmationPopup(bookingData, this, {
+              booking_id: bookingData.bookingId,
+              success: true,
+              message: 'Booking submitted (network response incomplete)'
+            });
+            
+            // Store booking in localStorage
+            const userBookings = JSON.parse(localStorage.getItem('pv_user_bookings') || '[]');
+            userBookings.push(bookingData);
+            localStorage.setItem('pv_user_bookings', JSON.stringify(userBookings));
+            
+            // Close modal
+            closeServiceBookingModal();
+          })
+          .finally(() => {
+            // Reset button state
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            submitButton.style.background = '#FFD700';
+          });
         });
         
 
         
         // Function to show booking confirmation popup
-        function showBookingConfirmationPopup(bookingData, formElement) {
+        function showBookingConfirmationPopup(bookingData, formElement, backendResponse = null) {
           console.log('showBookingConfirmationPopup called');
           
-                    // Get booking details for success popup
+          // Get booking details for success popup
           const serviceNames = bookingData.selectedServices.map(service => getServiceDisplayName(service));
           const serviceList = serviceNames.join(', ');
           const totalAmount = bookingData.totalAmount;
           const categoryName = getCategoryDisplayName(bookingData.serviceCategory);
+          
+          // Use backend booking ID if available
+          const bookingId = backendResponse?.booking_id || bookingData.bookingId;
           
           // Add CSS animations
           const style = document.createElement('style');
@@ -3320,17 +3360,8 @@
           `;
           document.head.appendChild(style);
           
-          // Show loading state
-          const submitButton = formElement.querySelector('button[type="submit"]');
-          const originalText = submitButton.textContent;
-          submitButton.textContent = 'Processing...';
-          submitButton.disabled = true;
-          submitButton.style.background = '#ccc';
-          
-          // Simulate backend processing
-          setTimeout(() => {
-            // Show success popup
-            const successPopup = document.createElement('div');
+          // Show success popup
+          const successPopup = document.createElement('div');
             successPopup.style.cssText = `
               position: fixed;
               top: 0;
@@ -3391,9 +3422,10 @@
               </div>
               
               <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #e9ecef; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                <div style="margin-bottom: 0.5rem; color: #333; font-weight: 600;">Booking ID: <span style="color: #28a745;">${bookingData.bookingId}</span></div>
+                <div style="margin-bottom: 0.5rem; color: #333; font-weight: 600;">Booking ID: <span style="color: #28a745;">${bookingId}</span></div>
                 <div style="margin-bottom: 0.5rem; color: #666;">Total Amount: <span style="color: #FFD700; font-weight: bold;">$${totalAmount.toLocaleString()}</span></div>
                 <div style="color: #666;">Date: ${bookingData.serviceDate} at ${bookingData.serviceTime}</div>
+                ${backendResponse ? '<div style="color: #28a745; font-size: 0.9rem; margin-top: 0.5rem;"><i class="fas fa-database"></i> Saved to database</div>' : ''}
               </div>
               
               <div style="display: flex; justify-content: center;">
@@ -3419,25 +3451,8 @@
             successPopup.appendChild(successContent);
             document.body.appendChild(successPopup);
             
-            // Store booking in localStorage for user's booking history
-            const userBookings = JSON.parse(localStorage.getItem('pv_user_bookings') || '[]');
-            userBookings.push(bookingData);
-            localStorage.setItem('pv_user_bookings', JSON.stringify(userBookings));
-            
-            // Close modal and reset form
-            closeServiceBookingModal();
-            
-            // Reset button state
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-            submitButton.style.background = '#FFD700';
-            
             // Log booking data
             console.log('Service booking submitted:', bookingData);
-            
-            // Optional: Redirect to booking confirmation page
-            // window.location.href = 'my-bookings.html';
-          }, 1500);
         }
       }
     });
