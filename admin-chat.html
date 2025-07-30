@@ -4,13 +4,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pearl Vista - Chat Admin</title>
+    <title>Admin Chat | The Pearl Vista</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="images/logo.png" />
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .admin-dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: #1a1a1a;
+            color: #fff;
+            width: 280px;
+            padding: 2rem 1.5rem 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            color: #d4af37;
+            text-align: center;
+            padding: 1rem;
+            background: #222;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+        }
+
+        .sidebar nav a i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #d4af37;
+        }
+
+        .sidebar nav a.active, 
+        .sidebar nav a:hover {
+            background: #d4af37;
+            color: #000;
+            border-color: #d4af37;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .sidebar nav a.active i,
+        .sidebar nav a:hover i {
+            color: #000;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background: #fff;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title i {
+            color: #d4af37;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            position: relative;
+            color: #333;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .admin-profile:hover {
+            background: #f8f9fa;
+            border-color: #d4af37;
+        }
+
+        .admin-profile .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #d4af37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .admin-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .admin-role {
+            font-size: 0.8rem;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        #adminDropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: #fff;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            z-index: 1000;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
         .admin-header {
             background: #1a1a1a;
             color: #fff;
@@ -265,22 +464,113 @@
             color: #666;
             margin-top: 0.5rem;
         }
+
+        /* Dropdown item styling for consistent icon colors */
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333;
+        }
+
+        .dropdown-item i {
+            color: #d4af37;
+            width: 16px;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-item:hover i {
+            color: #b8941f;
+        }
     </style>
 </head>
 
 <body>
-    <!-- Admin Header -->
-    <header class="admin-header">
-        <h1><i class="fas fa-comments"></i> Chat Admin Panel</h1>
-        <nav class="admin-nav">
-            <a href="admin-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="admin-bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a>
-            <a href="admin-customers.html"><i class="fas fa-users"></i> Customers</a>
-            <a href="admin-chat.html" style="background: #d4af37; color: #000;"><i class="fas fa-comments"></i> Chat</a>
-            <a href="admin-settings.html"><i class="fas fa-cog"></i> Settings</a>
-            <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <div class="admin-dashboard">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-gem"></i> The Pearl Vista
+            </div>
+            <nav>
+                <a href="admin-dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="admin-rooms.html">
+                    <i class="fas fa-bed"></i>
+                    Rooms
+                </a>
+                <a href="admin-bookings.html">
+                    <i class="fas fa-calendar-check"></i>
+                    Bookings
+                </a>
+                <a href="admin-customers.html">
+                    <i class="fas fa-users"></i>
+                    Customers
+                </a>
+                <a href="admin-services.html">
+                    <i class="fas fa-concierge-bell"></i>
+                    Services
+                </a>
+                <a href="admin-tour-bookings.html">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Tour Bookings
+                </a>
+                <a href="admin-chat.html" class="active">
+                    <i class="fas fa-comments"></i>
+                    Chat
+                </a>
+                <a href="admin-reports.html">
+                    <i class="fas fa-chart-bar"></i>
+                    Reports
+                </a>
+                <a href="admin-settings.html">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
         </nav>
-    </header>
+        </div>
+
+        <div class="main-content">
+            <div class="topbar">
+                <div class="page-title">
+                    <i class="fas fa-comments"></i>
+                    Chat Admin Panel
+                </div>
+                <div class="admin-profile" onclick="toggleDropdown()">
+                    <div class="avatar">A</div>
+                    <div class="admin-info">
+                        <div class="admin-name">Admin User</div>
+                        <div class="admin-role">Administrator</div>
+                    </div>
+                    <div id="adminDropdown">
+                        <div class="dropdown-item" onclick="window.location.href='admin-profile.html'">
+                            <i class="fas fa-user"></i>
+                            Profile
+                        </div>
+                        <div class="dropdown-item" onclick="window.location.href='admin-settings.html'">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </div>
+                        <div class="dropdown-item" onclick="window.location.href='admin-add-user.html'">
+                            <i class="fas fa-user-plus"></i>
+                            Add User
+                        </div>
+                        <div class="dropdown-item" onclick="window.location.href='logout.php'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     <!-- Chat Admin Container -->
     <div class="chat-admin-container">
@@ -564,6 +854,20 @@
                 return date.toLocaleDateString();
             }
         }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('adminDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const profile = document.querySelector('.admin-profile');
+            const dropdown = document.getElementById('adminDropdown');
+            if (!profile.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
     </script>
 </body>
 

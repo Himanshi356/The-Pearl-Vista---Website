@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root"; // default for XAMPP
 $password = "";     // default for XAMPP
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 // Create connection without specifying database first
 $conn = new mysqli($servername, $username, $password);

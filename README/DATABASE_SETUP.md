@@ -26,7 +26,7 @@
 
 The contact form uses the following database structure:
 
-### Database: `pearlvista`
+### Database: `the_pearl_vista`
 ### Table: `contact_messages`
 
 | Column | Type | Description |
@@ -82,7 +82,7 @@ php/
 
 To view submitted contact messages:
 1. Open phpMyAdmin: `http://localhost/phpmyadmin`
-2. Select the `pearlvista` database
+2. Select the `the_pearl_vista` database
 3. Click on the `contact_messages` table
 4. View the submitted messages
 

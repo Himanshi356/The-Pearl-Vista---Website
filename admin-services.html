@@ -4,1012 +4,736 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Services | The Pearl Vista</title>
-  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <style>
-    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
-    .admin-dashboard { display: flex; min-height: 100vh; }
-    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
-    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
-    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
-    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
-    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
-    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
-    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
-    .admin-profile { 
-      position: fixed; 
-      top: 32px; 
-      right: 48px; 
-      z-index: 1000; 
-      display: flex; 
-      align-items: center; 
-      gap: 0.8rem; 
-      color: #101a2b; 
-      cursor: pointer; 
-      transition: all 0.2s ease;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .admin-profile:hover { 
-      transform: translateY(-1px);
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      color: #333;
     }
-    .admin-profile .avatar { 
-      width: 40px; 
-      height: 40px; 
-      border-radius: 50%; 
-      background: #FFD700; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-weight: bold; 
-      color: #101a2b; 
-      font-size: 1.3rem;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-      transition: all 0.2s ease;
-    }
-    .admin-profile:hover .avatar {
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-      transform: scale(1.05);
-    }
-    #adminDropdown { 
-      display: none; 
-      position: absolute; 
-      top: 52px; 
-      right: 0; 
-      background: #fff; 
-      color: #101a2b; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
-      min-width: 240px; 
-      padding: 1.8rem; 
-      font-size: 0.95rem;
-      border: 1px solid #f8f9fa;
-      animation: dropdownFadeIn 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-    @keyframes dropdownFadeIn {
-      from { opacity: 0; transform: translateY(-15px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    #adminDropdown .user-info {
-      border-bottom: 1px solid #f0f0f0;
-      padding-bottom: 1.2rem;
-      margin-bottom: 1.2rem;
-      position: relative;
-    }
-    #adminDropdown .user-info::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    }
-    #adminDropdown .user-name {
-      font-weight: 700; 
-      font-size: 1.2rem;
-      margin-bottom: 0.4rem;
-      color: #101a2b;
-      letter-spacing: 0.5px;
-    }
-    #adminDropdown .user-email {
-      font-size: 0.9rem; 
-      margin-bottom: 0.8rem; 
-      color: #666;
-      font-weight: 500;
-    }
-    #adminDropdown .user-detail {
-      font-size: 0.85rem; 
-      margin-bottom: 0.4rem; 
-      color: #666;
+
+    .admin-dashboard {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      min-height: 100vh;
     }
-    #adminDropdown .user-detail i {
-      width: 14px;
-      color: #FFD700;
-      font-size: 0.8rem;
-    }
-    #adminDropdown .user-detail span {
-      color: #101a2b;
-      font-weight: 600;
-    }
-    #adminDropdown .dropdown-buttons {
+
+    .sidebar {
+      background: #1a1a1a;
+      color: #fff;
+      width: 280px;
+      padding: 2rem 1.5rem 1rem 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
+      gap: 2rem;
+      min-height: 100vh;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border-right: 1px solid #e0e0e0;
     }
-    #adminDropdown button { 
-      padding: 0.8rem 1.2rem; 
-      border-radius: 10px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      width: 100%; 
+
+    .sidebar .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+      color: #d4af37;
+      text-align: center;
+      padding: 1rem;
+      background: #222;
+      border-radius: 12px;
+      border: 1px solid #333;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+    }
+
+    .sidebar nav a i {
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #d4af37;
+    }
+
+    .sidebar nav a.active, 
+    .sidebar nav a:hover {
+      background: #d4af37;
+      color: #000;
+      border-color: #d4af37;
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .sidebar nav a.active i,
+    .sidebar nav a:hover i {
+      color: #000;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background: #fff;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .page-title i {
+      color: #d4af37;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      position: relative;
+      color: #333;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0;
+    }
+
+    .admin-profile:hover {
+      background: #f8f9fa;
+      border-color: #d4af37;
+    }
+
+    .admin-profile .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+      font-size: 1.2rem;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .admin-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .admin-role {
+      font-size: 0.8rem;
+      color: #d4af37;
+      font-weight: 500;
+    }
+
+    #adminDropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: #fff;
+      color: #333;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      z-index: 1000;
+      border: 1px solid #e0e0e0;
+    }
+
+    .dropdown-item {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+    }
+
+    .dropdown-item:hover {
+      background: #f8f9fa;
+      color: #d4af37;
+      border-color: #d4af37;
+    }
+
+    .dropdown-item i {
+      width: 16px;
+      text-align: center;
+      color: #d4af37;
+    }
+
+    /* Services specific styles */
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #d4af37;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      border-color: #d4af37;
+    }
+
+    .stat-card h3 {
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .change {
+      font-size: 0.9rem;
+      color: #28a745;
+      font-weight: 500;
+    }
+
+    .stat-card .change.negative {
+      color: #dc3545;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .service-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      border-color: #d4af37;
+    }
+
+    .service-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #d4af37, #b8941f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 3rem;
+    }
+
+    .service-info {
+      padding: 1.5rem;
+    }
+
+    .service-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+
+    .service-description {
+      color: #666;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .service-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .status-badge {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-available {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-unavailable {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .status-maintenance {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .btn-edit:hover {
+      background: #b8941f;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+    }
+
+    .add-service-section {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      margin-bottom: 2rem;
+    }
+
+    .add-service-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.8rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
       font-size: 0.9rem;
       transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    .btn-primary {
+      background: #d4af37;
+      color: #000;
+      padding: 1rem 2rem;
       border: none;
-      position: relative;
-      overflow: hidden;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    #adminDropdown button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-    #adminDropdown button:hover::before {
-      left: 100%;
-    }
-    #adminDropdown button:hover {
+
+    .btn-primary:hover {
+      background: #b8941f;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    #adminDropdown .btn-profile {
-      background: linear-gradient(135deg, #101a2b, #1a2332); 
-      color: #FFD700;
-      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.2);
-    }
-    #adminDropdown .btn-settings {
-      background: #fff; 
-      color: #101a2b; 
-      border: 2px solid #101a2b;
-      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.1);
-    }
-    #adminDropdown .btn-logout {
-      background: linear-gradient(135deg, #FFD700, #FFA500); 
-      color: #101a2b;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
-    }
-    .services-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1.5rem 2rem; min-width: 350px; max-width: 1100px; margin: 0 auto; }
-    .services-table table { width: 100%; border-collapse: collapse; }
-    .services-table th, .services-table td { padding: 1.1rem 1.1rem; text-align: left; border-bottom: 1px solid #222; }
-    .services-table tr:hover { background: #232b3b; }
-    .services-table th { color: #FFD700; font-size: 1rem; font-weight: 700; }
-    .services-table td { font-size: 1rem; color: #fff; }
-    .services-table td .status { 
-      display: inline-block;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.9em;
-    }
-    .action-btn { background: #FFD700; color: #101a2b; border: none; border-radius: 6px; padding: 0.4em 1.2em; font-weight: 600; cursor: pointer; margin-right: 0.8em; transition: background 0.2s; }
-    .action-btn:hover { background: #e6c200; }
-    .action-btn:last-child { margin-right: 0; }
-    .action-buttons { display: flex; align-items: center; gap: 0.8em; }
-    .status {
-      display: inline-block;
-      padding: 0.3em 1.1em;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1em;
-      letter-spacing: 0.5px;
-      text-align: center;
-      min-width: 80px;
-    }
-    .status.Confirmed { 
-      background: #1a7f37; 
-      color: #fff; 
-      border: 1px solid #0f5f2a;
-    }
-    .status.Pending { 
-      background: #FF8C00; 
-      color: #fff; 
-      border: 1px solid #e67e00;
-    }
-    .status.Cancelled { 
-      background: #d32f2f; 
-      color: #fff; 
-      border: 1px solid #b71c1c;
     }
   </style>
 </head>
 <body>
   <div class="admin-dashboard">
-    <aside class="sidebar">
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-gem"></i> The Pearl Vista
+      </div>
       <nav>
-        <a href="admin-dashboard.html">Dashboard</a>
-        <a href="admin-rooms.html">Rooms</a>
-        <a href="admin-services.html" class="active">Services</a>
-        <a href="admin-bookings.html">Bookings</a>
-        <a href="admin-tour-bookings.html">Tour Bookings</a>
-        <a href="admin-customers.html">Customers</a>
-        <a href="admin-reports.html">Reports</a>
+        <a href="admin-dashboard.html">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a>
+        <a href="admin-rooms.html">
+          <i class="fas fa-bed"></i>
+          Rooms
+        </a>
+        <a href="admin-bookings.html">
+          <i class="fas fa-calendar-check"></i>
+          Bookings
+        </a>
+        <a href="admin-customers.html">
+          <i class="fas fa-users"></i>
+          Customers
+        </a>
+        <a href="admin-services.html" class="active">
+          <i class="fas fa-concierge-bell"></i>
+          Services
+        </a>
+        <a href="admin-tour-bookings.html">
+          <i class="fas fa-map-marked-alt"></i>
+          Tour Bookings
+        </a>
+        <a href="admin-chat.html">
+          <i class="fas fa-comments"></i>
+          Chat
+        </a>
+        <a href="admin-reports.html">
+          <i class="fas fa-chart-bar"></i>
+          Reports
+        </a>
+        <a href="admin-settings.html">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
       </nav>
-    </aside>
-    <main class="main-content">
-      <header>
-        <h2>Hotel Services Management</h2>
-      </header>
-      
-      <!-- Search Bar -->
-      <div style="background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-        <div style="display: flex; align-items: end; gap: 1rem; flex-wrap: wrap;">
-          <div style="flex: 1; min-width: 250px;">
-            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #101a2b;">Search Services & Bookings</label>
-            <input type="text" id="searchInput" placeholder="Search by service name, category, customer, or booking ID..." 
-                   style="width: 100%; padding: 0.8rem 1rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: #fff; transition: border-color 0.2s; height: 42px; box-sizing: border-box;">
-            <div id="searchStatus" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; display: none;"></div>
+    </div>
+
+    <div class="main-content">
+      <div class="topbar">
+        <div class="page-title">
+          <i class="fas fa-concierge-bell"></i>
+          Service Management
+        </div>
+        <div class="admin-profile" onclick="toggleDropdown()">
+          <div class="avatar">A</div>
+          <div class="admin-info">
+            <div class="admin-name">Admin User</div>
+            <div class="admin-role">Administrator</div>
           </div>
-          <div style="display: flex; gap: 0.8rem; align-items: end;">
-            <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #101a2b; visibility: hidden;">Category</label>
-              <select id="filterCategory" style="padding: 0.8rem 1rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: #fff; min-width: 150px; height: 42px; box-sizing: border-box;">
-                <option value="">All Categories</option>
-                <option value="Dining & Culinary Excellence">Dining & Culinary Excellence</option>
-                <option value="Wellness & Spa Services">Wellness & Spa Services</option>
-                <option value="Leisure & Activities">Leisure & Activities</option>
-                <option value="Events & Meetings">Events & Meetings</option>
-                <option value="Concierge Services">Concierge Services</option>
-                <option value="Kids & Family">Kids & Family</option>
-                <option value="Packages & Experiences">Packages & Experiences</option>
-                <option value="Pet Services">Pet Services</option>
-              </select>
+          <div id="adminDropdown">
+            <div class="dropdown-item" onclick="window.location.href='admin-profile.html'">
+              <i class="fas fa-user"></i>
+              Profile
             </div>
-            <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #101a2b; visibility: hidden;">Status</label>
-              <select id="filterStatus" style="padding: 0.8rem 1rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: #fff; min-width: 120px; height: 42px; box-sizing: border-box;">
-                <option value="">All Status</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="Pending">Pending</option>
-                <option value="Cancelled">Cancelled</option>
-                <option value="Active">Active</option>
-              </select>
+            <div class="dropdown-item" onclick="window.location.href='admin-settings.html'">
+              <i class="fas fa-cog"></i>
+              Settings
             </div>
-            <div>
-              <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #101a2b; visibility: hidden;">Action</label>
-              <button onclick="clearSearch()" style="padding: 0.8rem 1.5rem; background: #6c757d; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; height: 42px; box-sizing: border-box;">Clear</button>
+            <div class="dropdown-item" onclick="window.location.href='admin-add-user.html'">
+              <i class="fas fa-user-plus"></i>
+              Add User
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='logout.php'">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
             </div>
           </div>
         </div>
       </div>
-      <div class="admin-profile" id="adminProfile">
-        <span>Admin</span>
-        <div class="avatar">A</div>
-        <div id="adminDropdown">
-          <div class="user-info">
-            <div class="user-name">Admin</div>
-            <div class="user-email">admin@pearlvista.com</div>
-            <div class="user-detail">
-              <i class="fas fa-building"></i>
-              Department: <span>Management</span>
+
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="number">25</div>
+          <h3>Total Services</h3>
+          <div class="change">+3 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">18</div>
+          <h3>Active Services</h3>
+          <div class="change">+2 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">$12,450</div>
+          <h3>Service Revenue</h3>
+          <div class="change">+15% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">156</div>
+          <h3>Bookings</h3>
+          <div class="change">+8% vs last month</div>
+        </div>
+      </div>
+
+      <div class="add-service-section">
+        <h3 style="margin-bottom: 1.5rem; color: #333;">
+          <i class="fas fa-plus" style="color: #d4af37;"></i>
+          Add New Service
+        </h3>
+        <form class="add-service-form">
+          <div class="form-group">
+            <label>Service Name</label>
+            <input type="text" placeholder="e.g., Spa Treatment" required>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select required>
+              <option value="">Select Category</option>
+              <option value="spa">Spa & Wellness</option>
+              <option value="dining">Dining</option>
+              <option value="transport">Transportation</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="business">Business Services</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price</label>
+            <input type="number" placeholder="e.g., 150" required>
+          </div>
+          <div class="form-group">
+            <label>Duration</label>
+            <input type="text" placeholder="e.g., 2 hours" required>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select required>
+              <option value="available">Available</option>
+              <option value="unavailable">Unavailable</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea placeholder="Service description..." rows="3"></textarea>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-plus"></i>
+              Add Service
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-image">
+            <i class="fas fa-spa"></i>
+          </div>
+          <div class="service-info">
+            <div class="service-title">Luxury Spa Treatment</div>
+            <div class="service-price">$200</div>
+            <div class="service-description">
+              Relaxing massage and spa treatment with premium oils and professional therapists.
             </div>
-            <div class="user-detail">
-              <i class="fas fa-phone"></i>
-              Phone: <span>+1 234 567 8901</span>
-            </div>
-            <div class="user-detail">
-              <i class="fas fa-clock"></i>
-              Last login: <span>23 Jul 2025, 14:44</span>
+            <div class="service-status">
+              <span class="status-badge status-available">Available</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
             </div>
           </div>
-          <div class="dropdown-buttons">
-            <button class="btn-profile" onclick="window.location.href='admin-profile.html'">Profile</button>
-            <button class="btn-settings" onclick="window.location.href='admin-settings.html'">Settings</button>
-            <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <div class="service-info">
+            <div class="service-title">Fine Dining Experience</div>
+            <div class="service-price">$150</div>
+            <div class="service-description">
+              Exclusive dining experience with gourmet cuisine and wine pairing.
+            </div>
+            <div class="service-status">
+              <span class="status-badge status-available">Available</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <i class="fas fa-car"></i>
+          </div>
+          <div class="service-info">
+            <div class="service-title">Airport Transfer</div>
+            <div class="service-price">$80</div>
+            <div class="service-description">
+              Luxury airport transfer service with professional chauffeur.
+            </div>
+            <div class="service-status">
+              <span class="status-badge status-maintenance">Maintenance</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <i class="fas fa-dumbbell"></i>
+          </div>
+          <div class="service-info">
+            <div class="service-title">Fitness Training</div>
+            <div class="service-price">$120</div>
+            <div class="service-description">
+              Personal fitness training session with certified trainers.
+            </div>
+            <div class="service-status">
+              <span class="status-badge status-available">Available</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <i class="fas fa-swimming-pool"></i>
+          </div>
+          <div class="service-info">
+            <div class="service-title">Pool Access</div>
+            <div class="service-price">$50</div>
+            <div class="service-description">
+              Access to our infinity pool with stunning ocean views.
+            </div>
+            <div class="service-status">
+              <span class="status-badge status-unavailable">Unavailable</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="service-info">
+            <div class="service-title">Business Center</div>
+            <div class="service-price">$30</div>
+            <div class="service-description">
+              Access to business center with meeting rooms and office equipment.
+            </div>
+            <div class="service-status">
+              <span class="status-badge status-available">Available</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <section style="max-width:1500px;margin:0 auto;">
-        <h1 style="font-size:1.5rem; font-weight:700; color: #101a2b; margin-bottom:0.2em;">Service Categories</h1>
-        <div style="color:#767676; font-size:1.05rem; margin-bottom:1.2em;">Dining & Culinary Excellence, Wellness & Spa Services, Leisure & Activities, Events & Meetings, Concierge Services, Kids & Family, Packages & Experiences, Pet Services</div>
-        <div class="services-table" style="margin-top:1.2em;">
-          <table>
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>Service Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dining & Culinary Excellence -->
-              <tr>
-                <td>Dining & Culinary Excellence</td>
-                <td>Main Restaurant</td>
-                <td>International cuisine with modern twist, seasonal menus, 120 seating capacity, 6:00 AM - 11:00 PM</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Main Restaurant')">Edit</button><button class="action-btn" onclick="deleteService('Main Restaurant')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Dining & Culinary Excellence</td>
-                <td>Restaurant and Lounge Bar</td>
-                <td>Gourmet cuisine with premium cocktails, wines, light refreshments, 50 seating capacity, 11:00 AM - 2:00 AM</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Restaurant and Lounge Bar')">Edit</button><button class="action-btn" onclick="deleteService('Restaurant and Lounge Bar')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Dining & Culinary Excellence</td>
-                <td>Private Dining</td>
-                <td>Exclusive private dining rooms for intimate gatherings, up to 20 guests, custom menus</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Private Dining')">Edit</button><button class="action-btn" onclick="deleteService('Private Dining')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Wellness & Spa Services -->
-              <tr>
-                <td>Wellness & Spa Services</td>
-                <td>Luxury Spa</td>
-                <td>Comprehensive spa treatments including massages, facials, body therapies, 6 treatment rooms, 8:00 AM - 8:00 PM</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Luxury Spa')">Edit</button><button class="action-btn" onclick="deleteService('Luxury Spa')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Wellness & Spa Services</td>
-                <td>Fitness Center</td>
-                <td>State-of-the-art equipment with personal training and group fitness classes, 24/7 access</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Fitness Center')">Edit</button><button class="action-btn" onclick="deleteService('Fitness Center')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Wellness & Spa Services</td>
-                <td>Wellness Programs</td>
-                <td>Customized wellness programs including yoga, meditation, and nutrition guidance</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Wellness Programs')">Edit</button><button class="action-btn" onclick="deleteService('Wellness Programs')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Leisure & Activities -->
-              <tr>
-                <td>Leisure & Activities</td>
-                <td>Swimming Pool</td>
-                <td>Infinity pool with stunning city views and poolside service, 6:00 AM - 10:00 PM</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Swimming Pool')">Edit</button><button class="action-btn" onclick="deleteService('Swimming Pool')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Leisure & Activities</td>
-                <td>Recreation Center</td>
-                <td>Indoor games, billiards, and entertainment facilities for all ages, 9:00 AM - 11:00 PM</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Recreation Center')">Edit</button><button class="action-btn" onclick="deleteService('Recreation Center')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Leisure & Activities</td>
-                <td>Outdoor Activities</td>
-                <td>Guided tours, outdoor sports, and adventure activities in the city</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Outdoor Activities')">Edit</button><button class="action-btn" onclick="deleteService('Outdoor Activities')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Events & Meetings -->
-              <tr>
-                <td>Events & Meetings</td>
-                <td>Conference Rooms</td>
-                <td>State-of-the-art meeting rooms with modern technology and equipment, 10-200 capacity, high-speed WiFi</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Conference Rooms')">Edit</button><button class="action-btn" onclick="deleteService('Conference Rooms')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Events & Meetings</td>
-                <td>Wedding Venues</td>
-                <td>Elegant wedding venues with professional event planning services, photography included</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Wedding Venues')">Edit</button><button class="action-btn" onclick="deleteService('Wedding Venues')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Events & Meetings</td>
-                <td>Social Events</td>
-                <td>Birthday parties, anniversaries, and special celebrations with custom catering and entertainment</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Social Events')">Edit</button><button class="action-btn" onclick="deleteService('Social Events')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Concierge Services -->
-              <tr>
-                <td>Concierge Services</td>
-                <td>Travel Arrangements</td>
-                <td>Airport transfers, car rentals, and transportation services</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Travel Arrangements')">Edit</button><button class="action-btn" onclick="deleteService('Travel Arrangements')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Concierge Services</td>
-                <td>Tourist Services</td>
-                <td>City tours, ticket bookings, and local attraction recommendations</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Tourist Services')">Edit</button><button class="action-btn" onclick="deleteService('Tourist Services')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Concierge Services</td>
-                <td>Personal Shopping</td>
-                <td>Personal shopping assistance and delivery services</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Personal Shopping')">Edit</button><button class="action-btn" onclick="deleteService('Personal Shopping')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Kids & Family -->
-              <tr>
-                <td>Kids & Family</td>
-                <td>Kids Club</td>
-                <td>Supervised activities and entertainment for children of all ages, 9:00 AM - 6:00 PM, ages 3-12</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Kids Club')">Edit</button><button class="action-btn" onclick="deleteService('Kids Club')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Kids & Family</td>
-                <td>Family Activities</td>
-                <td>Family-friendly activities and bonding experiences for all ages, games and arts & crafts</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Family Activities')">Edit</button><button class="action-btn" onclick="deleteService('Family Activities')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Kids & Family</td>
-                <td>Babysitting</td>
-                <td>Professional babysitting services with certified caregivers, 24/7 available</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Babysitting')">Edit</button><button class="action-btn" onclick="deleteService('Babysitting')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Packages & Experiences -->
-              <tr>
-                <td>Packages & Experiences</td>
-                <td>Romantic Escape</td>
-                <td>A special getaway for couples with exclusive amenities, spa access included</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Romantic Escape')">Edit</button><button class="action-btn" onclick="deleteService('Romantic Escape')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Packages & Experiences</td>
-                <td>Family Adventure</td>
-                <td>Fun-filled activities and perks for the whole family, suitable for all ages</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Family Adventure')">Edit</button><button class="action-btn" onclick="deleteService('Family Adventure')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Packages & Experiences</td>
-                <td>Seasonal Specials</td>
-                <td>Limited-time packages with unique experiences and exclusive offers</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Seasonal Specials')">Edit</button><button class="action-btn" onclick="deleteService('Seasonal Specials')">Delete</button></div></td>
-              </tr>
-              
-              <!-- Pet Services -->
-              <tr>
-                <td>Pet Services</td>
-                <td>Pet-Friendly Rooms</td>
-                <td>Comfortable rooms with pet beds and feeding stations</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Pet-Friendly Rooms')">Edit</button><button class="action-btn" onclick="deleteService('Pet-Friendly Rooms')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Pet Services</td>
-                <td>Pet Sitting</td>
-                <td>Certified caregivers for your pets, 24/7 available</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Pet Sitting')">Edit</button><button class="action-btn" onclick="deleteService('Pet Sitting')">Delete</button></div></td>
-              </tr>
-              <tr>
-                <td>Pet Services</td>
-                <td>Pet Grooming</td>
-                <td>Professional grooming and special treatments for pets</td>
-                <td><span class="status Confirmed">Active</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editService('Pet Grooming')">Edit</button><button class="action-btn" onclick="deleteService('Pet Grooming')">Delete</button></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <section style="max-width:1500px;margin:0 auto;">
-        <h1 style="font-size:1.5rem; font-weight:700; color: #101a2b; margin-bottom:0.2em;">Customer Service Bookings</h1>
-        <div style="color:#767676; font-size:1.05rem; margin-bottom:1.2em;">View and manage customer bookings for hotel services.</div>
-        <div class="services-table" style="margin-top:1.2em;">
-          <table>
-            <thead>
-              <tr>
-                <th>Booking ID</th>
-                <th>Customer</th>
-                <th>Service</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Special Requests</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>PV1001</td>
-                <td>John Smith</td>
-                <td>Luxury Spa</td>
-                <td>2025-07-25</td>
-                <td>14:30</td>
-                <td>Deep tissue massage preferred</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1001')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1001')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1002</td>
-                <td>Jane Doe</td>
-                <td>Main Restaurant</td>
-                <td>2025-07-26</td>
-                <td>19:00</td>
-                <td>Window seat, vegetarian menu</td>
-                <td><span class="status Pending">Pending</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1002')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1002')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1003</td>
-                <td>Tom Fernton</td>
-                <td>Swimming Pool</td>
-                <td>2025-07-27</td>
-                <td>09:00</td>
-                <td>Pool toys for children</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1003')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1003')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1004</td>
-                <td>Emily Clark</td>
-                <td>Tourist Services</td>
-                <td>2025-07-28</td>
-                <td>10:00</td>
-                <td>Wheelchair accessible tour</td>
-                <td><span class="status Cancelled">Cancelled</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1004')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1004')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1005</td>
-                <td>Michael Lee</td>
-                <td>Private Dining</td>
-                <td>2025-07-29</td>
-                <td>20:30</td>
-                <td>Anniversary celebration, champagne</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1005')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1005')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1006</td>
-                <td>Priya Patel</td>
-                <td>Luxury Spa</td>
-                <td>2025-07-30</td>
-                <td>16:00</td>
-                <td>Aromatherapy oils, quiet room</td>
-                <td><span class="status Pending">Pending</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1006')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1006')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1007</td>
-                <td>David Wilson</td>
-                <td>Fitness Center</td>
-                <td>2025-07-31</td>
-                <td>11:00</td>
-                <td>Personal training session</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1007')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1007')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1008</td>
-                <td>Sarah Johnson</td>
-                <td>Conference Rooms</td>
-                <td>2025-08-01</td>
-                <td>08:30</td>
-                <td>Business meeting setup</td>
-                <td><span class="status Pending">Pending</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1008')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1008')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1009</td>
-                <td>Robert Chen</td>
-                <td>Restaurant and Lounge Bar</td>
-                <td>2025-08-02</td>
-                <td>18:00</td>
-                <td>Business dinner, quiet corner</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1009')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1009')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1010</td>
-                <td>Lisa Anderson</td>
-                <td>Wellness Programs</td>
-                <td>2025-08-03</td>
-                <td>15:30</td>
-                <td>Yoga and meditation session</td>
-                <td><span class="status Cancelled">Cancelled</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1010')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1010')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1011</td>
-                <td>James Brown</td>
-                <td>Recreation Center</td>
-                <td>2025-08-04</td>
-                <td>13:00</td>
-                <td>Billiards tournament</td>
-                <td><span class="status Confirmed">Confirmed</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1011')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1011')">Cancel</button></div></td>
-              </tr>
-              <tr>
-                <td>PV1012</td>
-                <td>Maria Garcia</td>
-                <td>Travel Arrangements</td>
-                <td>2025-08-05</td>
-                <td>09:30</td>
-                <td>Airport transfer booking</td>
-                <td><span class="status Pending">Pending</span></td>
-                <td><div class="action-buttons"><button class="action-btn" onclick="editBooking('PV1012')">Edit</button><button class="action-btn" onclick="cancelBooking('PV1012')">Cancel</button></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
+    </div>
   </div>
+
+  <script src="admin-navigation.js"></script>
+  <script src="fix-admin-navigation.js"></script>
   <script>
-    // Admin Dropdown Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const adminProfile = document.getElementById('adminProfile');
-      const adminDropdown = document.getElementById('adminDropdown');
+    function toggleDropdown() {
+      const dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
 
-      if (adminProfile && adminDropdown) {
-        // Toggle dropdown on click
-        adminProfile.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const isVisible = adminDropdown.style.display === 'block';
-          adminDropdown.style.display = isVisible ? 'none' : 'block';
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!adminProfile.contains(e.target)) {
-            adminDropdown.style.display = 'none';
-          }
-        });
-
-        // Prevent dropdown from closing when clicking inside it
-        adminDropdown.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const profile = document.querySelector('.admin-profile');
+      const dropdown = document.getElementById('adminDropdown');
+      if (!profile.contains(event.target)) {
+        dropdown.style.display = 'none';
       }
     });
-
-    // Logout function
-    function logoutAdmin() {
-      if (confirm('Are you sure you want to logout?')) {
-        // Clear any admin session data
-        localStorage.removeItem('admin_logged_in');
-        localStorage.removeItem('admin_username');
-        // Redirect to login page
-        window.location.href = 'index.html';
-      }
-    }
-
-    // Service Management Functions
-    function editService(serviceName) {
-      // Find the service row
-      const rows = document.querySelectorAll('.services-table tbody tr');
-      rows.forEach(row => {
-        const serviceCell = row.querySelector('td:nth-child(2)');
-        if (serviceCell && serviceCell.textContent.trim() === serviceName) {
-          // Get current data
-          const category = row.querySelector('td:nth-child(1)').textContent;
-          const description = row.querySelector('td:nth-child(3)').textContent;
-          
-          // Create edit form
-          const editForm = `
-            <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center;">
-              <div style="background:white; padding:2rem; border-radius:10px; width:400px; max-width:90%;">
-                <h3 style="margin-top:0; color:#101a2b;">Edit Service: ${serviceName}</h3>
-                <form id="editServiceForm">
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Category:</label>
-                    <select id="editCategory" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                      <option value="Dining/Bar" ${category === 'Dining/Bar' ? 'selected' : ''}>Dining/Bar</option>
-                      <option value="Spa/Fitness" ${category === 'Spa/Fitness' ? 'selected' : ''}>Spa/Fitness</option>
-                      <option value="Activities" ${category === 'Activities' ? 'selected' : ''}>Activities</option>
-                      <option value="Concierge" ${category === 'Concierge' ? 'selected' : ''}>Concierge</option>
-                      <option value="Kids" ${category === 'Kids' ? 'selected' : ''}>Kids</option>
-                      <option value="Pets" ${category === 'Pets' ? 'selected' : ''}>Pets</option>
-                      <option value="Packages" ${category === 'Packages' ? 'selected' : ''}>Packages</option>
-                    </select>
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Service Name:</label>
-                    <input type="text" id="editServiceName" value="${serviceName}" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Description:</label>
-                    <textarea id="editDescription" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px; height:80px;">${description}</textarea>
-                  </div>
-                  <div style="display:flex; gap:1rem; justify-content:flex-end;">
-                    <button type="button" onclick="closeEditModal()" style="padding:0.5rem 1rem; border:1px solid #ccc; background:white; border-radius:4px; cursor:pointer;">Cancel</button>
-                    <button type="submit" style="padding:0.5rem 1rem; background:#FFD700; border:none; border-radius:4px; cursor:pointer; font-weight:600;">Save Changes</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          `;
-          
-          document.body.insertAdjacentHTML('beforeend', editForm);
-          
-          // Handle form submission
-          document.getElementById('editServiceForm').onsubmit = function(e) {
-            e.preventDefault();
-            const newCategory = document.getElementById('editCategory').value;
-            const newServiceName = document.getElementById('editServiceName').value;
-            const newDescription = document.getElementById('editDescription').value;
-            
-            // Update the table row
-            row.querySelector('td:nth-child(1)').textContent = newCategory;
-            row.querySelector('td:nth-child(2)').textContent = newServiceName;
-            row.querySelector('td:nth-child(3)').textContent = newDescription;
-            
-            // Update button onclick handlers
-            const editBtn = row.querySelector('button[onclick*="editService"]');
-            const deleteBtn = row.querySelector('button[onclick*="deleteService"]');
-            if (editBtn) editBtn.setAttribute('onclick', `editService('${newServiceName}')`);
-            if (deleteBtn) deleteBtn.setAttribute('onclick', `deleteService('${newServiceName}')`);
-            
-            closeEditModal();
-          };
-        }
-      });
-    }
-
-    function deleteService(serviceName) {
-      if (confirm(`Are you sure you want to delete the service "${serviceName}"?\n\nThis action cannot be undone.`)) {
-        const rows = document.querySelectorAll('.services-table tbody tr');
-        rows.forEach(row => {
-          const serviceCell = row.querySelector('td:nth-child(2)');
-          if (serviceCell && serviceCell.textContent.trim() === serviceName) {
-            // Add fade out effect
-            row.style.transition = 'opacity 0.3s ease';
-            row.style.opacity = '0';
-            setTimeout(() => {
-              row.style.display = 'none';
-            }, 300);
-          }
-        });
-      }
-    }
-
-    // Booking Management Functions
-    function editBooking(bookingId) {
-      // Find the booking row
-      const rows = document.querySelectorAll('.services-table tbody tr');
-      rows.forEach(row => {
-        const bookingIdCell = row.querySelector('td:first-child');
-        if (bookingIdCell && bookingIdCell.textContent.trim() === bookingId) {
-          // Get current data
-          const customer = row.querySelector('td:nth-child(2)').textContent;
-          const service = row.querySelector('td:nth-child(3)').textContent;
-          const date = row.querySelector('td:nth-child(4)').textContent;
-          const time = row.querySelector('td:nth-child(5)').textContent;
-          const specialRequests = row.querySelector('td:nth-child(6)').textContent;
-          const status = row.querySelector('td:nth-child(7) .status').textContent;
-          
-          // Create edit form
-          const editForm = `
-            <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center;">
-              <div style="background:white; padding:2rem; border-radius:10px; width:400px; max-width:90%;">
-                <h3 style="margin-top:0; color:#101a2b;">Edit Booking: ${bookingId}</h3>
-                <form id="editBookingForm">
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Customer:</label>
-                    <input type="text" id="editCustomer" value="${customer}" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Service:</label>
-                    <select id="editService" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                      <option value="Spa & Massage" ${service === 'Spa & Massage' ? 'selected' : ''}>Spa & Massage</option>
-                      <option value="Fine Dining Restaurant" ${service === 'Fine Dining Restaurant' ? 'selected' : ''}>Fine Dining Restaurant</option>
-                      <option value="Swimming Pool" ${service === 'Swimming Pool' ? 'selected' : ''}>Swimming Pool</option>
-                      <option value="City Tours" ${service === 'City Tours' ? 'selected' : ''}>City Tours</option>
-                    </select>
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Date:</label>
-                    <input type="date" id="editDate" value="${date}" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Time:</label>
-                    <input type="time" id="editTime" value="${time}" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Special Requests:</label>
-                    <textarea id="editSpecialRequests" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px; height:60px; resize:vertical;">${specialRequests}</textarea>
-                  </div>
-                  <div style="margin-bottom:1rem;">
-                    <label style="display:block; margin-bottom:0.5rem; font-weight:600;">Status:</label>
-                    <select id="editStatus" style="width:100%; padding:0.5rem; border:1px solid #ccc; border-radius:4px;">
-                      <option value="Confirmed" ${status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
-                      <option value="Pending" ${status === 'Pending' ? 'selected' : ''}>Pending</option>
-                      <option value="Cancelled" ${status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
-                    </select>
-                  </div>
-                  <div style="display:flex; gap:1rem; justify-content:flex-end;">
-                    <button type="button" onclick="closeEditModal()" style="padding:0.5rem 1rem; border:1px solid #ccc; background:white; border-radius:4px; cursor:pointer;">Cancel</button>
-                    <button type="submit" style="padding:0.5rem 1rem; background:#FFD700; border:none; border-radius:4px; cursor:pointer; font-weight:600;">Save Changes</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          `;
-          
-          document.body.insertAdjacentHTML('beforeend', editForm);
-          
-          // Handle form submission
-          document.getElementById('editBookingForm').onsubmit = function(e) {
-            e.preventDefault();
-            const newCustomer = document.getElementById('editCustomer').value;
-            const newService = document.getElementById('editService').value;
-            const newDate = document.getElementById('editDate').value;
-            const newTime = document.getElementById('editTime').value;
-            const newSpecialRequests = document.getElementById('editSpecialRequests').value;
-            const newStatus = document.getElementById('editStatus').value;
-            
-            // Update the table row
-            row.querySelector('td:nth-child(2)').textContent = newCustomer;
-            row.querySelector('td:nth-child(3)').textContent = newService;
-            row.querySelector('td:nth-child(4)').textContent = newDate;
-            row.querySelector('td:nth-child(5)').textContent = newTime;
-            row.querySelector('td:nth-child(6)').textContent = newSpecialRequests;
-            
-            // Update status with proper styling
-            const statusCell = row.querySelector('td:nth-child(7) .status');
-            statusCell.textContent = newStatus.toUpperCase();
-            statusCell.className = `status ${newStatus}`;
-            
-            closeEditModal();
-          };
-        }
-      });
-    }
-
-    function cancelBooking(bookingId) {
-      if (confirm(`Are you sure you want to cancel booking ${bookingId}?\n\nThis will change the status to "Cancelled".`)) {
-        const rows = document.querySelectorAll('.services-table tbody tr');
-        rows.forEach(row => {
-          const bookingIdCell = row.querySelector('td:first-child');
-          if (bookingIdCell && bookingIdCell.textContent.trim() === bookingId) {
-            const statusCell = row.querySelector('td:nth-child(7) .status');
-            if (statusCell) {
-              statusCell.textContent = 'CANCELLED';
-              statusCell.className = 'status Cancelled';
-            }
-          }
-        });
-      }
-    }
-
-    // Search and Filter Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.getElementById('searchInput');
-      const filterCategory = document.getElementById('filterCategory');
-      const filterStatus = document.getElementById('filterStatus');
-
-      // Search function
-      function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const selectedCategory = filterCategory.value;
-        const selectedStatus = filterStatus.value;
-        const searchStatus = document.getElementById('searchStatus');
-
-        console.log('Search term:', searchTerm);
-        console.log('Selected category:', selectedCategory);
-        console.log('Selected status:', selectedStatus);
-
-        // Filter service categories table (first table)
-        const serviceTables = document.querySelectorAll('.services-table');
-        if (serviceTables.length > 0) {
-          const serviceRows = serviceTables[0].querySelectorAll('tbody tr');
-          console.log('Service rows found:', serviceRows.length);
-          
-          serviceRows.forEach(row => {
-            const category = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-            const serviceName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            const description = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            const statusElement = row.querySelector('td:nth-child(4) .status');
-            const status = statusElement ? statusElement.textContent : '';
-
-            const matchesSearch = searchTerm === '' || 
-              category.includes(searchTerm) || 
-              serviceName.includes(searchTerm) || 
-              description.includes(searchTerm);
-
-            const matchesCategory = selectedCategory === '' || category === selectedCategory.toLowerCase();
-            const matchesStatus = selectedStatus === '' || status === selectedStatus;
-
-            const shouldShow = matchesSearch && matchesCategory && matchesStatus;
-            row.style.display = shouldShow ? '' : 'none';
-            
-            console.log(`Service: ${serviceName}, Search: ${matchesSearch}, Category: ${matchesCategory}, Status: ${matchesStatus}, Show: ${shouldShow}`);
-          });
-        }
-
-        // Filter customer bookings table (second table)
-        if (serviceTables.length > 1) {
-          const bookingRows = serviceTables[1].querySelectorAll('tbody tr');
-          console.log('Booking rows found:', bookingRows.length);
-          
-          bookingRows.forEach(row => {
-            const bookingId = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-            const customer = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            const service = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            const specialRequests = row.querySelector('td:nth-child(6)').textContent.toLowerCase();
-            const statusElement = row.querySelector('td:nth-child(7) .status');
-            const status = statusElement ? statusElement.textContent : '';
-
-            const matchesSearch = searchTerm === '' || 
-              bookingId.includes(searchTerm) || 
-              customer.includes(searchTerm) || 
-              service.includes(searchTerm) || 
-              specialRequests.includes(searchTerm);
-
-            const matchesStatus = selectedStatus === '' || status === selectedStatus;
-
-            const shouldShow = matchesSearch && matchesStatus;
-            row.style.display = shouldShow ? '' : 'none';
-            
-            console.log(`Booking: ${bookingId}, Search: ${matchesSearch}, Status: ${matchesStatus}, Show: ${shouldShow}`);
-          });
-        }
-      }
-
-      // Event listeners
-      if (searchInput) {
-        searchInput.addEventListener('input', performSearch);
-        console.log('Search input listener added');
-      }
-      if (filterCategory) {
-        filterCategory.addEventListener('change', performSearch);
-        console.log('Category filter listener added');
-      }
-      if (filterStatus) {
-        filterStatus.addEventListener('change', performSearch);
-        console.log('Status filter listener added');
-      }
-
-      // Clear search function
-      window.clearSearch = function() {
-        if (searchInput) searchInput.value = '';
-        if (filterCategory) filterCategory.value = '';
-        if (filterStatus) filterStatus.value = '';
-        performSearch();
-        console.log('Search cleared');
-      };
-
-              // Initial search to show all results
-        performSearch();
-        
-        // Add visual feedback
-        if (searchInput) {
-          searchInput.addEventListener('focus', function() {
-            this.style.borderColor = '#FFD700';
-          });
-          searchInput.addEventListener('blur', function() {
-            this.style.borderColor = '#ddd';
-          });
-        }
-      });
-
-    function closeEditModal() {
-      const modal = document.querySelector('div[style*="position:fixed"]');
-      if (modal) {
-        modal.remove();
-      }
-    }
-
-    // Additional utility functions
-    function showServiceForm() {
-      alert('Add New Service\n\nThis would open a form to add a new service.');
-    }
-
-    function showBookingForm() {
-      alert('Add New Booking\n\nThis would open a form to add a new booking.');
-    }
-
-    // Export functions for potential external use
-    window.editService = editService;
-    window.deleteService = deleteService;
-    window.editBooking = editBooking;
-    window.cancelBooking = cancelBooking;
-    window.logoutAdmin = logoutAdmin;
-      </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+  </script>
 </body>
 </html> 

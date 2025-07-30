@@ -46,7 +46,7 @@ if (!in_array($input['status'], $allowedStatuses)) {
 
 // Database configuration
 $host = 'localhost';
-$dbname = 'pearlvista';
+$dbname = 'the_pearl_vista';
 $username = 'root';
 $password = '';
 

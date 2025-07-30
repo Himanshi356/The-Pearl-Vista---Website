@@ -4,534 +4,621 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Rooms | The Pearl Vista</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <style>
-    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
-    .admin-dashboard { display: flex; min-height: 100vh; }
-    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
-    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
-    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
-    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
-    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
-    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
-    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
-    .admin-profile { 
-      position: fixed; 
-      top: 32px; 
-      right: 48px; 
-      z-index: 1000; 
-      display: flex; 
-      align-items: center; 
-      gap: 0.8rem; 
-      color: #101a2b; 
-      cursor: pointer; 
-      transition: all 0.2s ease;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .admin-profile:hover { 
-      transform: translateY(-1px);
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      color: #333;
     }
-    .admin-profile .avatar { 
-      width: 40px; 
-      height: 40px; 
-      border-radius: 50%; 
-      background: #FFD700; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-weight: bold; 
-      color: #101a2b; 
-      font-size: 1.3rem;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-      transition: all 0.2s ease;
-    }
-    .admin-profile:hover .avatar {
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-      transform: scale(1.05);
-    }
-    #adminDropdown { 
-      display: none; 
-      position: absolute; 
-      top: 52px; 
-      right: 0; 
-      background: #fff; 
-      color: #101a2b; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
-      min-width: 240px; 
-      padding: 1.8rem; 
-      font-size: 0.95rem;
-      border: 1px solid #f8f9fa;
-      animation: dropdownFadeIn 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-    @keyframes dropdownFadeIn {
-      from { opacity: 0; transform: translateY(-15px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    #adminDropdown .user-info {
-      border-bottom: 1px solid #f0f0f0;
-      padding-bottom: 1.2rem;
-      margin-bottom: 1.2rem;
-      position: relative;
-    }
-    #adminDropdown .user-info::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    }
-    #adminDropdown .user-name {
-      font-weight: 700; 
-      font-size: 1.2rem;
-      margin-bottom: 0.4rem;
-      color: #101a2b;
-      letter-spacing: 0.5px;
-    }
-    #adminDropdown .user-email {
-      font-size: 0.9rem; 
-      margin-bottom: 0.8rem; 
-      color: #666;
-      font-weight: 500;
-    }
-    #adminDropdown .user-detail {
-      font-size: 0.85rem; 
-      margin-bottom: 0.4rem; 
-      color: #666;
+
+    .admin-dashboard {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      min-height: 100vh;
     }
-    #adminDropdown .user-detail i {
-      width: 14px;
-      color: #FFD700;
-      font-size: 0.8rem;
-    }
-    #adminDropdown .user-detail span {
-      color: #101a2b;
-      font-weight: 600;
-    }
-    #adminDropdown .dropdown-buttons {
+
+    .sidebar {
+      background: #1a1a1a;
+      color: #fff;
+      width: 280px;
+      padding: 2rem 1.5rem 1rem 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
+      gap: 2rem;
+      min-height: 100vh;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border-right: 1px solid #e0e0e0;
     }
-    #adminDropdown button { 
-      padding: 0.8rem 1.2rem; 
-      border-radius: 10px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      width: 100%; 
+
+    .sidebar .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+      color: #d4af37;
+      text-align: center;
+      padding: 1rem;
+      background: #222;
+      border-radius: 12px;
+      border: 1px solid #333;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+    }
+
+    .sidebar nav a i {
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #d4af37;
+    }
+
+    .sidebar nav a.active, 
+    .sidebar nav a:hover {
+      background: #d4af37;
+      color: #000;
+      border-color: #d4af37;
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .sidebar nav a.active i,
+    .sidebar nav a:hover i {
+      color: #000;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background: #fff;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .page-title i {
+      color: #d4af37;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      position: relative;
+      color: #333;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0;
+    }
+
+    .admin-profile:hover {
+      background: #f8f9fa;
+      border-color: #d4af37;
+    }
+
+    .admin-profile .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+      font-size: 1.2rem;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .admin-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .admin-role {
+      font-size: 0.8rem;
+      color: #d4af37;
+      font-weight: 500;
+    }
+
+    #adminDropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: #fff;
+      color: #333;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      z-index: 1000;
+      border: 1px solid #e0e0e0;
+    }
+
+    .dropdown-item {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+    }
+
+    .dropdown-item:hover {
+      background: #f8f9fa;
+      color: #d4af37;
+      border-color: #d4af37;
+    }
+
+    .dropdown-item i {
+      width: 16px;
+      text-align: center;
+      color: #d4af37;
+    }
+
+    /* Rooms specific styles */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .room-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .room-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      border-color: #d4af37;
+    }
+
+    .room-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #d4af37, #b8941f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 3rem;
+    }
+
+    .room-info {
+      padding: 1.5rem;
+    }
+
+    .room-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .room-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+
+    .room-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-tag {
+      background: #f8f9fa;
+      color: #666;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      border: 1px solid #e0e0e0;
+    }
+
+    .room-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .status-badge {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-available {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-occupied {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .status-maintenance {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .btn-edit:hover {
+      background: #b8941f;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+    }
+
+    .add-room-section {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      margin-bottom: 2rem;
+    }
+
+    .add-room-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.8rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
       font-size: 0.9rem;
       transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    .btn-primary {
+      background: #d4af37;
+      color: #000;
+      padding: 1rem 2rem;
       border: none;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 0;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    #adminDropdown button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-    #adminDropdown button:hover::before {
-      left: 100%;
-    }
-    #adminDropdown button:hover {
+
+    .btn-primary:hover {
+      background: #b8941f;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    #adminDropdown .btn-profile {
-      background: linear-gradient(135deg, #101a2b, #1a2332); 
-      color: #FFD700;
-      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.2);
-    }
-    #adminDropdown .btn-settings {
-      background: #fff; 
-      color: #101a2b; 
-      border: 2px solid #101a2b;
-      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.1);
-    }
-    #adminDropdown .btn-logout {
-      background: linear-gradient(135deg, #FFD700, #FFA500); 
-      color: #101a2b;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
-    }
-    .rooms-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1.5rem 2rem; min-width: 350px; max-width: 1100px; margin: 0 auto; }
-    .rooms-table table { width: 100%; border-collapse: collapse; }
-    .rooms-table th, .rooms-table td { padding: 1.1rem 1.1rem; text-align: left; border-bottom: 1px solid #222; }
-    .rooms-table tr:hover { background: #232b3b; }
-    .rooms-table th { color: #FFD700; font-size: 1rem; font-weight: 700; }
-    .rooms-table td { font-size: 1rem; color: #fff; }
-    .action-btn { background: #FFD700; color: #101a2b; border: none; border-radius: 6px; padding: 0.4em 1.2em; font-weight: 600; cursor: pointer; margin-right: 0.5em; transition: background 0.2s; }
-    .action-btn:hover { background: #e6c200; }
-    .add-room-btn { background: #101a2b; color: #FFD700; border: 1px solid #FFD700; border-radius: 6px; padding: 0.4em 1.2em; font-weight: 600; cursor: pointer; margin-bottom: 1em; }
-    .room-form { background: #f7f8fa; color: #101a2b; border-radius: 10px; padding: 1.2em 1.5em; margin-top: 1.5em; max-width: 500px; }
-    .room-form label { font-weight: 600; margin-top: 0.7em; display: block; }
-    .room-form input, .room-form select { width: 100%; padding: 0.5em; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 1em; font-size: 1rem; }
-    .room-form .form-actions { display: flex; gap: 1em; }
-    .room-form .form-actions button { flex: 1; }
-    .status {
-      display: inline-block;
-      padding: 0.3em 1.1em;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1em;
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-    .status.available { background: #1a7f37; }
-    .status.maintenance { background: #FFD700; color: #101a2b; }
-    .status.reserved { background: #d32f2f; }
   </style>
 </head>
 <body>
   <div class="admin-dashboard">
-    <aside class="sidebar">
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-gem"></i> The Pearl Vista
+      </div>
       <nav>
-        <a href="admin-dashboard.html">Dashboard</a>
-        <a href="admin-rooms.html" class="active">Rooms</a>
-        <a href="admin-services.html">Services</a>
-        <a href="admin-bookings.html">Bookings</a>
-        <a href="admin-tour-bookings.html">Tour Bookings</a>
-        <a href="admin-customers.html">Customers</a>
-        <a href="admin-reports.html">Reports</a>
+        <a href="admin-dashboard.html">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a>
+        <a href="admin-rooms.html" class="active">
+          <i class="fas fa-bed"></i>
+          Rooms
+        </a>
+        <a href="admin-bookings.html">
+          <i class="fas fa-calendar-check"></i>
+          Bookings
+        </a>
+        <a href="admin-customers.html">
+          <i class="fas fa-users"></i>
+          Customers
+        </a>
+        <a href="admin-services.html">
+          <i class="fas fa-concierge-bell"></i>
+          Services
+        </a>
+        <a href="admin-tour-bookings.html">
+          <i class="fas fa-map-marked-alt"></i>
+          Tour Bookings
+        </a>
+        <a href="admin-chat.html">
+          <i class="fas fa-comments"></i>
+          Chat
+        </a>
+        <a href="admin-reports.html">
+          <i class="fas fa-chart-bar"></i>
+          Reports
+        </a>
+        <a href="admin-settings.html">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
       </nav>
-    </aside>
-    <main class="main-content">
-      <header>
-        <h2>Welcome To The Pearl Vista</h2>
-      </header>
-      <div class="admin-profile" id="adminProfile">
-        <span>Admin</span>
-        <div class="avatar">A</div>
-        <div id="adminDropdown">
-          <div class="user-info">
-            <div class="user-name">Admin</div>
-            <div class="user-email">admin@pearlvista.com</div>
-            <div class="user-detail">
-              <i class="fas fa-building"></i>
-              Department: <span>Management</span>
-            </div>
-            <div class="user-detail">
-              <i class="fas fa-phone"></i>
-              Phone: <span>+1 234 567 8901</span>
-            </div>
-            <div class="user-detail">
-              <i class="fas fa-clock"></i>
-              Last login: <span>23 Jul 2025, 14:44</span>
-            </div>
+    </div>
+
+    <div class="main-content">
+      <div class="topbar">
+        <div class="page-title">
+          <i class="fas fa-bed"></i>
+          Room Management
+        </div>
+        <div class="admin-profile" onclick="toggleDropdown()">
+          <div class="avatar">A</div>
+          <div class="admin-info">
+            <div class="admin-name">Admin User</div>
+            <div class="admin-role">Administrator</div>
           </div>
-          <div class="dropdown-buttons">
-            <button class="btn-profile" onclick="window.location.href='admin-profile.html'">Profile</button>
-            <button class="btn-settings" onclick="window.location.href='admin-settings.html'">Settings</button>
-            <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+          <div id="adminDropdown">
+            <div class="dropdown-item" onclick="window.location.href='admin-profile.html'">
+              <i class="fas fa-user"></i>
+              Profile
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='admin-settings.html'">
+              <i class="fas fa-cog"></i>
+              Settings
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='admin-add-user.html'">
+              <i class="fas fa-user-plus"></i>
+              Add User
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='logout.php'">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </div>
           </div>
         </div>
       </div>
-      <section style="max-width:1500px;margin:0 auto;">
-        <h1 style="font-size:1.5rem; font-weight:700; color: #101a2b; margin-bottom:0.2em;">Rooms Management</h1>
-        <div style="color:#767676; font-size:1.05rem; margin-bottom:1.2em;">Manage all hotel rooms, their types, status, and pricing. Edit or delete existing rooms, or add new ones below.</div>
-        <div style="display:flex; gap:1em; margin-bottom:1em;">
-          <button class="add-room-btn" onclick="showRoomForm()">+ Add Room</button>
-          <button class="add-room-btn" style="background:#FFD700; color:#101a2b; border:1px solid #FFD700;" onclick="showAvailabilityForm()">Check Availability</button>
+
+      <div class="add-room-section">
+        <h3 style="margin-bottom: 1.5rem; color: #333;">
+          <i class="fas fa-plus" style="color: #d4af37;"></i>
+          Add New Room
+        </h3>
+        <form class="add-room-form">
+          <div class="form-group">
+            <label>Room Number</label>
+            <input type="text" placeholder="e.g., 101" required>
+          </div>
+          <div class="form-group">
+            <label>Room Type</label>
+            <select required>
+              <option value="">Select Type</option>
+              <option value="deluxe">Deluxe Room</option>
+              <option value="executive">Executive Room</option>
+              <option value="suite">Suite</option>
+              <option value="family">Family Suite</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price per Night</label>
+            <input type="number" placeholder="e.g., 150" required>
+          </div>
+          <div class="form-group">
+            <label>Capacity</label>
+            <input type="number" placeholder="e.g., 2" required>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select required>
+              <option value="available">Available</option>
+              <option value="occupied">Occupied</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea placeholder="Room description..." rows="3"></textarea>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-plus"></i>
+              Add Room
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="rooms-grid">
+        <div class="room-card">
+          <div class="room-image">
+            <i class="fas fa-bed"></i>
+          </div>
+          <div class="room-info">
+            <div class="room-title">Deluxe Room 101</div>
+            <div class="room-price">$150/night</div>
+            <div class="room-features">
+              <span class="feature-tag">King Bed</span>
+              <span class="feature-tag">Ocean View</span>
+              <span class="feature-tag">Balcony</span>
+            </div>
+            <div class="room-status">
+              <span class="status-badge status-available">Available</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div id="availabilityForm" style="display:none; background:#f7f8fa; border-radius:10px; padding:1.2em 1.5em; margin-bottom:1.5em; max-width:500px;">
-          <h3 style="margin-top:0;">Check Room Availability</h3>
-          <label for="checkRoomNumber">Enter Room Number or Range</label>
-          <input type="text" id="checkRoomNumber" placeholder="e.g. 101 or 751-776" style="width:100%;padding:0.5em;margin-bottom:1em;" />
-          <button class="action-btn" onclick="checkRoomAvailability()" type="button">Check</button>
-          <span id="availabilityResult" style="display:block;margin-top:1em;font-weight:600;"></span>
-          <button class="action-btn" style="background:#fff; color:#101a2b; border:1px solid #101a2b; margin-top:1em;" type="button" onclick="hideAvailabilityForm()">Close</button>
+
+        <div class="room-card">
+          <div class="room-image">
+            <i class="fas fa-bed"></i>
+          </div>
+          <div class="room-info">
+            <div class="room-title">Executive Room 201</div>
+            <div class="room-price">$200/night</div>
+            <div class="room-features">
+              <span class="feature-tag">Queen Bed</span>
+              <span class="feature-tag">City View</span>
+              <span class="feature-tag">Work Desk</span>
+            </div>
+            <div class="room-status">
+              <span class="status-badge status-occupied">Occupied</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="rooms-table" style="margin-top:1.2em;">
-          <table>
-            <thead>
-              <tr>
-                <th>Room Numbers</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Floor</th>
-                <th>Total Rooms</th>
-                <th>Status</th>
-                <th>Price</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="roomsTbody">
-              <tr>
-                <td>751-776</td>
-                <td>Pearl Signature Room</td>
-                <td>King bed, skyline balcony, butler service, jacuzzi, and 24/7 dining</td>
-                <td>6</td>
-                <td>25</td>
-                <td><span class="status reserved">Reserved</span></td>
-                <td>$20695</td>
-                <td>
-                  <div style="display: flex; gap: 0.7em;">
-                    <button class="action-btn" onclick="editRoom('702-727')">Edit</button>
-                    <button class="action-btn" onclick="deleteRoom('702-727')">Delete</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>101-241</td>
-                <td>Deluxe Room</td>
-                <td>King bed, modern ensuite, WiFi, tea/coffee set, and daily housekeeping</td>
-                <td>1</td>
-                <td>140</td>
-                <td><span class="status available">Available</span></td>
-                <td>$3240</td>
-                <td>
-                  <div style="display: flex; gap: 0.7em;">
-                    <button class="action-btn" onclick="editRoom('101-241')">Edit</button>
-                    <button class="action-btn" onclick="deleteRoom('101-241')">Delete</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>251-381</td>
-                <td>Premium Room</td>
-                <td>King bed, city view lounge, minibar, smart TV, and welcome amenities</td>
-                <td>2</td>
-                <td>130</td>
-                <td><span class="status maintenance">Under Maintenance</span></td>
-                <td>$5580</td>
-                <td>
-                  <div style="display: flex; gap: 0.7em;">
-                    <button class="action-btn" onclick="editRoom('242-372')">Edit</button>
-                    <button class="action-btn" onclick="deleteRoom('242-372')">Delete</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>391-511</td>
-                <td>Executive Room</td>
-                <td>Executive king bed, workspace, lounge access, Nespresso, and concierge</td>
-                <td>3</td>
-                <td>120</td>
-                <td><span class="status available">Available</span></td>
-                <td>$8790</td>
-                <td>
-                  <div style="display: flex; gap: 0.7em;">
-                    <button class="action-btn" onclick="editRoom('372-492')">Edit</button>
-                    <button class="action-btn" onclick="deleteRoom('372-492')">Delete</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>521-631</td>
-                <td>Luxury Suite</td>
-                <td>King bed, private lounge, butler service, marble bath, and VIP perks</td>
-                <td>4</td>
-                <td>110</td>
-                <td><span class="status available">Available</span></td>
-                <td>$11920</td>
-                <td>
-                  <div style="display: flex; gap: 0.7em;">
-                    <button class="action-btn" onclick="editRoom('492-602')">Edit</button>
-                    <button class="action-btn" onclick="deleteRoom('492-602')">Delete</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>641-741</td>
-                <td>Family Suite</td>
-                <td>Two bedrooms (king + twin), living area, kid-friendly amenities, and late check-out</td>
-                <td>5</td>
-                <td>100</td>
-                <td><span class="status reserved">Reserved</span></td>
-                <td>$14855</td>
-                <td>
-                  <div style="display: flex; gap: 0.7em;">
-                    <button class="action-btn" onclick="editRoom('602-702')">Edit</button>
-                    <button class="action-btn" onclick="deleteRoom('602-702')">Delete</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+        <div class="room-card">
+          <div class="room-image">
+            <i class="fas fa-bed"></i>
+          </div>
+          <div class="room-info">
+            <div class="room-title">Suite 301</div>
+            <div class="room-price">$300/night</div>
+            <div class="room-features">
+              <span class="feature-tag">King Bed</span>
+              <span class="feature-tag">Living Room</span>
+              <span class="feature-tag">Kitchen</span>
+            </div>
+            <div class="room-status">
+              <span class="status-badge status-maintenance">Maintenance</span>
+              <div class="action-buttons">
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-      <form id="roomForm" class="room-form" style="display:none;">
-        <h3 id="formTitle">Add Room</h3>
-        <label for="roomNumber">Room Number</label>
-        <input type="text" id="roomNumber" required />
-        <label for="roomType">Type</label>
-        <select id="roomType" required onchange="toggleOtherRoomType()">
-          <option value="Pearl Signature Room">Pearl Signature Room</option>
-          <option value="Deluxe Room">Deluxe Room</option>
-          <option value="Premium Room">Premium Room</option>
-          <option value="Executive Room">Executive Room</option>
-          <option value="Luxury Suite">Luxury Suite</option>
-          <option value="Family Suite">Family Suite</option>
-          <option value="Other">Other</option>
-        </select>
-        <input type="text" id="otherRoomType" placeholder="Enter new room type" style="display:none; margin-top:0.7em;" />
-        <label for="roomStatus">Status</label>
-        <select id="roomStatus" required>
-          <option value="Available">Available</option>
-          <option value="Occupied">Reserved</option>
-          <option value="Maintenance">Maintenance</option>
-        </select>
-        <label for="roomPrice">Price</label>
-        <input type="number" id="roomPrice" required min="0" />
-        <div class="form-actions">
-          <button type="submit" class="action-btn">Save</button>
-          <button type="button" class="action-btn" onclick="hideRoomForm()">Cancel</button>
-        </div>
-      </form>
-    </main>
+      </div>
+    </div>
   </div>
+
+  <script src="admin-navigation.js"></script>
+  <script src="fix-admin-navigation.js"></script>
   <script>
-    // Admin Dropdown Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const adminProfile = document.getElementById('adminProfile');
-      const adminDropdown = document.getElementById('adminDropdown');
+    function toggleDropdown() {
+      const dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
 
-      if (adminProfile && adminDropdown) {
-        // Toggle dropdown on click
-        adminProfile.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const isVisible = adminDropdown.style.display === 'block';
-          adminDropdown.style.display = isVisible ? 'none' : 'block';
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!adminProfile.contains(e.target)) {
-            adminDropdown.style.display = 'none';
-          }
-        });
-
-        // Prevent dropdown from closing when clicking inside it
-        adminDropdown.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const profile = document.querySelector('.admin-profile');
+      const dropdown = document.getElementById('adminDropdown');
+      if (!profile.contains(event.target)) {
+        dropdown.style.display = 'none';
       }
     });
-
-    // Logout function
-    function logoutAdmin() {
-      if (confirm('Are you sure you want to logout?')) {
-        // Clear any admin session data
-        localStorage.removeItem('admin_logged_in');
-        localStorage.removeItem('admin_username');
-        // Redirect to login page
-        window.location.href = 'index.html';
-      }
-    }
-    // Room form logic (demo only)
-    function showRoomForm() {
-      document.getElementById('roomForm').style.display = 'block';
-      document.getElementById('formTitle').innerText = 'Add Room';
-    }
-    // Prevent negative or zero price on form submit
-    document.getElementById('roomForm').onsubmit = function(e) {
-      var price = parseFloat(document.getElementById('roomPrice').value);
-      if (isNaN(price) || price <= 0) {
-        alert('Price must be a positive number.');
-        e.preventDefault();
-        return false;
-      }
-    };
-    function hideRoomForm() {
-      document.getElementById('roomForm').style.display = 'none';
-    }
-    function editRoom(roomNumber) {
-      showRoomForm();
-      document.getElementById('formTitle').innerText = 'Edit Room';
-      document.getElementById('roomNumber').value = roomNumber;
-      // Set type and price based on roomNumber/range
-      var type = '';
-      var price = '';
-      switch(roomNumber) {
-        case '751-776':
-          type = 'Pearl Signature Room'; price = 20695; break;
-        case '101-241':
-          type = 'Deluxe Room'; price = 3240; break;
-        case '251-381':
-          type = 'Premium Room'; price = 5580; break;
-        case '391-511':
-          type = 'Executive Room'; price = 8790; break;
-        case '521-631':
-          type = 'Luxury Suite'; price = 11920; break;
-        case '641-741':
-          type = 'Family Suite'; price = 14855; break;
-        default:
-          type = '';
-          price = '';
-      }
-      document.getElementById('roomType').value = type;
-      document.getElementById('roomPrice').value = price;
-      document.getElementById('roomStatus').value = 'Available';
-    }
-    function deleteRoom(roomNumber) {
-      if (confirm('Delete room ' + roomNumber + '?')) {
-        // Demo: just hide the row
-        var rows = document.querySelectorAll('#roomsTbody tr');
-        rows.forEach(function(row) {
-          if (row.children[0].innerText == roomNumber) row.style.display = 'none';
-        });
-      }
-    }
-    function toggleOtherRoomType() {
-      var select = document.getElementById('roomType');
-      var otherInput = document.getElementById('otherRoomType');
-      if (select.value === 'Other') {
-        otherInput.style.display = 'block';
-        otherInput.required = true;
-      } else {
-        otherInput.style.display = 'none';
-        otherInput.required = false;
-      }
-    }
-    // Check Availability logic
-    function showAvailabilityForm() {
-      document.getElementById('availabilityForm').style.display = 'block';
-    }
-    function hideAvailabilityForm() {
-      document.getElementById('availabilityForm').style.display = 'none';
-      document.getElementById('availabilityResult').textContent = '';
-      document.getElementById('checkRoomNumber').value = '';
-    }
-    function checkRoomAvailability() {
-      var input = document.getElementById('checkRoomNumber').value.trim();
-      var result = document.getElementById('availabilityResult');
-      // Demo: check against the current table data
-      var rooms = [
-        {number:'751-776', status:'Reserved'},
-        {number:'101-241', status:'Available'},
-        {number:'251-381', status:'Maintenance'},
-        {number:'391-511', status:'Available'},
-        {number:'521-631', status:'Available'},
-        {number:'641-741', status:'Reserved'}
-      ];
-      var found = rooms.find(r => r.number === input);
-      if (found) {
-        if (found.status === 'Available') {
-          result.textContent = 'Room(s) ' + input + ' are AVAILABLE.';
-          result.style.color = '#1a7f37';
-        } else if (found.status === 'Reserved') {
-          result.textContent = 'Room(s) ' + input + ' are RESERVED.';
-          result.style.color = '#b59f00';
-        } else {
-          result.textContent = 'Room(s) ' + input + ' are under MAINTENANCE.';
-          result.style.color = '#d32f2f';
-        }
-      } else {
-        result.textContent = 'Room(s) ' + input + ' not found.';
-        result.style.color = '#d32f2f';
-      }
-    }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
 </body>
 </html> 

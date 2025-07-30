@@ -9,7 +9,7 @@ echo "<h2>Pearl Vista Database Connection Test</h2>";
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 try {
     // Test basic MySQL connection

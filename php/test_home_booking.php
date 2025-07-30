@@ -9,7 +9,7 @@ echo "<h2>Pearl Vista Home Booking System Test</h2>";
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

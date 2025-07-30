@@ -8,7 +8,7 @@ echo "<h2>🚫 Testing Room Unavailability Scenarios</h2>";
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

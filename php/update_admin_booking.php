@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

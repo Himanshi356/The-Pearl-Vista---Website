@@ -694,6 +694,35 @@
     document.getElementById('timeInput').addEventListener('blur', calculateAmount);
     document.getElementById('timeInput').addEventListener('focus', calculateAmount);
   </script>
+  <script>
+    // User dropdown toggle
+    const userProfileIcon = document.getElementById('userProfileIcon');
+    const userDropdownMenu = document.getElementById('userDropdown');
+    const userDropdownHeader = document.getElementById('userDropdownHeader');
+    document.addEventListener('DOMContentLoaded', function() {
+      const username = localStorage.getItem('pv_username') || 'User';
+      if (userDropdownHeader) {
+        userDropdownHeader.textContent = `Hey ${username}!`;
+      }
+    });
+    document.addEventListener('click', function(e) {
+      if (userProfileIcon && userProfileIcon.contains(e.target)) {
+        userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
+      } else if (userDropdownMenu && !userDropdownMenu.contains(e.target)) {
+        userDropdownMenu.style.display = 'none';
+      }
+    });
+    userProfileIcon && userProfileIcon.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
+      }
+    });
+    function logout() {
+      localStorage.removeItem('pv_logged_in');
+      localStorage.removeItem('pv_username');
+      window.location.href = 'index.html';
+    }
+  </script>
 </body>
 
 </html>

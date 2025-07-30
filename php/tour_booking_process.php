@@ -10,7 +10,7 @@ header('Content-Type: application/json');
 $servername = "localhost";
 $username = "root"; // default for XAMPP
 $password = "";     // default for XAMPP
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);

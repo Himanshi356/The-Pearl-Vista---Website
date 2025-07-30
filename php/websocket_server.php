@@ -163,7 +163,7 @@ class ChatWebSocketServer {
     
     private function saveMessage($sessionId, $userName, $message, $type = 'user') {
         // Database connection
-        $conn = new mysqli("localhost", "root", "", "pearlvista");
+        $conn = new mysqli("localhost", "root", "", "the_pearl_vista");
         
         if ($conn->connect_error) {
             return false;

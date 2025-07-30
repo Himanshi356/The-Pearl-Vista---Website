@@ -11,7 +11,7 @@ echo "<h3>Test 1: Database Tables</h3>";
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "pearlvista";
+$dbname = "the_pearl_vista";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

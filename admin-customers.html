@@ -4,583 +4,762 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Customers | The Pearl Vista</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <style>
-    body { background: #fff; font-family: 'Lato', Arial, sans-serif; margin: 0; color: #101a2b; }
-    .admin-dashboard { display: flex; min-height: 100vh; }
-    .sidebar { background: #101a2b; color: #fff; width: 220px; padding: 2rem 1rem 1rem 1rem; display: flex; flex-direction: column; gap: 2rem; min-height: 100vh; }
-    .sidebar nav { display: flex; flex-direction: column; gap: 1rem; }
-    .sidebar nav a { color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 8px; font-weight: 600; transition: background 0.2s; }
-    .sidebar nav a.active, .sidebar nav a:hover { background: #767676; color: #fff; }
-    .main-content { flex: 1; padding: 2rem 3rem; display: flex; flex-direction: column; gap: 2rem; background: #fff; min-height: 100vh; }
-    header { width:100%; text-align:center; margin-bottom:1.2rem; background: #fff; }
-    h2 { font-size:1.5rem; font-weight:600; color:#101a2b; letter-spacing:0.5px; margin:0; }
-    .admin-profile { 
-      position: fixed; 
-      top: 32px; 
-      right: 48px; 
-      z-index: 1000; 
-      display: flex; 
-      align-items: center; 
-      gap: 0.8rem; 
-      color: #101a2b; 
-      cursor: pointer; 
-      transition: all 0.2s ease;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .admin-profile:hover { 
-      transform: translateY(-1px);
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      color: #333;
     }
-    .admin-profile .avatar { 
-      width: 40px; 
-      height: 40px; 
-      border-radius: 50%; 
-      background: #FFD700; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-weight: bold; 
-      color: #101a2b; 
-      font-size: 1.3rem;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-      transition: all 0.2s ease;
+
+    .admin-dashboard {
+      display: flex;
+      min-height: 100vh;
     }
-    .admin-profile:hover .avatar {
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-      transform: scale(1.05);
+
+    .sidebar {
+      background: #1a1a1a;
+      color: #fff;
+      width: 280px;
+      padding: 2rem 1.5rem 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      min-height: 100vh;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border-right: 1px solid #e0e0e0;
     }
-    #adminDropdown { 
-      display: none; 
-      position: absolute; 
-      top: 52px; 
-      right: 0; 
-      background: #fff; 
-      color: #101a2b; 
-      border-radius: 16px; 
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
-      min-width: 240px; 
-      padding: 1.8rem; 
+
+    .sidebar .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+      color: #d4af37;
+      text-align: center;
+      padding: 1rem;
+      background: #222;
+      border-radius: 12px;
+      border: 1px solid #333;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-size: 0.95rem;
-      border: 1px solid #f8f9fa;
-      animation: dropdownFadeIn 0.3s ease;
-      backdrop-filter: blur(10px);
+      border: 1px solid transparent;
     }
-    @keyframes dropdownFadeIn {
-      from { opacity: 0; transform: translateY(-15px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+
+    .sidebar nav a i {
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #d4af37;
     }
-    #adminDropdown .user-info {
-      border-bottom: 1px solid #f0f0f0;
-      padding-bottom: 1.2rem;
-      margin-bottom: 1.2rem;
+
+    .sidebar nav a.active, 
+    .sidebar nav a:hover {
+      background: #d4af37;
+      color: #000;
+      border-color: #d4af37;
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .sidebar nav a.active i,
+    .sidebar nav a:hover i {
+      color: #000;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      background: #fff;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .page-title i {
+      color: #d4af37;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
       position: relative;
+      color: #333;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0;
     }
-    #adminDropdown .user-info::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #FFD700, transparent);
+
+    .admin-profile:hover {
+      background: #f8f9fa;
+      border-color: #d4af37;
     }
-    #adminDropdown .user-name {
-      font-weight: 700; 
+
+    .admin-profile .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
       font-size: 1.2rem;
-      margin-bottom: 0.4rem;
-      color: #101a2b;
-      letter-spacing: 0.5px;
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
     }
-    #adminDropdown .user-email {
-      font-size: 0.9rem; 
-      margin-bottom: 0.8rem; 
+
+    .admin-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .admin-role {
+      font-size: 0.8rem;
+      color: #d4af37;
+      font-weight: 500;
+    }
+
+    #adminDropdown {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: #fff;
+      color: #333;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      min-width: 200px;
+      padding: 1rem;
+      font-size: 0.9rem;
+      z-index: 1000;
+      border: 1px solid #e0e0e0;
+    }
+
+    .dropdown-item {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+    }
+
+    .dropdown-item:hover {
+      background: #f8f9fa;
+      color: #d4af37;
+      border-color: #d4af37;
+    }
+
+    .dropdown-item i {
+      width: 16px;
+      text-align: center;
+      color: #d4af37;
+    }
+
+    /* Customers specific styles */
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #d4af37;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      border-color: #d4af37;
+    }
+
+    .stat-card h3 {
+      color: #333;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .change {
+      font-size: 0.9rem;
+      color: #28a745;
+      font-weight: 500;
+    }
+
+    .stat-card .change.negative {
+      color: #dc3545;
+    }
+
+    .customers-filters {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      margin-bottom: 2rem;
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .filter-group label {
+      font-weight: 500;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      padding: 0.8rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    .customers-table {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e0e0e0;
+      overflow: hidden;
+    }
+
+    .table-header {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .table-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .table-title i {
+      color: #d4af37;
+    }
+
+    .customers-grid {
+      display: grid;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+
+    .customer-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .customer-card:hover {
+      border-color: #d4af37;
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+    }
+
+    .customer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f1f3f4;
+    }
+
+    .customer-name {
+      font-weight: 600;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .customer-status {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-inactive {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .status-vip {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .customer-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .detail-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .detail-label {
+      font-size: 0.8rem;
       color: #666;
       font-weight: 500;
     }
-    #adminDropdown .user-detail {
-      font-size: 0.85rem; 
-      margin-bottom: 0.4rem; 
-      color: #666;
+
+    .detail-value {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .customer-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-view {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .btn-view:hover {
+      background: #b8941f;
+    }
+
+    .btn-edit {
+      background: #17a2b8;
+      color: #fff;
+    }
+
+    .btn-edit:hover {
+      background: #138496;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+    }
+
+    .customer-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4af37, #b8941f);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
+      color: #000;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-right: 1rem;
     }
-    #adminDropdown .user-detail i {
-      width: 14px;
-      color: #FFD700;
-      font-size: 0.8rem;
-    }
-    #adminDropdown .user-detail span {
-      color: #101a2b;
-      font-weight: 600;
-    }
-    #adminDropdown .dropdown-buttons {
+
+    .customer-info {
       display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
+      align-items: center;
     }
-    #adminDropdown button { 
-      padding: 0.8rem 1.2rem; 
-      border-radius: 10px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      width: 100%; 
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      border: none;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 0;
-    }
-    #adminDropdown button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-    #adminDropdown button:hover::before {
-      left: 100%;
-    }
-    #adminDropdown button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    #adminDropdown .btn-profile {
-      background: linear-gradient(135deg, #101a2b, #1a2332); 
-      color: #FFD700;
-      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.2);
-    }
-    #adminDropdown .btn-settings {
-      background: #fff; 
-      color: #101a2b; 
-      border: 2px solid #101a2b;
-      box-shadow: 0 2px 8px rgba(16, 26, 43, 0.1);
-    }
-    #adminDropdown .btn-logout {
-      background: linear-gradient(135deg, #FFD700, #FFA500); 
-      color: #101a2b;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
-    }
-    .customers-table { background: #101a2b; color: #FFD700; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 1rem 1.2rem; min-width: 350px; }
-    .customers-table table { width: 100%; border-collapse: collapse; }
-    .customers-table th, .customers-table td { padding: 0.7rem 0.5rem; text-align: left; border-bottom: 1px solid #222; }
-    .customers-table th { color: #FFD700; font-size: 1rem; font-weight: 700; }
-    .customers-table td { font-size: 1rem; color: #fff; }
-    .status { padding: 0.2em 0.8em; border-radius: 12px; font-size: 0.95em; font-weight: 600; display: inline-block; }
-    .status.Active { background: #e6f7e6; color: #1a7f37; }
-    .status.Inactive { background: #ffeaea; color: #d32f2f; }
   </style>
 </head>
 <body>
   <div class="admin-dashboard">
-    <aside class="sidebar">
+    <div class="sidebar">
+      <div class="logo">
+        <i class="fas fa-gem"></i> The Pearl Vista
+      </div>
       <nav>
-        <a href="admin-dashboard.html">Dashboard</a>
-        <a href="admin-rooms.html">Rooms</a>
-        <a href="admin-services.html">Services</a>
-        <a href="admin-bookings.html">Bookings</a>
-        <a href="admin-tour-bookings.html">Tour Bookings</a>
-        <a href="admin-customers.html" class="active">Customers</a>
-        <a href="admin-reports.html">Reports</a>
+        <a href="admin-dashboard.html">
+          <i class="fas fa-tachometer-alt"></i>
+          Dashboard
+        </a>
+        <a href="admin-rooms.html">
+          <i class="fas fa-bed"></i>
+          Rooms
+        </a>
+        <a href="admin-bookings.html">
+          <i class="fas fa-calendar-check"></i>
+          Bookings
+        </a>
+        <a href="admin-customers.html" class="active">
+          <i class="fas fa-users"></i>
+          Customers
+        </a>
+        <a href="admin-services.html">
+          <i class="fas fa-concierge-bell"></i>
+          Services
+        </a>
+        <a href="admin-tour-bookings.html">
+          <i class="fas fa-map-marked-alt"></i>
+          Tour Bookings
+        </a>
+        <a href="admin-chat.html">
+          <i class="fas fa-comments"></i>
+          Chat
+        </a>
+        <a href="admin-reports.html">
+          <i class="fas fa-chart-bar"></i>
+          Reports
+        </a>
+        <a href="admin-settings.html">
+          <i class="fas fa-cog"></i>
+          Settings
+        </a>
       </nav>
-    </aside>
-    <main class="main-content">
-      <header style="text-align:center; margin-bottom:1.2em;">
-        <h2 style="font-size:2.2rem; font-weight:900; letter-spacing:1px; color:#101a2b; margin-bottom:0.7em;">Welcome To The Pearl Vista</h2>
-      </header>
-      <div class="customer-cards-row">
-        <div class="customer-card">
-          <div class="customer-card-value" id="totalCustomers">-</div>
-          <div class="customer-card-label">Total Customers</div>
+    </div>
+
+    <div class="main-content">
+      <div class="topbar">
+        <div class="page-title">
+          <i class="fas fa-users"></i>
+          Customer Management
         </div>
-        <div class="customer-card">
-          <div class="customer-card-value" id="activeMembers">-</div>
-          <div class="customer-card-label">Active Members</div>
-        </div>
-        <div class="customer-card">
-          <div class="customer-card-value" id="topSpender">-</div>
-          <div class="customer-card-label">Top Spender</div>
-        </div>
-        <div class="customer-card">
-          <div class="customer-card-value" id="newSignups">-</div>
-          <div class="customer-card-label">New Signups This Month</div>
-        </div>
-      </div>
-      <div style="max-width: 900px; margin: 0 auto 2em auto; display: flex; justify-content: center;">
-        <input id="customerSearch" type="text" placeholder="Search customers..." style="width: 320px; padding: 0.7em 1.2em; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;" oninput="filterCustomers()" />
-      </div>
-      <style>
-        .customer-cards-row {
-          max-width: 900px;
-          margin: 0 auto 2em auto;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.5em;
-        }
-        .customer-card {
-          background: #101a2b;
-          color: #FFD700;
-          border-radius: 12px;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-          padding: 1.2em 1em;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          min-width: 0;
-          min-height: 90px;
-          transition: box-shadow 0.25s, transform 0.25s, background 0.25s;
-          cursor: pointer;
-        }
-        .customer-card:hover, .customer-card:focus {
-          transform: scale(1.045);
-          box-shadow: 0 8px 32px rgba(25,118,210,0.18);
-          background: #18233a;
-          outline: none;
-        }
-        .customer-card-value {
-          font-size: 2em;
-          font-weight: 800;
-          color: #FFD700;
-          margin-bottom: 0.2em;
-          word-break: break-word;
-        }
-        .customer-card-label {
-          font-size: 1em;
-          color: #fff;
-          font-weight: 600;
-          text-align: center;
-        }
-        @media (max-width: 1100px) {
-          .customer-cards-row { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 700px) {
-          .customer-cards-row { grid-template-columns: 1fr; }
-        }
-      </style>
-      <div class="admin-profile" id="adminProfile">
-        <span>Admin</span>
-        <div class="avatar">A</div>
-        <div id="adminDropdown">
-          <div class="user-info">
-            <div class="user-name">Admin</div>
-            <div class="user-email">admin@pearlvista.com</div>
-            <div class="user-detail">
-              <i class="fas fa-building"></i>
-              Department: <span>Management</span>
-            </div>
-            <div class="user-detail">
-              <i class="fas fa-phone"></i>
-              Phone: <span>+1 234 567 8901</span>
-            </div>
-            <div class="user-detail">
-              <i class="fas fa-clock"></i>
-              Last login: <span>23 Jul 2025, 14:44</span>
-            </div>
+        <div class="admin-profile" onclick="toggleDropdown()">
+          <div class="avatar">A</div>
+          <div class="admin-info">
+            <div class="admin-name">Admin User</div>
+            <div class="admin-role">Administrator</div>
           </div>
-          <div class="dropdown-buttons">
-            <button class="btn-profile" onclick="window.location.href='admin-profile.html'">Profile</button>
-            <button class="btn-settings" onclick="window.location.href='admin-settings.html'">Settings</button>
-            <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+          <div id="adminDropdown">
+            <div class="dropdown-item" onclick="window.location.href='admin-profile.html'">
+              <i class="fas fa-user"></i>
+              Profile
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='admin-settings.html'">
+              <i class="fas fa-cog"></i>
+              Settings
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='admin-add-user.html'">
+              <i class="fas fa-user-plus"></i>
+              Add User
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='logout.php'">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </div>
           </div>
         </div>
       </div>
-      <h2 class="section-title" style="margin:1.5em 0 1em 0; font-size:1.3em; font-weight:800; color:#101a2b; text-align:center;">Customers</h2>
+
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="number">1,234</div>
+          <h3>Total Customers</h3>
+          <div class="change">+15% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">89</div>
+          <h3>VIP Customers</h3>
+          <div class="change">+8% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">456</div>
+          <h3>Active Customers</h3>
+          <div class="change">+12% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">$125,430</div>
+          <h3>Total Revenue</h3>
+          <div class="change">+18% vs last month</div>
+        </div>
+      </div>
+
+      <div class="customers-filters">
+        <h3 style="margin-bottom: 1rem; color: #333;">
+          <i class="fas fa-filter" style="color: #d4af37;"></i>
+          Filter Customers
+        </h3>
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label>Status</label>
+            <select>
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="vip">VIP</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Search</label>
+            <input type="text" placeholder="Search by name or email">
+          </div>
+          <div class="filter-group">
+            <label>Country</label>
+            <select>
+              <option value="">All Countries</option>
+              <option value="usa">USA</option>
+              <option value="uk">UK</option>
+              <option value="canada">Canada</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Registration Date</label>
+            <input type="date">
+          </div>
+        </div>
+      </div>
+
       <div class="customers-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Customer Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Total Bookings</th>
-              <th>Total Points</th>
-              <th>Member Type</th>
-              <th>Gender</th>
-              <th>Country</th>
-              <th>Preferences</th>
-              <th>Member Since</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John Smith</td>
-              <td>john.smith@email.com</td>
-              <td>+1 555 123 4567</td>
-              <td>4</td>
-              <td>32000</td>
-              <td>Pearl Gold</td>
-              <td>Male</td>
-              <td>USA</td>
-              <td>Non-smoking, King bed</td>
-              <td>2022-03-15</td>
-              <td><span class="status Active">Active</span></td>
-            </tr>
-            <tr><td>Linda Evans</td><td>linda.evans@email.com</td><td>+44 20 1234 5678</td><td>2</td><td>12000</td><td>Pearl Silver</td><td>Female</td><td>UK</td><td>High floor, Quiet room</td><td>2023-07-01</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Rajesh Kumar</td><td>rajesh.kumar@email.com</td><td>+91 98765 43210</td><td>3</td><td>8000</td><td>Pearl Silver</td><td>Male</td><td>India</td><td>Vegetarian meals</td><td>2022-11-20</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Anna Müller</td><td>anna.mueller@email.com</td><td>+49 30 123456</td><td>5</td><td>48000</td><td>Pearl Platinum</td><td>Female</td><td>Germany</td><td>Suite upgrade</td><td>2021-05-10</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>David Brown</td><td>david.brown@email.com</td><td>+1 555 234 5678</td><td>1</td><td>9000</td><td>Pearl Silver</td><td>Male</td><td>USA</td><td>King bed</td><td>2023-01-12</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Yuki Tanaka</td><td>yuki.tanaka@email.com</td><td>+81 3 1234 5678</td><td>2</td><td>15000</td><td>Pearl Silver</td><td>Female</td><td>Japan</td><td>Non-smoking</td><td>2022-08-05</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Pedro Silva</td><td>pedro.silva@email.com</td><td>+55 11 91234 5678</td><td>6</td><td>22000</td><td>Pearl Gold</td><td>Male</td><td>Brazil</td><td>Pool view</td><td>2021-12-22</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Fatima Zahra</td><td>fatima.zahra@email.com</td><td>+212 522 123456</td><td>2</td><td>8000</td><td>Pearl Silver</td><td>Female</td><td>Morocco</td><td>Late check-out</td><td>2023-04-18</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Omar Ali</td><td>omar.ali@email.com</td><td>+971 50 123 4567</td><td>3</td><td>32000</td><td>Pearl Gold</td><td>Male</td><td>UAE</td><td>Airport pickup</td><td>2022-09-30</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Chloe Martin</td><td>chloe.martin@email.com</td><td>+33 1 23 45 67 89</td><td>1</td><td>0</td><td>Pearl Basic</td><td>Female</td><td>France</td><td>Baby cot</td><td>2024-06-01</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Lucas Rossi</td><td>lucas.rossi@email.com</td><td>+39 06 1234 5678</td><td>2</td><td>18000</td><td>Pearl Silver</td><td>Male</td><td>Italy</td><td>Balcony</td><td>2023-02-14</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Emily Wang</td><td>emily.wang@email.com</td><td>+86 10 1234 5678</td><td>4</td><td>25000</td><td>Pearl Gold</td><td>Female</td><td>China</td><td>Extra towels</td><td>2022-10-10</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Mohammed Hassan</td><td>mohammed.hassan@email.com</td><td>+20 2 12345678</td><td>1</td><td>8000</td><td>Pearl Silver</td><td>Male</td><td>Egypt</td><td>Quiet room</td><td>2023-03-25</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Julia Novak</td><td>julia.novak@email.com</td><td>+420 123 456 789</td><td>3</td><td>32000</td><td>Pearl Gold</td><td>Female</td><td>Czechia</td><td>Suite upgrade</td><td>2021-07-19</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Samuel Lee</td><td>samuel.lee@email.com</td><td>+82 2 1234 5678</td><td>2</td><td>12000</td><td>Pearl Silver</td><td>Male</td><td>South Korea</td><td>King bed</td><td>2022-12-03</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Isabella Garcia</td><td>isabella.garcia@email.com</td><td>+34 91 123 4567</td><td>5</td><td>48000</td><td>Pearl Platinum</td><td>Female</td><td>Spain</td><td>Non-smoking, Pool view</td><td>2021-11-11</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Ahmed Nasser</td><td>ahmed.nasser@email.com</td><td>+966 50 123 4567</td><td>1</td><td>9000</td><td>Pearl Silver</td><td>Male</td><td>Saudi Arabia</td><td>Late check-out</td><td>2023-05-08</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Olivia Smith</td><td>olivia.smith@email.com</td><td>+1 555 321 6547</td><td>2</td><td>15000</td><td>Pearl Silver</td><td>Female</td><td>USA</td><td>Extra pillows</td><td>2022-04-21</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Mateo Lopez</td><td>mateo.lopez@email.com</td><td>+52 55 1234 5678</td><td>3</td><td>22000</td><td>Pearl Gold</td><td>Male</td><td>Mexico</td><td>Balcony, King bed</td><td>2023-06-15</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Sophia Rossi</td><td>sophia.rossi@email.com</td><td>+39 06 8765 4321</td><td>1</td><td>8000</td><td>Pearl Silver</td><td>Female</td><td>Italy</td><td>Family room</td><td>2024-01-05</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Benjamin Clark</td><td>benjamin.clark@email.com</td><td>+61 2 1234 5678</td><td>2</td><td>32000</td><td>Pearl Gold</td><td>Male</td><td>Australia</td><td>Suite upgrade</td><td>2022-07-28</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Emma Dubois</td><td>emma.dubois@email.com</td><td>+33 1 98 76 54 32</td><td>4</td><td>48000</td><td>Pearl Platinum</td><td>Female</td><td>France</td><td>Non-smoking</td><td>2023-10-10</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>William Kim</td><td>william.kim@email.com</td><td>+82 10 9876 5432</td><td>1</td><td>9000</td><td>Pearl Silver</td><td>Male</td><td>South Korea</td><td>High floor</td><td>2022-05-30</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Charlotte Brown</td><td>charlotte.brown@email.com</td><td>+1 555 654 3210</td><td>2</td><td>18000</td><td>Pearl Silver</td><td>Female</td><td>USA</td><td>Extra towels</td><td>2021-09-17</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Lucas Müller</td><td>lucas.mueller@email.com</td><td>+49 89 123456</td><td>3</td><td>25000</td><td>Pearl Gold</td><td>Male</td><td>Germany</td><td>Balcony</td><td>2022-02-22</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Mia Silva</td><td>mia.silva@email.com</td><td>+55 21 98765 4321</td><td>1</td><td>0</td><td>Pearl Basic</td><td>Female</td><td>Brazil</td><td>Baby cot</td><td>2024-07-01</td><td><span class="status Inactive">Inactive</span></td></tr>
-            <tr><td>Henry Evans</td><td>henry.evans@email.com</td><td>+44 161 123 4567</td><td>2</td><td>15000</td><td>Pearl Silver</td><td>Male</td><td>UK</td><td>Non-smoking</td><td>2023-10-10</td><td><span class="status Active">Active</span></td></tr>
-            <tr><td>Amelia Rossi</td><td>amelia.rossi@email.com</td><td>+39 06 2345 6789</td><td>1</td><td>8000</td><td>Pearl Silver</td><td>Female</td><td>Italy</td><td>Suite upgrade</td><td>2022-06-18</td><td><span class="status Inactive">Inactive</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="customer-actions-row" style="max-width:900px; margin:2em auto 0 auto; display:flex; gap:1.2em; justify-content:center;">
-        <button class="customer-action-btn" id="editCustomerBtn" style="background:#101a2b; color:#FFD700; border:none; border-radius:8px; padding:0.8em 1.8em; font-size:1.05em; font-weight:700; cursor:pointer; transition:background 0.2s;">Edit</button>
-        <button class="customer-action-btn" id="deactivateCustomerBtn" style="background:#FFD700; color:#101a2b; border:none; border-radius:8px; padding:0.8em 1.8em; font-size:1.05em; font-weight:700; cursor:pointer; transition:background 0.2s;">Deactivate/Blacklist</button>
-        <button class="customer-action-btn" id="viewDetailsBtn" style="background:#fff; color:#101a2b; border:2px solid #101a2b; border-radius:8px; padding:0.8em 1.8em; font-size:1.05em; font-weight:700; cursor:pointer; transition:background 0.2s;">View Details</button>
-        <button class="customer-action-btn" id="sendMailBtn" style="background:#101a2b; color:#fff; border:none; border-radius:8px; padding:0.8em 1.8em; font-size:1.05em; font-weight:700; cursor:pointer; transition:background 0.2s;">Send Mail</button>
-      </div>
-      <!-- Modal Container -->
-      <div id="customerModal" class="customer-modal-overlay" style="display:none;">
-        <div class="customer-modal">
-          <span class="customer-modal-close" id="closeModalBtn">&times;</span>
-          <div id="modalContent"></div>
+        <div class="table-header">
+          <div class="table-title">
+            <i class="fas fa-list"></i>
+            Customer List
+          </div>
+        </div>
+        <div class="customers-grid">
+          <div class="customer-card">
+            <div class="customer-header">
+              <div class="customer-info">
+                <div class="customer-avatar">JD</div>
+                <div>
+                  <div class="customer-name">John Doe</div>
+                  <div style="font-size: 0.8rem; color: #666;">john.doe@email.com</div>
+                </div>
+              </div>
+              <span class="customer-status status-active">Active</span>
+            </div>
+            <div class="customer-details">
+              <div class="detail-group">
+                <div class="detail-label">Phone</div>
+                <div class="detail-value">+1 555 123 4567</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Country</div>
+                <div class="detail-value">USA</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Total Bookings</div>
+                <div class="detail-value">15</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Total Spent</div>
+                <div class="detail-value">$8,450</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Last Visit</div>
+                <div class="detail-value">Dec 15, 2024</div>
+              </div>
+            </div>
+            <div class="customer-actions">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </div>
+          </div>
+
+          <div class="customer-card">
+            <div class="customer-header">
+              <div class="customer-info">
+                <div class="customer-avatar">SS</div>
+                <div>
+                  <div class="customer-name">Sarah Smith</div>
+                  <div style="font-size: 0.8rem; color: #666;">sarah.smith@email.com</div>
+                </div>
+              </div>
+              <span class="customer-status status-vip">VIP</span>
+            </div>
+            <div class="customer-details">
+              <div class="detail-group">
+                <div class="detail-label">Phone</div>
+                <div class="detail-value">+1 555 987 6543</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Country</div>
+                <div class="detail-value">Canada</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Total Bookings</div>
+                <div class="detail-value">28</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Total Spent</div>
+                <div class="detail-value">$15,230</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Last Visit</div>
+                <div class="detail-value">Dec 20, 2024</div>
+              </div>
+            </div>
+            <div class="customer-actions">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </div>
+          </div>
+
+          <div class="customer-card">
+            <div class="customer-header">
+              <div class="customer-info">
+                <div class="customer-avatar">MJ</div>
+                <div>
+                  <div class="customer-name">Mike Johnson</div>
+                  <div style="font-size: 0.8rem; color: #666;">mike.johnson@email.com</div>
+                </div>
+              </div>
+              <span class="customer-status status-inactive">Inactive</span>
+            </div>
+            <div class="customer-details">
+              <div class="detail-group">
+                <div class="detail-label">Phone</div>
+                <div class="detail-value">+1 555 456 7890</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Country</div>
+                <div class="detail-value">UK</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Total Bookings</div>
+                <div class="detail-value">5</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Total Spent</div>
+                <div class="detail-value">$3,200</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Last Visit</div>
+                <div class="detail-value">Nov 10, 2024</div>
+              </div>
+            </div>
+            <div class="customer-actions">
+              <button class="btn btn-view">View</button>
+              <button class="btn btn-edit">Edit</button>
+              <button class="btn btn-delete">Delete</button>
+            </div>
+          </div>
         </div>
       </div>
-      <style>
-        .customers-table tbody tr.selected { background: #ffe066 !important; color: #101a2b !important; }
-        .customer-modal-overlay {
-          position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-          background: rgba(16,26,43,0.45); z-index: 2000; display: flex; align-items: center; justify-content: center;
-        }
-        .customer-modal {
-          background: #fff; border-radius: 14px; box-shadow: 0 8px 32px rgba(16,26,43,0.18);
-          padding: 2em 2.5em; min-width: 340px; max-width: 95vw; position: relative;
-          color: #101a2b; /* Ensure modal text is dark */
-        }
-        .customer-modal * { color: #101a2b; }
-        .customer-modal-close {
-          position: absolute; top: 1em; right: 1.2em; font-size: 2em; color: #101a2b; cursor: pointer; font-weight: bold;
-        }
-        .customer-modal h3 { margin-top: 0; color: #101a2b; }
-        .customer-modal label { font-weight: 600; color: #101a2b; }
-        .customer-modal input, .customer-modal textarea, .customer-modal select {
-          width: 100%; padding: 0.6em 1em; border-radius: 7px; border: 1px solid #ccc; margin-bottom: 1em; font-size: 1em;
-          color: #101a2b; background: #fff;
-        }
-        .customer-modal button {
-          background: #101a2b; color: #FFD700; border: none; border-radius: 7px; padding: 0.7em 1.5em; font-size: 1em; font-weight: 700; cursor: pointer;
-        }
-        .customer-modal .danger { background: #FFD700; color: #101a2b; }
-        .customer-modal .success-msg { color: #1a7f37 !important; font-weight: 700; margin-top: 1em; }
-        .customer-modal .warning-msg { color: #d32f2f !important; font-weight: 700; margin-top: 1em; }
-      </style>
-      <script>
-    // Admin Dropdown Functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const adminProfile = document.getElementById('adminProfile');
-      const adminDropdown = document.getElementById('adminDropdown');
+    </div>
+  </div>
 
-      if (adminProfile && adminDropdown) {
-        // Toggle dropdown on click
-        adminProfile.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const isVisible = adminDropdown.style.display === 'block';
-          adminDropdown.style.display = isVisible ? 'none' : 'block';
-        });
+  <script src="admin-navigation.js"></script>
+  <script src="fix-admin-navigation.js"></script>
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('adminDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!adminProfile.contains(e.target)) {
-            adminDropdown.style.display = 'none';
-          }
-        });
-
-        // Prevent dropdown from closing when clicking inside it
-        adminDropdown.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const profile = document.querySelector('.admin-profile');
+      const dropdown = document.getElementById('adminDropdown');
+      if (!profile.contains(event.target)) {
+        dropdown.style.display = 'none';
       }
     });
-
-    // Logout function
-    function logoutAdmin() {
-      if (confirm('Are you sure you want to logout?')) {
-        // Clear any admin session data
-        localStorage.removeItem('admin_logged_in');
-        localStorage.removeItem('admin_username');
-        // Redirect to login page
-        window.location.href = 'index.html';
-      }
-    }
-
-    // Dynamic customer cards logic
-    function updateCustomerCards() {
-      var rows = document.querySelectorAll('.customers-table tbody tr');
-      var total = 0, active = 0, newSignups = 0, topSpender = '', maxPoints = -1;
-      var now = new Date();
-      rows.forEach(function(row) {
-        if (row.style.display === 'none') return;
-        total++;
-        var status = row.querySelector('.status')?.textContent.trim();
-        if (status === 'Active') active++;
-        var points = parseInt(row.children[5]?.textContent.trim() || '0', 10);
-        if (points > maxPoints) {
-          maxPoints = points;
-          topSpender = row.children[0]?.textContent.trim();
-        }
-        // New signups: points == 0 and member type is Pearl Basic and joined this month (simulate by checking points==0)
-        var memberType = row.children[6]?.textContent.trim();
-        if (points === 0 && memberType === 'Pearl Basic') newSignups++;
-      });
-      document.getElementById('totalCustomers').textContent = total;
-      document.getElementById('activeMembers').textContent = active;
-      document.getElementById('topSpender').textContent = topSpender || '-';
-      document.getElementById('newSignups').textContent = newSignups;
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      updateCustomerCards();
-      // Row selection logic (event delegation)
-      var tbody = document.querySelector('.customers-table tbody');
-      tbody.addEventListener('click', function(e) {
-        var row = e.target.closest('tr');
-        if (!row) return;
-        if (row.classList.contains('selected')) {
-          row.classList.remove('selected');
-        } else {
-          tbody.querySelectorAll('tr').forEach(r => r.classList.remove('selected'));
-          row.classList.add('selected');
-        }
-      });
-      // Modal logic
-      var modal = document.getElementById('customerModal');
-      var modalContent = document.getElementById('modalContent');
-      document.getElementById('closeModalBtn').onclick = function() { modal.style.display = 'none'; };
-      window.onclick = function(event) { if (event.target === modal) modal.style.display = 'none'; };
-      function getSelectedCustomer() {
-        var selected = document.querySelector('.customers-table tbody tr.selected');
-        if (!selected) return null;
-        var cells = selected.children;
-        return {
-          name: cells[0].textContent,
-          email: cells[1].textContent,
-          phone: cells[2].textContent,
-          bookings: cells[3].textContent,
-          points: cells[4].textContent,
-          memberType: cells[5].textContent,
-          gender: cells[6].textContent,
-          country: cells[7].textContent,
-          preferences: cells[8].textContent,
-          since: cells[9].textContent,
-          status: cells[10].textContent
-        };
-      }
-      function showModal(contentHtml) {
-        modalContent.innerHTML = contentHtml;
-        modal.style.display = 'flex';
-      }
-      // Button actions
-      document.getElementById('editCustomerBtn').onclick = function() {
-        var customer = getSelectedCustomer();
-        if (!customer) return showModal('<div class="warning-msg">Please select a customer row first.</div>');
-        showModal(`
-          <h3>Edit Customer</h3>
-          <form id="editCustomerForm">
-            <label>Name</label><input type="text" value="${customer.name}" />
-            <label>Email</label><input type="email" value="${customer.email}" />
-            <label>Phone</label><input type="text" value="${customer.phone}" />
-            <label>Member Type</label><input type="text" value="${customer.memberType}" />
-            <label>Status</label><input type="text" value="${customer.status}" />
-            <button type="submit">Save Changes</button>
-          </form>
-        `);
-        document.getElementById('editCustomerForm').onsubmit = function(e) {
-          e.preventDefault();
-          showModal('<div class="success-msg">Customer details updated (demo only).</div>');
-          setTimeout(()=>{ modal.style.display='none'; }, 1200);
-        };
-      };
-      document.getElementById('deactivateCustomerBtn').onclick = function() {
-        var customer = getSelectedCustomer();
-        if (!customer) return showModal('<div class="warning-msg">Please select a customer row first.</div>');
-        showModal(`
-          <h3>Deactivate/Blacklist Customer</h3>
-          <div>Are you sure you want to deactivate or blacklist <b>${customer.name}</b>?</div>
-          <button class="danger" id="confirmDeactivateBtn">Yes, Deactivate</button>
-        `);
-        document.getElementById('confirmDeactivateBtn').onclick = function() {
-          showModal('<div class="success-msg">Customer deactivated (demo only).</div>');
-          setTimeout(()=>{ modal.style.display='none'; }, 1200);
-        };
-      };
-      document.getElementById('viewDetailsBtn').onclick = function() {
-        var customer = getSelectedCustomer();
-        if (!customer) return showModal('<div class="warning-msg">Please select a customer row first.</div>');
-        showModal(`
-          <h3>Customer Details</h3>
-          <div><b>Name:</b> ${customer.name}</div>
-          <div><b>Email:</b> ${customer.email}</div>
-          <div><b>Phone:</b> ${customer.phone}</div>
-          <div><b>Member Type:</b> ${customer.memberType}</div>
-          <div><b>Status:</b> ${customer.status}</div>
-          <div><b>Country:</b> ${customer.country}</div>
-          <div><b>Preferences:</b> ${customer.preferences}</div>
-          <div><b>Member Since:</b> ${customer.since}</div>
-          <div><b>Total Bookings:</b> ${customer.bookings}</div>
-          <div><b>Total Points:</b> ${customer.points}</div>
-          <div><b>Gender:</b> ${customer.gender}</div>
-        `);
-      };
-      document.getElementById('sendMailBtn').onclick = function() {
-        var customer = getSelectedCustomer();
-        if (!customer) return showModal('<div class="warning-msg">Please select a customer row first.</div>');
-        showModal(`
-          <h3>Send Mail to ${customer.name}</h3>
-          <form id="sendMailForm">
-            <label>To</label><input type="email" value="${customer.email}" readonly />
-            <label>Subject</label><input type="text" value="" placeholder="Subject" required />
-            <label>Message</label><textarea rows="4" placeholder="Type your message..." required></textarea>
-            <button type="submit">Send Mail</button>
-          </form>
-        `);
-        document.getElementById('sendMailForm').onsubmit = function(e) {
-          e.preventDefault();
-          showModal('<div class="success-msg">Mail sent (demo only).</div>');
-          setTimeout(()=>{ modal.style.display='none'; }, 1200);
-        };
-      };
-    });
-    // Update cards on search
-    function filterCustomers() {
-      var input = document.getElementById('customerSearch').value.toLowerCase();
-      var table = document.querySelector('.customers-table table');
-      var rows = table.querySelectorAll('tbody tr');
-      rows.forEach(function(row) {
-        var text = row.textContent.toLowerCase();
-        if (text.indexOf(input) > -1) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
-      });
-      updateCustomerCards();
-    }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
 </body>
 </html> 

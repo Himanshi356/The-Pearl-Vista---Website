@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Tour Bookings - Pearl Vista</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Admin Tour Bookings | The Pearl Vista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <style>
         body {
-            background: #f8fafc;
-            font-family: 'Lato', Arial, sans-serif;
+            background: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            color: #222;
+            color: #333;
         }
 
         .admin-dashboard {
@@ -20,42 +19,92 @@
         }
 
         .sidebar {
-            background: #101a2b;
+            background: #1a1a1a;
             color: #fff;
-            width: 220px;
-            padding: 2rem 1rem 1rem 1rem;
+            width: 280px;
+            padding: 2rem 1.5rem 1rem 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 2rem;
             min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #e0e0e0;
         }
 
         .sidebar .logo {
-            font-size: 1.3rem;
-            font-weight: 900;
-            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             margin-bottom: 2rem;
-            color: #FFD700;
+            padding: 1rem;
+            background: #333;
+            border-radius: 8px;
+            border: 1px solid #444;
+            color: #d4af37;
         }
 
+        .sidebar .logo i {
+            font-size: 1.8rem;
+            color: #d4af37;
+        }
+
+        .sidebar .logo .logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2;
+        }
+
+        .sidebar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            color: #d4af37;
+            text-align: center;
+            padding: 1rem;
+            background: #222;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
         .sidebar nav {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         .sidebar nav a {
             color: #fff;
             text-decoration: none;
-            padding: 0.7rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background 0.2s;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+        }
+
+        .sidebar nav a i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #d4af37;
         }
 
         .sidebar nav a.active, .sidebar nav a:hover {
-            background: #767676;
-            color: #fff;
+            background: #d4af37;
+            color: #000;
+            border-color: #d4af37;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .sidebar nav a.active i, .sidebar nav a:hover i {
+            color: #000;
         }
 
         .main-content {
@@ -68,51 +117,390 @@
             min-height: 100vh;
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #d4af37;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            border-color: #d4af37;
+        }
+
+        .stat-card h3 {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .change {
+            color: #28a745;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Insights Grid Styling */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .insight-panel {
+            background: #1a1a1a;
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .insight-panel:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .insight-panel h3 {
+            color: #d4af37;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .insight-content {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.9rem;
+            flex-direction: column;
+            padding: 1rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            max-width: 280px;
+            background: #333;
+            border-radius: 12px;
+            height: 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            margin: 1rem auto;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            border-radius: 12px;
+            transition: width 0.8s ease;
+            width: 0%;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+
+        /* Insight content styling */
+        .destination-item, .trend-item, .preference-item, .guide-item, .seasonal-item {
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .insight-content div {
+            margin: 0.5rem 0;
+        }
+
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 400;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title i {
+            color: #d4af37;
         }
 
         .admin-profile {
             display: flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 1rem;
             cursor: pointer;
             position: relative;
-            color: #000;
+            color: #333;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .admin-profile:hover {
+            background: #f8f9fa;
+            border-color: #d4af37;
         }
 
         .admin-profile .avatar {
-            width: 36px;
-            height: 36px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: #FFD700;
+            background: #d4af37;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: #101a2b;
+            color: #000;
             font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .admin-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-name {
+            font-weight: 700;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .admin-role {
+            font-size: 0.85rem;
+            color: #d4af37 !important;
+            font-weight: 500;
         }
 
         #adminDropdown {
             display: none;
             position: absolute;
-            top: 48px;
+            top: 60px;
             right: 0;
             background: #fff;
-            color: #101a2b;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-            min-width: 240px;
-            padding: 1.8rem;
-            font-size: 0.95rem;
-            border: 1px solid #f8f9fa;
-            animation: dropdownFadeIn 0.3s ease;
-            backdrop-filter: blur(10px);
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            padding: 1rem;
+            font-size: 0.9rem;
             z-index: 1000;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+
+        .dropdown-item i {
+            width: 16px;
+            text-align: center;
+            color: #d4af37 !important;
+        }
+
+        /* Most specific rules for dropdown icons */
+        .admin-profile #adminDropdown .dropdown-item .fas {
+            color: #d4af37 !important;
+        }
+
+        .admin-profile #adminDropdown .dropdown-item .fa {
+            color: #d4af37 !important;
+        }
+
+        /* Target specific icons */
+        .admin-profile #adminDropdown .dropdown-item .fa-user {
+            color: #d4af37 !important;
+        }
+
+        .admin-profile #adminDropdown .dropdown-item .fa-cog {
+            color: #d4af37 !important;
+        }
+
+        .admin-profile #adminDropdown .dropdown-item .fa-user-plus {
+            color: #d4af37 !important;
+        }
+
+        .admin-profile #adminDropdown .dropdown-item .fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Additional specific targeting for settings and logout */
+        #adminDropdown .fa-cog {
+            color: #d4af37 !important;
+        }
+
+        #adminDropdown .fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Even more specific targeting */
+        .admin-profile #adminDropdown .dropdown-item i.fa-cog {
+            color: #d4af37 !important;
+        }
+
+        .admin-profile #adminDropdown .dropdown-item i.fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Override any external CSS */
+        body .admin-profile #adminDropdown .dropdown-item i.fa-cog {
+            color: #d4af37 !important;
+        }
+
+        body .admin-profile #adminDropdown .dropdown-item i.fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Most specific rule to override any external CSS */
+        body .admin-profile #adminDropdown .dropdown-item i.fa-cog {
+            color: #d4af37 !important;
+        }
+
+        body .admin-profile #adminDropdown .dropdown-item i.fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Override any FontAwesome or external icon styles */
+        .fa, .fas, .far, .fal {
+            color: #d4af37 !important;
+        }
+
+        #adminDropdown .fa,
+        #adminDropdown .fas,
+        #adminDropdown .far,
+        #adminDropdown .fal {
+            color: #d4af37 !important;
+        }
+
+        /* Additional specific targeting for settings and logout */
+        #adminDropdown .fa-cog {
+            color: #d4af37 !important;
+        }
+
+        #adminDropdown .fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Even more specific targeting */
+        .admin-profile #adminDropdown .dropdown-item i.fa-cog {
+            color: #d4af37 !important;
+        }
+
+        .admin-profile #adminDropdown .dropdown-item i.fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Override any external CSS */
+        body .admin-profile #adminDropdown .dropdown-item i.fa-cog {
+            color: #d4af37 !important;
+        }
+
+        body .admin-profile #adminDropdown .dropdown-item i.fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Most specific rule to override any external CSS */
+        body .admin-profile #adminDropdown .dropdown-item i.fa-cog {
+            color: #d4af37 !important;
+        }
+
+        body .admin-profile #adminDropdown .dropdown-item i.fa-sign-out-alt {
+            color: #d4af37 !important;
+        }
+
+        /* Override any FontAwesome or external icon styles */
+        .fa, .fas, .far, .fal {
+            color: #d4af37 !important;
+        }
+
+        #adminDropdown .fa,
+        #adminDropdown .fas,
+        #adminDropdown .far,
+        #adminDropdown .fal {
+            color: #d4af37 !important;
+        }
+
+        #adminDropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: #fff;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            z-index: 1000;
+            border: 1px solid #e0e0e0;
         }
 
         @keyframes dropdownFadeIn {
@@ -556,93 +944,426 @@
                 gap: 1rem;
             }
         }
+
+        /* Dropdown item styling for consistent icon colors */
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333;
+        }
+
+        .dropdown-item i {
+            color: #d4af37;
+            width: 16px;
+            text-align: center;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-item:hover i {
+            color: #b8941f;
+        }
+
+        /* Dashboard-style content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .recent-activity {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .recent-activity h3 {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recent-activity h3 i {
+            color: #d4af37;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+        }
+
+        .activity-content h4 {
+            color: #333;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .quick-actions {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .quick-actions h3 {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-actions h3 i {
+            color: #d4af37;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #d4af37;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .action-btn i {
+            color: #d4af37;
+            width: 20px;
+            text-align: center;
+        }
+
+        .action-btn:hover i {
+            color: #000;
+        }
+
+        .chart-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container h3 {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-container h3 i {
+            color: #d4af37;
+        }
+
+        .chart-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="admin-dashboard">
-        <aside class="sidebar">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-gem"></i> The Pearl Vista
+            </div>
             <nav>
-                <a href="admin-dashboard.html">Dashboard</a>
-                <a href="admin-rooms.html">Rooms</a>
-                <a href="admin-services.html">Services</a>
-                <a href="admin-bookings.html">Bookings</a>
-                <a href="admin-tour-bookings.html" class="active">Tour Bookings</a>
-                <a href="admin-customers.html">Customers</a>
-                <a href="admin-reports.html">Reports</a>
+          <a href="admin-dashboard.html">
+            <i class="fas fa-tachometer-alt"></i>
+            Dashboard
+          </a>
+          <a href="admin-rooms.html">
+            <i class="fas fa-bed"></i>
+            Rooms
+          </a>
+          <a href="admin-bookings.html">
+            <i class="fas fa-calendar-check"></i>
+            Bookings
+          </a>
+          <a href="admin-customers.html">
+            <i class="fas fa-users"></i>
+            Customers
+          </a>
+          <a href="admin-services.html">
+            <i class="fas fa-concierge-bell"></i>
+            Services
+          </a>
+          <a href="admin-tour-bookings.html" class="active">
+            <i class="fas fa-map-marked-alt"></i>
+            Tour Bookings
+          </a>
+          <a href="admin-chat.html">
+            <i class="fas fa-comments"></i>
+            Chat Support
+          </a>
+          <a href="admin-reports.html">
+            <i class="fas fa-chart-bar"></i>
+            Reports
+          </a>
+          <a href="admin-settings.html">
+            <i class="fas fa-cog"></i>
+            Settings
+          </a>
             </nav>
-        </aside>
+      </div>
+      <div class="main-content">
+                  <div class="topbar">
+        <div class="page-title">
+          <i class="fas fa-map-marked-alt"></i>
+          Tour Bookings
+        </div>
+        <div class="admin-profile" onclick="toggleDropdown()">
+          <div class="avatar">A</div>
+          <div class="admin-info">
+            <div class="admin-name">System Administrator</div>
+            <div class="admin-role">super_admin</div>
+          </div>
+          <div id="adminDropdown">
+            <div class="dropdown-item" onclick="window.location.href='admin-profile.html'">
+              <i class="fas fa-user" style="color: #d4af37 !important;"></i>
+              Profile
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='admin-settings.html'">
+              <i class="fas fa-cog" style="color: #d4af37 !important;"></i>
+              Settings
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='admin-add-user.html'">
+              <i class="fas fa-user-plus" style="color: #d4af37 !important;"></i>
+              Add User
+            </div>
+            <div class="dropdown-item" onclick="window.location.href='logout.php'">
+              <i class="fas fa-sign-out-alt" style="color: #d4af37 !important;"></i>
+              Logout
+            </div>
+          </div>
+        </div>
+      </div>
+      
+            <div class="stats-grid" id="tourBookingsStatsGrid">
+        <!-- Stats will be loaded here dynamically -->
+      </div>
 
-        <main class="main-content">
-            <div class="topbar">
-                <div></div>
-                <div class="admin-profile" id="adminProfile">
-                    <span>Admin</span>
-                    <div class="avatar">A</div>
-                    <div id="adminDropdown">
-                        <div class="user-info">
-                            <div class="user-name">Admin</div>
-                            <div class="user-email">admin@pearlvista.com</div>
-                            <div class="user-detail">
-                                <i class="fas fa-building"></i>
-                                Department: <span>Management</span>
-                            </div>
-                            <div class="user-detail">
-                                <i class="fas fa-phone"></i>
-                                Phone: <span>+1 234 567 8901</span>
-                            </div>
-                            <div class="user-detail">
-                                <i class="fas fa-clock"></i>
-                                Last login: <span>23 Jul 2025, 14:44</span>
-                            </div>
-                        </div>
-                        <div class="dropdown-buttons">
-                            <button class="btn-profile" onclick="window.location.href='admin-profile.html'">Profile</button>
-                            <button class="btn-settings" onclick="window.location.href='admin-settings.html'">Settings</button>
-                            <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
-                        </div>
-                    </div>
+      <!-- INSIGHTS PANELS -->
+      <div class="insights-grid">
+        <div class="insight-panel">
+          <h3>Popular Tour Destinations</h3>
+          <div id="popularDestinationsContent" class="insight-content">
+            <!-- Data will be loaded from backend -->
+          </div>
+        </div>
+        <div class="insight-panel">
+          <h3>Tour Booking Trends</h3>
+          <div id="bookingTrendsContent" class="insight-content">
+            <!-- Data will be loaded from backend -->
+          </div>
+        </div>
+        <div class="insight-panel">
+          <h3>Customer Preferences</h3>
+          <div id="customerPreferencesContent" class="insight-content">
+            <!-- Data will be loaded from backend -->
+          </div>
+        </div>
+        <div class="insight-panel">
+          <h3>Revenue from Tours</h3>
+          <div id="tourRevenueContent" class="insight-content">
+            <div class="progress-container">
+              <div class="progress-bar" id="tourRevenueProgressBar"></div>
+              <div class="progress-text" id="tourRevenueText">0%</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight-panel">
+          <h3>Tour Guide Performance</h3>
+          <div id="guidePerformanceContent" class="insight-content">
+            <!-- Data will be loaded from backend -->
+          </div>
+        </div>
+        <div class="insight-panel">
+          <h3>Seasonal Bookings</h3>
+          <div id="seasonalBookingsContent" class="insight-content">
+            <!-- Data will be loaded from backend -->
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Tour Bookings</h3>
+                    <div class="number" id="totalBookings">-</div>
+                    <div class="change">+5 this week</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Confirmed Tours</h3>
+                    <div class="number" id="confirmedBookings">-</div>
+                    <div class="change">85% confirmation rate</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Tours</h3>
+                    <div class="number" id="pendingBookings">-</div>
+                    <div class="change">Awaiting confirmation</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Cancelled Tours</h3>
+                    <div class="number" id="cancelledBookings">-</div>
+                    <div class="change">Low cancellation rate</div>
                 </div>
             </div>
 
-            <div class="page-header">
-                <h1 class="page-title">
+            <div class="content-grid">
+                <div class="recent-activity">
+                    <h3>
                     <i class="fas fa-map-marked-alt"></i>
-                    Tour Bookings Management
-                </h1>
-                <p class="page-subtitle">Manage and monitor all guided tour bookings from Pearl Vista guests</p>
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalBookings">-</span>
-                        <span class="stat-label">Total Bookings</span>
+                        Recent Tour Bookings
+                    </h3>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="confirmedBookings">-</span>
-                        <span class="stat-label">Confirmed</span>
+                        <div class="activity-content">
+                            <h4>New Tour Booking</h4>
+                            <p>City tour booked for Dec 15th by John Doe</p>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="pendingBookings">-</span>
-                        <span class="stat-label">Pending</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="cancelledBookings">-</span>
-                        <span class="stat-label">Cancelled</span>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Tour Confirmed</h4>
+                            <p>Museum tour confirmed for Sarah Smith</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Tour Review</h4>
+                            <p>5-star review received for guided city tour</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Upcoming Tours</h4>
+                            <p>3 tours scheduled for next week</p>
                     </div>
                 </div>
             </div>
 
-            <button class="refresh-btn" onclick="loadBookings()">
+                <div class="quick-actions">
+                    <h3>
+                        <i class="fas fa-bolt"></i>
+                        Quick Actions
+                    </h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="loadBookings()">
                 <i class="fas fa-sync-alt"></i>
                 Refresh Bookings
             </button>
-
-            <div class="bookings-container">
-                <div id="bookingsContainer">
-                    <div class="no-bookings">
-                        <div class="loading-spinner">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            Loading bookings...
+                        <a href="admin-bookings.html" class="action-btn">
+                            <i class="fas fa-calendar-check"></i>
+                            View All Bookings
+                        </a>
+                        <a href="admin-customers.html" class="action-btn">
+                            <i class="fas fa-users"></i>
+                            Manage Customers
+                        </a>
+                        <a href="admin-reports.html" class="action-btn">
+                            <i class="fas fa-chart-line"></i>
+                            Tour Reports
+                        </a>
                         </div>
                     </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>
+                    <i class="fas fa-chart-area"></i>
+                    Tour Bookings Overview
+                </h3>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-area"></i>
+                    Tour bookings chart will be displayed here
                 </div>
             </div>
         </main>
@@ -902,6 +1623,86 @@
 
         // Load bookings when page loads
         document.addEventListener('DOMContentLoaded', loadBookings);
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('adminDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const profile = document.querySelector('.admin-profile');
+            const dropdown = document.getElementById('adminDropdown');
+            if (!profile.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Load tour bookings stats
+        fetch('Backend/get_tour_bookings_stats.php')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) return;
+                const stats = data.stats;
+                document.getElementById('tourBookingsStatsGrid').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Total Tour Bookings</h3>
+                        <div class="number">${stats.total_bookings}</div>
+                        <div class="change">${stats.bookings_change}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tour Revenue</h3>
+                        <div class="number">${stats.revenue}</div>
+                        <div class="change">${stats.revenue_change}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Tours</h3>
+                        <div class="number">${stats.active_tours}</div>
+                        <div class="change">${stats.tours_change}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Customer Satisfaction</h3>
+                        <div class="number">${stats.satisfaction}</div>
+                        <div class="change">${stats.satisfaction_change}</div>
+                    </div>
+                `;
+            });
+
+        // Load insights data
+        function loadTourInsightsData() {
+            // Popular Destinations
+            fetch('Backend/get_popular_destinations.php')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.destinations) {
+                        const destinationsHtml = data.destinations.map(dest => 
+                            `<div class="destination-item">${dest.name} - ${dest.bookings} bookings</div>`
+                        ).join('');
+                        document.getElementById('popularDestinationsContent').innerHTML = destinationsHtml;
+                    } else {
+                        document.getElementById('popularDestinationsContent').innerHTML = '<div>No data available</div>';
+                    }
+                });
+
+            // Tour Revenue Progress
+            fetch('Backend/get_tour_revenue_progress.php')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        const progress = data.progress || 0;
+                        document.getElementById('tourRevenueProgressBar').style.width = progress + '%';
+                        document.getElementById('tourRevenueText').textContent = progress + '%';
+                    }
+                });
+
+            // Other insights...
+            // Add more fetch calls for other insights
+        }
+
+        // Load insights when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTourInsightsData();
+        });
     </script>
 </body>
 </html> 

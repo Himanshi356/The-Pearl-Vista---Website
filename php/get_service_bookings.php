@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
 // Database configuration
 $host = 'localhost';
-$dbname = 'pearlvista';
+$dbname = 'the_pearl_vista';
 $username = 'root';
 $password = '';
 
