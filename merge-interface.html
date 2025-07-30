@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Merge Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .status-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #28a745;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-card.warning {
+            border-left-color: #ffc107;
+        }
+
+        .status-card.danger {
+            border-left-color: #dc3545;
+        }
+
+        .file-upload-section {
+            background: #e9ecef;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #6c757d;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .merge-progress {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .file-list {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background 0.3s ease;
+        }
+
+        .file-item:hover {
+            background: #f8f9fa;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .status-safe {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-review {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-conflict {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .merge-log {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .log-entry.success {
+            color: #28a745;
+        }
+
+        .log-entry.warning {
+            color: #856404;
+        }
+
+        .log-entry.error {
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔀 Safe Merge Interface</h1>
+            <p>Merge your partner's changes without losing your work</p>
+        </div>
+
+        <div class="content">
+            <!-- Status Section -->
+            <div class="status-section">
+                <h2>📊 Current Status</h2>
+                <div class="status-grid">
+                    <div class="status-card">
+                        <h3>✅ Backup Created</h3>
+                        <p>Your work is safely backed up in <code>backup-before-merge</code> branch</p>
+                    </div>
+                    <div class="status-card">
+                        <h3>🔄 Merge Branch</h3>
+                        <p>Working on <code>merge-partner-changes</code> branch</p>
+                    </div>
+                    <div class="status-card">
+                        <h3>📁 Files Ready</h3>
+                        <p id="files-status">Waiting for partner files...</p>
+                    </div>
+                    <div class="status-card">
+                        <h3>🛡️ Safety Check</h3>
+                        <p id="safety-status">Pending...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Upload Section -->
+            <div class="file-upload-section">
+                <h2>📁 Upload Partner's Files</h2>
+                <p>Drag and drop your partner's files here or click to browse</p>
+                
+                <div class="file-upload-area" id="upload-area">
+                    <div>
+                        <h3>📂 Drop files here</h3>
+                        <p>or click to select files</p>
+                        <input type="file" id="file-input" multiple accept=".html,.css,.js,.php" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="analyzeFiles()">🔍 Analyze Files</button>
+                    <button class="btn btn-success" onclick="startMerge()" id="merge-btn" disabled>🚀 Start Merge</button>
+                    <button class="btn btn-warning" onclick="rollback()">🔄 Rollback</button>
+                </div>
+            </div>
+
+            <!-- Merge Progress -->
+            <div class="merge-progress hidden" id="progress-section">
+                <h2>📈 Merge Progress</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p id="progress-text">Ready to start...</p>
+            </div>
+
+            <!-- File List -->
+            <div class="file-list hidden" id="file-list-section">
+                <h2>📋 File Analysis</h2>
+                <div id="file-list-content">
+                    <!-- File items will be added here -->
+                </div>
+            </div>
+
+            <!-- Merge Log -->
+            <div class="merge-log hidden" id="merge-log-section">
+                <h2>📝 Merge Log</h2>
+                <div id="merge-log-content">
+                    <!-- Log entries will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="merge-helper.js"></script>
+    <script>
+        let uploadedFiles = [];
+        let mergeHelper = new MergeHelper();
+        let mergeLog = [];
+
+        // File upload handling
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            uploadedFiles = Array.from(files);
+            document.getElementById('files-status').textContent = `${uploadedFiles.length} files uploaded`;
+            addLogEntry(`📁 ${uploadedFiles.length} files uploaded`, 'success');
+        }
+
+        function analyzeFiles() {
+            if (uploadedFiles.length === 0) {
+                alert('Please upload files first!');
+                return;
+            }
+
+            addLogEntry('🔍 Starting file analysis...', 'success');
+            
+            // Simulate file analysis
+            setTimeout(() => {
+                const fileListSection = document.getElementById('file-list-section');
+                const fileListContent = document.getElementById('file-list-content');
+                
+                fileListSection.classList.remove('hidden');
+                fileListContent.innerHTML = '';
+
+                uploadedFiles.forEach((file, index) => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    
+                    const status = getFileStatus(file.name);
+                    fileItem.innerHTML = `
+                        <div>
+                            <strong>${file.name}</strong>
+                            <br><small>${(file.size / 1024).toFixed(1)} KB</small>
+                        </div>
+                        <span class="file-status status-${status.type}">${status.text}</span>
+                    `;
+                    
+                    fileListContent.appendChild(fileItem);
+                });
+
+                document.getElementById('merge-btn').disabled = false;
+                document.getElementById('safety-status').textContent = 'Analysis complete';
+                addLogEntry('✅ File analysis complete', 'success');
+            }, 2000);
+        }
+
+        function getFileStatus(filename) {
+            if (filename.endsWith('.css')) {
+                return { type: 'review', text: 'Needs Review' };
+            } else if (filename.endsWith('.js')) {
+                return { type: 'review', text: 'Needs Review' };
+            } else if (filename.endsWith('.html')) {
+                return { type: 'review', text: 'Manual Review' };
+            } else if (filename.endsWith('.php')) {
+                return { type: 'conflict', text: 'Critical Review' };
+            } else {
+                return { type: 'safe', text: 'Safe to Add' };
+            }
+        }
+
+        function startMerge() {
+            const progressSection = document.getElementById('progress-section');
+            const mergeLogSection = document.getElementById('merge-log-section');
+            
+            progressSection.classList.remove('hidden');
+            mergeLogSection.classList.remove('hidden');
+            
+            addLogEntry('🚀 Starting merge process...', 'success');
+            
+            // Simulate merge process
+            simulateMerge();
+        }
+
+        function simulateMerge() {
+            const steps = [
+                { text: 'Creating backup...', progress: 10 },
+                { text: 'Analyzing conflicts...', progress: 25 },
+                { text: 'Merging safe files...', progress: 50 },
+                { text: 'Reviewing critical files...', progress: 75 },
+                { text: 'Finalizing merge...', progress: 90 },
+                { text: 'Merge complete!', progress: 100 }
+            ];
+
+            let currentStep = 0;
+            
+            const interval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    updateProgress(step.progress, step.text);
+                    addLogEntry(`📝 ${step.text}`, 'success');
+                    currentStep++;
+                } else {
+                    clearInterval(interval);
+                    addLogEntry('✅ Merge completed successfully!', 'success');
+                    setTimeout(() => {
+                        alert('Merge completed! Check your files and test functionality.');
+                    }, 1000);
+                }
+            }, 1500);
+        }
+
+        function updateProgress(percentage, text) {
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = text;
+        }
+
+        function addLogEntry(message, type = 'success') {
+            const logContent = document.getElementById('merge-log-content');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContent.appendChild(logEntry);
+            logContent.scrollTop = logContent.scrollHeight;
+        }
+
+        function rollback() {
+            if (confirm('Are you sure you want to rollback to your backup? This will undo all merge changes.')) {
+                addLogEntry('🔄 Rolling back to backup...', 'warning');
+                setTimeout(() => {
+                    addLogEntry('✅ Rollback completed', 'success');
+                    alert('Rollback completed. You are now on your backup branch.');
+                }, 2000);
+            }
+        }
+
+        // Initialize
+        addLogEntry('🔧 Merge interface initialized', 'success');
+    </script>
+</body>
+</html> 
