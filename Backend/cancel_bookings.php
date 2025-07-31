@@ -47,6 +47,32 @@ try {
     $stmt = $pdo->prepare("UPDATE rooms SET status = 'available' WHERE room_id = ?");
     $stmt->execute([$booking['room_id']]);
 
+    // Auto-update room availability after cancellation
+    try {
+        $currentDate = date('Y-m-d');
+        $update_stmt = $pdo->prepare("
+            UPDATE room_types rt
+            SET available_rooms = (
+                rt.total_rooms - COALESCE(
+                    (
+                        SELECT COUNT(*)
+                        FROM bookings b
+                        WHERE b.room_type = rt.room_type 
+                        AND b.status IN ('pending', 'confirmed')
+                        AND (
+                            (b.check_in_date <= ? AND b.check_out_date >= ?) -- Current bookings
+                            OR (b.check_in_date > ?) -- Future bookings
+                        )
+                    ), 0
+                )
+            )
+        ");
+        $update_stmt->execute([$currentDate, $currentDate, $currentDate]);
+    } catch (Exception $e) {
+        // Log error but don't fail the cancellation
+        error_log("Error updating room availability after cancellation: " . $e->getMessage());
+    }
+
     echo json_encode(['status' => 'success', 'message' => 'Booking cancelled successfully']);
 
 } catch (Exception $e) {

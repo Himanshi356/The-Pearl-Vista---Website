@@ -81,18 +81,8 @@
       if (userDropdownHeader) {
         userDropdownHeader.textContent = `Hey ${username}!`;
       }
-      // Set dynamic user info fields
-      document.getElementById('userFullName').textContent = localStorage.getItem('pv_username') || 'John Doe';
-      document.getElementById('userMembership').textContent = localStorage.getItem('pv_membership') || 'Premium Member';
-      document.getElementById('userMemberSince').textContent = 'Member since ' + (localStorage.getItem('pv_member_since') || 'January 2023');
-      document.getElementById('userEmail').textContent = localStorage.getItem('pv_email') || 'john.doe@email.com';
-      document.getElementById('userPhone').textContent = localStorage.getItem('pv_phone') || '+1 (555) 123-4567';
-      document.getElementById('userAddress').textContent = localStorage.getItem('pv_address') || '123 Main Street, New York, NY 10001';
-      document.getElementById('userEmergencyContact').textContent = localStorage.getItem('pv_emergency_contact') || 'Jane Doe (+1 555-987-6543)';
-      document.getElementById('userFullNameDetail').textContent = localStorage.getItem('pv_full_name') || 'John Michael Doe';
-      document.getElementById('userDOB').textContent = localStorage.getItem('pv_dob') || 'March 15, 1985';
-      document.getElementById('userGender').textContent = localStorage.getItem('pv_gender') || 'Male';
-      document.getElementById('userNationality').textContent = localStorage.getItem('pv_nationality') || 'United States';
+          // Load user data from backend
+    loadUserData();
       // Always hide the edit profile modal on page load
       var editProfileModal = document.getElementById('editProfileModal');
       if (editProfileModal) editProfileModal.style.display = 'none';
@@ -113,6 +103,206 @@
       localStorage.removeItem('pv_logged_in');
       localStorage.removeItem('pv_username');
       window.location.href = 'index.html';
+    }
+
+    // Load user data from backend
+    async function loadUserData() {
+      const API_BASE_URL = window.location.origin + '/Pearl-Vista---Website';
+      const email = localStorage.getItem('pv_email');
+      
+      // Check if user is logged in
+      console.log('Profile page - localStorage check:', {
+        email: email,
+        pv_logged_in: localStorage.getItem('pv_logged_in'),
+        pv_username: localStorage.getItem('pv_username'),
+        pv_email: localStorage.getItem('pv_email')
+      });
+      
+      // Clear old localStorage data to ensure fresh data from database
+      if (email) {
+        localStorage.removeItem('pv_full_name');
+        localStorage.removeItem('pv_phone');
+        localStorage.removeItem('pv_address');
+        localStorage.removeItem('pv_emergency_contact');
+        localStorage.removeItem('pv_dob');
+        localStorage.removeItem('pv_gender');
+        localStorage.removeItem('pv_nationality');
+        localStorage.removeItem('pv_pref_room_type');
+        localStorage.removeItem('pv_pref_floor');
+        localStorage.removeItem('pv_pref_requests');
+        localStorage.removeItem('pv_pref_diet');
+      }
+      
+      if (!email || !localStorage.getItem('pv_logged_in')) {
+        console.log('User not logged in - redirecting to login');
+        alert('Please log in to view your profile information.');
+        window.location.href = 'unified-login.html';
+        return;
+      }
+      
+      // Update last login time in database
+      try {
+        await fetch(`${API_BASE_URL}/Backend/update_last_login.php`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email })
+        });
+      } catch (error) {
+        console.log('Failed to update last login:', error);
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/Backend/get_user_info.php`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email
+          })
+        });
+
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          const userData = data.data;
+          
+          // Update user profile information
+          document.getElementById('userFullName').textContent = userData.full_name;
+          document.getElementById('userMembership').textContent = userData.verified ? 'Premium Member' : 'Basic Member';
+          document.getElementById('userMemberSince').textContent = 'Member since ' + userData.member_since;
+          document.getElementById('userEmail').textContent = userData.email;
+          
+          // Show user data only if it's not empty, otherwise show "-"
+          document.getElementById('userPhone').textContent = userData.phone && userData.phone !== '-' ? userData.phone : '-';
+          document.getElementById('userAddress').textContent = userData.address && userData.address !== '-' ? userData.address : '-';
+          document.getElementById('userEmergencyContact').textContent = userData.emergency_contact && userData.emergency_contact !== '-' ? userData.emergency_contact : '-';
+          document.getElementById('userFullNameDetail').textContent = userData.full_name && userData.full_name !== '-' ? userData.full_name : '-';
+          document.getElementById('userDOB').textContent = userData.date_of_birth && userData.date_of_birth !== '-' ? userData.date_of_birth : '-';
+          document.getElementById('userGender').textContent = userData.gender && userData.gender !== '-' ? userData.gender : '-';
+          document.getElementById('userNationality').textContent = userData.nationality && userData.nationality !== '-' ? userData.nationality : '-';
+          
+                     // Update account security information with real-time data
+           const now = new Date();
+           const currentLoginTime = now.toLocaleString('en-US', { 
+             year: 'numeric',
+             month: 'short',
+             day: 'numeric',
+             hour: 'numeric',
+             minute: '2-digit',
+             hour12: true
+           });
+           
+           // Update last login time with current time
+           document.getElementById('lastLogin').textContent = currentLoginTime;
+           localStorage.setItem('pv_last_login', currentLoginTime);
+           
+           document.getElementById('twoFactorStatus').textContent = userData.two_factor_auth;
+           document.getElementById('passwordChanged').textContent = userData.password_changed;
+          document.getElementById('accountStatus').textContent = userData.account_status;
+          
+          // Update preferences - show "-" if empty
+          if (userData.preferences) {
+            document.getElementById('prefRoomType').textContent = userData.preferences.room_type !== '-' ? userData.preferences.room_type : '-';
+            document.getElementById('prefFloor').textContent = userData.preferences.floor_preference !== '-' ? userData.preferences.floor_preference : '-';
+            document.getElementById('prefRequests').textContent = userData.preferences.special_requests !== '-' ? userData.preferences.special_requests : '-';
+            document.getElementById('prefDiet').textContent = userData.preferences.dietary_restrictions !== '-' ? userData.preferences.dietary_restrictions : '-';
+          }
+          
+          // Store data in localStorage for offline access
+          localStorage.setItem('pv_username', userData.full_name);
+          // Update localStorage with the actual email from database
+          localStorage.setItem('pv_email', userData.email);
+          localStorage.setItem('pv_full_name', userData.full_name);
+          localStorage.setItem('pv_phone', userData.phone);
+          localStorage.setItem('pv_address', userData.address);
+          localStorage.setItem('pv_emergency_contact', userData.emergency_contact);
+          localStorage.setItem('pv_dob', userData.date_of_birth);
+          localStorage.setItem('pv_gender', userData.gender);
+          localStorage.setItem('pv_nationality', userData.nationality);
+          
+          // Store preferences in localStorage for backup
+          if (userData.preferences) {
+            localStorage.setItem('pv_pref_room_type', userData.preferences.room_type !== '-' ? userData.preferences.room_type : '');
+            localStorage.setItem('pv_pref_floor', userData.preferences.floor_preference !== '-' ? userData.preferences.floor_preference : '');
+            localStorage.setItem('pv_pref_requests', userData.preferences.special_requests !== '-' ? userData.preferences.special_requests : '');
+            localStorage.setItem('pv_pref_diet', userData.preferences.dietary_restrictions !== '-' ? userData.preferences.dietary_restrictions : '');
+          }
+          
+        } else {
+          console.error('Failed to load user data:', data.message);
+          // Check if user exists in database, if not, redirect to login
+          if (data.message.includes('User not found')) {
+            alert('User not found in database. Please log in with a valid account.');
+            // Clear localStorage and redirect to login
+            localStorage.removeItem('pv_logged_in');
+            localStorage.removeItem('pv_email');
+            localStorage.removeItem('pv_username');
+            window.location.href = 'unified-login.html';
+            return;
+          }
+          // Fallback to localStorage data for other errors
+          loadFallbackData();
+        }
+        
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        // Fallback to localStorage data
+        loadFallbackData();
+      }
+    }
+
+    // Fallback function to load data from localStorage
+    function loadFallbackData() {
+      // Only show data if user is properly logged in
+      const isLoggedIn = localStorage.getItem('pv_logged_in') === '1';
+      const email = localStorage.getItem('pv_email');
+      
+      if (!isLoggedIn || !email) {
+        alert('Please log in to view your profile information.');
+        window.location.href = 'unified-login.html';
+        return;
+      }
+      
+      // Show actual user data from localStorage (if available)
+      document.getElementById('userFullName').textContent = localStorage.getItem('pv_username') || 'User';
+      document.getElementById('userMembership').textContent = localStorage.getItem('pv_membership') || 'Basic Member';
+      document.getElementById('userMemberSince').textContent = 'Member since ' + (localStorage.getItem('pv_member_since') || 'July 2025');
+      document.getElementById('userEmail').textContent = email;
+      
+      // Show "-" for fields that haven't been edited yet (don't use old localStorage data)
+      document.getElementById('userPhone').textContent = '-';
+      document.getElementById('userAddress').textContent = '-';
+      document.getElementById('userEmergencyContact').textContent = '-';
+      document.getElementById('userFullNameDetail').textContent = localStorage.getItem('pv_username') || '-';
+      document.getElementById('userDOB').textContent = '-';
+      document.getElementById('userGender').textContent = '-';
+      document.getElementById('userNationality').textContent = '-';
+      
+      // Show preferences from localStorage or "-" if not set
+      document.getElementById('prefRoomType').textContent = '-';
+      document.getElementById('prefFloor').textContent = '-';
+      document.getElementById('prefRequests').textContent = '-';
+      document.getElementById('prefDiet').textContent = '-';
+      
+      // Update last login time if not already set
+      if (!localStorage.getItem('pv_last_login')) {
+        const now = new Date();
+        const currentLoginTime = now.toLocaleString('en-US', { 
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        });
+        document.getElementById('lastLogin').textContent = currentLoginTime;
+        localStorage.setItem('pv_last_login', currentLoginTime);
+      } else {
+        document.getElementById('lastLogin').textContent = localStorage.getItem('pv_last_login');
+      }
     }
   </script>
   <!-- Editable Profile Modal/Form (hidden by default) -->
@@ -337,7 +527,7 @@
         </div>
         <!-- Action Buttons -->
         <div class="profile-actions" style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-          <button class="hero-btn signup" onclick="window.location.href='confirm-password.html'"
+          <button class="hero-btn signup" onclick="window.location.href='confirm-password.html?email=' + encodeURIComponent(localStorage.getItem('pv_email') || '')"
             style="background: #FFD700; color: #000; border: none; font-size: 1rem; padding: 0.6rem 1.5rem; border-radius: 24px; font-weight:700;">
             <i class="fas fa-key" style="font-size: 1rem; color: #000;"></i> Change Password</button>
           <button class="hero-btn login" onclick="updatePreferences()"
@@ -406,15 +596,24 @@
     // Edit Profile Modal Logic
     function showEditProfileModal() {
       document.getElementById('editProfileModal').style.display = 'flex';
-      // Prefill values from localStorage or current display
-      document.getElementById('editFullName').value = localStorage.getItem('pv_full_name') || document.getElementById('userFullNameDetail').textContent;
-      document.getElementById('editEmail').value = localStorage.getItem('pv_email') || document.getElementById('userEmail').textContent;
-      document.getElementById('editPhone').value = localStorage.getItem('pv_phone') || document.getElementById('userPhone').textContent;
+      // Prefill values from localStorage or current display, but show empty if value is "-"
+      const currentFullName = document.getElementById('userFullNameDetail').textContent;
+      const currentPhone = document.getElementById('userPhone').textContent;
+      const currentAddress = document.getElementById('userAddress').textContent;
+      const currentEmergencyContact = document.getElementById('userEmergencyContact').textContent;
+      const currentDOB = document.getElementById('userDOB').textContent;
+      const currentGender = document.getElementById('userGender').textContent;
+      const currentNationality = document.getElementById('userNationality').textContent;
+      
+      document.getElementById('editFullName').value = localStorage.getItem('pv_full_name') || (currentFullName !== '-' ? currentFullName : '');
+      // Use the actual email from the database display, not localStorage
+      document.getElementById('editEmail').value = document.getElementById('userEmail').textContent;
+      document.getElementById('editPhone').value = localStorage.getItem('pv_phone') || (currentPhone !== '-' ? currentPhone : '');
       // For DOB, convert display to yyyy-mm-dd if possible
-      let dob = localStorage.getItem('pv_dob') || document.getElementById('userDOB').textContent;
-      if (dob && dob.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      let dob = localStorage.getItem('pv_dob') || currentDOB;
+      if (dob && dob !== '-' && dob.match(/^\d{4}-\d{2}-\d{2}$/)) {
         document.getElementById('editDOB').value = dob;
-      } else if (dob) {
+      } else if (dob && dob !== '-') {
         // Try to parse to yyyy-mm-dd
         let d = new Date(dob);
         if (!isNaN(d)) {
@@ -425,10 +624,10 @@
       } else {
         document.getElementById('editDOB').value = '';
       }
-      document.getElementById('editGender').value = localStorage.getItem('pv_gender') || document.getElementById('userGender').textContent;
-      document.getElementById('editAddress').value = localStorage.getItem('pv_address') || document.getElementById('userAddress').textContent;
-      document.getElementById('editNationality').value = localStorage.getItem('pv_nationality') || document.getElementById('userNationality').textContent;
-      document.getElementById('editEmergencyContact').value = localStorage.getItem('pv_emergency_contact') || document.getElementById('userEmergencyContact').textContent;
+      document.getElementById('editGender').value = localStorage.getItem('pv_gender') || (currentGender !== '-' ? currentGender : 'Male');
+      document.getElementById('editAddress').value = localStorage.getItem('pv_address') || (currentAddress !== '-' ? currentAddress : '');
+      document.getElementById('editNationality').value = localStorage.getItem('pv_nationality') || (currentNationality !== '-' ? currentNationality : '');
+      document.getElementById('editEmergencyContact').value = localStorage.getItem('pv_emergency_contact') || (currentEmergencyContact !== '-' ? currentEmergencyContact : '');
     }
     document.getElementById('cancelEditBtn').onclick = function () {
       document.getElementById('editProfileModal').style.display = 'none';
@@ -436,61 +635,173 @@
     document.getElementById('closeEditModalBtn').onclick = function () {
       document.getElementById('editProfileModal').style.display = 'none';
     };
-    document.getElementById('editProfileForm').onsubmit = function (e) {
+    document.getElementById('editProfileForm').onsubmit = async function (e) {
       e.preventDefault();
-      // Save to localStorage
-      localStorage.setItem('pv_full_name', document.getElementById('editFullName').value);
-      localStorage.setItem('pv_email', document.getElementById('editEmail').value);
-      localStorage.setItem('pv_phone', document.getElementById('editPhone').value);
-      localStorage.setItem('pv_dob', document.getElementById('editDOB').value);
-      localStorage.setItem('pv_gender', document.getElementById('editGender').value);
-      localStorage.setItem('pv_address', document.getElementById('editAddress').value);
-      localStorage.setItem('pv_nationality', document.getElementById('editNationality').value);
-      localStorage.setItem('pv_emergency_contact', document.getElementById('editEmergencyContact').value);
-      // Update display immediately
-      document.getElementById('userFullNameDetail').textContent = document.getElementById('editFullName').value;
-      document.getElementById('userFullName').textContent = document.getElementById('editFullName').value;
-      document.getElementById('userEmail').textContent = document.getElementById('editEmail').value;
-      document.getElementById('userPhone').textContent = document.getElementById('editPhone').value;
-      // Format DOB for display (e.g., March 15, 1985)
-      let dobVal = document.getElementById('editDOB').value;
-      if (dobVal) {
-        let d = new Date(dobVal);
-        if (!isNaN(d)) {
-          document.getElementById('userDOB').textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      
+      const API_BASE_URL = window.location.origin + '/Pearl-Vista---Website';
+      // Use the email from the form instead of localStorage to ensure we're updating the correct user
+      const email = document.getElementById('editEmail').value;
+      
+      try {
+        const requestData = {
+          email: email,
+          full_name: document.getElementById('editFullName').value,
+          phone: document.getElementById('editPhone').value,
+          address: document.getElementById('editAddress').value,
+          emergency_contact: document.getElementById('editEmergencyContact').value,
+          date_of_birth: document.getElementById('editDOB').value,
+          gender: document.getElementById('editGender').value,
+          nationality: document.getElementById('editNationality').value
+        };
+        console.log('Sending edit profile data:', requestData);
+        console.log('Email being used for update:', email);
+        
+        const response = await fetch(`${API_BASE_URL}/Backend/update_user_info.php`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData)
+        });
+
+        const data = await response.json();
+        console.log('Edit profile response:', data);
+        
+        if (data.status === 'success') {
+          // Save to localStorage as backup - only save non-empty values
+          const fullName = document.getElementById('editFullName').value.trim();
+          const phone = document.getElementById('editPhone').value.trim();
+          const address = document.getElementById('editAddress').value.trim();
+          const emergencyContact = document.getElementById('editEmergencyContact').value.trim();
+          const dob = document.getElementById('editDOB').value.trim();
+          const gender = document.getElementById('editGender').value.trim();
+          const nationality = document.getElementById('editNationality').value.trim();
+          
+          // Update localStorage with new data
+          if (fullName) localStorage.setItem('pv_full_name', fullName);
+          if (phone) localStorage.setItem('pv_phone', phone);
+          if (address) localStorage.setItem('pv_address', address);
+          if (emergencyContact) localStorage.setItem('pv_emergency_contact', emergencyContact);
+          if (dob) localStorage.setItem('pv_dob', dob);
+          if (gender) localStorage.setItem('pv_gender', gender);
+          if (nationality) localStorage.setItem('pv_nationality', nationality);
+          
+          // Update username in localStorage if full name was provided
+          if (fullName) localStorage.setItem('pv_username', fullName);
+          
+          // Update display immediately - show actual values or "-" if empty
+          document.getElementById('userFullNameDetail').textContent = fullName || '-';
+          document.getElementById('userFullName').textContent = fullName || 'User';
+          document.getElementById('userEmail').textContent = document.getElementById('editEmail').value;
+          document.getElementById('userPhone').textContent = phone || '-';
+          
+          // Format DOB for display (e.g., March 15, 1985)
+          if (dob) {
+            let d = new Date(dob);
+            if (!isNaN(d)) {
+              document.getElementById('userDOB').textContent = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            } else {
+              document.getElementById('userDOB').textContent = dob;
+            }
+          } else {
+            document.getElementById('userDOB').textContent = '-';
+          }
+          document.getElementById('userGender').textContent = gender || '-';
+          document.getElementById('userAddress').textContent = address || '-';
+          document.getElementById('userNationality').textContent = nationality || '-';
+          document.getElementById('userEmergencyContact').textContent = emergencyContact || '-';
+          
+          // Show success message
+          alert('Profile updated successfully!');
+          
+          // Reload user data to show the latest information
+          setTimeout(() => {
+            loadUserData();
+          }, 500);
         } else {
-          document.getElementById('userDOB').textContent = dobVal;
+          alert('Failed to update profile: ' + data.message);
         }
+        
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        alert('Failed to update profile. Please try again.');
       }
-      document.getElementById('userGender').textContent = document.getElementById('editGender').value;
-      document.getElementById('userAddress').textContent = document.getElementById('editAddress').value;
-      document.getElementById('userNationality').textContent = document.getElementById('editNationality').value;
-      document.getElementById('userEmergencyContact').textContent = document.getElementById('editEmergencyContact').value;
+      
       document.getElementById('editProfileModal').style.display = 'none';
     };
   </script>
   <script>
 function updatePreferences() {
-  // Fill form with current values
-  document.getElementById('editRoomType').value = document.getElementById('prefRoomType').textContent;
-  document.getElementById('editFloor').value = document.getElementById('prefFloor').textContent;
-  document.getElementById('editRequests').value = document.getElementById('prefRequests').textContent;
-  document.getElementById('editDiet').value = document.getElementById('prefDiet').textContent;
+  // Fill form with current values - show empty for "-" values
+  const currentRoomType = document.getElementById('prefRoomType').textContent;
+  const currentFloor = document.getElementById('prefFloor').textContent;
+  const currentRequests = document.getElementById('prefRequests').textContent;
+  const currentDiet = document.getElementById('prefDiet').textContent;
+  
+  document.getElementById('editRoomType').value = currentRoomType !== '-' ? currentRoomType : '';
+  document.getElementById('editFloor').value = currentFloor !== '-' ? currentFloor : '';
+  document.getElementById('editRequests').value = currentRequests !== '-' ? currentRequests : '';
+  document.getElementById('editDiet').value = currentDiet !== '-' ? currentDiet : '';
+  
   document.getElementById('preferencesDisplay').style.display = 'none';
   document.getElementById('preferencesForm').style.display = 'flex';
 }
-document.getElementById('preferencesForm').onsubmit = function(e) {
+document.getElementById('preferencesForm').onsubmit = async function(e) {
   e.preventDefault();
-  // Save values
-  document.getElementById('prefRoomType').textContent = document.getElementById('editRoomType').value;
-  document.getElementById('prefFloor').textContent = document.getElementById('editFloor').value;
-  document.getElementById('prefRequests').textContent = document.getElementById('editRequests').value;
-  document.getElementById('prefDiet').textContent = document.getElementById('editDiet').value;
-  // Optionally, save to localStorage
-  localStorage.setItem('pv_pref_room_type', document.getElementById('editRoomType').value);
-  localStorage.setItem('pv_pref_floor', document.getElementById('editFloor').value);
-  localStorage.setItem('pv_pref_requests', document.getElementById('editRequests').value);
-  localStorage.setItem('pv_pref_diet', document.getElementById('editDiet').value);
+  
+  // Get form values
+  const roomType = document.getElementById('editRoomType').value.trim();
+  const floor = document.getElementById('editFloor').value.trim();
+  const requests = document.getElementById('editRequests').value.trim();
+  const diet = document.getElementById('editDiet').value.trim();
+  
+  // Save values - only save non-empty values
+  document.getElementById('prefRoomType').textContent = roomType || '-';
+  document.getElementById('prefFloor').textContent = floor || '-';
+  document.getElementById('prefRequests').textContent = requests || '-';
+  document.getElementById('prefDiet').textContent = diet || '-';
+  
+  // Save to localStorage - only save non-empty values
+  if (roomType) localStorage.setItem('pv_pref_room_type', roomType);
+  if (floor) localStorage.setItem('pv_pref_floor', floor);
+  if (requests) localStorage.setItem('pv_pref_requests', requests);
+  if (diet) localStorage.setItem('pv_pref_diet', diet);
+  
+  // Save to database
+  try {
+    const email = localStorage.getItem('pv_email');
+    if (email) {
+      const requestData = {
+        email: email,
+        preferences: {
+          room_type: roomType || null,
+          floor_preference: floor || null,
+          special_requests: requests || null,
+          dietary_restrictions: diet || null
+        }
+      };
+      console.log('Sending preferences data:', requestData);
+      
+      const response = await fetch('Backend/update_user_info.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData)
+      });
+      
+              const data = await response.json();
+        console.log('Preferences save response:', data);
+        if (data.status === 'success') {
+          console.log('Preferences saved to database successfully');
+        } else {
+          console.error('Failed to save preferences to database:', data.message);
+        }
+    }
+  } catch (error) {
+    console.error('Error saving preferences to database:', error);
+  }
+  
   document.getElementById('preferencesDisplay').style.display = 'block';
   document.getElementById('preferencesForm').style.display = 'none';
 };
@@ -498,13 +809,7 @@ document.getElementById('cancelPrefEdit').onclick = function() {
   document.getElementById('preferencesDisplay').style.display = 'block';
   document.getElementById('preferencesForm').style.display = 'none';
 };
-// On page load, fill preferences from localStorage if available
-window.addEventListener('DOMContentLoaded', function() {
-  if(localStorage.getItem('pv_pref_room_type')) document.getElementById('prefRoomType').textContent = localStorage.getItem('pv_pref_room_type');
-  if(localStorage.getItem('pv_pref_floor')) document.getElementById('prefFloor').textContent = localStorage.getItem('pv_pref_floor');
-  if(localStorage.getItem('pv_pref_requests')) document.getElementById('prefRequests').textContent = localStorage.getItem('pv_pref_requests');
-  if(localStorage.getItem('pv_pref_diet')) document.getElementById('prefDiet').textContent = localStorage.getItem('pv_pref_diet');
-});
+
 </script>
 <script>
 // Helper to get relative time string
@@ -523,34 +828,34 @@ function getRelativeTime(dateString) {
   const diffYears = Math.floor(diffMonths / 12);
   return diffYears + (diffYears === 1 ? ' year ago' : ' years ago');
 }
-// Account Security Card: Real-time info
-window.addEventListener('DOMContentLoaded', function() {
-  // Last Login
-  const now = new Date();
-  const lastLogin = localStorage.getItem('pv_last_login');
-  document.getElementById('lastLogin').textContent = lastLogin ? lastLogin : 'First visit';
-  localStorage.setItem('pv_last_login', now.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }));
+        // Account Security Card: Real-time info
+        window.addEventListener('DOMContentLoaded', function() {
+          // Last Login - Update with current time
+          const now = new Date();
+          const lastLogin = localStorage.getItem('pv_last_login');
+          document.getElementById('lastLogin').textContent = lastLogin ? lastLogin : 'First visit';
+          localStorage.setItem('pv_last_login', now.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }));
 
-  // Two-Factor Auth
-  const twoFactor = localStorage.getItem('pv_two_factor') || 'Active';
-  document.getElementById('twoFactorStatus').textContent = twoFactor;
-  document.getElementById('twoFactorStatus').style.color = (twoFactor === 'Active') ? '#28a745' : '#e60000';
+          // Two-Factor Auth
+          const twoFactor = localStorage.getItem('pv_two_factor') || 'Active';
+          document.getElementById('twoFactorStatus').textContent = twoFactor;
+          document.getElementById('twoFactorStatus').style.color = (twoFactor === 'Active') ? '#28a745' : '#e60000';
 
-  // Password Changed
-  if (window.location.search.includes('passwordChanged=1')) {
-    const pwdDate = now.toISOString();
-    localStorage.setItem('pv_password_changed', pwdDate);
-    document.getElementById('passwordChanged').textContent = getRelativeTime(pwdDate);
-  } else {
-    const pwdChanged = localStorage.getItem('pv_password_changed');
-    document.getElementById('passwordChanged').textContent = pwdChanged ? getRelativeTime(pwdChanged) : '-';
-  }
+          // Password Changed
+          if (window.location.search.includes('passwordChanged=1')) {
+            const pwdDate = now.toISOString();
+            localStorage.setItem('pv_password_changed', pwdDate);
+            document.getElementById('passwordChanged').textContent = getRelativeTime(pwdDate);
+          } else {
+            const pwdChanged = localStorage.getItem('pv_password_changed');
+            document.getElementById('passwordChanged').textContent = pwdChanged ? getRelativeTime(pwdChanged) : '-';
+          }
 
-  // Account Status
-  const accStatus = localStorage.getItem('pv_account_status') || 'Active';
-  document.getElementById('accountStatus').textContent = accStatus;
-  document.getElementById('accountStatus').style.color = (accStatus === 'Active') ? '#28a745' : '#e60000';
-});
+          // Account Status
+          const accStatus = localStorage.getItem('pv_account_status') || 'Active';
+          document.getElementById('accountStatus').textContent = accStatus;
+          document.getElementById('accountStatus').style.color = (accStatus === 'Active') ? '#28a745' : '#e60000';
+        });
 </script>
 <style>
   /* Hide scrollbar in Edit Profile modal but allow scrolling */

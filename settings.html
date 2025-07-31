@@ -203,7 +203,7 @@
             <!-- Change Password Setting -->
             <div class="setting-item"
               style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0; border-bottom:1px solid #f0f0f0; cursor:pointer;"
-              onclick="window.location.href='confirm-password.html';">
+              onclick="window.location.href='confirm-password.html?email=' + encodeURIComponent(localStorage.getItem('pv_email') || '');">
               <div style="display:flex; align-items:center; gap:1rem;">
                 <i class="fa fa-key" style="color:#FFD700; font-size:1.2rem;"></i>
                 <span style="font-size:1.08rem; color:#1a2238; font-weight:600;">Change Password</span>

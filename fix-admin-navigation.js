@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Additional utility functions
 function navigateToAdmin(page) {
     const adminNavLinks = {
-        dashboard: 'admin-dashboard.html',
+        dashboard: 'admin-dashboard.php',
         rooms: 'admin-rooms.html',
         bookings: 'admin-bookings.html',
         customers: 'admin-customers.html',

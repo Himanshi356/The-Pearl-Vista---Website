@@ -4208,15 +4208,7 @@ body, html, p, li, a, span, div, input, button {
   .testimonial-slide { padding: 1.5rem 0.5rem; min-width: 90vw; max-width: 98vw; }
 }
 
-/* Make the mail icon in the sign up form dark grey */
-#signUpPage .fa-envelope {
-  color: #333 !important;
-}
 
-/* Make the user icon in the sign up form dark grey */
-#signUpPage .icon, #signUpPage .fa-user {
-  color: #333 !important;
-}
 
 /* Hide vertical scrollbar on email verification page */
 body:has(.email-verification-bg), html:has(.email-verification-bg) {
@@ -4259,14 +4251,7 @@ body:has(.confirm-password-bg), html:has(.confirm-password-bg) {
 }
 
 /* Make all icons on the login page dark grey */
-#loginPage .fa,
-#loginPage .fa-solid,
-#loginPage .fa-lock,
-#loginPage .fa-eye,
-#loginPage .fa-envelope,
-#loginPage .icon {
-  color: #333 !important;
-}
+
 
 /* Make the background of the account recovery page white */
 body:has(.recovery-bg), html:has(.recovery-bg) {

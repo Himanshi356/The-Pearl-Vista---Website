@@ -225,6 +225,34 @@ $stmt->bind_param("sssssssssssdss", $customer_name, $customer_phone, $customer_e
 if ($stmt->execute()) {
     $inserted_id = $conn->insert_id;
     
+    // Auto-update room availability after successful booking
+    try {
+        $currentDate = date('Y-m-d');
+        $update_stmt = $conn->prepare("
+            UPDATE room_types rt
+            SET available_rooms = (
+                rt.total_rooms - COALESCE(
+                    (
+                        SELECT COUNT(*)
+                        FROM home_bookings b
+                        WHERE b.room_type = rt.room_type 
+                        AND b.status IN ('pending', 'confirmed')
+                        AND (
+                            (b.check_in_date <= ? AND b.check_out_date >= ?) -- Current bookings
+                            OR (b.check_in_date > ?) -- Future bookings
+                        )
+                    ), 0
+                )
+            )
+        ");
+        $update_stmt->bind_param("sss", $currentDate, $currentDate, $currentDate);
+        $update_stmt->execute();
+        $update_stmt->close();
+    } catch (Exception $e) {
+        // Log error but don't fail the booking
+        error_log("Error updating room availability: " . $e->getMessage());
+    }
+    
     // Calculate advance payment amount
     $advance_amount = $total_amount > 0 ? ($total_amount * 0.45) : 0;
     

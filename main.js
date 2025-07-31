@@ -688,91 +688,10 @@ function togglePassword(id, toggleSpan) {
   }
 }
 
-// Show Sign Up and Login forms (for index.html)
-function showSignUp() {
-  if (document.getElementById("landingPage")) document.getElementById("landingPage").style.display = "none";
-  if (document.getElementById("signUpPage")) document.getElementById("signUpPage").style.display = "flex";
-  if (document.getElementById("loginPage")) document.getElementById("loginPage").style.display = "none";
-}
-function showLogin() {
-  if (document.getElementById("landingPage")) document.getElementById("landingPage").style.display = "none";
-  if (document.getElementById("loginPage")) document.getElementById("loginPage").style.display = "flex";
-  if (document.getElementById("signUpPage")) document.getElementById("signUpPage").style.display = "none";
-}
 
-function showRecovery() {
-  showNotification("Password recovery feature coming soon!", "info");
-}
 
-// --- Auth/Welcome Page Logic ---
-if (document.getElementById('signupForm')) {
-  document.getElementById('signupForm').onsubmit = function(event) {
-    event.preventDefault();
-    const username = document.getElementById("signupUsername").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const securityQuestion = document.getElementById("securityQuestion").value;
-    const securityAnswer = document.getElementById("securityAnswer").value.trim();
-    if (!username || !email || !securityQuestion || !securityAnswer) {
-      showNotification("Please fill in all fields.", "error");
-      return;
-    }
-    if (!isValidEmail(email)) {
-      showNotification("Please enter a valid email address.", "error");
-      return;
-    }
-    // Simulate signup process
-    localStorage.setItem('pv_logged_in', '1');
-    localStorage.setItem('pv_username', username);
-    // Set flag for home page modal
-    localStorage.setItem('justLoggedIn', '1');
-    showNotification("Account created successfully! Please check your email for verification.", "success");
-    setTimeout(() => {
-      // Redirect to email verification page with email parameter
-      window.location.href = `email-verification.html?email=${encodeURIComponent(email)}`;
-    }, 1500);
-  };
-}
-if (document.getElementById('loginForm')) {
-  document.getElementById('loginForm').onsubmit = function(event) {
-    event.preventDefault();
-    const username = document.getElementById("loginUsername").value.trim();
-    const password = document.getElementById("loginPassword").value;
-    const role = document.getElementById("loginRole").value; // <-- Get role
 
-    if (!username || !password || !role) {
-      showNotification("Please enter all fields.", "error");
-      return;
-    }
-    localStorage.setItem('pv_logged_in', '1');
-    localStorage.setItem('pv_username', username);
-    localStorage.setItem('pv_role', role); // <-- Store role
 
-    // Set flag for home page modal
-    localStorage.setItem('justLoggedIn', '1');
-    showNotification("Login successful! Welcome back.", "success");
-    setTimeout(() => {
-      if (role === "admin") {
-        window.location.href = 'admin-dashboard.html'; // Or your admin page
-      } else {
-      window.location.href = 'home.html';
-      }
-    }, 1500);
-  };
-}
-
-// --- Landing Page Button Logic ---
-document.addEventListener('DOMContentLoaded', function() {
-  // Connect Sign Up button to showSignUp
-  const signUpBtn = document.querySelector('.hero-btn:not(.login)');
-  if (signUpBtn) {
-    signUpBtn.addEventListener('click', showSignUp);
-  }
-  // Optionally, connect Login button to showLogin
-  const loginBtn = document.querySelector('.hero-btn.login');
-  if (loginBtn) {
-    loginBtn.addEventListener('click', showLogin);
-  }
-});
 
 // --- Home Page Logic ---
 if (window.location.pathname.endsWith('home.html')) {
@@ -3882,16 +3801,23 @@ if (window.location.pathname.includes('my-wishlist.html')) {
 // --- Check Availability Modal Logic ---
 document.addEventListener('DOMContentLoaded', function() {
   if (window.location.pathname.endsWith('home.html')) {
-    // Check for justLoggedIn or justSignedUp flag
-    var justLoggedIn = localStorage.getItem('justLoggedIn') === '1' || sessionStorage.getItem('justLoggedIn') === '1';
-    if (justLoggedIn) {
+    // Check for logged in status
+    var isLoggedIn = localStorage.getItem('pv_logged_in') === '1';
+    console.log('Modal check - isLoggedIn:', isLoggedIn, 'pv_logged_in:', localStorage.getItem('pv_logged_in'));
+    if (isLoggedIn) {
       var modal = document.getElementById('checkAvailabilityModal');
+      console.log('Modal element found:', modal);
       if (modal) {
-        modal.style.display = 'flex';
-        // Clear the flag so it doesn't show again
-        localStorage.removeItem('justLoggedIn');
-        sessionStorage.removeItem('justLoggedIn');
+        // Show modal after a short delay
+        setTimeout(() => {
+          modal.style.display = 'flex';
+          console.log('Modal display set to flex');
+        }, 1000);
+      } else {
+        console.log('Modal element not found!');
       }
+    } else {
+      console.log('User not logged in, not showing modal');
     }
     // Modal button logic
     var openBtn = document.getElementById('openAvailabilityFormBtn');
@@ -4129,3 +4055,116 @@ if (guestsInput && guestAgesContainer) {
         }
     });
 }
+
+// Add duplicate prevention for form submissions
+let isSubmitting = false;
+
+// Function to prevent duplicate form submissions
+function preventDuplicateSubmission(formElement, submitButton) {
+    if (isSubmitting) {
+        return false;
+    }
+    
+    isSubmitting = true;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
+    
+    // Re-enable after 5 seconds as a safety measure
+    setTimeout(() => {
+        isSubmitting = false;
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit';
+    }, 5000);
+    
+    return true;
+}
+
+// Function to handle form submission with duplicate prevention
+async function submitFormWithPrevention(formData, url, successCallback, errorCallback) {
+    if (isSubmitting) {
+        console.log('Form submission already in progress');
+        return;
+    }
+    
+    isSubmitting = true;
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            if (successCallback) successCallback(result);
+        } else {
+            if (result.duplicate) {
+                // Handle duplicate booking case
+                alert('This booking already exists. Please check your email for confirmation.');
+            } else {
+                if (errorCallback) errorCallback(result.message);
+                else alert('Error: ' + result.message);
+            }
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        if (errorCallback) errorCallback('Network error occurred');
+        else alert('Network error occurred. Please try again.');
+    } finally {
+        isSubmitting = false;
+    }
+}
+
+// Add event listeners to prevent duplicate submissions
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all forms and add duplicate prevention
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+        if (submitButton) {
+            form.addEventListener('submit', function(e) {
+                if (!preventDuplicateSubmission(form, submitButton)) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    });
+    
+    // Add specific handling for booking forms
+    const bookingForms = document.querySelectorAll('.booking-form, #bookingForm');
+    bookingForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (isSubmitting) {
+                alert('Please wait, your booking is being processed...');
+                return false;
+            }
+            
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            
+            submitFormWithPrevention(
+                data,
+                'Backend/room_booking_process.php',
+                function(result) {
+                    alert('Booking submitted successfully! Booking ID: ' + result.booking_id);
+                    form.reset();
+                },
+                function(error) {
+                    alert('Error: ' + error);
+                }
+            );
+        });
+    });
+});
+
+// ... existing code ...

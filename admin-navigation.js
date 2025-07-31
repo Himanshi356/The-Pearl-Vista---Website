@@ -59,17 +59,17 @@ function addNavClickHandlers() {
 
 // Admin navigation links
 const adminNavLinks = {
-    dashboard: 'admin-dashboard.html',
-    rooms: 'admin-rooms.html',
-    bookings: 'admin-bookings.html',
-    customers: 'admin-customers.html',
-    services: 'admin-services.html',
-    tourBookings: 'admin-tour-bookings.html',
-    chat: 'admin-chat.html',
-    reports: 'admin-reports.html',
-    settings: 'admin-settings.html',
-    profile: 'admin-profile.html',
-    addUser: 'admin-add-user.html',
+    dashboard: 'admin-dashboard.php',
+    rooms: 'admin-rooms.php',
+    bookings: 'admin-bookings.php',
+    customers: 'admin-customers.php',
+    services: 'admin-services.php',
+    tourBookings: 'admin-tour-bookings.php',
+    chat: 'admin-chat.php',
+    reports: 'admin-reports.php',
+    settings: 'admin-settings.php',
+    profile: 'admin-profile.php',
+    addUser: 'admin-add-user.php',
     logout: 'logout.php'
 };
 
@@ -89,12 +89,13 @@ async function getCurrentAdmin() {
         if (data && !data.error) {
             return data;
         } else {
-            // Redirect to login if not authenticated
-            window.location.href = 'admin-login.html';
+            // Don't redirect, just return null for now
+            console.log('getCurrentAdmin error:', data);
+            return null;
         }
     } catch (error) {
         console.error('Error getting admin info:', error);
-        window.location.href = 'admin-login.html';
+        return null;
     }
 }
 

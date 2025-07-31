@@ -200,6 +200,8 @@
     </div>
   </div>
   <script>
+    const API_BASE_URL = window.location.origin + '/Pearl-Vista---Website';
+    
     document.getElementById('recoveryForm').onsubmit = async function(e) {
       e.preventDefault();
       const username = document.getElementById('recoveryUsername').value.trim();
@@ -222,7 +224,7 @@
       submitBtn.textContent = 'Verifying...';
       
       try {
-        const response = await fetch('Auth/forgot_password.php', {
+        const response = await fetch(`${API_BASE_URL}/Auth/forgot_password.php`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -241,9 +243,9 @@
           feedback.textContent = data.message;
           feedback.classList.add('success');
           
-          // Redirect to email verification page with email parameter
+          // Redirect directly to password reset page
           setTimeout(() => {
-            window.location.href = `email-verification.html?email=${encodeURIComponent(data.email)}&mode=recovery`;
+            window.location.href = `confirm-password.html?email=${encodeURIComponent(data.email)}&mode=recovery`;
           }, 1500);
         } else {
           feedback.textContent = data.message;

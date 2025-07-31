@@ -115,22 +115,22 @@ $is_available = $available_rooms >= $num_rooms;
 // Calculate pricing based on room type and duration
 $duration = $checkin->diff($checkout)->days;
 $base_prices = [
-    'Pearl Signature Room' => 500,
-    'Deluxe Room' => 400,
-    'Premium Room' => 350,
-    'Executive Room' => 450,
-    'Luxury Suite' => 800,
-    'Family Suite' => 600
+    'Pearl Signature Room' => 20695,
+    'Deluxe Room' => 3240,
+    'Premium Room' => 5580,
+    'Executive Room' => 8790,
+    'Luxury Suite' => 11920,
+    'Family Suite' => 14855
 ];
 
-$base_price = isset($base_prices[$room_type]) ? $base_prices[$room_type] : 400;
+$base_price = isset($base_prices[$room_type]) ? $base_prices[$room_type] : 5000;
 $total_amount = $base_price * $duration * $num_rooms;
 
 // Add guest surcharge if more than 2 guests per room
 $guest_surcharge = 0;
 if ($guests > ($num_rooms * 2)) {
     $extra_guests = $guests - ($num_rooms * 2);
-    $guest_surcharge = $extra_guests * 50 * $duration;
+    $guest_surcharge = $extra_guests * 2500 * $duration; // $2500 per extra guest per night
     $total_amount += $guest_surcharge;
 }
 
@@ -149,7 +149,7 @@ $response = [
     'guest_surcharge' => $guest_surcharge,
     'message' => $is_available 
         ? "Great! {$num_rooms} {$room_type}(s) are available for your selected dates."
-        : "Sorry, only {$available_rooms} {$room_type}(s) are available for your selected dates."
+        : "Sorry, only {$available_rooms} {$room_type}(s) are available for your selected dates. Please try a different room type or date range."
 ];
 
 echo json_encode($response);

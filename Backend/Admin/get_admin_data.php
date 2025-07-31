@@ -1,47 +1,68 @@
 <?php
-require_once '../../Config/database.php';
-require_once '../Admin/admin_only.php';
-
+session_start();
 header('Content-Type: application/json');
 
+// Check admin session
+if (!isset($_SESSION['user']) || !in_array($_SESSION['role'], ['admin', 'super_admin', 'manager'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+    exit();
+}
+
+require_once '../../Config/database.php';
+
 try {
-    $admin_id = $_SESSION['admin_id'];
+    $pdo = getDatabaseConnection();
     
-    // Get admin data from unified admin_users table
-    $stmt = $conn->prepare("SELECT * FROM admin_users WHERE id = ? LIMIT 1");
-    $stmt->bind_param('i', $admin_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $admin_data = $result->fetch_assoc();
-
-    // Get recent admin activity from unified admin_activity_log
-    $stmt = $conn->prepare("SELECT * FROM admin_activity_log WHERE admin_id = ? ORDER BY created_at DESC LIMIT 10");
-    $stmt->bind_param('i', $admin_id);
-    $stmt->execute();
-    $activity_result = $stmt->get_result();
-    $recent_activity = [];
-    while ($row = $activity_result->fetch_assoc()) {
-        $recent_activity[] = $row;
-    }
-
-    // Get admin statistics
-    $total_admins = $conn->query("SELECT COUNT(*) FROM admin_users")->fetch_row()[0];
-    $active_admins = $conn->query("SELECT COUNT(*) FROM admin_users WHERE is_active = 1")->fetch_row()[0];
-    $total_activity = $conn->query("SELECT COUNT(*) FROM admin_activity_log")->fetch_row()[0];
-
+    // Get admin user data
+    $adminId = $_SESSION['user_id'] ?? 1;
+    $stmt = $pdo->prepare("
+        SELECT 
+            admin_id,
+            username,
+            email,
+            first_name,
+            last_name,
+            role,
+            created_at
+        FROM admin_users 
+        WHERE admin_id = ?
+    ");
+    $stmt->execute([$adminId]);
+    $adminData = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Get overall statistics
+    $stmt2 = $pdo->query("
+        SELECT 
+            (SELECT COUNT(*) FROM admin_users) as total_admins,
+            (SELECT COUNT(*) FROM rooms) as total_rooms,
+            (SELECT COUNT(*) FROM bookings WHERE status = 'confirmed') as active_bookings,
+            (SELECT COUNT(*) FROM admin_activity_log) as total_activity
+    ");
+    $statistics = $stmt2->fetch(PDO::FETCH_ASSOC);
+    
+    // Get recent activity
+    $stmt3 = $pdo->query("
+        SELECT 
+            action,
+            description,
+            created_at
+        FROM admin_activity_log 
+        ORDER BY created_at DESC 
+        LIMIT 10
+    ");
+    $recentActivity = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+    
     echo json_encode([
         'status' => 'success',
-        'admin_data' => $admin_data,
-        'recent_activity' => $recent_activity,
-        'statistics' => [
-            'total_admins' => $total_admins,
-            'active_admins' => $active_admins,
-            'total_activity' => $total_activity
-        ]
+        'admin_data' => $adminData,
+        'statistics' => $statistics,
+        'recent_activity' => $recentActivity
     ]);
-
+    
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Failed to fetch admin data: ' . $e->getMessage()
+    ]);
 }
 ?> 

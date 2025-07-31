@@ -561,6 +561,74 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    
+    /* Guest ages container styling */
+    #guestAgesContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    #guestAgesContainer > div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    #guestAgesContainer label {
+      font-weight: 600;
+      color: #1a1a1a;
+      font-size: 0.98rem;
+      min-width: 120px;
+    }
+    
+    #guestAgesContainer input {
+      flex: 1;
+      border-radius: 8px;
+      border: 1.5px solid #e0e0e0;
+      padding: 0.7rem 1rem;
+      font-size: 1.08rem;
+      background: #fff;
+      color: #1a365d;
+      transition: border 0.2s;
+    }
+    
+    #guestAgesContainer input:focus {
+      border: 2px solid #d4af37;
+      background: #fff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+    @keyframes fadeInModal {
+      from { opacity: 0; transform: translateY(40px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes fadeInBg {
+      from { background: rgba(0,0,0,0); }
+      to { background: rgba(0,0,0,0.32); }
+    }
+    @media (max-width: 600px) {
+      #checkAvailabilityModal > div {
+        padding: 28px 10px 24px 10px !important;
+        max-width: 98vw !important;
+      }
+      #checkAvailabilityModal h2 {
+        font-size: 1.3rem !important;
+      }
+      #checkAvailabilityModal p {
+        font-size: 1rem !important;
+      }
+      #checkAvailabilityModal button {
+        font-size: 1rem !important;
+        padding: 0.8rem 1.5rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -825,11 +893,11 @@
         <select id="roomType" name="roomType" required class="booking-input enhanced-input">
           <option value="">Select Room Type</option>
           <option value="Pearl Signature Room">Pearl Signature Room - $20,695/night</option>
-          <option value="Deluxe Room">Deluxe Room - $18,500/night</option>
-          <option value="Premium Room">Premium Room - $22,500/night</option>
-          <option value="Executive Room">Executive Room - $25,000/night</option>
-          <option value="Luxury Suite">Luxury Suite - $35,000/night</option>
-          <option value="Family Suite">Family Suite - $28,000/night</option>
+          <option value="Deluxe Room">Deluxe Room - $3,240/night</option>
+          <option value="Premium Room">Premium Room - $5,580/night</option>
+          <option value="Executive Room">Executive Room - $8,790/night</option>
+          <option value="Luxury Suite">Luxury Suite - $11,920/night</option>
+          <option value="Family Suite">Family Suite - $14,855/night</option>
         </select>
         <label for="totalAmount" class="booking-label">Total Amount</label>
         <div style="display: flex; gap: 0.5rem; align-items: center; position: relative;">
@@ -974,12 +1042,12 @@
       <input type="number" id="guests" name="guests" min="1" max="10" value="1" required style="width:100%; margin-bottom:18px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
       <label for="availabilityRoomType" style="display:block; margin-bottom:7px; font-weight:700; color:#bfa134; font-size:1.08rem; font-family:'Lato',sans-serif;">Type of Room</label>
       <select id="availabilityRoomType" name="availabilityRoomType" required style="width:100%; margin-bottom:18px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
-        <option value="Pearl Signature Room">Pearl Signature Room</option>
-        <option value="Deluxe Room">Deluxe Room</option>
-        <option value="Premium Room">Premium Room</option>
-        <option value="Executive Room">Executive Room</option>
-        <option value="Luxury Suite">Luxury Suite</option>
-        <option value="Family Suite">Family Suite</option>
+        <option value="Pearl Signature Room">Pearl Signature Room - $20,695/night</option>
+        <option value="Deluxe Room">Deluxe Room - $3,240/night</option>
+        <option value="Premium Room">Premium Room - $5,580/night</option>
+        <option value="Executive Room">Executive Room - $8,790/night</option>
+        <option value="Luxury Suite">Luxury Suite - $11,920/night</option>
+        <option value="Family Suite">Family Suite - $14,855/night</option>
       </select>
       <label for="numRooms" style="display:block; margin-bottom:7px; font-weight:700; color:#bfa134; font-size:1.08rem; font-family:'Lato',sans-serif;">Number of Rooms</label>
       <input type="number" id="numRooms" name="numRooms" min="1" max="10" value="1" required style="width:100%; margin-bottom:28px; padding:12px 14px; border-radius:12px; border:1.5px solid #e5e5e5; color:#222; font-size:1.08rem; font-family:'Lato',sans-serif; background:#faf9f6; transition:border 0.2s, box-shadow 0.2s; outline:none;" onfocus="this.style.borderColor='#d4af37';this.style.boxShadow='0 0 0 2px #f3e7c3';" onblur="this.style.borderColor='#e5e5e5';this.style.boxShadow='none';">
@@ -1029,10 +1097,35 @@
 </div>
 <!-- End Modals -->
   <script>
+    // Show availability popup for logged-in users
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user is logged in
+      var isLoggedIn = localStorage.getItem('pv_logged_in') === '1';
+      console.log('Modal check - isLoggedIn:', isLoggedIn, 'pv_logged_in:', localStorage.getItem('pv_logged_in'));
+      
+      if (isLoggedIn) {
+        var modal = document.getElementById('checkAvailabilityModal');
+        console.log('Modal element found:', modal);
+        if (modal) {
+          // Show modal after a short delay
+          setTimeout(() => {
+            modal.style.display = 'flex';
+            console.log('Modal display set to flex');
+          }, 1000);
+        } else {
+          console.log('Modal element not found!');
+        }
+      } else {
+        console.log('User not logged in, not showing modal');
+      }
+    });
+
     document.getElementById('openBookingModalBtn').onclick = function() {
       document.getElementById('bookingModal').style.display = 'flex';
       // Calculate total amount when modal opens
       setTimeout(calculateTotalAmount, 100);
+      // Initialize guest ages when modal opens
+      setTimeout(updateGuestAges, 150);
     };
     document.getElementById('closeBookingModalBtn').onclick = function() {
       document.getElementById('bookingModal').style.display = 'none';
@@ -1052,8 +1145,8 @@
     // Handle guest ages dynamically (optimized)
     var guestAgesCache = {};
     
-    document.getElementById('guests').onchange = function() {
-      var guests = parseInt(this.value);
+    function updateGuestAges() {
+      var guests = parseInt(document.getElementById('guests').value) || 1;
       var container = document.getElementById('guestAgesContainer');
       
       // Use cached HTML if available
@@ -1076,7 +1169,15 @@
       
       // Recalculate total amount after updating guest ages
       debouncedCalculateTotalAmount();
-    };
+    }
+    
+    document.getElementById('guests').onchange = updateGuestAges;
+    document.getElementById('guests').oninput = updateGuestAges;
+    
+    // Initialize guest ages on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(updateGuestAges, 100);
+    });
     
     // Set minimum dates for check-in and check-out
     var today = new Date();
@@ -1132,11 +1233,11 @@
       // Room prices per night
       var roomPrices = {
         'Pearl Signature Room': 20695,
-        'Deluxe Room': 18500,
-        'Premium Room': 22500,
-        'Executive Room': 25000,
-        'Luxury Suite': 35000,
-        'Family Suite': 28000
+        'Deluxe Room': 3240,
+        'Premium Room': 5580,
+        'Executive Room': 8790,
+        'Luxury Suite': 11920,
+        'Family Suite': 14855
       };
       
       var pricePerNight = roomPrices[roomType] || 20000;
@@ -1322,8 +1423,20 @@
         calculateTotalAmount();
       }
     }, 500);
+    // Add duplicate prevention variable
+    var isSubmitting = false;
+    
     document.getElementById('bookingForm').onsubmit = function(e) {
       e.preventDefault();
+      
+      // Prevent duplicate submission
+      if (isSubmitting) {
+        console.log('Booking submission already in progress...');
+        alert('Please wait, your booking is being processed...');
+        return false;
+      }
+      
+      isSubmitting = true;
       
       // Show loading state
       var submitBtn = document.querySelector('#bookingForm button[type="submit"]');
@@ -1361,6 +1474,17 @@
       // Send data to backend
       console.log('Submitting to: php/home_booking_process.php');
       console.log('Form data:', Object.fromEntries(formData));
+      
+      // Add safety timeout to reset submission flag
+      setTimeout(() => {
+        if (isSubmitting) {
+          console.log('Safety timeout: Resetting submission flag');
+          isSubmitting = false;
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }
+      }, 10000); // 10 second timeout
+      
       fetch('php/home_booking_process.php', {
         method: 'POST',
         body: formData
@@ -1379,11 +1503,12 @@
           }
         });
       })
-      .then(data => {
+              .then(data => {
         console.log('Parsed response data:', data);
-        // Reset button state
+        // Reset button state and submission flag
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
+        isSubmitting = false;
         
         if (data.success) {
           // Hide booking modal
@@ -1468,6 +1593,8 @@
           document.getElementById('bookingForm').reset();
           document.getElementById('idUploadWrapper').style.display = 'none';
           document.getElementById('guestAgesContainer').innerHTML = '';
+          // Reinitialize guest ages after reset
+          setTimeout(updateGuestAges, 100);
           
         } else {
           // Show error message
@@ -1476,9 +1603,10 @@
         }
       })
       .catch(error => {
-        // Reset button state
+        // Reset button state and submission flag
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
+        isSubmitting = false;
         
         console.error('Error:', error);
         console.error('Error details:', error.message);
@@ -1578,7 +1706,260 @@
         document.getElementById('bookingModal').style.display = 'flex';
         // Calculate total amount when modal opens
         setTimeout(calculateTotalAmount, 100);
+        // Initialize guest ages when modal opens
+        setTimeout(updateGuestAges, 150);
       };
+    });
+    
+    // Availability modal handlers
+    document.getElementById('denyAvailabilityBtn').onclick = function() {
+      document.getElementById('checkAvailabilityModal').style.display = 'none';
+    };
+    
+    document.getElementById('openAvailabilityFormBtn').onclick = function() {
+      document.getElementById('checkAvailabilityModal').style.display = 'none';
+      document.getElementById('availabilityFormModal').style.display = 'flex';
+    };
+    
+    document.getElementById('closeAvailabilityFormBtn').onclick = function() {
+      document.getElementById('availabilityFormModal').style.display = 'none';
+    };
+
+    // Add availability form submission handler
+    document.getElementById('availabilityForm').onsubmit = function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      var formData = new FormData();
+      formData.append('checkinDate', document.getElementById('checkinDate').value);
+      formData.append('checkoutDate', document.getElementById('checkoutDate').value);
+      formData.append('guests', document.getElementById('guests').value);
+      formData.append('roomType', document.getElementById('availabilityRoomType').value);
+      formData.append('numRooms', document.getElementById('numRooms').value);
+      
+      // Show loading state
+      var submitBtn = this.querySelector('button[type="submit"]');
+      var originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Checking...';
+      submitBtn.disabled = true;
+      
+      // Send request to backend
+      fetch('php/check_availability.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('availabilityFormModal').style.display = 'none';
+        
+        if (data.success) {
+          if (data.available) {
+            // Show detailed availability result modal
+            showAvailabilityResult(data);
+          } else {
+            showNotification(data.message, 'error');
+          }
+        } else {
+          showNotification('Error: ' + data.message, 'error');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showNotification('Network error. Please try again.', 'error');
+      })
+      .finally(() => {
+        // Restore button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      });
+    };
+
+    // Function to show detailed availability result
+    function showAvailabilityResult(data) {
+      var resultModal = document.createElement('div');
+      resultModal.id = 'availabilityResultModal';
+      resultModal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.45);
+        z-index: 10003;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeInBg 0.4s;
+      `;
+      
+      resultModal.innerHTML = `
+        <div style="background: #fff; padding: 44px 36px 36px 36px; border-radius: 28px; box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 0 24px 4px rgba(212,175,55,0.28); min-width: 400px; max-width: 500px; width: 95vw; text-align: center; border: 2px solid #d4af37; animation: fadeInModal 0.5s;">
+          <h2 style="margin-bottom: 28px; color: #d4af37; font-size: 2rem; font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: 0.5px;">Room Available!</h2>
+          
+          <div style="text-align: left; margin-bottom: 24px; color: #333;">
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Room Type:</strong> 
+              <span style="color: #333; font-weight: 600;">${data.room_type}</span>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Check-in:</strong> 
+              <span style="color: #333; font-weight: 600;">${formatDate(data.check_in_date)}</span>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Check-out:</strong> 
+              <span style="color: #333; font-weight: 600;">${formatDate(data.check_out_date)}</span>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Duration:</strong> 
+              <span style="color: #333; font-weight: 600;">${data.duration} night(s)</span>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Guests:</strong> 
+              <span style="color: #333; font-weight: 600;">${data.guests} person(s)</span>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Rooms:</strong> 
+              <span style="color: #333; font-weight: 600;">${data.requested_rooms} room(s)</span>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <strong style="color: #bfa134; font-size: 1.1rem;">Base Price:</strong> 
+              <span style="color: #333; font-weight: 600;">$${data.base_price_per_night.toLocaleString()}/night</span>
+            </div>
+            ${data.guest_surcharge > 0 ? `<div style="margin-bottom: 16px;"><strong style="color: #bfa134; font-size: 1.1rem;">Guest Surcharge:</strong> <span style="color: #333; font-weight: 600;">$${data.guest_surcharge.toLocaleString()}</span></div>` : ''}
+            <div style="margin-bottom: 24px; padding: 16px; background: #f8f9fa; border-radius: 12px; border-left: 4px solid #28a745;">
+              <strong style="color: #28a745; font-size: 1.3rem;">Total Amount: $${data.total_amount.toLocaleString()}</strong>
+            </div>
+          </div>
+          
+          <div style="display: flex; justify-content: center; gap: 14px; margin-top: 8px;">
+            <button onclick="closeAvailabilityResult()" style="background: #eee; color: #222; border: none; border-radius: 24px; padding: 0.8rem 2.1rem; font-size: 1.08rem; font-weight: 600; cursor: pointer; font-family: 'Lato', sans-serif; transition: background 0.18s, color 0.18s;" onmouseover="this.style.background='#e0e0e0';this.style.color='#bfa134';" onmouseout="this.style.background='#eee';this.style.color='#222';">Close</button>
+            <button onclick="proceedToBooking(${JSON.stringify(data).replace(/"/g, '&quot;')})" style="background: #d4af37; color: #222; border: none; border-radius: 24px; padding: 0.8rem 2.3rem; font-size: 1.13rem; font-weight: 700; cursor: pointer; font-family: 'Lato', sans-serif; box-shadow: 0 2px 8px rgba(212,175,55,0.10); transition: background 0.18s, color 0.18s, box-shadow 0.18s;" onmouseover="this.style.background='#bfa134';this.style.color='#fff';this.style.boxShadow='0 4px 16px rgba(212,175,55,0.18)';" onmouseout="this.style.background='#d4af37';this.style.color='#222';this.style.boxShadow='0 2px 8px rgba(212,175,55,0.10)';">Book Now</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(resultModal);
+      
+      // Close modal when clicking outside
+      resultModal.addEventListener('click', function(e) {
+        if (e.target === resultModal) {
+          closeAvailabilityResult();
+        }
+      });
+    }
+
+    // Function to close availability result modal
+    function closeAvailabilityResult() {
+      var modal = document.getElementById('availabilityResultModal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+
+    // Function to proceed to booking
+    function proceedToBooking(data) {
+      closeAvailabilityResult();
+      // Store booking data in localStorage for the booking form
+      localStorage.setItem('pendingBooking', JSON.stringify(data));
+      // Show booking modal with pre-filled data
+      showNotification('Opening booking form...', 'success');
+      setTimeout(() => {
+        // Pre-fill the booking form with availability data
+        if (data.room_type) {
+          document.getElementById('roomType').value = data.room_type;
+        }
+        if (data.check_in_date) {
+          document.getElementById('checkin').value = data.check_in_date;
+        }
+        if (data.check_out_date) {
+          document.getElementById('checkout').value = data.check_out_date;
+        }
+        if (data.guests) {
+          document.getElementById('guests').value = data.guests;
+        }
+        if (data.requested_rooms) {
+          document.getElementById('rooms').value = data.requested_rooms;
+        }
+        
+        // Show booking modal
+        document.getElementById('bookingModal').style.display = 'flex';
+        // Calculate total amount and initialize guest ages
+        setTimeout(calculateTotalAmount, 100);
+        setTimeout(updateGuestAges, 150);
+      }, 1000);
+    }
+
+    // Helper function to format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    }
+
+    // Function to show notifications
+    function showNotification(message, type = 'info') {
+      var notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        z-index: 10004;
+        animation: slideIn 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+      `;
+      
+      if (type === 'error') {
+        notification.style.background = '#dc3545';
+      } else if (type === 'success') {
+        notification.style.background = '#28a745';
+      } else {
+        notification.style.background = '#17a2b8';
+      }
+      
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      // Remove after 5 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 5000);
+    }
+
+    // Add CSS animations for notifications
+    var style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Close modals when clicking outside
+    [document.getElementById('checkAvailabilityModal'), document.getElementById('availabilityFormModal')].forEach(function(modal) {
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) modal.style.display = 'none';
+        });
+      }
     });
   </script>
   <script src="main.js"></script>

@@ -196,6 +196,7 @@ CREATE TABLE IF NOT EXISTS room_types (
     description TEXT,
     base_price DECIMAL(10,2) NOT NULL,
     total_rooms INT(11) NOT NULL DEFAULT 10,
+    available_rooms INT(11) NOT NULL DEFAULT 10,
     floor_number INT(11) DEFAULT 1,
     status ENUM('active', 'inactive') DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

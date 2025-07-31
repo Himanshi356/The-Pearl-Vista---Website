@@ -317,7 +317,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = window.location.origin + '/Hotel-Management';
+        const API_BASE_URL = window.location.origin + '/Pearl-Vista---Website';
         const urlParams = new URLSearchParams(window.location.search);
         const email = urlParams.get('email');
         const mode = urlParams.get('mode'); // 'recovery' or 'signup'
@@ -406,6 +406,9 @@
             document.getElementById('message').style.display = 'none';
 
             try {
+                console.log('Sending verification request to:', `${API_BASE_URL}/Auth/verify_code.php`);
+                console.log('Verification data:', { email: email, code: code });
+                
                 const response = await fetch(`${API_BASE_URL}/Auth/verify_code.php`, {
                     method: 'POST',
                     headers: {
@@ -417,10 +420,18 @@
                     })
                 });
 
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 if (data.status === 'success') {
                     showMessage('✅ Code verified successfully! Redirecting to set password...', 'success');
+                    
+                    // Store user login status
+                    localStorage.setItem('pv_logged_in', '1');
+                    localStorage.setItem('pv_email', email);
                     
                     setTimeout(() => {
                         window.location.href = `confirm-password.html?email=${encodeURIComponent(email)}`;

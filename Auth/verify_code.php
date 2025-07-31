@@ -4,12 +4,22 @@ ini_set('log_errors', 1);
 error_reporting(E_ALL);
 session_start();
 
+// Add CORS headers
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 // Ensure clean output
 while (ob_get_level()) {
     ob_end_clean();
 }
-
-header('Content-Type: application/json');
 
 require_once '../Config/database.php';
 $pdo = getDatabaseConnection();

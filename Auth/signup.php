@@ -3,13 +3,26 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
 session_start();
+
+// Add CORS headers
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 // Ensure clean output
 ob_clean();
 
 try {
     require_once '../Config/database.php';
+    require_once 'email_helper.php';
+    require_once 'email_template.php';
     $pdo = getDatabaseConnection();
 
     $input = json_decode(file_get_contents('php://input'), true);
@@ -21,7 +34,7 @@ try {
     $username = trim($input['username'] ?? '');
     $email = trim($input['email'] ?? '');
     $security_question = $input['security_question'] ?? '';
-    $security_answer = $input['security_answer'] ?? '';
+    $security_answer = trim($input['security_answer'] ?? '');
     
     if (empty($user_id) || empty($username) || empty($email) || empty($security_question) || empty($security_answer)) {
         echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
@@ -62,10 +75,18 @@ try {
     $result = $stmt->execute([$user_id, $username, $email, $security_question, $security_answer, $verification_code]);
     
     if ($result && $stmt->rowCount() > 0) {
-        // Send email (simple mail example — needs real SMTP setup)
-        mail($email, "Your Verification Code", "Your verification code is: $verification_code");
+        // Save verification email as HTML file
+        $email_file = saveVerificationEmail($email, $verification_code, $username);
         
-        echo json_encode(['status' => 'success', 'message' => 'Verification code sent to email.']);
+        // Also log the verification code for debugging
+        sendVerificationEmail($email, $verification_code);
+        
+        echo json_encode([
+            'status' => 'success', 
+            'message' => 'Verification code sent to email.', 
+            'debug_code' => $verification_code,
+            'email_file' => basename($email_file)
+        ]);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Registration failed. Database error.']);
     }

@@ -213,11 +213,11 @@
                 <label for="securityQuestion">Security Question</label>
                 <select id="securityQuestion" name="security_question" required>
                     <option value="" disabled selected>Select a security question</option>
-                    <option value="pet">What is the name of your first pet?</option>
-                    <option value="school">What is the name of your elementary school?</option>
-                    <option value="city">In what city were you born?</option>
-                    <option value="mother">What is your mother's maiden name?</option>
-                    <option value="car">What was your first car?</option>
+                    <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+                    <option value="What is the name of your elementary school?">What is the name of your elementary school?</option>
+                    <option value="In what city were you born?">In what city were you born?</option>
+                    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                    <option value="What was your first car?">What was your first car?</option>
                 </select>
             </div>
 
@@ -244,13 +244,13 @@
     </div>
 
     <script>
-        const API_BASE_URL = window.location.origin + '/Hotel-Management';
+        const API_BASE_URL = window.location.origin + '/Pearl-Vista---Website';
 
         // Show message
         function showMessage(text, type = 'info') {
             const messageDiv = document.getElementById('message');
             messageDiv.className = `message ${type}`;
-            messageDiv.textContent = text;
+            messageDiv.innerHTML = text;
             messageDiv.style.display = 'block';
             
             setTimeout(() => {
@@ -281,6 +281,15 @@
             document.getElementById('message').style.display = 'none';
 
             try {
+                console.log('Sending request to:', `${API_BASE_URL}/Auth/signup.php`);
+                console.log('Request data:', {
+                    user_id: userId,
+                    username: username,
+                    email: email,
+                    security_question: securityQuestion,
+                    security_answer: securityAnswer
+                });
+                
                 const response = await fetch(`${API_BASE_URL}/Auth/signup.php`, {
                     method: 'POST',
                     headers: {
@@ -295,14 +304,29 @@
                     })
                 });
 
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 if (data.status === 'success') {
-                    showMessage('✅ Account created successfully! Please check your email for verification.', 'success');
+                    showMessage('✅ Redirecting to Verify Email...', 'success');
+                    
+                    // Store user email in localStorage for later use
+                    localStorage.setItem('pv_email', email);
+                    localStorage.setItem('pv_username', username);
+                    
+                    // Open the verification email in a new tab
+                    if (data.email_file) {
+                        setTimeout(() => {
+                            window.open(`show_verification_email.php?file=${data.email_file}&email=${encodeURIComponent(email)}`, '_blank');
+                        }, 1000);
+                    }
                     
                     setTimeout(() => {
                         window.location.href = `email-verification.html?email=${encodeURIComponent(email)}`;
-                    }, 2000);
+                    }, 3000);
                     
                 } else {
                     showMessage(`❌ Signup failed: ${data.message}`, 'error');
@@ -310,7 +334,11 @@
                 
             } catch (error) {
                 console.error('Signup error:', error);
-                showMessage('❌ Network error. Please try again.', 'error');
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    showMessage('❌ Network error. Please check your connection and try again.', 'error');
+                } else {
+                    showMessage('❌ An error occurred. Please try again.', 'error');
+                }
             } finally {
                 signupBtn.disabled = false;
                 loading.style.display = 'none';

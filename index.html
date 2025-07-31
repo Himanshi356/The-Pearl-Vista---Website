@@ -148,61 +148,9 @@
     </div>
   </section>
 
-  <!-- Sign Up Page -->
-  <div class="page form-wrapper" id="signUpPage" style="display:none;">
-    <h2>Sign Up</h2>
-    <form id="signupForm" onsubmit="handleSignUp(event)">
-      <div class="input-group">
-        <span class="icon">🆔</span>
-        <input type="number" id="signupUserId" placeholder="User ID (numeric, must be unique)" required min="100000" max="999999" />
-        <small style="color: #666; font-size: 0.8rem;">Enter a 6-digit number (e.g., 123456)</small>
-      </div>
-      <div class="input-group">
-        <span class="icon">👤</span>
-        <input type="text" id="signupUsername" placeholder="Username" required />
-      </div>
-      <div class="input-group">
-        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
-        <input type="email" id="signupEmail" placeholder="Email" required />
-      </div>
-      <div class="input-group">
-        <select id="securityQuestion" required>
-          <option value="" disabled selected>Select a security question</option>
-          <option value="pet">What is the name of your first pet?</option>
-          <option value="school">What is the name of your elementary school?</option>
-          <option value="city">In what city were you born?</option>
-          <option value="mother">What is your mother's maiden name?</option>
-          <option value="car">What was your first car?</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <input type="text" id="securityAnswer" placeholder="Your Answer" required />
-      </div>
-      <button type="submit" class="btn signup full">Sign Up</button>
-    </form>
-  </div>
 
-  <!-- Login Page -->
-  <div class="page form-wrapper" id="loginPage" style="display:none;">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <div class="input-group">
-        <span class="icon">👤</span>
-        <input type="text" id="loginUsername" placeholder="Username" required />
-      </div>
-      <div class="input-group" style="position:relative;">
-        <span class="icon">🔒</span>
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <span class="toggle-password" onclick="togglePassword('loginPassword', this)">
-          <i class="fa-solid fa-eye"></i>
-        </span>
-      </div>
-      <div class="forgot-link">
-        <a href="account-recovery.html" class="forgot-link">Forgot Password?</a>
-      </div>
-      <button type="submit" class="btn login full">Login</button>
-    </form>
-  </div>
+
+
 
   <script src="main.js"></script>
 </body>

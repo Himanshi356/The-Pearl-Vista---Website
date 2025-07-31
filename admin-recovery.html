@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Admin Password Recovery - The Pearl Vista" />
+  <title>Admin Password Recovery - The Pearl Vista</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="images/logo.png" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .recovery-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo h1 {
+      color: #d4af37;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .logo p {
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #d4af37;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    .recovery-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .recovery-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .recovery-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .back-to-login {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-to-login a {
+      color: #d4af37;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .back-to-login a:hover {
+      color: #b8941f;
+      text-decoration: underline;
+    }
+
+    .code-feedback {
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .code-feedback.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .code-feedback.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .admin-notice {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      color: #856404;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .recovery-container {
+        max-width: 98vw;
+        padding: 30px 20px;
+      }
+      
+      .logo h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="recovery-container">
+    <div class="logo">
+      <h1>The Pearl Vista</h1>
+      <p>Admin Password Recovery</p>
+    </div>
+
+    <div class="admin-notice">
+      <i class="fas fa-shield-alt"></i>
+      <strong>Admin Recovery:</strong> Enter your admin username and email to receive a password reset link.
+    </div>
+
+    <form id="adminRecoveryForm" autocomplete="off" aria-label="Admin Password Recovery Form">
+      <div class="form-group">
+        <label for="adminUsername">Admin Username</label>
+        <input type="text" id="adminUsername" required aria-label="Admin Username" placeholder="Enter your admin username" />
+      </div>
+      <div class="form-group">
+        <label for="adminEmail">Admin Email</label>
+        <input type="email" id="adminEmail" required aria-label="Admin Email" placeholder="Enter your admin email" />
+      </div>
+      <div id="recoveryFeedback" class="code-feedback"></div>
+      <button class="recovery-btn" id="recoveryBtn" type="submit">Send Recovery Email</button>
+    </form>
+
+    <div class="back-to-login">
+      <a href="unified-login.html" aria-label="Back to Login">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Login
+      </a>
+    </div>
+  </div>
+  <script>
+    const API_BASE_URL = window.location.origin + '/Pearl-Vista---Website';
+    
+    document.getElementById('adminRecoveryForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('adminUsername').value.trim();
+      const email = document.getElementById('adminEmail').value.trim();
+      const feedback = document.getElementById('recoveryFeedback');
+      const submitBtn = document.getElementById('recoveryBtn');
+      
+      feedback.classList.remove('success', 'error');
+      
+      if (!username || !email) {
+        feedback.textContent = "Please fill in all fields.";
+        feedback.classList.add('error');
+        return false;
+      }
+
+      // Disable submit button and show loading
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/Auth/admin_forgot_password.php`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          feedback.textContent = '✅ Admin recovery email sent! Opening verification code in new tab...';
+          feedback.classList.add('success');
+          
+          // Open verification code in new tab
+          if (data.email_file) {
+            window.open(`${API_BASE_URL}/emails/${data.email_file}`, '_blank');
+          }
+          
+          // Redirect to admin email verification page
+          setTimeout(() => {
+            window.location.href = `admin-email-verification.html?email=${encodeURIComponent(data.email)}&username=${encodeURIComponent(data.username)}`;
+          }, 1500);
+        } else {
+          feedback.textContent = data.message;
+          feedback.classList.add('error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        feedback.textContent = 'Network error. Please try again.';
+        feedback.classList.add('error');
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Recovery Email';
+      }
+      
+      return false;
+    };
+  </script>
+</body>
+</html> 

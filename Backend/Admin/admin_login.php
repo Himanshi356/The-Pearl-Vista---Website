@@ -1,7 +1,29 @@
 <?php
 // admin_login.php
 session_start();
-require_once '../../Config/database.php';
+
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Set content type to JSON
+header('Content-Type: application/json');
+
+// Database configuration
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "the_pearl_vista";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';

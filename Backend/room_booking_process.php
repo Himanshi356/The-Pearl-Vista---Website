@@ -1,189 +1,205 @@
 <?php
+session_start();
+header('Content-Type: application/json');
+
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Set content type to JSON
-header('Content-Type: application/json');
+require_once 'Config/database.php';
 
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "the_pearl_vista";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
-    exit();
-}
-
-// Create database if it doesn't exist
-$sql = "CREATE DATABASE IF NOT EXISTS $dbname";
-if ($conn->query($sql) === FALSE) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error creating database']);
-    exit();
-}
-
-// Select the database
-$conn->select_db($dbname);
-
-
-if ($conn->query($sql) === FALSE) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error creating room_bookings table']);
-    exit();
-}
-
-// Get form data
-$customer_name = isset($_POST['customer_name']) ? trim($_POST['customer_name']) : '';
-$customer_email = isset($_POST['customer_email']) ? trim($_POST['customer_email']) : '';
-$customer_phone = isset($_POST['customer_phone']) ? trim($_POST['customer_phone']) : '';
-$id_type = isset($_POST['id_type']) ? trim($_POST['id_type']) : '';
-$room_type = isset($_POST['room_type']) ? trim($_POST['room_type']) : '';
-$check_in_date = isset($_POST['check_in_date']) ? trim($_POST['check_in_date']) : '';
-$check_out_date = isset($_POST['check_out_date']) ? trim($_POST['check_out_date']) : '';
-$num_guests = isset($_POST['num_guests']) ? intval($_POST['num_guests']) : 0;
-$guest_ages = isset($_POST['guest_ages']) ? $_POST['guest_ages'] : [];
-$num_rooms = isset($_POST['num_rooms']) ? intval($_POST['num_rooms']) : 0;
-$total_amount = isset($_POST['total_amount']) ? floatval($_POST['total_amount']) : 0;
-$special_instructions = isset($_POST['special_instructions']) ? trim($_POST['special_instructions']) : '';
-
-// Validate required fields
-if (empty($customer_name) || empty($customer_email) || empty($customer_phone) || 
-    empty($room_type) || empty($check_in_date) || empty($check_out_date) || 
-    $num_guests <= 0 || $num_rooms <= 0 || $total_amount <= 0) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'All required fields are required']);
-    exit();
-}
-
-// Validate email format
-if (!filter_var($customer_email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid email format']);
-    exit();
-}
-
-// Validate date format
-if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $check_in_date) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $check_out_date)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid date format']);
-    exit();
-}
-
-// Validate dates
-$checkin = new DateTime($check_in_date);
-$checkout = new DateTime($check_out_date);
-$today = new DateTime();
-
-if ($checkin < $today) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Check-in date cannot be in the past']);
-    exit();
-}
-
-if ($checkout <= $checkin) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Check-out date must be after check-in date']);
-    exit();
-}
-
-// Handle file upload for ID verification
-$id_upload_path = '';
-if (isset($_FILES['id_upload']) && $_FILES['id_upload']['error'] === UPLOAD_ERR_OK) {
-    $upload_dir = '../uploads/';
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
+try {
+    $pdo = getDatabaseConnection();
     
-    $file_extension = pathinfo($_FILES['id_upload']['name'], PATHINFO_EXTENSION);
-    $file_name = uniqid() . '_' . time() . '.' . $file_extension;
-    $upload_path = $upload_dir . $file_name;
+    // Get POST data
+    $data = json_decode(file_get_contents('php://input'), true);
     
-    if (move_uploaded_file($_FILES['id_upload']['tmp_name'], $upload_path)) {
-        $id_upload_path = 'uploads/' . $file_name;
-    }
-}
-
-// Check room availability
-$stmt = $conn->prepare("SELECT available_rooms FROM room_availability WHERE room_type = ? AND check_in_date = ? AND check_out_date = ?");
-$stmt->bind_param("sss", $room_type, $check_in_date, $check_out_date);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $availability = $result->fetch_assoc();
-    $available_rooms = $availability['available_rooms'];
-    
-    if ($available_rooms < $num_rooms) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => "Sorry, only {$available_rooms} {$room_type}(s) are available for your selected dates."]);
+    if (!$data) {
+        echo json_encode(['success' => false, 'message' => 'No data received']);
         exit();
     }
-} else {
-    // No availability record exists, assume rooms are available
-    $available_rooms = 10;
-    if ($num_rooms > $available_rooms) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => "Sorry, only {$available_rooms} {$room_type}(s) are available for your selected dates."]);
+    
+    // Extract booking data with proper trimming and validation
+    $customer_name = trim($data['customer_name'] ?? '');
+    $customer_email = trim($data['customer_email'] ?? '');
+    $customer_phone = trim($data['customer_phone'] ?? '');
+    $room_type = trim($data['room_type'] ?? '');
+    $check_in_date = trim($data['check_in_date'] ?? '');
+    $check_out_date = trim($data['check_out_date'] ?? '');
+    $num_guests = intval($data['num_guests'] ?? 1);
+    $num_rooms = intval($data['num_rooms'] ?? 1);
+    $total_amount = floatval($data['total_amount'] ?? 0);
+    $special_instructions = trim($data['special_instructions'] ?? '');
+    $guest_ages = $data['guest_ages'] ?? [];
+    $id_type = trim($data['id_type'] ?? '');
+    $id_upload_path = trim($data['id_upload_path'] ?? '');
+    
+    // Validate required fields
+    if (empty($customer_name) || empty($customer_email) || empty($room_type) || 
+        empty($check_in_date) || empty($check_out_date)) {
+        echo json_encode(['success' => false, 'message' => 'Missing required fields']);
         exit();
     }
-}
-
-// Convert guest ages to JSON if it's an array
-$guest_ages_json = '';
-if (is_array($guest_ages)) {
-    $guest_ages_json = json_encode($guest_ages);
-} else {
-    $guest_ages_json = $guest_ages;
-}
-
-// Insert booking into database
-$stmt = $conn->prepare("INSERT INTO room_bookings (customer_name, customer_email, customer_phone, id_type, id_upload_path, room_type, check_in_date, check_out_date, num_guests, guest_ages, num_rooms, total_amount, special_instructions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-if (!$stmt) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error preparing statement: ' . $conn->error]);
-    exit();
-}
-
-$stmt->bind_param("sssssssisdss", $customer_name, $customer_email, $customer_phone, $id_type, $id_upload_path, $room_type, $check_in_date, $check_out_date, $num_guests, $guest_ages_json, $num_rooms, $total_amount, $special_instructions);
-
-if ($stmt->execute()) {
-    $booking_id = $conn->insert_id;
     
-    // Update room availability
-    $new_available = $available_rooms - $num_rooms;
-    $update_stmt = $conn->prepare("UPDATE room_availability SET available_rooms = ? WHERE room_type = ? AND check_in_date = ? AND check_out_date = ?");
-    $update_stmt->bind_param("isss", $new_available, $room_type, $check_in_date, $check_out_date);
-    $update_stmt->execute();
+    // Start transaction with SERIALIZABLE isolation level for maximum consistency
+    $pdo->exec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE");
+    $pdo->beginTransaction();
     
-    // Success response
-    echo json_encode([
-        'success' => true,
-        'message' => 'Room booking submitted successfully!',
-        'booking_id' => $booking_id,
-        'details' => [
-            'customer_name' => $customer_name,
-            'room_type' => $room_type,
-            'check_in_date' => $check_in_date,
-            'check_out_date' => $check_out_date,
-            'num_guests' => $num_guests,
-            'num_rooms' => $num_rooms,
-            'total_amount' => $total_amount,
-            'special_instructions' => $special_instructions
-        ]
-    ]);
-} else {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Error saving booking: ' . $stmt->error]);
+    try {
+        // Use a more comprehensive duplicate check with exact matching
+        $duplicate_check_sql = "
+            SELECT id, booking_id, created_at 
+            FROM home_bookings 
+            WHERE customer_email = ? 
+            AND customer_name = ? 
+            AND room_type = ? 
+            AND check_in_date = ? 
+            AND check_out_date = ? 
+            AND num_guests = ? 
+            AND num_rooms = ? 
+            AND total_amount = ?
+            AND special_instructions = ?
+            LIMIT 1
+        ";
+        
+        $duplicate_stmt = $pdo->prepare($duplicate_check_sql);
+        $duplicate_stmt->execute([
+            $customer_email,
+            $customer_name,
+            $room_type,
+            $check_in_date,
+            $check_out_date,
+            $num_guests,
+            $num_rooms,
+            $total_amount,
+            $special_instructions
+        ]);
+        
+        $existing_booking = $duplicate_stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($existing_booking) {
+            $pdo->rollBack();
+            echo json_encode([
+                'success' => false, 
+                'message' => 'A booking with these exact details already exists. Please check your email for confirmation.',
+                'duplicate' => true,
+                'booking_id' => $existing_booking['id'],
+                'existing_booking_id' => $existing_booking['booking_id'],
+                'created_at' => $existing_booking['created_at']
+            ]);
+            exit();
+        }
+    
+        // Generate unique booking ID with timestamp to ensure uniqueness
+        $timestamp = microtime(true);
+        $booking_id = 'PV' . date('Ymd') . sprintf('%06d', ($timestamp - floor($timestamp)) * 1000000);
+        
+        // Double-check booking_id uniqueness
+        $id_check_stmt = $pdo->prepare("SELECT id FROM home_bookings WHERE booking_id = ?");
+        $id_check_stmt->execute([$booking_id]);
+        
+        if ($id_check_stmt->fetch()) {
+            // If somehow duplicate, generate a new one
+            $booking_id = 'PV' . date('Ymd') . sprintf('%06d', ($timestamp - floor($timestamp)) * 1000000) . rand(100, 999);
+        }
+        
+        // Insert the booking
+        $insert_sql = "
+            INSERT INTO home_bookings (
+                booking_id, customer_name, customer_email, customer_phone,
+                room_type, check_in_date, check_out_date, num_guests,
+                num_rooms, total_amount, special_instructions, guest_ages,
+                id_type, id_upload_path, status, created_at, updated_at
+            ) VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW(), NOW()
+            )
+        ";
+        
+        $stmt = $pdo->prepare($insert_sql);
+        $result = $stmt->execute([
+            $booking_id,
+            $customer_name,
+            $customer_email,
+            $customer_phone,
+            $room_type,
+            $check_in_date,
+            $check_out_date,
+            $num_guests,
+            $num_rooms,
+            $total_amount,
+            $special_instructions,
+            json_encode($guest_ages),
+            $id_type,
+            $id_upload_path
+        ]);
+        
+        if ($result) {
+            $new_booking_id = $pdo->lastInsertId();
+            $pdo->commit();
+            
+            echo json_encode([
+                'success' => true,
+                'message' => 'Booking created successfully!',
+                'booking_id' => $new_booking_id,
+                'unique_id' => $booking_id
+            ]);
+        } else {
+            $pdo->rollBack();
+            echo json_encode(['success' => false, 'message' => 'Failed to create booking']);
+        }
+        
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        
+        // Check if this is a duplicate key error
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false || 
+            strpos($e->getMessage(), 'unique_booking_fields') !== false ||
+            strpos($e->getMessage(), 'Duplicate key') !== false) {
+            
+            // Find the existing booking
+            $existing_check_sql = "
+                SELECT id, booking_id, created_at FROM home_bookings 
+                WHERE customer_email = ? 
+                AND customer_name = ? 
+                AND room_type = ? 
+                AND check_in_date = ? 
+                AND check_out_date = ? 
+                AND num_guests = ? 
+                AND num_rooms = ? 
+                AND total_amount = ?
+                AND special_instructions = ?
+                LIMIT 1
+            ";
+            
+            $existing_stmt = $pdo->prepare($existing_check_sql);
+            $existing_stmt->execute([
+                $customer_email,
+                $customer_name,
+                $room_type,
+                $check_in_date,
+                $check_out_date,
+                $num_guests,
+                $num_rooms,
+                $total_amount,
+                $special_instructions
+            ]);
+            
+            $existing = $existing_stmt->fetch(PDO::FETCH_ASSOC);
+            
+            echo json_encode([
+                'success' => false,
+                'message' => 'A booking with these exact details already exists. Please check your email for confirmation.',
+                'duplicate' => true,
+                'booking_id' => $existing['id'] ?? null,
+                'existing_booking_id' => $existing['booking_id'] ?? null,
+                'created_at' => $existing['created_at'] ?? null
+            ]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+        }
+    }
+    
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'message' => 'System error: ' . $e->getMessage()]);
 }
-
-$stmt->close();
-$conn->close();
+?>
