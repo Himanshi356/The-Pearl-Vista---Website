@@ -304,10 +304,18 @@
                         localStorage.setItem('pv_logged_in', '1');
                         localStorage.setItem('pv_username', data.user?.username || username);
                         localStorage.setItem('pv_email', data.user?.email || '');
+                        
+                        // Set new user flag if this is their first login
+                        if (data.isNewUser) {
+                            localStorage.setItem('pv_is_new_user', '1');
+                            console.log('New user detected - setting welcome popup flag');
+                        }
+                        
                         console.log('Login successful - localStorage set:', {
                             pv_logged_in: localStorage.getItem('pv_logged_in'),
                             pv_username: localStorage.getItem('pv_username'),
-                            pv_email: localStorage.getItem('pv_email')
+                            pv_email: localStorage.getItem('pv_email'),
+                            pv_is_new_user: localStorage.getItem('pv_is_new_user')
                         });
                     }
                     

@@ -674,7 +674,10 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
                             <i class="fas fa-calendar-plus"></i>
                             Manage Bookings
                         </a>
-                    
+                        <button onclick="openCreateBookingModal()" class="action-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            Create New Booking
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1067,6 +1070,151 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
             });
 
 
+    </script>
+
+    <!-- Create New Booking Modal -->
+    <div id="createBookingModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:20px; max-width:600px; width:95%; max-height:90vh; overflow-y:auto; padding:2rem; position:relative;">
+            <button onclick="closeCreateBookingModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#666;">&times;</button>
+            
+            <h2 style="color:#333; margin-bottom:1.5rem; text-align:center;">
+                <i class="fas fa-plus-circle" style="color:#d4af37; margin-right:0.5rem;"></i>
+                Create New Booking
+            </h2>
+            
+            <form id="createBookingForm" style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div>
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Customer Name *</label>
+                        <input type="text" id="customerName" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Customer Phone *</label>
+                        <input type="tel" id="customerPhone" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                </div>
+                
+                <div>
+                    <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Customer Email *</label>
+                    <input type="email" id="customerEmail" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                </div>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div>
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Check-in Date *</label>
+                        <input type="date" id="checkinDate" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Check-out Date *</label>
+                        <input type="date" id="checkoutDate" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                </div>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div>
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Number of Guests *</label>
+                        <input type="number" id="numGuests" min="1" max="10" value="1" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Number of Rooms *</label>
+                        <input type="number" id="numRooms" min="1" max="10" value="1" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                </div>
+                
+                <div>
+                    <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Room Type *</label>
+                    <select id="roomType" required style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem;">
+                        <option value="">Select Room Type</option>
+                        <option value="Pearl Signature Room">Pearl Signature Room - $20,695/night</option>
+                        <option value="Deluxe Room">Deluxe Room - $3,240/night</option>
+                        <option value="Premium Room">Premium Room - $5,580/night</option>
+                        <option value="Executive Room">Executive Room - $8,790/night</option>
+                        <option value="Luxury Suite">Luxury Suite - $11,920/night</option>
+                        <option value="Family Suite">Family Suite - $14,855/night</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#333;">Special Instructions</label>
+                    <textarea id="specialInstructions" rows="3" style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px; font-size:1rem; resize:vertical;"></textarea>
+                </div>
+                
+                <div style="display:flex; gap:1rem; margin-top:1rem;">
+                    <button type="button" onclick="closeCreateBookingModal()" style="flex:1; padding:0.75rem; background:#f8f9fa; color:#333; border:1px solid #ddd; border-radius:8px; font-size:1rem; cursor:pointer;">Cancel</button>
+                    <button type="submit" style="flex:1; padding:0.75rem; background:#d4af37; color:#333; border:none; border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer;">Create Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Create Booking Modal Functions
+        function openCreateBookingModal() {
+            document.getElementById('createBookingModal').style.display = 'flex';
+            // Set minimum dates
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkinDate').min = today;
+            document.getElementById('checkoutDate').min = today;
+        }
+
+        function closeCreateBookingModal() {
+            document.getElementById('createBookingModal').style.display = 'none';
+            document.getElementById('createBookingForm').reset();
+        }
+
+        // Handle form submission
+        document.getElementById('createBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('customer_name', document.getElementById('customerName').value);
+            formData.append('customer_phone', document.getElementById('customerPhone').value);
+            formData.append('customer_email', document.getElementById('customerEmail').value);
+            formData.append('check_in_date', document.getElementById('checkinDate').value);
+            formData.append('check_out_date', document.getElementById('checkoutDate').value);
+            formData.append('num_guests', document.getElementById('numGuests').value);
+            formData.append('num_rooms', document.getElementById('numRooms').value);
+            formData.append('room_type', document.getElementById('roomType').value);
+            formData.append('special_instructions', document.getElementById('specialInstructions').value);
+            formData.append('status', 'confirmed'); // Default to confirmed for admin bookings
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Creating...';
+            submitBtn.disabled = true;
+            
+            fetch('Backend/admin_create_booking.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Booking created successfully! Booking ID: ' + data.booking_id);
+                    closeCreateBookingModal();
+                    // Optionally refresh the page or update stats
+                    location.reload();
+                } else {
+                    alert('Error creating booking: ' + (data.message || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Network error. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('createBookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCreateBookingModal();
+            }
+        });
     </script>
 </body>
 </html> 

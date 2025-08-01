@@ -118,11 +118,13 @@
       userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
     }
   });
-  function logout() {
-    localStorage.removeItem('pv_logged_in');
-    localStorage.removeItem('pv_username');
-    window.location.href = 'index.html';
-  }
+      function logout() {
+      localStorage.removeItem('pv_logged_in');
+      localStorage.removeItem('pv_username');
+      localStorage.removeItem('pv_email');
+      localStorage.removeItem('pv_is_new_user');
+      window.location.href = 'index.html';
+    }
   </script>
 
   <!-- Hero Section (Keeping the original banner) -->
@@ -462,7 +464,7 @@
           <b>Services:</b> Daily housekeeping, laundry, airport transfers, concierge, and more.<br>
           <b>Perfect for:</b> Couples, VIPs, and anyone seeking the ultimate luxury experience.
         </div>
-        <button class="luxury-btn-filled" id="signatureBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+        <button class="luxury-btn-filled" id="signatureBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
       </div>
     </div>
   </div>
@@ -494,7 +496,7 @@
           <b>Services:</b> Daily housekeeping, laundry, 24/7 room service, and more.<br>
           <b>Perfect for:</b> Solo travelers, couples, and business guests.
         </div>
-        <button class="luxury-btn-filled" id="deluxeBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+        <button class="luxury-btn-filled" id="deluxeBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
       </div>
     </div>
   </div>
@@ -527,7 +529,7 @@
           <b>Services:</b> Priority check-in, daily housekeeping, laundry, 24/7 room service, and more.<br>
           <b>Perfect for:</b> Business travelers, couples, and guests seeking an elevated stay experience.
         </div>
-        <button class="luxury-btn-filled" id="premiumBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+        <button class="luxury-btn-filled" id="premiumBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
       </div>
     </div>
   </div>
@@ -559,7 +561,7 @@
           <b>Executive Perks:</b> Access to Executive Lounge (breakfast, snacks, cocktails), express check-in/out, business center services.<br>
           <b>Perfect for:</b> Business travelers, executives, and guests seeking a productive yet relaxing stay.
         </div>
-        <button class="luxury-btn-filled" id="executiveBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+        <button class="luxury-btn-filled" id="executiveBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
       </div>
     </div>
   </div>
@@ -592,7 +594,7 @@
           <b>VIP Perks:</b> Private check-in/out, complimentary airport transfer, welcome champagne, and access to the executive lounge.<br>
           <b>Perfect for:</b> Families, VIPs, and guests seeking the ultimate in luxury and privacy.
         </div>
-        <button class="luxury-btn-filled" id="luxuryBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+        <button class="luxury-btn-filled" id="luxuryBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
       </div>
     </div>
   </div>
@@ -625,7 +627,7 @@
           <b>Family Perks:</b> Welcome treats for kids, babysitting on request, and late check-out (subject to availability).<br>
           <b>Perfect for:</b> Families, groups, and guests who want space, comfort, and convenience.
         </div>
-        <button class="luxury-btn-filled" id="familyBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;">Book Now</button>
+        <button class="luxury-btn-filled" id="familyBookNowBtn" style="margin-top:1.2rem; font-size:1.13rem;" onclick="window.location.href='home.html?openBooking=true'">Book Now</button>
       </div>
     </div>
   </div>

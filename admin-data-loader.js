@@ -101,7 +101,9 @@ class AdminDataLoader {
         const confirmedElement = document.querySelectorAll('.stat-card .number')[1];
         const pendingElement = document.querySelectorAll('.stat-card .number')[2];
         const cancelledElement = document.querySelectorAll('.stat-card .number')[3];
-        const revenueElement = document.querySelectorAll('.stat-card .number')[4];
+        const checkedInElement = document.querySelectorAll('.stat-card .number')[4];
+        const completedElement = document.querySelectorAll('.stat-card .number')[5];
+        const revenueElement = document.querySelectorAll('.stat-card .number')[6];
         
         if (totalBookingsElement) {
             totalBookingsElement.textContent = stats.total_bookings || 0;
@@ -114,6 +116,12 @@ class AdminDataLoader {
         }
         if (cancelledElement) {
             cancelledElement.textContent = stats.cancelled_bookings || 0;
+        }
+        if (checkedInElement) {
+            checkedInElement.textContent = stats.checked_in_bookings || 0;
+        }
+        if (completedElement) {
+            completedElement.textContent = stats.completed_bookings || 0;
         }
         if (revenueElement) {
             revenueElement.textContent = '$' + (stats.total_revenue || 0).toLocaleString();
@@ -1096,6 +1104,7 @@ function showEditBookingModal(booking) {
                         <div class="form-group">
                             <label>Room Type</label>
                             <select name="room_type" required>
+                                <option value="Pearl Signature Room" ${booking.room_type === 'Pearl Signature Room' ? 'selected' : ''}>Pearl Signature Room</option>
                                 <option value="Deluxe Room" ${booking.room_type === 'Deluxe Room' ? 'selected' : ''}>Deluxe Room</option>
                                 <option value="Premium Room" ${booking.room_type === 'Premium Room' ? 'selected' : ''}>Premium Room</option>
                                 <option value="Executive Room" ${booking.room_type === 'Executive Room' ? 'selected' : ''}>Executive Room</option>
@@ -1130,6 +1139,7 @@ function showEditBookingModal(booking) {
                                 <option value="confirmed" ${booking.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
                                 <option value="cancelled" ${booking.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
                                 <option value="completed" ${booking.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                <option value="checked-in" ${booking.status === 'checked-in' ? 'selected' : ''}>Checked-In</option>
                             </select>
                         </div>
                         <div class="form-group full-width">

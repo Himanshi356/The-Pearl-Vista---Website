@@ -353,6 +353,11 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
       color: #0c5460;
     }
 
+    .status-checked-in {
+      background: #f0e6ff;
+      color: #6a4c93;
+    }
+
     .booking-details {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -658,6 +663,16 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
           <div class="change">+2% vs last month</div>
         </div>
         <div class="stat-card">
+          <div class="number">8</div>
+          <h3>Checked-in</h3>
+          <div class="change">+3% vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">15</div>
+          <h3>Completed</h3>
+          <div class="change">+6% vs last month</div>
+        </div>
+        <div class="stat-card">
           <div class="number">$45,230</div>
           <h3>Revenue</h3>
           <div class="change">+15% vs last month</div>
@@ -678,6 +693,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
               <option value="pending">Pending</option>
               <option value="cancelled">Cancelled</option>
               <option value="completed">Completed</option>
+              <option value="checked-in">Checked-In</option>
             </select>
           </div>
           <div class="filter-group">

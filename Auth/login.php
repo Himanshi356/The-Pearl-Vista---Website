@@ -135,23 +135,34 @@ try {
         
         // Verify password
         if (password_verify($password, $user['password'])) {
-            // User login successful
-            $_SESSION['user'] = $user['user_id'];
-            $_SESSION['role'] = $user['role'] ?? 'user';
-            
-            error_log("User login successful for: $username");
-            
-            echo json_encode([
-                'status' => 'success', 
-                'message' => 'Login successful.', 
-                'user' => [
-                    'id' => $user['id'],
-                    'user_id' => $user['user_id'],
-                    'username' => $user['username'],
-                    'email' => $user['email'],
-                    'role' => $user['role'] ?? 'user'
-                ]
-            ]);
+                    // User login successful
+        $_SESSION['user'] = $user['user_id'];
+        $_SESSION['role'] = $user['role'] ?? 'user';
+        
+        // Check if this is the user's first login
+        $stmt = $pdo->prepare("SELECT last_login FROM users WHERE user_id = ?");
+        $stmt->execute([$user['user_id']]);
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $isNewUser = $userData['last_login'] === null;
+        
+        // Update last login time
+        $updateStmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE user_id = ?");
+        $updateStmt->execute([$user['user_id']]);
+        
+        error_log("User login successful for: $username");
+        
+        echo json_encode([
+            'status' => 'success', 
+            'message' => 'Login successful.', 
+            'isNewUser' => $isNewUser,
+            'user' => [
+                'id' => $user['id'],
+                'user_id' => $user['user_id'],
+                'username' => $user['username'],
+                'email' => $user['email'],
+                'role' => $user['role'] ?? 'user'
+            ]
+        ]);
         } else {
             error_log("Login failed for username: $username - Invalid password");
             echo json_encode(['status' => 'error', 'message' => 'Invalid username or password.']);

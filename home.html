@@ -1097,13 +1097,14 @@
 </div>
 <!-- End Modals -->
   <script>
-    // Show availability popup for logged-in users
+    // Show welcome popup only once for new users after login
     document.addEventListener('DOMContentLoaded', function() {
-      // Check if user is logged in
+      // Check if user is logged in and is a new user
       var isLoggedIn = localStorage.getItem('pv_logged_in') === '1';
-      console.log('Modal check - isLoggedIn:', isLoggedIn, 'pv_logged_in:', localStorage.getItem('pv_logged_in'));
+      var isNewUser = localStorage.getItem('pv_is_new_user') === '1';
+      console.log('Modal check - isLoggedIn:', isLoggedIn, 'pv_logged_in:', localStorage.getItem('pv_logged_in'), 'isNewUser:', isNewUser);
       
-      if (isLoggedIn) {
+      if (isLoggedIn && isNewUser) {
         var modal = document.getElementById('checkAvailabilityModal');
         console.log('Modal element found:', modal);
         if (modal) {
@@ -1111,12 +1112,32 @@
           setTimeout(() => {
             modal.style.display = 'flex';
             console.log('Modal display set to flex');
+            // Clear the new user flag so popup won't show again
+            localStorage.removeItem('pv_is_new_user');
           }, 1000);
         } else {
           console.log('Modal element not found!');
         }
       } else {
-        console.log('User not logged in, not showing modal');
+        console.log('User not logged in or not a new user, not showing modal');
+      }
+      
+      // Check for openBooking URL parameter
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('openBooking') === 'true') {
+        console.log('Opening booking modal from URL parameter');
+        setTimeout(() => {
+          var bookingModal = document.getElementById('bookingModal');
+          if (bookingModal) {
+            bookingModal.style.display = 'flex';
+            // Calculate total amount when modal opens
+            setTimeout(calculateTotalAmount, 100);
+            // Initialize guest ages when modal opens
+            setTimeout(updateGuestAges, 150);
+            // Clear the URL parameter to prevent reopening on refresh
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+        }, 500); // Small delay to ensure page is fully loaded
       }
     });
 
@@ -1990,6 +2011,8 @@
     function logout() {
       localStorage.removeItem('pv_logged_in');
       localStorage.removeItem('pv_username');
+      localStorage.removeItem('pv_email');
+      localStorage.removeItem('pv_is_new_user');
       window.location.href = 'index.html';
     }
     // Initialize language and currency on page load

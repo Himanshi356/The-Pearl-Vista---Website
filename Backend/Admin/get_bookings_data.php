@@ -93,6 +93,8 @@ try {
             SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_bookings,
             SUM(CASE WHEN status = 'confirmed' THEN 1 ELSE 0 END) as confirmed_bookings,
             SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_bookings,
+            SUM(CASE WHEN status = 'checked-in' THEN 1 ELSE 0 END) as checked_in_bookings,
+            SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_bookings,
             SUM(total_amount) as total_revenue,
             AVG(total_amount) as avg_booking_value
         FROM home_bookings

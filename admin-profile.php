@@ -184,10 +184,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
   </style>
 </head>
 <body>
-  <a href="admin-dashboard.php" class="back-link">
-    <i class="fas fa-arrow-left"></i>
-    Back to Dashboard
-  </a>
+
   
   <div class="profile-container">
     <div class="avatar">
@@ -196,7 +193,6 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
     
     <div class="profile-header">
       <div class="profile-name">System Administrator</div>
-      <div class="profile-role">Administrator</div>
     </div>
     
     <div class="profile-info">

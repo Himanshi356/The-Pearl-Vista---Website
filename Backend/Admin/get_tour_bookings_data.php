@@ -42,6 +42,8 @@ try {
             SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_bookings,
             SUM(CASE WHEN status = 'confirmed' THEN 1 ELSE 0 END) as confirmed_bookings,
             SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) as cancelled_bookings,
+            SUM(CASE WHEN status = 'checked-in' THEN 1 ELSE 0 END) as checked_in_bookings,
+            SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_bookings,
             SUM(amount_paid) as total_revenue,
             AVG(amount_paid) as avg_booking_value,
             SUM(number_of_travellers) as total_travellers

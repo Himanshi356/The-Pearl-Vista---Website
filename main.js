@@ -746,6 +746,8 @@ if (window.location.pathname.endsWith('home.html')) {
   window.logout = function() {
     localStorage.removeItem('pv_logged_in');
     localStorage.removeItem('pv_username');
+    localStorage.removeItem('pv_email');
+    localStorage.removeItem('pv_is_new_user');
     window.location.href = 'index.html';
   };
   // Close user menu when clicking outside

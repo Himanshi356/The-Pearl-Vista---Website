@@ -72,6 +72,8 @@
   function logout() {
     localStorage.removeItem('pv_logged_in');
     localStorage.removeItem('pv_username');
+    localStorage.removeItem('pv_email');
+    localStorage.removeItem('pv_is_new_user');
     window.location.href = 'index.html';
   }
   </script>

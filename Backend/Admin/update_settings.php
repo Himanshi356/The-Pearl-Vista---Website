@@ -1,63 +1,97 @@
 <?php
-require_once '../../Config/database.php';
-require_once '../Admin/admin_only.php';
-
+session_start();
 header('Content-Type: application/json');
 
+// Check if user is logged in and is admin
+if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'super_admin', 'manager'])) {
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+    exit();
+}
+
 try {
-    $input = json_decode(file_get_contents('php://input'), true);
+    require_once dirname(__FILE__) . '/../../Config/database.php';
+    $pdo = getDatabaseConnection();
     
-    if (!$input || !isset($input['settings'])) {
-        throw new Exception('Invalid input data');
+    // Get POST data
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    if (!$data) {
+        echo json_encode(['status' => 'error', 'message' => 'No data received']);
+        exit();
     }
     
-    $user_id = $_SESSION['user'];
+    // Validate and sanitize data
+    $allowedFields = [
+        'hotel_name', 'hotel_address', 'hotel_phone', 'hotel_email', 'hotel_website',
+        'email_notifications', 'sms_notifications', 'booking_confirmations', 'reminder_notifications',
+        'session_timeout', 'password_policy', 'two_factor_auth', 'login_notifications',
+        'timezone', 'date_format', 'currency', 'maintenance_mode',
+        'backup_frequency', 'data_retention_days', 'auto_backup', 'log_analytics'
+    ];
     
-    // Get admin data for logging
-    $stmt = $pdo->prepare("SELECT admin_id FROM admins WHERE user_id = ?");
-    $stmt->execute([$user_id]);
-    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+    $updateData = [];
+    $updateValues = [];
     
-    if (!$admin) {
-        throw new Exception('Admin not found');
-    }
-    
-    $admin_id = $admin['admin_id'];
-    $updated_settings = [];
-    
-    foreach ($input['settings'] as $setting_key => $setting_value) {
-        // Update setting
-        $stmt = $pdo->prepare("UPDATE admin_settings SET setting_value = ?, updated_at = CURRENT_TIMESTAMP WHERE setting_key = ?");
-        $result = $stmt->execute([$setting_value, $setting_key]);
-        
-        if ($result) {
-            $updated_settings[] = $setting_key;
+    foreach ($allowedFields as $field) {
+        if (isset($data[$field])) {
+            $updateData[] = "$field = ?";
             
-            // Log the activity
-            $stmt = $pdo->prepare("
-                INSERT INTO admin_activity_log (admin_id, action, table_name, record_id, new_values, ip_address, user_agent) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ");
-            $stmt->execute([
-                $admin_id,
-                'UPDATE_SETTING',
-                'admin_settings',
-                null,
-                json_encode(['setting_key' => $setting_key, 'setting_value' => $setting_value]),
-                $_SERVER['REMOTE_ADDR'] ?? '',
-                $_SERVER['HTTP_USER_AGENT'] ?? ''
-            ]);
+            // Convert boolean values to integers for database
+            if (in_array($field, ['email_notifications', 'sms_notifications', 'booking_confirmations', 
+                                 'reminder_notifications', 'two_factor_auth', 'login_notifications', 
+                                 'maintenance_mode', 'auto_backup', 'log_analytics'])) {
+                $updateValues[] = $data[$field] ? 1 : 0;
+            } else {
+                $updateValues[] = $data[$field];
+            }
         }
     }
     
-    echo json_encode([
-        'status' => 'success',
-        'message' => 'Settings updated successfully',
-        'updated_settings' => $updated_settings
-    ]);
-
+    if (empty($updateData)) {
+        echo json_encode(['status' => 'error', 'message' => 'No valid fields to update']);
+        exit();
+    }
+    
+    // Check if settings exist
+    $checkStmt = $pdo->query("SELECT COUNT(*) FROM admin_settings WHERE id = 1");
+    $exists = $checkStmt->fetchColumn() > 0;
+    
+    if ($exists) {
+        // Update existing settings
+        $sql = "UPDATE admin_settings SET " . implode(', ', $updateData) . " WHERE id = 1";
+    } else {
+        // Insert new settings
+        $columns = implode(', ', array_keys($data));
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+        $sql = "INSERT INTO admin_settings ($columns) VALUES ($placeholders)";
+        $updateValues = array_values($data);
+    }
+    
+    $stmt = $pdo->prepare($sql);
+    $result = $stmt->execute($updateValues);
+    
+    if ($result) {
+        // Log the settings update
+        $admin_id = $_SESSION['user'];
+        $log_stmt = $pdo->prepare("
+            INSERT INTO admin_activity_log (admin_id, action, description, ip_address, user_agent) 
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $log_stmt->execute([
+            $admin_id, 
+            'UPDATE_SETTINGS', 
+            "Updated system settings", 
+            $_SERVER['REMOTE_ADDR'] ?? 'unknown', 
+            $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
+        ]);
+        
+        echo json_encode(['status' => 'success', 'message' => 'Settings updated successfully']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to update settings']);
+    }
+    
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    error_log("Error updating settings: " . $e->getMessage());
+    echo json_encode(['status' => 'error', 'message' => 'Database error occurred']);
 }
 ?> 

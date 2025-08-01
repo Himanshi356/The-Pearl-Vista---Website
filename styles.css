@@ -3086,20 +3086,174 @@ html, body {
   min-width: 200px;
 }
 
-/* Responsive styles */
+/* Enhanced Responsive styles */
 @media (max-width: 900px) {
-  .navbar, .footer-content { flex-direction: column; align-items: flex-start; }
-  .nav-menu { flex-wrap: wrap; gap: 1rem; }
-  .footer-content { gap: 1.5rem; }
+  .navbar, .footer-content { 
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+  .nav-menu { 
+    flex-wrap: wrap; 
+    gap: 1rem; 
+    justify-content: center;
+  }
+  .footer-content { 
+    gap: 1.5rem; 
+    text-align: center;
+  }
+  
+  /* Grid adjustments for medium screens */
+  .rooms-grid,
+  .services-grid,
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .reviews-grid,
+  .bookings-grid,
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Form adjustments */
+  .form-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  /* Hero adjustments */
+  .content h1 {
+    font-size: 3.5rem;
+  }
+  
+  .highlight-text {
+    font-size: 1.8rem;
+  }
 }
 @media (max-width: 600px) {
-  .navbar { padding: 12px 10px; }
-  .nav-menu { gap: 0.5rem; }
-  .user-dropdown { left: 0; right: 0; width: 95vw; min-width: unset; }
-  .footer-content { flex-direction: column; align-items: stretch; }
-  .content h1 { font-size: 2rem; }
-  .highlight-text { font-size: 1.1rem; }
-  .btn { font-size: 1rem; padding: 0.7rem 1.2rem; }
+  .navbar { 
+    padding: 12px 10px; 
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav-menu { 
+    gap: 0.5rem; 
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .user-dropdown { 
+    left: 10px; 
+    right: 10px; 
+    width: calc(100vw - 20px); 
+    min-width: unset; 
+  }
+  .footer-content { 
+    flex-direction: column; 
+    align-items: stretch; 
+    text-align: center;
+  }
+  .content h1 { 
+    font-size: 2.5rem; 
+    line-height: 1.2;
+  }
+  .highlight-text { 
+    font-size: 1.2rem; 
+    padding: 0.8rem 0;
+  }
+  .btn { 
+    font-size: 1rem; 
+    padding: 0.8rem 1.5rem; 
+    border-radius: 20px;
+  }
+  
+  /* Hero button group adjustments */
+  .hero-btn-group {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  /* Container adjustments */
+  .container {
+    padding: 0 15px;
+  }
+  
+  /* Grid adjustments for mobile */
+  .rooms-grid,
+  .services-grid,
+  .gallery-grid,
+  .reviews-grid,
+  .bookings-grid,
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  /* Card adjustments */
+  .room-card,
+  .service-card,
+  .gallery-card,
+  .review-card,
+  .booking-card,
+  .wishlist-card {
+    margin-bottom: 1rem;
+  }
+  
+  /* Form adjustments */
+  .form-wrapper {
+    padding: 1rem;
+  }
+  
+  .form-wrapper > form,
+  .form-wrapper > #signupForm {
+    padding: 2rem 1.5rem;
+    margin: 0 10px;
+  }
+  
+  .input-group {
+    padding: 0.6rem 0.8rem;
+  }
+  
+  /* Modal adjustments */
+  .modal-content {
+    width: 95%;
+    margin: 5% auto;
+    max-height: 90vh;
+  }
+  
+  /* Hero section adjustments */
+  .hero {
+    min-height: 300px;
+  }
+  
+  .about-hero,
+  .rooms-hero,
+  .services-hero,
+  .gallery-hero,
+  .contact-hero,
+  .reviews-hero {
+    min-height: 50vh;
+  }
+  
+  .about-hero h1,
+  .rooms-hero h1,
+  .services-hero h1,
+  .gallery-hero h1,
+  .contact-hero h1,
+  .reviews-hero h1 {
+    font-size: 2rem;
+  }
+  
+  /* Chat widget adjustments */
+  .chat-widget {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.8rem 1rem;
+  }
+  
+  .chat-widget span {
+    display: none;
+  }
   
   /* About page responsive */
   .about-hero h1 { font-size: 2.5rem; }
@@ -3184,6 +3338,114 @@ html, body {
   .service-wishlist-actions .btn { min-width: unset; }
   .wishlist-actions-section .actions-grid { flex-direction: column; align-items: center; }
   .wishlist-actions-section .btn { min-width: unset; width: 100%; max-width: 300px; }
+  
+  /* Additional mobile optimizations */
+  .featured-rooms-grid,
+  .special-offers-grid,
+  .testimonials-slider {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .featured-room-card,
+  .special-offer-card {
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-slide {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .testimonials-slider {
+    min-height: 420px;
+  }
+  
+  /* Profile dropdown adjustments */
+  .profile-dropdown {
+    left: 10px;
+    right: 10px;
+    width: calc(100vw - 20px);
+    max-width: none;
+  }
+  
+  /* Form improvements for mobile */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-buttons .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  /* Contact form adjustments */
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  /* Rating overview adjustments */
+  .rating-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .overall-rating h2 {
+    font-size: 3rem;
+  }
+  
+  /* Booking actions adjustments */
+  .booking-actions {
+    flex-direction: column;
+  }
+  
+  .booking-actions .btn {
+    min-width: unset;
+    width: 100%;
+  }
+  
+  /* Service tabs adjustments */
+  .services-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .service-tab {
+    min-width: 100px;
+    padding: 0.8rem 1rem;
+  }
+  
+  /* Gallery modal adjustments */
+  .gallery-grid-modal {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Lightbox adjustments */
+  .lightbox-content {
+    max-width: 95%;
+    max-height: 95%;
+  }
+  
+  /* Footer improvements */
+  .footer-section {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
 }
 
 /* Wishlist Page Styles */
@@ -4970,4 +5232,660 @@ body.dark-mode .switch input:checked + .slider {
 .booking-card .booking-price .price {
   font-size: 1.75rem;
   font-weight: 700;
+}
+
+/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
+
+/* Mobile First Approach - Base styles for mobile */
+@media (max-width: 480px) {
+  /* Container adjustments */
+  .container {
+    padding: 0 15px;
+  }
+  
+  /* Typography scaling */
+  .content h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.2;
+  }
+  
+  .highlight-text {
+    font-size: 1.2rem !important;
+    padding: 0.8rem 0;
+  }
+  
+  /* Button adjustments */
+  .btn {
+    padding: 0.8rem 1.5rem !important;
+    font-size: 1rem !important;
+    border-radius: 20px !important;
+  }
+  
+  .hero-btn-group {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: center !important;
+  }
+  
+  /* Navigation adjustments */
+  .navbar {
+    padding: 12px 15px !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  
+  .nav-menu {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+  }
+  
+  .nav-menu a {
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+  }
+  
+  /* User dropdown adjustments */
+  .user-dropdown {
+    left: 15px !important;
+    right: 15px !important;
+    width: calc(100vw - 30px) !important;
+    max-width: none !important;
+  }
+  
+  /* Form adjustments */
+  .form-wrapper {
+    padding: 1rem !important;
+  }
+  
+  .form-wrapper > form,
+  .form-wrapper > #signupForm {
+    padding: 2rem 1.5rem !important;
+    margin: 0 10px !important;
+  }
+  
+  .input-group {
+    padding: 0.6rem 0.8rem !important;
+  }
+  
+  /* Modal adjustments */
+  .modal-content {
+    width: 95% !important;
+    margin: 5% auto !important;
+    max-height: 90vh !important;
+  }
+  
+  /* Grid adjustments */
+  .rooms-grid,
+  .services-grid,
+  .gallery-grid,
+  .reviews-grid,
+  .bookings-grid,
+  .wishlist-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Card adjustments */
+  .room-card,
+  .service-card,
+  .gallery-card,
+  .review-card,
+  .booking-card,
+  .wishlist-card {
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Hero section adjustments */
+  .hero {
+    min-height: 300px !important;
+  }
+  
+  .about-hero,
+  .rooms-hero,
+  .services-hero,
+  .gallery-hero,
+  .contact-hero,
+  .reviews-hero {
+    min-height: 50vh !important;
+  }
+  
+  .about-hero h1,
+  .rooms-hero h1,
+  .services-hero h1,
+  .gallery-hero h1,
+  .contact-hero h1,
+  .reviews-hero h1 {
+    font-size: 2rem !important;
+  }
+  
+  /* Footer adjustments */
+  .footer-content {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+  }
+  
+  .footer-section {
+    flex: 1 1 100% !important;
+  }
+  
+  /* Chat widget adjustments */
+  .chat-widget {
+    bottom: 1rem !important;
+    right: 1rem !important;
+    padding: 0.8rem 1rem !important;
+  }
+  
+  .chat-widget span {
+    display: none !important;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 481px) and (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  .content h1 {
+    font-size: 3rem !important;
+  }
+  
+  .highlight-text {
+    font-size: 1.5rem !important;
+  }
+  
+  .hero-btn-group {
+    gap: 1rem !important;
+  }
+  
+  .navbar {
+    padding: 15px 20px !important;
+  }
+  
+  .nav-menu {
+    gap: 1rem !important;
+  }
+  
+  /* Grid adjustments for tablet */
+  .rooms-grid,
+  .services-grid,
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  }
+  
+  .reviews-grid,
+  .bookings-grid,
+  .wishlist-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Form adjustments */
+  .form-container {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* About page adjustments */
+  .about-content,
+  .featured-content,
+  .tour-content {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  .hero-stats,
+  .hero-features {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Small desktop adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
+  
+  .content h1 {
+    font-size: 4rem !important;
+  }
+  
+  .highlight-text {
+    font-size: 1.8rem !important;
+  }
+  
+  /* Grid adjustments for small desktop */
+  .rooms-grid,
+  .services-grid,
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+  }
+  
+  .reviews-grid,
+  .bookings-grid,
+  .wishlist-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+  }
+  
+  /* Navigation adjustments */
+  .nav-menu {
+    gap: 1.5rem !important;
+  }
+  
+  .nav-menu a {
+    font-size: 1rem !important;
+  }
+}
+
+/* Large desktop adjustments */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1200px;
+  }
+  
+  .content h1 {
+    font-size: 5rem !important;
+  }
+  
+  .highlight-text {
+    font-size: 2rem !important;
+  }
+  
+  /* Enhanced hover effects for large screens */
+  .room-card:hover,
+  .service-card:hover,
+  .gallery-card:hover,
+  .review-card:hover,
+  .booking-card:hover,
+  .wishlist-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 12px 32px rgba(26,34,56,0.15) !important;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: 250px !important;
+  }
+  
+  .about-hero,
+  .rooms-hero,
+  .services-hero,
+  .gallery-hero,
+  .contact-hero,
+  .reviews-hero {
+    min-height: 40vh !important;
+  }
+  
+  .content h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  .highlight-text {
+    font-size: 1.3rem !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .room-image img,
+  .service-image img,
+  .gallery-card img,
+  .featured-room-img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .footer,
+  .chat-widget,
+  .user-dropdown,
+  .modal,
+  .lightbox {
+    display: none !important;
+  }
+  
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  
+  .content h1 {
+    font-size: 2rem !important;
+    color: #000 !important;
+  }
+  
+  .highlight-text {
+    font-size: 1.2rem !important;
+    color: #000 !important;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn {
+    border: 2px solid #000 !important;
+  }
+  
+  .room-card,
+  .service-card,
+  .gallery-card,
+  .review-card,
+  .booking-card,
+  .wishlist-card {
+    border: 2px solid #000 !important;
+  }
+}
+
+/* Focus styles for accessibility */
+.btn:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus {
+  outline: 2px solid #FFD700 !important;
+  outline-offset: 2px !important;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+  
+  .nav-menu a {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  .user-icon {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Admin dashboard touch optimizations */
+  .admin-dashboard .btn,
+  .admin-dashboard button {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+  
+  .admin-dashboard .nav-menu a {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+}
+
+/* Admin Dashboard Responsive Styles */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem !important;
+  }
+  
+  .admin-dashboard .container {
+    padding: 0 10px !important;
+  }
+  
+  .admin-dashboard .navbar {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+  }
+  
+  .admin-dashboard .nav-menu {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+  }
+  
+  .admin-dashboard .nav-menu a {
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+  }
+  
+  .admin-dashboard .content h1 {
+    font-size: 2rem !important;
+  }
+  
+  .admin-dashboard .highlight-text {
+    font-size: 1.1rem !important;
+  }
+  
+  .admin-dashboard .btn {
+    font-size: 1rem !important;
+    padding: 0.8rem 1.5rem !important;
+  }
+  
+  .admin-dashboard .hero-btn-group {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: center !important;
+  }
+  
+  .admin-dashboard .user-dropdown {
+    left: 10px !important;
+    right: 10px !important;
+    width: calc(100vw - 20px) !important;
+    max-width: none !important;
+  }
+  
+  .admin-dashboard .modal-content {
+    width: 95% !important;
+    margin: 5% auto !important;
+    max-height: 90vh !important;
+  }
+  
+  .admin-dashboard .form-container {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  .admin-dashboard .form-row {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .admin-dashboard .form-buttons {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  .admin-dashboard .form-buttons .btn {
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+}
+
+/* Email verification responsive improvements */
+@media (max-width: 480px) {
+  .verification-content {
+    max-width: 98vw !important;
+    padding: 1.2rem 0.5rem !important;
+  }
+  
+  .otp-inputs {
+    gap: 0.4rem !important;
+  }
+  
+  .otp-box {
+    width: 36px !important;
+    height: 44px !important;
+    font-size: 1.3rem !important;
+  }
+  
+  .verification-tips {
+    font-size: 0.93rem !important;
+    padding: 0.7rem 0.5rem 0.7rem 0.7rem !important;
+  }
+  
+  .verification-content h2 {
+    font-size: 2rem !important;
+  }
+  
+  .verification-text {
+    font-size: 1rem !important;
+  }
+  
+  .email-display {
+    font-size: 1rem !important;
+  }
+  
+  .email-display span {
+    font-size: 0.95rem !important;
+  }
+  
+  #verifyBtn {
+    font-size: 1.1rem !important;
+    padding: 1rem 0 !important;
+  }
+  
+  .verification-actions {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .verification-actions .btn {
+    width: 100% !important;
+    max-width: 340px !important;
+  }
+}
+
+/* Form wrapper responsive improvements */
+@media (max-width: 480px) {
+  .form-wrapper {
+    padding: 0.5rem !important;
+  }
+  
+  .form-wrapper > form,
+  .form-wrapper > #signupForm {
+    padding: 1.5rem 1rem !important;
+    margin: 0 5px !important;
+    border-radius: 15px !important;
+  }
+  
+  .form-wrapper > h2 {
+    font-size: 2rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .input-group {
+    padding: 0.5rem 0.7rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .form-wrapper input,
+  .form-wrapper select {
+    font-size: 1rem !important;
+  }
+  
+  .btn.signup.full,
+  .btn.login.full {
+    font-size: 1.1rem !important;
+    padding: 0.9rem 0 !important;
+  }
+  
+  .toggle-password {
+    right: 15px !important;
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Language and currency page responsive */
+@media (max-width: 480px) {
+  .selector-group {
+    padding: 0 !important;
+    min-width: unset !important;
+  }
+  
+  .radio-list {
+    gap: 0.7rem !important;
+  }
+  
+  .custom-radio {
+    font-size: 1rem !important;
+    padding-left: 2em !important;
+  }
+  
+  .custom-radio:before {
+    width: 1.2em !important;
+    height: 1.2em !important;
+  }
+  
+  .custom-radio:after {
+    width: 0.5em !important;
+    height: 0.5em !important;
+  }
+}
+
+/* Chat widget responsive improvements */
+@media (max-width: 480px) {
+  .chat-widget {
+    bottom: 0.5rem !important;
+    right: 0.5rem !important;
+    padding: 0.6rem 0.8rem !important;
+    border-radius: 25px !important;
+  }
+  
+  .chat-widget i {
+    font-size: 1rem !important;
+  }
+}
+
+/* Footer responsive improvements */
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0 1rem 0 !important;
+  }
+  
+  .footer-content {
+    gap: 1rem !important;
+  }
+  
+  .footer-section {
+    margin-bottom: 1rem !important;
+  }
+  
+  .footer-section h4 {
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 0.4rem !important;
+  }
+  
+  .social-links a {
+    margin-right: 8px !important;
+    font-size: 1.1rem !important;
+  }
+  
+  .footer-bottom {
+    margin-top: 1rem !important;
+    font-size: 0.9rem !important;
+  }
 }

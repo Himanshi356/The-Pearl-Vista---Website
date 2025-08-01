@@ -36,7 +36,7 @@ try {
     }
     
     // Validate status
-    $valid_statuses = ['pending', 'confirmed', 'cancelled', 'completed'];
+    $valid_statuses = ['pending', 'confirmed', 'cancelled', 'completed', 'checked-in'];
     if (!in_array(strtolower($status), $valid_statuses)) {
         echo json_encode(['success' => false, 'message' => 'Invalid status. Must be one of: ' . implode(', ', $valid_statuses)]);
         exit();

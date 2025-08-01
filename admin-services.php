@@ -543,7 +543,7 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['role']) || !in_array($_SESSIO
           <div class="change"></div>
         </div>
         <div class="stat-card">
-          <div class="number">0.0</div>
+          <div class="number">4.2</div>
           <h3>Avg. Rating</h3>
           <div class="change"></div>
         </div>

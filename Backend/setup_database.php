@@ -70,7 +70,7 @@ try {
         check_in_date DATE NOT NULL,
         check_out_date DATE NOT NULL,
         total_amount DECIMAL(10,2) NOT NULL,
-        status ENUM('pending', 'confirmed', 'cancelled', 'completed') DEFAULT 'pending',
+                        status ENUM('pending', 'confirmed', 'cancelled', 'completed', 'checked-in') DEFAULT 'pending',
         booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(user_id),
         FOREIGN KEY (room_id) REFERENCES rooms(room_id)
